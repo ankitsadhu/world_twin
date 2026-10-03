@@ -135,6 +135,25 @@
       ]
     },
     {
+      "id": "centralpark",
+      "name": "Central Park",
+      "sub": "843 acres \u00b7 59th St to 110th St",
+      "kind": "landmark",
+      "keywords": "central park sheep meadow bethesda the pond gapstow",
+      "x": 197.8,
+      "y": 1382.4,
+      "eye": [
+        -52.2,
+        1032.4,
+        120
+      ],
+      "target": [
+        197.8,
+        1382.4,
+        5
+      ]
+    },
+    {
       "id": "pier25",
       "name": "Pier 25",
       "sub": "Hudson River Park \u00b7 Tribeca",

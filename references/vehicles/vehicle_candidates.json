@@ -1,0 +1,82 @@
+{
+ "generic_car_pack": {
+  "name": "Generic passenger car pack",
+  "author": "Comrade1280",
+  "license": "CC Attribution",
+  "faces": 69312,
+  "url": "https://sketchfab.com/3d-models/generic-passenger-car-pack-20f9af9b8a404d5cb022ac6fe87f21f5",
+  "downloadable": true
+ },
+ "rav4_hybrid_2021": {
+  "name": "2021 Toyota RAV4 Hybrid",
+  "author": "tonielpro520",
+  "license": "CC Attribution",
+  "faces": 172455,
+  "url": "https://sketchfab.com/3d-models/2021-toyota-rav4-hybrid-de74fe4e98004c92b1103947597d1b53",
+  "downloadable": true
+ },
+ "taxi_and_police": {
+  "name": "Taxi and Police car",
+  "author": "MaG80",
+  "license": "CC Attribution",
+  "faces": 23152,
+  "url": "https://sketchfab.com/3d-models/taxi-and-police-car-a7ce321a68f04eedbde30d035f945e59",
+  "downloadable": true
+ },
+ "bicycle": {
+  "name": "Bicycle",
+  "author": "Lyskilde",
+  "license": "CC Attribution",
+  "faces": 20864,
+  "url": "https://sketchfab.com/3d-models/bicycle-25aa85eeba944baea33ce5cde985ca49",
+  "downloadable": true
+ },
+ "classic_bicycle": {
+  "name": "Classic Bicycle | LowPoly | Game ready",
+  "author": "by__Rx",
+  "license": "CC Attribution",
+  "faces": 19822,
+  "url": "https://sketchfab.com/3d-models/classic-bicycle-lowpoly-game-ready-da6507928c0c4a5c8776008cdb9f747e",
+  "downloadable": true
+ },
+ "seaplane_c172": {
+  "name": "SeaPlane Cessna 172",
+  "author": "KOG_THORNS",
+  "license": "CC Attribution",
+  "faces": 6146,
+  "url": "https://sketchfab.com/3d-models/seaplane-cessna-172-3924196d2ccf42c0ac8458d8f16a7910",
+  "downloadable": true
+ },
+ "plane": {
+  "name": "Plane",
+  "author": "osmosikum",
+  "license": "CC Attribution",
+  "faces": 14892,
+  "url": "https://sketchfab.com/3d-models/plane-cedc8a07370747f7b0d14400cdf2faf9",
+  "downloadable": true
+ },
+ "cessna172sp": {
+  "name": "FREE Cessna 172SP",
+  "author": "NLM",
+  "license": "CC Attribution",
+  "faces": 187484,
+  "url": "https://sketchfab.com/3d-models/free-cessna-172sp-c9cadc2f026946da8cf9715a683739e9",
+  "downloadable": true
+ },
+ "ferry_concept": {
+  "name": "Ferry Concept",
+  "author": "Gman The Cruise Dude",
+  "license": "CC Attribution",
+  "faces": 206346,
+  "url": "https://sketchfab.com/3d-models/ferry-concept-73b9556133704e73af6637a428bcb8f4",
+  "downloadable": true
+ },
+ "mv_banfield": {
+  "name": "MV Banfield",
+  "author": "Potater_King",
+  "license": "CC Attribution",
+  "faces": 574512,
+  "url": "https://sketchfab.com/3d-models/mv-banfield-acd24b12e7fe4596b06fc2022c12725e",
+  "downloadable": true
+ }
+}

@@ -1,0 +1,6161 @@
+{
+  "district": "times_square",
+  "places": [
+    {
+      "id": "tkts",
+      "name": "TKTS Red Steps",
+      "sub": "Duffy Square \u00b7 sit and look at One Times Square",
+      "kind": "landmark",
+      "keywords": "red stairs steps tkts duffy father",
+      "x": -20.0,
+      "y": 130.0,
+      "eye": [
+        -12.0,
+        96.0,
+        1.7
+      ],
+      "target": [
+        -20.0,
+        130.0,
+        4.0
+      ]
+    },
+    {
+      "id": "1tsq",
+      "name": "One Times Square",
+      "sub": "The New Year's Eve ball tower",
+      "kind": "landmark",
+      "keywords": "ball nye new year one times square 1475",
+      "x": 16.0,
+      "y": -215.0,
+      "eye": [
+        -14.5,
+        137.5,
+        6.4
+      ],
+      "target": [
+        16.0,
+        -215.0,
+        40.0
+      ]
+    },
+    {
+      "id": "nasdaq",
+      "name": "Nasdaq Tower",
+      "sub": "4 Times Square \u00b7 curved screen",
+      "kind": "landmark",
+      "keywords": "nasdaq 4 times square conde nast drum",
+      "x": 60.0,
+      "y": -184.0,
+      "eye": [
+        8.0,
+        -128.0,
+        1.7
+      ],
+      "target": [
+        60.0,
+        -184.0,
+        30.0
+      ]
+    },
+    {
+      "id": "750",
+      "name": "750 7th Ave",
+      "sub": "Wraparound screens & 3D corner board",
+      "kind": "landmark",
+      "keywords": "750 seventh 3d box corner",
+      "x": 24.0,
+      "y": 334.0,
+      "eye": [
+        -6.0,
+        302.0,
+        1.7
+      ],
+      "target": [
+        24.0,
+        334.0,
+        16.0
+      ]
+    },
+    {
+      "id": "w49",
+      "name": "7th Ave & W 49th St corner",
+      "sub": "Corner LED wrap",
+      "kind": "landmark",
+      "keywords": "49th corner",
+      "x": -24.0,
+      "y": 298.0,
+      "eye": [
+        -1.0,
+        323.0,
+        1.7
+      ],
+      "target": [
+        -24.0,
+        298.0,
+        9.0
+      ]
+    },
+    {
+      "id": "paramount",
+      "name": "Paramount Building",
+      "sub": "Clock tower & globe",
+      "kind": "landmark",
+      "keywords": "paramount clock globe 1501",
+      "x": -37.0,
+      "y": -124.0,
+      "eye": [
+        26.0,
+        -182.0,
+        1.7
+      ],
+      "target": [
+        -37.0,
+        -124.0,
+        84.0
+      ]
+    },
+    {
+      "id": "marquis",
+      "name": "Marriott Marquis screen",
+      "sub": "100 m wraparound screen",
+      "kind": "landmark",
+      "keywords": "marriott marquis hotel",
+      "x": -34.0,
+      "y": 36.0,
+      "eye": [
+        2.0,
+        30.0,
+        1.7
+      ],
+      "target": [
+        -34.0,
+        36.0,
+        20.0
+      ]
+    },
+    {
+      "id": "1551",
+      "name": "1551 Broadway",
+      "sub": "Screen tower over Duffy Square",
+      "kind": "landmark",
+      "keywords": "1551 american eagle",
+      "x": -58.0,
+      "y": 118.0,
+      "eye": [
+        -6.0,
+        104.0,
+        1.7
+      ],
+      "target": [
+        -58.0,
+        118.0,
+        28.0
+      ]
+    },
+    {
+      "id": "astor",
+      "name": "One Astor Plaza",
+      "sub": "1515 Broadway \u00b7 Minskoff Theatre",
+      "kind": "landmark",
+      "keywords": "astor plaza minskoff lion king",
+      "x": -63.3,
+      "y": -44.5,
+      "eye": [
+        -3.3,
+        -104.5,
+        40.0
+      ],
+      "target": [
+        -63.3,
+        -44.5,
+        13.5
+      ]
+    },
+    {
+      "id": "3tsq",
+      "name": "3 Times Square",
+      "sub": "Rounded LED corner",
+      "kind": "landmark",
+      "keywords": "3 times square reuters",
+      "x": -30.0,
+      "y": -215.0,
+      "eye": [
+        12.0,
+        -262.0,
+        1.7
+      ],
+      "target": [
+        -30.0,
+        -215.0,
+        40.0
+      ]
+    },
+    {
+      "id": "1540",
+      "name": "1540 Broadway",
+      "sub": "Bertelsmann building",
+      "kind": "landmark",
+      "keywords": "bertelsmann 1540",
+      "x": 46.8,
+      "y": 34.6,
+      "eye": [
+        106.8,
+        -25.4,
+        40.0
+      ],
+      "target": [
+        46.8,
+        34.6,
+        15.3
+      ]
+    },
+    {
+      "id": "intrepid",
+      "name": "USS Intrepid (planes)",
+      "sub": "Pier 86 \u00b7 take off from the deck",
+      "kind": "landmark",
+      "keywords": "intrepid carrier plane fly pier 86",
+      "x": -1486.0,
+      "y": 23.0,
+      "eye": [
+        -1430.0,
+        -80.0,
+        40.0
+      ],
+      "target": [
+        -1486.0,
+        23.0,
+        15.0
+      ]
+    },
+    {
+      "id": "pier83",
+      "name": "Pier 83 (boats)",
+      "sub": "Hudson River \u00b7 sightseeing ferry",
+      "kind": "landmark",
+      "keywords": "pier 83 boat ship ferry circle line hudson",
+      "x": -1494.0,
+      "y": -193.0,
+      "eye": [
+        -1440.0,
+        -260.0,
+        12.0
+      ],
+      "target": [
+        -1494.0,
+        -193.0,
+        0.0
+      ]
+    },
+    {
+      "id": "x_-550_39",
+      "name": "9th Ave & W 39th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 39th St 9th Ave 39 corner",
+      "x": -550,
+      "y": -491,
+      "eye": [
+        -537.5,
+        -508.25,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        -461.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_39",
+      "name": "8th Ave & W 39th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 39th St 8th Ave 39 corner",
+      "x": -275,
+      "y": -491,
+      "eye": [
+        -262.5,
+        -508.25,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        -461.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_39",
+      "name": "7th Ave & W 39th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 39th St 7th Ave 39 corner",
+      "x": 0,
+      "y": -491,
+      "eye": [
+        12.5,
+        -508.25,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        -461.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_39",
+      "name": "6th Ave & W 39th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 39th St 6th Ave 39 corner",
+      "x": 273,
+      "y": -491,
+      "eye": [
+        285.5,
+        -508.25,
+        1.7
+      ],
+      "target": [
+        263.0,
+        -461.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_39",
+      "name": "5th Ave & W 39th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 39th St 5th Ave 39 corner",
+      "x": 584,
+      "y": -491,
+      "eye": [
+        596.5,
+        -508.25,
+        1.7
+      ],
+      "target": [
+        574.0,
+        -461.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_40",
+      "name": "9th Ave & W 40th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 40th St 9th Ave 40 corner",
+      "x": -550,
+      "y": -413,
+      "eye": [
+        -537.5,
+        -430.25,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        -383.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_40",
+      "name": "8th Ave & W 40th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 40th St 8th Ave 40 corner",
+      "x": -275,
+      "y": -413,
+      "eye": [
+        -262.5,
+        -430.25,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        -383.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_40",
+      "name": "7th Ave & W 40th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 40th St 7th Ave 40 corner",
+      "x": 0,
+      "y": -413,
+      "eye": [
+        12.5,
+        -430.25,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        -383.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_40",
+      "name": "6th Ave & W 40th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 40th St 6th Ave 40 corner",
+      "x": 273,
+      "y": -413,
+      "eye": [
+        285.5,
+        -430.25,
+        1.7
+      ],
+      "target": [
+        263.0,
+        -383.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_40",
+      "name": "5th Ave & W 40th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 40th St 5th Ave 40 corner",
+      "x": 584,
+      "y": -413,
+      "eye": [
+        596.5,
+        -430.25,
+        1.7
+      ],
+      "target": [
+        574.0,
+        -383.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_41",
+      "name": "9th Ave & W 41st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 41st St 9th Ave 41 corner",
+      "x": -550,
+      "y": -331,
+      "eye": [
+        -537.5,
+        -348.25,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        -301.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_41",
+      "name": "8th Ave & W 41st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 41st St 8th Ave 41 corner",
+      "x": -275,
+      "y": -331,
+      "eye": [
+        -262.5,
+        -348.25,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        -301.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_41",
+      "name": "7th Ave & W 41st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 41st St 7th Ave 41 corner",
+      "x": 0,
+      "y": -331,
+      "eye": [
+        12.5,
+        -348.25,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        -301.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_41",
+      "name": "6th Ave & W 41st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 41st St 6th Ave 41 corner",
+      "x": 273,
+      "y": -331,
+      "eye": [
+        285.5,
+        -348.25,
+        1.7
+      ],
+      "target": [
+        263.0,
+        -301.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_41",
+      "name": "5th Ave & W 41st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 41st St 5th Ave 41 corner",
+      "x": 584,
+      "y": -331,
+      "eye": [
+        596.5,
+        -348.25,
+        1.7
+      ],
+      "target": [
+        574.0,
+        -301.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_42",
+      "name": "9th Ave & W 42nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 42nd St 9th Ave 42 corner",
+      "x": -550,
+      "y": -249,
+      "eye": [
+        -537.5,
+        -270.0,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        -219.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_42",
+      "name": "8th Ave & W 42nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 42nd St 8th Ave 42 corner",
+      "x": -275,
+      "y": -249,
+      "eye": [
+        -262.5,
+        -270.0,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        -219.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_42",
+      "name": "7th Ave & W 42nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 42nd St 7th Ave 42 corner",
+      "x": 0,
+      "y": -249,
+      "eye": [
+        12.5,
+        -270.0,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        -219.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_42",
+      "name": "6th Ave & W 42nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 42nd St 6th Ave 42 corner",
+      "x": 273,
+      "y": -249,
+      "eye": [
+        285.5,
+        -270.0,
+        1.7
+      ],
+      "target": [
+        263.0,
+        -219.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_42",
+      "name": "5th Ave & W 42nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 42nd St 5th Ave 42 corner",
+      "x": 584,
+      "y": -249,
+      "eye": [
+        596.5,
+        -270.0,
+        1.7
+      ],
+      "target": [
+        574.0,
+        -219.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_43",
+      "name": "9th Ave & W 43rd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 43rd St 9th Ave 43 corner",
+      "x": -550,
+      "y": -164,
+      "eye": [
+        -537.5,
+        -181.25,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        -134.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_43",
+      "name": "8th Ave & W 43rd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 43rd St 8th Ave 43 corner",
+      "x": -275,
+      "y": -164,
+      "eye": [
+        -262.5,
+        -181.25,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        -134.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_43",
+      "name": "7th Ave & W 43rd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 43rd St 7th Ave 43 corner",
+      "x": 0,
+      "y": -164,
+      "eye": [
+        12.5,
+        -181.25,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        -134.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_43",
+      "name": "6th Ave & W 43rd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 43rd St 6th Ave 43 corner",
+      "x": 273,
+      "y": -164,
+      "eye": [
+        285.5,
+        -181.25,
+        1.7
+      ],
+      "target": [
+        263.0,
+        -134.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_43",
+      "name": "5th Ave & W 43rd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 43rd St 5th Ave 43 corner",
+      "x": 584,
+      "y": -164,
+      "eye": [
+        596.5,
+        -181.25,
+        1.7
+      ],
+      "target": [
+        574.0,
+        -134.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_44",
+      "name": "9th Ave & W 44th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 44th St 9th Ave 44 corner",
+      "x": -550,
+      "y": -85,
+      "eye": [
+        -537.5,
+        -102.25,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        -55.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_44",
+      "name": "8th Ave & W 44th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 44th St 8th Ave 44 corner",
+      "x": -275,
+      "y": -85,
+      "eye": [
+        -262.5,
+        -102.25,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        -55.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_44",
+      "name": "7th Ave & W 44th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 44th St 7th Ave 44 corner",
+      "x": 0,
+      "y": -85,
+      "eye": [
+        12.5,
+        -102.25,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        -55.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_44",
+      "name": "6th Ave & W 44th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 44th St 6th Ave 44 corner",
+      "x": 273,
+      "y": -85,
+      "eye": [
+        285.5,
+        -102.25,
+        1.7
+      ],
+      "target": [
+        263.0,
+        -55.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_44",
+      "name": "5th Ave & W 44th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 44th St 5th Ave 44 corner",
+      "x": 584,
+      "y": -85,
+      "eye": [
+        596.5,
+        -102.25,
+        1.7
+      ],
+      "target": [
+        574.0,
+        -55.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_45",
+      "name": "9th Ave & W 45th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 45th St 9th Ave 45 corner",
+      "x": -550,
+      "y": -5,
+      "eye": [
+        -537.5,
+        -22.25,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        25.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_45",
+      "name": "8th Ave & W 45th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 45th St 8th Ave 45 corner",
+      "x": -275,
+      "y": -5,
+      "eye": [
+        -262.5,
+        -22.25,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        25.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_45",
+      "name": "7th Ave & W 45th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 45th St 7th Ave 45 corner",
+      "x": 0,
+      "y": -5,
+      "eye": [
+        12.5,
+        -22.25,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        25.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_45",
+      "name": "6th Ave & W 45th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 45th St 6th Ave 45 corner",
+      "x": 273,
+      "y": -5,
+      "eye": [
+        285.5,
+        -22.25,
+        1.7
+      ],
+      "target": [
+        263.0,
+        25.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_45",
+      "name": "5th Ave & W 45th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 45th St 5th Ave 45 corner",
+      "x": 584,
+      "y": -5,
+      "eye": [
+        596.5,
+        -22.25,
+        1.7
+      ],
+      "target": [
+        574.0,
+        25.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_46",
+      "name": "9th Ave & W 46th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 46th St 9th Ave 46 corner",
+      "x": -550,
+      "y": 75,
+      "eye": [
+        -537.5,
+        57.75,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        105.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_46",
+      "name": "8th Ave & W 46th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 46th St 8th Ave 46 corner",
+      "x": -275,
+      "y": 75,
+      "eye": [
+        -262.5,
+        57.75,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        105.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_46",
+      "name": "7th Ave & W 46th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 46th St 7th Ave 46 corner",
+      "x": 0,
+      "y": 75,
+      "eye": [
+        12.5,
+        57.75,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        105.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_46",
+      "name": "6th Ave & W 46th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 46th St 6th Ave 46 corner",
+      "x": 273,
+      "y": 75,
+      "eye": [
+        285.5,
+        57.75,
+        1.7
+      ],
+      "target": [
+        263.0,
+        105.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_46",
+      "name": "5th Ave & W 46th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 46th St 5th Ave 46 corner",
+      "x": 584,
+      "y": 75,
+      "eye": [
+        596.5,
+        57.75,
+        1.7
+      ],
+      "target": [
+        574.0,
+        105.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_47",
+      "name": "9th Ave & W 47th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 47th St 9th Ave 47 corner",
+      "x": -550,
+      "y": 155,
+      "eye": [
+        -537.5,
+        137.75,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        185.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_47",
+      "name": "8th Ave & W 47th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 47th St 8th Ave 47 corner",
+      "x": -275,
+      "y": 155,
+      "eye": [
+        -262.5,
+        137.75,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        185.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_47",
+      "name": "7th Ave & W 47th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 47th St 7th Ave 47 corner",
+      "x": 0,
+      "y": 155,
+      "eye": [
+        12.5,
+        137.75,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        185.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_47",
+      "name": "6th Ave & W 47th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 47th St 6th Ave 47 corner",
+      "x": 273,
+      "y": 155,
+      "eye": [
+        285.5,
+        137.75,
+        1.7
+      ],
+      "target": [
+        263.0,
+        185.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_47",
+      "name": "5th Ave & W 47th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 47th St 5th Ave 47 corner",
+      "x": 584,
+      "y": 155,
+      "eye": [
+        596.5,
+        137.75,
+        1.7
+      ],
+      "target": [
+        574.0,
+        185.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_48",
+      "name": "9th Ave & W 48th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 48th St 9th Ave 48 corner",
+      "x": -550,
+      "y": 234,
+      "eye": [
+        -537.5,
+        216.75,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        264.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_48",
+      "name": "8th Ave & W 48th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 48th St 8th Ave 48 corner",
+      "x": -275,
+      "y": 234,
+      "eye": [
+        -262.5,
+        216.75,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        264.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_48",
+      "name": "7th Ave & W 48th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 48th St 7th Ave 48 corner",
+      "x": 0,
+      "y": 234,
+      "eye": [
+        12.5,
+        216.75,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        264.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_48",
+      "name": "6th Ave & W 48th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 48th St 6th Ave 48 corner",
+      "x": 273,
+      "y": 234,
+      "eye": [
+        285.5,
+        216.75,
+        1.7
+      ],
+      "target": [
+        263.0,
+        264.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_48",
+      "name": "5th Ave & W 48th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 48th St 5th Ave 48 corner",
+      "x": 584,
+      "y": 234,
+      "eye": [
+        596.5,
+        216.75,
+        1.7
+      ],
+      "target": [
+        574.0,
+        264.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_49",
+      "name": "9th Ave & W 49th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 49th St 9th Ave 49 corner",
+      "x": -550,
+      "y": 314,
+      "eye": [
+        -537.5,
+        296.75,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        344.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_49",
+      "name": "8th Ave & W 49th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 49th St 8th Ave 49 corner",
+      "x": -275,
+      "y": 314,
+      "eye": [
+        -262.5,
+        296.75,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        344.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_49",
+      "name": "7th Ave & W 49th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 49th St 7th Ave 49 corner",
+      "x": 0,
+      "y": 314,
+      "eye": [
+        12.5,
+        296.75,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        344.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_49",
+      "name": "6th Ave & W 49th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 49th St 6th Ave 49 corner",
+      "x": 273,
+      "y": 314,
+      "eye": [
+        285.5,
+        296.75,
+        1.7
+      ],
+      "target": [
+        263.0,
+        344.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_49",
+      "name": "5th Ave & W 49th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 49th St 5th Ave 49 corner",
+      "x": 584,
+      "y": 314,
+      "eye": [
+        596.5,
+        296.75,
+        1.7
+      ],
+      "target": [
+        574.0,
+        344.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_50",
+      "name": "9th Ave & W 50th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 50th St 9th Ave 50 corner",
+      "x": -550,
+      "y": 394,
+      "eye": [
+        -537.5,
+        376.75,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        424.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_50",
+      "name": "8th Ave & W 50th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 50th St 8th Ave 50 corner",
+      "x": -275,
+      "y": 394,
+      "eye": [
+        -262.5,
+        376.75,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        424.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_50",
+      "name": "7th Ave & W 50th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 50th St 7th Ave 50 corner",
+      "x": 0,
+      "y": 394,
+      "eye": [
+        12.5,
+        376.75,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        424.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_50",
+      "name": "6th Ave & W 50th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 50th St 6th Ave 50 corner",
+      "x": 273,
+      "y": 394,
+      "eye": [
+        285.5,
+        376.75,
+        1.7
+      ],
+      "target": [
+        263.0,
+        424.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_50",
+      "name": "5th Ave & W 50th St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 50th St 5th Ave 50 corner",
+      "x": 584,
+      "y": 394,
+      "eye": [
+        596.5,
+        376.75,
+        1.7
+      ],
+      "target": [
+        574.0,
+        424.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_51",
+      "name": "9th Ave & W 51st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 51st St 9th Ave 51 corner",
+      "x": -550,
+      "y": 473,
+      "eye": [
+        -537.5,
+        455.75,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        503.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_51",
+      "name": "8th Ave & W 51st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 51st St 8th Ave 51 corner",
+      "x": -275,
+      "y": 473,
+      "eye": [
+        -262.5,
+        455.75,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        503.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_51",
+      "name": "7th Ave & W 51st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 51st St 7th Ave 51 corner",
+      "x": 0,
+      "y": 473,
+      "eye": [
+        12.5,
+        455.75,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        503.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_51",
+      "name": "6th Ave & W 51st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 51st St 6th Ave 51 corner",
+      "x": 273,
+      "y": 473,
+      "eye": [
+        285.5,
+        455.75,
+        1.7
+      ],
+      "target": [
+        263.0,
+        503.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_51",
+      "name": "5th Ave & W 51st St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 51st St 5th Ave 51 corner",
+      "x": 584,
+      "y": 473,
+      "eye": [
+        596.5,
+        455.75,
+        1.7
+      ],
+      "target": [
+        574.0,
+        503.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-550_52",
+      "name": "9th Ave & W 52nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 52nd St 9th Ave 52 corner",
+      "x": -550,
+      "y": 553,
+      "eye": [
+        -537.5,
+        535.75,
+        1.7
+      ],
+      "target": [
+        -560.0,
+        583.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_-275_52",
+      "name": "8th Ave & W 52nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 52nd St 8th Ave 52 corner",
+      "x": -275,
+      "y": 553,
+      "eye": [
+        -262.5,
+        535.75,
+        1.7
+      ],
+      "target": [
+        -285.0,
+        583.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_0_52",
+      "name": "7th Ave & W 52nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 52nd St 7th Ave 52 corner",
+      "x": 0,
+      "y": 553,
+      "eye": [
+        12.5,
+        535.75,
+        1.7
+      ],
+      "target": [
+        -10.0,
+        583.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_273_52",
+      "name": "6th Ave & W 52nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 52nd St 6th Ave 52 corner",
+      "x": 273,
+      "y": 553,
+      "eye": [
+        285.5,
+        535.75,
+        1.7
+      ],
+      "target": [
+        263.0,
+        583.0,
+        8.0
+      ]
+    },
+    {
+      "id": "x_584_52",
+      "name": "5th Ave & W 52nd St",
+      "sub": "Intersection",
+      "kind": "intersection",
+      "keywords": "W 52nd St 5th Ave 52 corner",
+      "x": 584,
+      "y": 553,
+      "eye": [
+        596.5,
+        535.75,
+        1.7
+      ],
+      "target": [
+        574.0,
+        583.0,
+        8.0
+      ]
+    },
+    {
+      "id": "times_square.1087268",
+      "name": "Bank of America Tower",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BankOfAmericaTower_1087268",
+      "x": 189.5,
+      "y": -204.7,
+      "eye": [
+        333.3,
+        -166.2,
+        45.0
+      ],
+      "target": [
+        189.5,
+        -204.7,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1022706",
+      "name": "Exxon Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_ExxonBuilding_1022706",
+      "x": 162.0,
+      "y": 353.0,
+      "eye": [
+        283.3,
+        385.5,
+        43.1
+      ],
+      "target": [
+        162.0,
+        353.0,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1085682",
+      "name": "4 Times Square (Nasdaq)",
+      "sub": "151 W 42nd St, New York, NY",
+      "kind": "building",
+      "keywords": "BLD_TS_FourTimesSquare",
+      "x": 86.5,
+      "y": -203.4,
+      "eye": [
+        146.5,
+        -263.4,
+        134.8
+      ],
+      "target": [
+        86.5,
+        -203.4,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1022693",
+      "name": "McGraw Hill Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_McgrawHillBuilding_1022693",
+      "x": 162.8,
+      "y": 273.9,
+      "eye": [
+        275.7,
+        273.9,
+        39.0
+      ],
+      "target": [
+        162.8,
+        273.9,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1076173",
+      "name": "Americas Tower Offices",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_AmericasTowerOffices_1076173",
+      "x": 227.2,
+      "y": 34.8,
+      "eye": [
+        282.9,
+        131.2,
+        38.4
+      ],
+      "target": [
+        227.2,
+        34.8,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1076193",
+      "name": "Morgan Stanley Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MorganStanleyBuilding_1076193",
+      "x": -105.5,
+      "y": 194.3,
+      "eye": [
+        -105.5,
+        83.7,
+        38.2
+      ],
+      "target": [
+        -105.5,
+        194.3,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1022678",
+      "name": "Celanese Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_CelaneseBuilding_1022678",
+      "x": 189.3,
+      "y": 193.6,
+      "eye": [
+        285.9,
+        219.5,
+        34.7
+      ],
+      "target": [
+        189.3,
+        193.6,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1024727",
+      "name": "New York Marriott Marquis Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NewYorkMarriottMarquisHotel_1024727",
+      "x": -90.1,
+      "y": 34.3,
+      "eye": [
+        6.7,
+        34.3,
+        33.7
+      ],
+      "target": [
+        -90.1,
+        34.3,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1083717",
+      "name": "J.P. Stevens Company Tower",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_JPStevensCompanyTower_1083717",
+      "x": 225.9,
+      "y": 114.1,
+      "eye": [
+        305.8,
+        160.2,
+        32.2
+      ],
+      "target": [
+        225.9,
+        114.1,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1084667",
+      "name": "750 Seventh Avenue",
+      "sub": "750 7th Ave, New York, NY",
+      "kind": "building",
+      "keywords": "BLD_TS_750SeventhAve",
+      "x": 50.7,
+      "y": 353.9,
+      "eye": [
+        110.7,
+        293.9,
+        96.7
+      ],
+      "target": [
+        50.7,
+        353.9,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1085016",
+      "name": "Millenium Broadway Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MilleniumBroadwayHotel_1085016",
+      "x": 101.1,
+      "y": -60.1,
+      "eye": [
+        158.3,
+        -2.9,
+        28.5
+      ],
+      "target": [
+        101.1,
+        -60.1,
+        66.2
+      ]
+    },
+    {
+      "id": "times_square.1085493",
+      "name": "Double Tree Guest Suites",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_DoubleTreeGuestSuites_1085493",
+      "x": 44.5,
+      "y": 130.5,
+      "eye": [
+        -12.3,
+        187.3,
+        28.3
+      ],
+      "target": [
+        44.5,
+        130.5,
+        65.7
+      ]
+    },
+    {
+      "id": "times_square.1076195",
+      "name": "Crown Plaza Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_CrownPlazaHotel_1076195",
+      "x": -110.8,
+      "y": 273.6,
+      "eye": [
+        -43.2,
+        312.7,
+        27.6
+      ],
+      "target": [
+        -110.8,
+        273.6,
+        63.9
+      ]
+    },
+    {
+      "id": "times_square.1022577",
+      "name": "Bryant Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BryantTheatre_1022577",
+      "x": 151.3,
+      "y": -295.4,
+      "eye": [
+        211.3,
+        -355.4,
+        77.3
+      ],
+      "target": [
+        151.3,
+        -295.4,
+        58.0
+      ]
+    },
+    {
+      "id": "times_square.1076194",
+      "name": "Ritz Plaza",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_RitzPlaza_1076194",
+      "x": -192.5,
+      "y": 261.3,
+      "eye": [
+        -250.9,
+        227.6,
+        24.1
+      ],
+      "target": [
+        -192.5,
+        261.3,
+        55.1
+      ]
+    },
+    {
+      "id": "times_square.1024663",
+      "name": "Candler Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_CandlerBuilding_1024663",
+      "x": -95.8,
+      "y": -294.3,
+      "eye": [
+        -67.2,
+        -244.8,
+        20.7
+      ],
+      "target": [
+        -95.8,
+        -294.3,
+        46.7
+      ]
+    },
+    {
+      "id": "times_square.1024711",
+      "name": "Milford Plaza",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MilfordPlaza_1024711",
+      "x": -245.2,
+      "y": -44.3,
+      "eye": [
+        -209.3,
+        -8.4,
+        18.6
+      ],
+      "target": [
+        -245.2,
+        -44.3,
+        41.5
+      ]
+    },
+    {
+      "id": "times_square.1022579",
+      "name": "Newsweek Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NewsweekBuilding_1022579",
+      "x": 100.0,
+      "y": -295.3,
+      "eye": [
+        136.8,
+        -295.3,
+        14.1
+      ],
+      "target": [
+        100.0,
+        -295.3,
+        30.2
+      ]
+    },
+    {
+      "id": "times_square.1076192",
+      "name": "Edison Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_EdisonHotel_1076192",
+      "x": -144.3,
+      "y": 114.5,
+      "eye": [
+        -126.8,
+        144.8,
+        13.4
+      ],
+      "target": [
+        -144.3,
+        114.5,
+        28.5
+      ]
+    },
+    {
+      "id": "times_square.1024737",
+      "name": "Paramount Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_ParamountHotel_1024737",
+      "x": -199.7,
+      "y": 99.3,
+      "eye": [
+        -230.0,
+        81.8,
+        13.1
+      ],
+      "target": [
+        -199.7,
+        99.3,
+        27.9
+      ]
+    },
+    {
+      "id": "times_square.1024669",
+      "name": "Eltinge Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_EltingeTheatre_1024669",
+      "x": -207.3,
+      "y": -282.0,
+      "eye": [
+        -189.8,
+        -251.7,
+        12.9
+      ],
+      "target": [
+        -207.3,
+        -282.0,
+        27.2
+      ]
+    },
+    {
+      "id": "times_square.1022573",
+      "name": "Siemens Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_SiemensBuilding_1022573",
+      "x": 101.7,
+      "y": -310.2,
+      "eye": [
+        71.4,
+        -292.7,
+        12.3
+      ],
+      "target": [
+        101.7,
+        -310.2,
+        25.8
+      ]
+    },
+    {
+      "id": "times_square.1022661",
+      "name": "Embassy Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_EmbassyTheatre_1022661",
+      "x": 43.4,
+      "y": 99.5,
+      "eye": [
+        73.7,
+        117.0,
+        12.3
+      ],
+      "target": [
+        43.4,
+        99.5,
+        25.8
+      ]
+    },
+    {
+      "id": "times_square.1024703",
+      "name": "Times Square Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_TimesSquareHotel_1024703",
+      "x": -230.1,
+      "y": -139.3,
+      "eye": [
+        -265.1,
+        -139.3,
+        11.9
+      ],
+      "target": [
+        -230.1,
+        -139.3,
+        24.8
+      ]
+    },
+    {
+      "id": "times_square.1024764",
+      "name": "Best Western President Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BestWesternPresidentHotel_1024764",
+      "x": -202.7,
+      "y": 209.9,
+      "eye": [
+        -178.0,
+        234.6,
+        11.1
+      ],
+      "target": [
+        -202.7,
+        209.9,
+        22.8
+      ]
+    },
+    {
+      "id": "times_square.1022641",
+      "name": "Saint James Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_SaintJamesHotel_1022641",
+      "x": 211.8,
+      "y": 17.8,
+      "eye": [
+        194.3,
+        -12.5,
+        10.3
+      ],
+      "target": [
+        211.8,
+        17.8,
+        20.8
+      ]
+    },
+    {
+      "id": "times_square.1022613",
+      "name": "Woodstock Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_WoodstockHotel_1022613",
+      "x": 137.5,
+      "y": -141.3,
+      "eye": [
+        128.4,
+        -107.5,
+        10.3
+      ],
+      "target": [
+        137.5,
+        -141.3,
+        20.7
+      ]
+    },
+    {
+      "id": "times_square.1022694",
+      "name": "Radio City Apts",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_RadioCityApts_1022694",
+      "x": 81.5,
+      "y": 286.6,
+      "eye": [
+        106.2,
+        311.3,
+        10.2
+      ],
+      "target": [
+        81.5,
+        286.6,
+        20.6
+      ]
+    },
+    {
+      "id": "times_square.1024771",
+      "name": "Hilton Garden Inn Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_HiltonGardenInnHotel_1024771",
+      "x": -248.9,
+      "y": 274.1,
+      "eye": [
+        -239.8,
+        307.9,
+        10.2
+      ],
+      "target": [
+        -248.9,
+        274.1,
+        20.6
+      ]
+    },
+    {
+      "id": "times_square.1024793",
+      "name": "Brill Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BrillBuilding_1024793",
+      "x": -107.0,
+      "y": 342.1,
+      "eye": [
+        -72.0,
+        342.1,
+        9.7
+      ],
+      "target": [
+        -107.0,
+        342.1,
+        19.2
+      ]
+    },
+    {
+      "id": "times_square.1024660",
+      "name": "New Amsterdam Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NewAmsterdamTheatre_1024660",
+      "x": -77.3,
+      "y": -294.5,
+      "eye": [
+        -94.8,
+        -324.8,
+        1.7
+      ],
+      "target": [
+        -77.3,
+        -294.5,
+        17.2
+      ]
+    },
+    {
+      "id": "times_square.1022669",
+      "name": "Portland Sq. Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_PortlandSqHotel_1022669",
+      "x": 141.0,
+      "y": 131.4,
+      "eye": [
+        150.1,
+        165.2,
+        1.7
+      ],
+      "target": [
+        141.0,
+        131.4,
+        16.0
+      ]
+    },
+    {
+      "id": "times_square.1022632",
+      "name": "Night Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NightHotel_1022632",
+      "x": 140.7,
+      "y": -28.2,
+      "eye": [
+        140.7,
+        6.8,
+        1.7
+      ],
+      "target": [
+        140.7,
+        -28.2,
+        15.8
+      ]
+    },
+    {
+      "id": "times_square.1022676",
+      "name": "Hampshire Hotel Suites",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_HampshireHotelSuites_1022676",
+      "x": 74.2,
+      "y": 178.8,
+      "eye": [
+        56.7,
+        148.5,
+        1.7
+      ],
+      "target": [
+        74.2,
+        178.8,
+        15.4
+      ]
+    },
+    {
+      "id": "times_square.1076844",
+      "name": "1540 Broadway (Bertelsmann Building)",
+      "sub": "1540 Broadway, New York, NY",
+      "kind": "building",
+      "keywords": "BLD_TS_1540Broadway",
+      "x": 46.8,
+      "y": 34.6,
+      "eye": [
+        106.8,
+        -25.4,
+        40.0
+      ],
+      "target": [
+        46.8,
+        34.6,
+        15.3
+      ]
+    },
+    {
+      "id": "times_square.1022666",
+      "name": "Comfort Inn Midtown",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_ComfortInnMidtown_1022666",
+      "x": 144.8,
+      "y": 97.5,
+      "eye": [
+        204.8,
+        37.5,
+        40.0
+      ],
+      "target": [
+        144.8,
+        97.5,
+        14.7
+      ]
+    },
+    {
+      "id": "times_square.1022633",
+      "name": "Lyceum Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_LyceumTheatre_1022633",
+      "x": 83.1,
+      "y": 35.0,
+      "eye": [
+        83.1,
+        70.0,
+        1.7
+      ],
+      "target": [
+        83.1,
+        35.0,
+        13.7
+      ]
+    },
+    {
+      "id": "times_square.1085736",
+      "name": "Hilton Theater",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_HiltonTheater_1085736",
+      "x": -118.2,
+      "y": -188.7,
+      "eye": [
+        -100.7,
+        -158.4,
+        1.7
+      ],
+      "target": [
+        -118.2,
+        -188.7,
+        12.8
+      ]
+    },
+    {
+      "id": "times_square.1087882",
+      "name": "Selwyn Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_SelwynTheatre_1087882",
+      "x": -148.2,
+      "y": -188.5,
+      "eye": [
+        -130.7,
+        -158.2,
+        1.7
+      ],
+      "target": [
+        -148.2,
+        -188.5,
+        12.5
+      ]
+    },
+    {
+      "id": "times_square.1024806",
+      "name": "Amsterdam Court Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_AmsterdamCourtHotel_1024806",
+      "x": -173.8,
+      "y": 368.9,
+      "eye": [
+        -149.1,
+        393.6,
+        1.7
+      ],
+      "target": [
+        -173.8,
+        368.9,
+        12.0
+      ]
+    },
+    {
+      "id": "times_square.1024739",
+      "name": "Lunt-Fontanne Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_LuntFontanneTheatre_1024739",
+      "x": -94.5,
+      "y": 99.2,
+      "eye": [
+        -119.2,
+        74.5,
+        1.7
+      ],
+      "target": [
+        -94.5,
+        99.2,
+        11.8
+      ]
+    },
+    {
+      "id": "times_square.1024784",
+      "name": "Mayfair Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MayfairHotel_1024784",
+      "x": -206.5,
+      "y": 290.9,
+      "eye": [
+        -224.0,
+        321.2,
+        1.7
+      ],
+      "target": [
+        -206.5,
+        290.9,
+        11.3
+      ]
+    },
+    {
+      "id": "times_square.1022611",
+      "name": "Casablanca Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_CasablancaHotel_1022611",
+      "x": 88.2,
+      "y": -141.3,
+      "eye": [
+        70.7,
+        -171.6,
+        1.7
+      ],
+      "target": [
+        88.2,
+        -141.3,
+        11.0
+      ]
+    },
+    {
+      "id": "times_square.1076172",
+      "name": "Hudson Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_HudsonTheatre_1076172",
+      "x": 123.0,
+      "y": -44.8,
+      "eye": [
+        132.1,
+        -11.0,
+        1.7
+      ],
+      "target": [
+        123.0,
+        -44.8,
+        10.4
+      ]
+    },
+    {
+      "id": "times_square.1024712",
+      "name": "Majestic Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MajesticTheatre_1024712",
+      "x": -208.9,
+      "y": -61.8,
+      "eye": [
+        -233.6,
+        -86.5,
+        1.7
+      ],
+      "target": [
+        -208.9,
+        -61.8,
+        10.2
+      ]
+    },
+    {
+      "id": "times_square.1024709",
+      "name": "Saint James Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_SaintJamesTheatre_1024709",
+      "x": -195.8,
+      "y": -108.7,
+      "eye": [
+        -171.1,
+        -84.0,
+        1.7
+      ],
+      "target": [
+        -195.8,
+        -108.7,
+        10.1
+      ]
+    },
+    {
+      "id": "times_square.1024755",
+      "name": "Ethel Barrymore Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_EthelBarrymoreTheatre_1024755",
+      "x": -161.8,
+      "y": 179.5,
+      "eye": [
+        -179.3,
+        149.2,
+        1.7
+      ],
+      "target": [
+        -161.8,
+        179.5,
+        9.9
+      ]
+    },
+    {
+      "id": "times_square.1080842",
+      "name": "Shubert Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_ShubertTheatre_1080842",
+      "x": -137.9,
+      "y": -58.3,
+      "eye": [
+        -107.6,
+        -40.8,
+        1.7
+      ],
+      "target": [
+        -137.9,
+        -58.3,
+        9.9
+      ]
+    },
+    {
+      "id": "times_square.1024713",
+      "name": "Broadhurst Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BroadhurstTheatre_1024713",
+      "x": -171.2,
+      "y": -59.7,
+      "eye": [
+        -195.9,
+        -84.4,
+        1.7
+      ],
+      "target": [
+        -171.2,
+        -59.7,
+        9.8
+      ]
+    },
+    {
+      "id": "times_square.1022639",
+      "name": "Big Apple Hostel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BigAppleHostel_1022639",
+      "x": 184.7,
+      "y": 16.5,
+      "eye": [
+        175.6,
+        -17.3,
+        1.7
+      ],
+      "target": [
+        184.7,
+        16.5,
+        9.7
+      ]
+    },
+    {
+      "id": "times_square.1024762",
+      "name": "Longacre Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_LongacreTheatre_1024762",
+      "x": -160.2,
+      "y": 209.8,
+      "eye": [
+        -142.7,
+        240.1,
+        1.7
+      ],
+      "target": [
+        -160.2,
+        209.8,
+        9.5
+      ]
+    },
+    {
+      "id": "times_square.1024685",
+      "name": "New Victory Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NewVictoryTheatre_1024685",
+      "x": -66.8,
+      "y": -219.4,
+      "eye": [
+        -84.3,
+        -249.7,
+        1.7
+      ],
+      "target": [
+        -66.8,
+        -219.4,
+        9.5
+      ]
+    },
+    {
+      "id": "times_square.1022679",
+      "name": "Cort Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_CortTheatre_1022679",
+      "x": 119.7,
+      "y": 209.1,
+      "eye": [
+        137.2,
+        239.4,
+        1.7
+      ],
+      "target": [
+        119.7,
+        209.1,
+        9.5
+      ]
+    },
+    {
+      "id": "times_square.1080841",
+      "name": "Booth Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BoothTheatre_1080841",
+      "x": -137.9,
+      "y": -27.8,
+      "eye": [
+        -107.6,
+        -10.3,
+        1.7
+      ],
+      "target": [
+        -137.9,
+        -27.8,
+        9.4
+      ]
+    },
+    {
+      "id": "times_square.1024717",
+      "name": "Golden Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_GoldenTheatre_1024717",
+      "x": -220.7,
+      "y": -31.2,
+      "eye": [
+        -211.6,
+        2.6,
+        1.7
+      ],
+      "target": [
+        -220.7,
+        -31.2,
+        9.4
+      ]
+    },
+    {
+      "id": "times_square.1024716",
+      "name": "Royale Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_RoyaleTheatre_1024716",
+      "x": -199.1,
+      "y": -31.3,
+      "eye": [
+        -181.6,
+        -1.0,
+        1.7
+      ],
+      "target": [
+        -199.1,
+        -31.3,
+        9.3
+      ]
+    },
+    {
+      "id": "times_square.1024753",
+      "name": "Biltmore Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BiltmoreTheatre_1024753",
+      "x": -219.4,
+      "y": 182.8,
+      "eye": [
+        -236.9,
+        152.5,
+        1.7
+      ],
+      "target": [
+        -219.4,
+        182.8,
+        9.3
+      ]
+    },
+    {
+      "id": "times_square.1024715",
+      "name": "Gerald Schoenfeld Theater",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_GeraldSchoenfeldTheater_1024715",
+      "x": -169.7,
+      "y": -29.2,
+      "eye": [
+        -145.0,
+        -4.5,
+        1.7
+      ],
+      "target": [
+        -169.7,
+        -29.2,
+        9.2
+      ]
+    },
+    {
+      "id": "times_square.1024747",
+      "name": "Brooks Atkinson Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BrooksAtkinsonTheatre_1024747",
+      "x": -215.3,
+      "y": 129.8,
+      "eye": [
+        -197.8,
+        160.1,
+        1.7
+      ],
+      "target": [
+        -215.3,
+        129.8,
+        9.0
+      ]
+    },
+    {
+      "id": "times_square.1024726",
+      "name": "Music Box Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MusicBoxTheatre_1024726",
+      "x": -169.4,
+      "y": 18.3,
+      "eye": [
+        -194.1,
+        -6.4,
+        1.7
+      ],
+      "target": [
+        -169.4,
+        18.3,
+        8.9
+      ]
+    },
+    {
+      "id": "times_square.1024783",
+      "name": "Eugene O'Neil Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_EugeneONeilTheatre_1024783",
+      "x": -185.8,
+      "y": 290.8,
+      "eye": [
+        -161.1,
+        315.5,
+        1.7
+      ],
+      "target": [
+        -185.8,
+        290.8,
+        8.9
+      ]
+    },
+    {
+      "id": "times_square.1022630",
+      "name": "Belasco Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BelascoTheatre_1022630",
+      "x": 198.6,
+      "y": -60.4,
+      "eye": [
+        173.9,
+        -85.1,
+        1.7
+      ],
+      "target": [
+        198.6,
+        -60.4,
+        8.6
+      ]
+    },
+    {
+      "id": "times_square.1024792",
+      "name": "Ambassador Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_AmbassadorTheatre_1024792",
+      "x": -139.4,
+      "y": 338.1,
+      "eye": [
+        -164.1,
+        313.4,
+        1.7
+      ],
+      "target": [
+        -139.4,
+        338.1,
+        8.6
+      ]
+    },
+    {
+      "id": "times_square.1024684",
+      "name": "Times Square Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_TimesSquareTheatre_1024684",
+      "x": -99.7,
+      "y": -219.4,
+      "eye": [
+        -124.4,
+        -244.1,
+        1.7
+      ],
+      "target": [
+        -99.7,
+        -219.4,
+        8.2
+      ]
+    },
+    {
+      "id": "times_square.BLD_TS_USSIntrepid",
+      "name": "USS Intrepid",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_USSIntrepid",
+      "x": -1493.6,
+      "y": 30.0,
+      "eye": [
+        -1493.6,
+        120.0,
+        1.7
+      ],
+      "target": [
+        -1493.6,
+        30.0,
+        8.1
+      ]
+    },
+    {
+      "id": "times_square.1024741",
+      "name": "1551 Broadway (Duffy Square west)",
+      "sub": "1551 Broadway, New York, NY",
+      "kind": "building",
+      "keywords": "BLD_TS_1551Broadway",
+      "x": -59.9,
+      "y": 114.9,
+      "eye": [
+        0.1,
+        54.9,
+        40.0
+      ],
+      "target": [
+        -59.9,
+        114.9,
+        7.2
+      ]
+    },
+    {
+      "id": "times_square.1024708",
+      "name": "Helen Hayes Theater",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_HelenHayesTheater_1024708",
+      "x": -165.2,
+      "y": -109.5,
+      "eye": [
+        -147.7,
+        -79.2,
+        1.7
+      ],
+      "target": [
+        -165.2,
+        -109.5,
+        6.2
+      ]
+    },
+    {
+      "id": "times_square.BLD_TS_USSGrowler",
+      "name": "USS Growler",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_USSGrowler",
+      "x": -1438.2,
+      "y": 100.2,
+      "eye": [
+        -1298.2,
+        100.2,
+        1.7
+      ],
+      "target": [
+        -1438.2,
+        100.2,
+        3.0
+      ]
+    },
+    {
+      "id": "times_square.duffy_square",
+      "name": "TKTS Red Steps, Duffy Square",
+      "sub": "Duffy Square, Broadway & W 47th St, New York, NY",
+      "kind": "building",
+      "keywords": "BLD_TS_TKTSDuffySquare",
+      "x": -20.6,
+      "y": 115.4,
+      "eye": [
+        9.7,
+        132.9,
+        1.7
+      ],
+      "target": [
+        -20.6,
+        115.4,
+        3.0
+      ]
+    },
+    {
+      "id": "times_square.1076262",
+      "name": "RCA Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_RcaBuilding_1076262",
+      "x": 368.1,
+      "y": 352.3,
+      "eye": [
+        508.0,
+        352.3,
+        45.0
+      ],
+      "target": [
+        368.1,
+        352.3,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1087186",
+      "name": "New York Times Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NewYorkTimesBuilding_1087186",
+      "x": -198.8,
+      "y": -373.9,
+      "eye": [
+        -321.1,
+        -406.7,
+        43.4
+      ],
+      "target": [
+        -198.8,
+        -373.9,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1023157",
+      "name": "AXA Center",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_AxaCenter_1023157",
+      "x": 73.6,
+      "y": 512.4,
+      "eye": [
+        -14.9,
+        600.9,
+        42.9
+      ],
+      "target": [
+        73.6,
+        512.4,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1034199",
+      "name": "Salmon Tower Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_SalmonTowerBuilding_1034199",
+      "x": 536.7,
+      "y": -220.1,
+      "eye": [
+        595.8,
+        -117.8,
+        40.7
+      ],
+      "target": [
+        536.7,
+        -220.1,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1076203",
+      "name": "Worldwide Plaza",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_WorldwidePlaza_1076203",
+      "x": -336.2,
+      "y": 353.6,
+      "eye": [
+        -262.9,
+        426.9,
+        35.9
+      ],
+      "target": [
+        -336.2,
+        353.6,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1022709",
+      "name": "Time & Life Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_TimeLifeBuilding_1022709",
+      "x": 193.3,
+      "y": 432.4,
+      "eye": [
+        278.5,
+        481.6,
+        34.2
+      ],
+      "target": [
+        193.3,
+        432.4,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1034510",
+      "name": "Sperry Rand Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_SperryRandBuilding_1034510",
+      "x": 355.2,
+      "y": 511.9,
+      "eye": [
+        437.7,
+        559.5,
+        33.2
+      ],
+      "target": [
+        355.2,
+        511.9,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1023158",
+      "name": "Equitable Life Assurance Society",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_EquitableLifeAssuranceSociet_1023158",
+      "x": 193.0,
+      "y": 512.1,
+      "eye": [
+        281.2,
+        512.1,
+        30.9
+      ],
+      "target": [
+        193.0,
+        512.1,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1083860",
+      "name": "International Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_InternationalBuilding_1083860",
+      "x": 519.9,
+      "y": 432.0,
+      "eye": [
+        602.7,
+        454.2,
+        30.1
+      ],
+      "target": [
+        519.9,
+        432.0,
+        70.0
+      ]
+    },
+    {
+      "id": "times_square.1034517",
+      "name": "Pahlavi Foundation Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_PahlaviFoundationBuilding_1034517",
+      "x": 544.0,
+      "y": 527.1,
+      "eye": [
+        627.4,
+        527.1,
+        29.3
+      ],
+      "target": [
+        544.0,
+        527.1,
+        68.2
+      ]
+    },
+    {
+      "id": "times_square.1024926",
+      "name": "GHI Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_GhiBuilding_1024926",
+      "x": -420.4,
+      "y": -294.7,
+      "eye": [
+        -350.2,
+        -254.2,
+        28.5
+      ],
+      "target": [
+        -420.4,
+        -294.7,
+        66.3
+      ]
+    },
+    {
+      "id": "times_square.1016046",
+      "name": "Fifth Avenue Tower",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_FifthAvenueTower_1016046",
+      "x": 540.6,
+      "y": -453.3,
+      "eye": [
+        604.2,
+        -416.6,
+        26.0
+      ],
+      "target": [
+        540.6,
+        -453.3,
+        60.1
+      ]
+    },
+    {
+      "id": "times_square.1034512",
+      "name": "Time Warner Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_TimeWarnerBuilding_1034512",
+      "x": 463.9,
+      "y": 511.8,
+      "eye": [
+        525.4,
+        547.3,
+        25.2
+      ],
+      "target": [
+        463.9,
+        511.8,
+        58.1
+      ]
+    },
+    {
+      "id": "times_square.1083861",
+      "name": "1270 Avenue of the Americas",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_1270AvenueOfTheAmericas_1083861",
+      "x": 306.3,
+      "y": 432.3,
+      "eye": [
+        354.4,
+        480.4,
+        24.3
+      ],
+      "target": [
+        306.3,
+        432.3,
+        55.7
+      ]
+    },
+    {
+      "id": "times_square.1024817",
+      "name": "Novotel Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NovotelHotel_1024817",
+      "x": -114.1,
+      "y": 512.6,
+      "eye": [
+        -68.5,
+        558.2,
+        23.1
+      ],
+      "target": [
+        -114.1,
+        512.6,
+        52.8
+      ]
+    },
+    {
+      "id": "times_square.1080611",
+      "name": "Lefcourt Manhattan Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_LefcourtManhattanBuilding_1080611",
+      "x": 154.5,
+      "y": -467.8,
+      "eye": [
+        102.2,
+        -437.6,
+        21.7
+      ],
+      "target": [
+        154.5,
+        -467.8,
+        49.4
+      ]
+    },
+    {
+      "id": "times_square.1080614",
+      "name": "World Tower Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_WorldTowerBuilding_1080614",
+      "x": 196.8,
+      "y": -437.4,
+      "eye": [
+        245.7,
+        -409.2,
+        20.5
+      ],
+      "target": [
+        196.8,
+        -437.4,
+        46.2
+      ]
+    },
+    {
+      "id": "times_square.1034212",
+      "name": "Morgan Guaranty Trust Co.",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MorganGuarantyTrustCo_1034212",
+      "x": 529.9,
+      "y": -112.0,
+      "eye": [
+        583.8,
+        -112.0,
+        19.6
+      ],
+      "target": [
+        529.9,
+        -112.0,
+        44.1
+      ]
+    },
+    {
+      "id": "times_square.1034227",
+      "name": "Bank of N.Y. Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BankOfNYBuilding_1034227",
+      "x": 541.4,
+      "y": -45.7,
+      "eye": [
+        592.1,
+        -45.7,
+        18.6
+      ],
+      "target": [
+        541.4,
+        -45.7,
+        41.5
+      ]
+    },
+    {
+      "id": "times_square.1022708",
+      "name": "American Management Association",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_AmericanManagementAssociatio_1022708",
+      "x": 87.6,
+      "y": 432.5,
+      "eye": [
+        108.5,
+        468.7,
+        15.7
+      ],
+      "target": [
+        87.6,
+        432.5,
+        34.2
+      ]
+    },
+    {
+      "id": "times_square.1083859",
+      "name": "Bank of America Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BankOfAmericaBuilding_1083859",
+      "x": 424.2,
+      "y": 432.2,
+      "eye": [
+        464.7,
+        432.2,
+        15.3
+      ],
+      "target": [
+        424.2,
+        432.2,
+        33.2
+      ]
+    },
+    {
+      "id": "times_square.1022710",
+      "name": "Executive Plaza Apts",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_ExecutivePlazaApts_1022710",
+      "x": 43.2,
+      "y": 432.8,
+      "eye": [
+        63.1,
+        467.2,
+        15.0
+      ],
+      "target": [
+        43.2,
+        432.8,
+        32.5
+      ]
+    },
+    {
+      "id": "times_square.1080570",
+      "name": "Gilbert Bldg",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_GilbertBldg_1080570",
+      "x": -66.6,
+      "y": -467.4,
+      "eye": [
+        -93.6,
+        -494.4,
+        14.5
+      ],
+      "target": [
+        -66.6,
+        -467.4,
+        31.2
+      ]
+    },
+    {
+      "id": "times_square.1077284",
+      "name": "Rockefeller Plaza",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_RockefellerPlaza_1077284",
+      "x": 406.0,
+      "y": 273.3,
+      "eye": [
+        424.4,
+        305.2,
+        14.1
+      ],
+      "target": [
+        406.0,
+        273.3,
+        30.1
+      ]
+    },
+    {
+      "id": "times_square.1034224",
+      "name": "Berkeley Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BerkeleyBuilding_1034224",
+      "x": 476.8,
+      "y": -45.6,
+      "eye": [
+        513.3,
+        -45.6,
+        14.0
+      ],
+      "target": [
+        476.8,
+        -45.6,
+        29.9
+      ]
+    },
+    {
+      "id": "times_square.1024818",
+      "name": "Sheraton City Squire Inn",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_SheratonCitySquireInn_1024818",
+      "x": -44.1,
+      "y": 512.5,
+      "eye": [
+        -8.3,
+        512.5,
+        13.7
+      ],
+      "target": [
+        -44.1,
+        512.5,
+        29.3
+      ]
+    },
+    {
+      "id": "times_square.1024813",
+      "name": "Capitol Apts",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_CapitolApts_1024813",
+      "x": -246.1,
+      "y": 441.0,
+      "eye": [
+        -228.6,
+        471.3,
+        12.8
+      ],
+      "target": [
+        -246.1,
+        441.0,
+        27.1
+      ]
+    },
+    {
+      "id": "times_square.1024982",
+      "name": "Film Center Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_FilmCenterBuilding_1024982",
+      "x": -520.9,
+      "y": -43.9,
+      "eye": [
+        -485.9,
+        -43.9,
+        12.4
+      ],
+      "target": [
+        -520.9,
+        -43.9,
+        25.9
+      ]
+    },
+    {
+      "id": "times_square.1014508",
+      "name": "Freshman Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_FreshmanBuilding_1014508",
+      "x": -150.0,
+      "y": -438.9,
+      "eye": [
+        -119.7,
+        -421.4,
+        12.1
+      ],
+      "target": [
+        -150.0,
+        -438.9,
+        25.3
+      ]
+    },
+    {
+      "id": "times_square.1014499",
+      "name": "United Business Publishe*",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_UnitedBusinessPublishe_1014499",
+      "x": -139.0,
+      "y": -468.8,
+      "eye": [
+        -169.3,
+        -486.3,
+        11.1
+      ],
+      "target": [
+        -139.0,
+        -468.8,
+        22.7
+      ]
+    },
+    {
+      "id": "times_square.1082647",
+      "name": "Polyclinic Apts",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_PolyclinicApts_1082647",
+      "x": -467.8,
+      "y": 416.5,
+      "eye": [
+        -498.1,
+        434.0,
+        10.9
+      ],
+      "target": [
+        -467.8,
+        416.5,
+        22.2
+      ]
+    },
+    {
+      "id": "times_square.1034234",
+      "name": "Webster Apt. Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_WebsterAptHotel_1034234",
+      "x": 418.7,
+      "y": -30.0,
+      "eye": [
+        436.2,
+        0.3,
+        10.6
+      ],
+      "target": [
+        418.7,
+        -30.0,
+        21.6
+      ]
+    },
+    {
+      "id": "times_square.1034207",
+      "name": "Princeton Club of N.Y.",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_PrincetonClubOfNY_1034207",
+      "x": 485.1,
+      "y": -140.3,
+      "eye": [
+        467.6,
+        -170.6,
+        10.6
+      ],
+      "target": [
+        485.1,
+        -140.3,
+        21.4
+      ]
+    },
+    {
+      "id": "times_square.1034225",
+      "name": "Paragon Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_ParagonBuilding_1034225",
+      "x": 499.6,
+      "y": -62.9,
+      "eye": [
+        508.7,
+        -29.1,
+        10.2
+      ],
+      "target": [
+        499.6,
+        -62.9,
+        20.6
+      ]
+    },
+    {
+      "id": "times_square.1034213",
+      "name": "Mansfield Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MansfieldHotel_1034213",
+      "x": 484.2,
+      "y": -108.1,
+      "eye": [
+        544.2,
+        -168.1,
+        40.0
+      ],
+      "target": [
+        484.2,
+        -108.1,
+        19.4
+      ]
+    },
+    {
+      "id": "times_square.1081059",
+      "name": "Algonquin Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_AlgonquinHotel_1081059",
+      "x": 343.0,
+      "y": -71.0,
+      "eye": [
+        309.2,
+        -80.1,
+        9.7
+      ],
+      "target": [
+        343.0,
+        -71.0,
+        19.4
+      ]
+    },
+    {
+      "id": "times_square.1022561",
+      "name": "Emerson Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_EmersonBuilding_1022561",
+      "x": 66.0,
+      "y": -396.2,
+      "eye": [
+        101.0,
+        -396.2,
+        9.6
+      ],
+      "target": [
+        66.0,
+        -396.2,
+        19.1
+      ]
+    },
+    {
+      "id": "times_square.1034220",
+      "name": "Iriquois Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_IriquoisHotel_1034220",
+      "x": 378.4,
+      "y": -62.6,
+      "eye": [
+        360.9,
+        -92.9,
+        9.6
+      ],
+      "target": [
+        378.4,
+        -62.6,
+        18.9
+      ]
+    },
+    {
+      "id": "times_square.1034203",
+      "name": "Royalton Hotel",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_RoyaltonHotel_1034203",
+      "x": 368.6,
+      "y": -124.9,
+      "eye": [
+        368.6,
+        -89.9,
+        9.5
+      ],
+      "target": [
+        368.6,
+        -124.9,
+        18.6
+      ]
+    },
+    {
+      "id": "times_square.1034223",
+      "name": "Harvard Club",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_HarvardClub_1034223",
+      "x": 442.7,
+      "y": -45.5,
+      "eye": [
+        451.8,
+        -11.7,
+        9.2
+      ],
+      "target": [
+        442.7,
+        -45.5,
+        18.0
+      ]
+    },
+    {
+      "id": "times_square.1075692",
+      "name": "British Empire Building",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BritishEmpireBuilding_1075692",
+      "x": 536.4,
+      "y": 372.0,
+      "eye": [
+        571.4,
+        372.0,
+        1.7
+      ],
+      "target": [
+        536.4,
+        372.0,
+        17.5
+      ]
+    },
+    {
+      "id": "times_square.1034194",
+      "name": "New York Public Library",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NewYorkPublicLibrary_1034194",
+      "x": 501.3,
+      "y": -333.9,
+      "eye": [
+        556.3,
+        -333.9,
+        1.7
+      ],
+      "target": [
+        501.3,
+        -333.9,
+        17.2
+      ]
+    },
+    {
+      "id": "times_square.1083862",
+      "name": "Radio City Music Hall",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_RadioCityMusicHall_1083862",
+      "x": 360.5,
+      "y": 432.2,
+      "eye": [
+        369.6,
+        466.0,
+        1.7
+      ],
+      "target": [
+        360.5,
+        432.2,
+        15.8
+      ]
+    },
+    {
+      "id": "times_square.1083268",
+      "name": "Port Authority Bus Terminal",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_PortAuthorityBusTerminal_1083268",
+      "x": -412.3,
+      "y": -334.2,
+      "eye": [
+        -446.1,
+        -325.1,
+        1.7
+      ],
+      "target": [
+        -412.3,
+        -334.2,
+        14.1
+      ]
+    },
+    {
+      "id": "times_square.1025009",
+      "name": "The Whitby Apt House",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_TheWhitbyAptHouse_1025009",
+      "x": -409.1,
+      "y": 17.8,
+      "eye": [
+        -378.8,
+        35.3,
+        1.7
+      ],
+      "target": [
+        -409.1,
+        17.8,
+        14.1
+      ]
+    },
+    {
+      "id": "times_square.1034221",
+      "name": "N.Y. Yacht Club",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NYYachtClub_1034221",
+      "x": 412.1,
+      "y": -60.4,
+      "eye": [
+        394.6,
+        -90.7,
+        1.7
+      ],
+      "target": [
+        412.1,
+        -60.4,
+        13.7
+      ]
+    },
+    {
+      "id": "times_square.1034204",
+      "name": "N.Y. Bar Association",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_NYBarAssociation_1034204",
+      "x": 389.3,
+      "y": -124.9,
+      "eye": [
+        398.4,
+        -91.1,
+        1.7
+      ],
+      "target": [
+        389.3,
+        -124.9,
+        13.6
+      ]
+    },
+    {
+      "id": "times_square.1034214",
+      "name": "General Society of Mechanics & Tradesmen",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_GeneralSocietyOfMechanicsTra_1034214",
+      "x": 461.2,
+      "y": -109.8,
+      "eye": [
+        478.7,
+        -79.5,
+        1.7
+      ],
+      "target": [
+        461.2,
+        -109.8,
+        13.5
+      ]
+    },
+    {
+      "id": "times_square.1025144",
+      "name": "Elmsford Apts",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_ElmsfordApts_1025144",
+      "x": -312.0,
+      "y": 285.8,
+      "eye": [
+        -277.0,
+        285.8,
+        1.7
+      ],
+      "target": [
+        -312.0,
+        285.8,
+        12.7
+      ]
+    },
+    {
+      "id": "times_square.1013691",
+      "name": "State Offices",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_StateOffices_1013691",
+      "x": -389.4,
+      "y": -436.8,
+      "eye": [
+        -364.7,
+        -412.1,
+        1.7
+      ],
+      "target": [
+        -389.4,
+        -436.8,
+        12.5
+      ]
+    },
+    {
+      "id": "times_square.1024820",
+      "name": "Alvin Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_AlvinTheatre_1024820",
+      "x": -199.5,
+      "y": 528.2,
+      "eye": [
+        -174.8,
+        552.9,
+        1.7
+      ],
+      "target": [
+        -199.5,
+        528.2,
+        11.8
+      ]
+    },
+    {
+      "id": "times_square.1024993",
+      "name": "Martin Beck Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MartinBeckTheatre_1024993",
+      "x": -341.9,
+      "y": -28.8,
+      "eye": [
+        -317.2,
+        -4.1,
+        1.7
+      ],
+      "target": [
+        -341.9,
+        -28.8,
+        10.7
+      ]
+    },
+    {
+      "id": "times_square.1024967",
+      "name": "Second Stage Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_SecondStageTheatre_1024967",
+      "x": -306.0,
+      "y": -145.4,
+      "eye": [
+        -271.0,
+        -145.4,
+        1.7
+      ],
+      "target": [
+        -306.0,
+        -145.4,
+        10.4
+      ]
+    },
+    {
+      "id": "times_square.1083730",
+      "name": "Roman Catholic Church",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_RomanCatholicChurch_1083730",
+      "x": -424.1,
+      "y": -182.7,
+      "eye": [
+        -399.4,
+        -158.0,
+        1.7
+      ],
+      "target": [
+        -424.1,
+        -182.7,
+        10.3
+      ]
+    },
+    {
+      "id": "times_square.1024651",
+      "name": "David T. Nederlander Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_DavidTNederlanderTheatre_1024651",
+      "x": -71.4,
+      "y": -358.8,
+      "eye": [
+        -46.7,
+        -334.1,
+        1.7
+      ],
+      "target": [
+        -71.4,
+        -358.8,
+        10.3
+      ]
+    },
+    {
+      "id": "times_square.1083731",
+      "name": "Holy Cross Roman Catholi*",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_HolyCrossRomanCatholi_1083731",
+      "x": -427.4,
+      "y": -215.0,
+      "eye": [
+        -452.1,
+        -190.3,
+        1.7
+      ],
+      "target": [
+        -427.4,
+        -215.0,
+        10.0
+      ]
+    },
+    {
+      "id": "times_square.1024810",
+      "name": "Winter Garden Theatre",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_WinterGardenTheatre_1024810",
+      "x": -42.2,
+      "y": 426.6,
+      "eye": [
+        -7.2,
+        426.6,
+        1.7
+      ],
+      "target": [
+        -42.2,
+        426.6,
+        9.4
+      ]
+    },
+    {
+      "id": "times_square.1024927",
+      "name": "Post Office",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_PostOffice_1024927",
+      "x": -458.5,
+      "y": -294.7,
+      "eye": [
+        -449.4,
+        -260.9,
+        1.7
+      ],
+      "target": [
+        -458.5,
+        -294.7,
+        8.9
+      ]
+    },
+    {
+      "id": "times_square.1025013",
+      "name": "St. Luke's Lutheran Chur*",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_StLukeSLutheranChur_1025013",
+      "x": -338.3,
+      "y": 50.8,
+      "eye": [
+        -320.8,
+        81.1,
+        1.7
+      ],
+      "target": [
+        -338.3,
+        50.8,
+        7.9
+      ]
+    },
+    {
+      "id": "times_square.1024990",
+      "name": "Union Offices",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_UnionOffices_1024990",
+      "x": -428.2,
+      "y": -59.4,
+      "eye": [
+        -445.7,
+        -29.1,
+        1.7
+      ],
+      "target": [
+        -428.2,
+        -59.4,
+        4.1
+      ]
+    },
+    {
+      "id": "times_square.1024961",
+      "name": "McCaffrey Playground Public Restroom",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_MccaffreyPlaygroundPublicRes_1024961",
+      "x": -496.9,
+      "y": -127.9,
+      "eye": [
+        -461.9,
+        -127.9,
+        1.7
+      ],
+      "target": [
+        -496.9,
+        -127.9,
+        3.0
+      ]
+    },
+    {
+      "id": "times_square.1090520",
+      "name": "Bryant Park Public Restroom",
+      "sub": "Building",
+      "kind": "building",
+      "keywords": "BLD_TS_BryantParkPublicRestroom_1090520",
+      "x": 424.0,
+      "y": -269.0,
+      "eye": [
+        459.0,
+        -269.0,
+        1.7
+      ],
+      "target": [
+        424.0,
+        -269.0,
+        3.0
+      ]
+    },
+    {
+      "id": "ts.1022610.blade13",
+      "name": "Ad slot ts.1022610.blade13",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d726.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 36.9,
+      "y": -138.3,
+      "eye": [
+        16.8,
+        -162.2,
+        18.0
+      ],
+      "target": [
+        36.9,
+        -138.3,
+        30.0
+      ]
+    },
+    {
+      "id": "ts.1022610.blade14",
+      "name": "Ad slot ts.1022610.blade14",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d726.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 43.6,
+      "y": -138.19,
+      "eye": [
+        21.6,
+        -160.3,
+        18.0
+      ],
+      "target": [
+        43.6,
+        -138.19,
+        30.0
+      ]
+    },
+    {
+      "id": "ts.1022610.blade15",
+      "name": "Ad slot ts.1022610.blade15",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d726.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 43.7,
+      "y": -156.5,
+      "eye": [
+        21.7,
+        -178.7,
+        18.0
+      ],
+      "target": [
+        43.7,
+        -156.5,
+        30.0
+      ]
+    },
+    {
+      "id": "ts.1022610.up03",
+      "name": "Ad slot ts.1022610.up03",
+      "sub": "flat \u00b7 16x9 \u00b7 34.0\u00d719.12 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 33.6,
+      "y": -115.54,
+      "eye": [
+        -10.0,
+        -122.9,
+        1.7
+      ],
+      "target": [
+        33.6,
+        -115.54,
+        26.06
+      ]
+    },
+    {
+      "id": "ts.1022610.up04",
+      "name": "Ad slot ts.1022610.up04",
+      "sub": "flat \u00b7 16x9 \u00b7 34.0\u00d719.12 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 33.6,
+      "y": -115.54,
+      "eye": [
+        -10.0,
+        -122.9,
+        27.9
+      ],
+      "target": [
+        33.6,
+        -115.54,
+        46.53
+      ]
+    },
+    {
+      "id": "ts.1022610.up05",
+      "name": "Ad slot ts.1022610.up05",
+      "sub": "flat \u00b7 9x16 \u00b7 5.29\u00d79.41 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 41.35,
+      "y": -137.77,
+      "eye": [
+        41.4,
+        -155.8,
+        1.7
+      ],
+      "target": [
+        41.35,
+        -137.77,
+        21.21
+      ]
+    },
+    {
+      "id": "ts.1022610.up06",
+      "name": "Ad slot ts.1022610.up06",
+      "sub": "flat \u00b7 9x16 \u00b7 5.29\u00d79.41 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 41.35,
+      "y": -137.77,
+      "eye": [
+        41.4,
+        -155.8,
+        19.2
+      ],
+      "target": [
+        41.35,
+        -137.77,
+        32.03
+      ]
+    },
+    {
+      "id": "ts.1022610.up07",
+      "name": "Ad slot ts.1022610.up07",
+      "sub": "flat \u00b7 9x16 \u00b7 5.29\u00d79.41 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 41.35,
+      "y": -137.77,
+      "eye": [
+        41.4,
+        -155.8,
+        25.5
+      ],
+      "target": [
+        41.35,
+        -137.77,
+        42.46
+      ]
+    },
+    {
+      "id": "ts.1022610.up08",
+      "name": "Ad slot ts.1022610.up08",
+      "sub": "flat \u00b7 9x16 \u00b7 5.29\u00d79.41 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 41.35,
+      "y": -137.77,
+      "eye": [
+        41.4,
+        -155.8,
+        32.1
+      ],
+      "target": [
+        41.35,
+        -137.77,
+        53.43
+      ]
+    },
+    {
+      "id": "ts.1022610.up09",
+      "name": "Ad slot ts.1022610.up09",
+      "sub": "flat \u00b7 16x9 \u00b7 16.32\u00d79.18 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 44.07,
+      "y": -146.2,
+      "eye": [
+        22.9,
+        -146.3,
+        1.7
+      ],
+      "target": [
+        44.07,
+        -146.2,
+        21.09
+      ]
+    },
+    {
+      "id": "ts.1022610.up10",
+      "name": "Ad slot ts.1022610.up10",
+      "sub": "flat \u00b7 16x9 \u00b7 16.32\u00d79.18 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 44.07,
+      "y": -146.2,
+      "eye": [
+        22.9,
+        -146.3,
+        18.7
+      ],
+      "target": [
+        44.07,
+        -146.2,
+        31.18
+      ]
+    },
+    {
+      "id": "ts.1022610.up11",
+      "name": "Ad slot ts.1022610.up11",
+      "sub": "flat \u00b7 16x9 \u00b7 34.0\u00d719.12 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 50.52,
+      "y": -93.01,
+      "eye": [
+        85.5,
+        -93.0,
+        9.5
+      ],
+      "target": [
+        50.52,
+        -93.01,
+        26.06
+      ]
+    },
+    {
+      "id": "ts.1022610.up12",
+      "name": "Ad slot ts.1022610.up12",
+      "sub": "flat \u00b7 16x9 \u00b7 34.0\u00d719.12 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 50.52,
+      "y": -93.01,
+      "eye": [
+        92.0,
+        -93.0,
+        15.6
+      ],
+      "target": [
+        50.52,
+        -93.01,
+        47.17
+      ]
+    },
+    {
+      "id": "ts.1022610.wrap01",
+      "name": "Ad slot ts.1022610.wrap01",
+      "sub": "wrap \u00b7 8x1 \u00b7 103.74\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 47.29,
+      "y": -135.98,
+      "eye": [
+        107.3,
+        -196.0,
+        40.0
+      ],
+      "target": [
+        47.29,
+        -135.98,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1022610.wrap02",
+      "name": "Ad slot ts.1022610.wrap02",
+      "sub": "wrap \u00b7 4x1 \u00b7 39.69\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022610  billboard screen ad",
+      "x": 50.52,
+      "y": -93.28,
+      "eye": [
+        85.5,
+        -93.3,
+        1.7
+      ],
+      "target": [
+        50.52,
+        -93.28,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1022611.wrap01",
+      "name": "Ad slot ts.1022611.wrap01",
+      "sub": "wrap \u00b7 2x1 \u00b7 28.72\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_CasablancaHotel_1022611 Casablanca Hotel billboard screen ad",
+      "x": 85.06,
+      "y": -152.19,
+      "eye": [
+        145.1,
+        -212.2,
+        40.0
+      ],
+      "target": [
+        85.06,
+        -152.19,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1022612.wrap01",
+      "name": "Ad slot ts.1022612.wrap01",
+      "sub": "wrap \u00b7 16x9 \u00b7 18.25\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022612  billboard screen ad",
+      "x": 106.57,
+      "y": -155.58,
+      "eye": [
+        141.6,
+        -155.6,
+        1.7
+      ],
+      "target": [
+        106.57,
+        -155.58,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1022612.wrap02",
+      "name": "Ad slot ts.1022612.wrap02",
+      "sub": "wrap \u00b7 16x9 \u00b7 15.38\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022612  billboard screen ad",
+      "x": 104.74,
+      "y": -93.15,
+      "eye": [
+        139.7,
+        -93.2,
+        1.7
+      ],
+      "target": [
+        104.74,
+        -93.15,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1022621.wrap01",
+      "name": "Ad slot ts.1022621.wrap01",
+      "sub": "wrap \u00b7 1x1 \u00b7 12.43\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022621  billboard screen ad",
+      "x": 90.84,
+      "y": -93.19,
+      "eye": [
+        125.8,
+        -93.2,
+        1.7
+      ],
+      "target": [
+        90.84,
+        -93.19,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1022622.wrap01",
+      "name": "Ad slot ts.1022622.wrap01",
+      "sub": "wrap \u00b7 3x4 \u00b7 6.91\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022622  billboard screen ad",
+      "x": 81.17,
+      "y": -93.21,
+      "eye": [
+        116.2,
+        -93.2,
+        1.7
+      ],
+      "target": [
+        81.17,
+        -93.21,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1022623.wrap02",
+      "name": "Ad slot ts.1022623.wrap02",
+      "sub": "wrap \u00b7 3x4 \u00b7 7.36\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022623  billboard screen ad",
+      "x": 74.04,
+      "y": -93.23,
+      "eye": [
+        109.0,
+        -93.2,
+        1.7
+      ],
+      "target": [
+        74.04,
+        -93.23,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1022633.blade07",
+      "name": "Ad slot ts.1022633.blade07",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d711.35 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_LyceumTheatre_1022633 Lyceum Theatre billboard screen ad",
+      "x": 69.04,
+      "y": 3.44,
+      "eye": [
+        56.5,
+        -9.4,
+        1.7
+      ],
+      "target": [
+        69.04,
+        3.44,
+        22.67
+      ]
+    },
+    {
+      "id": "ts.1022653.wrap01",
+      "name": "Ad slot ts.1022653.wrap01",
+      "sub": "wrap \u00b7 8x1 \u00b7 79.54\u00d710.04 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022653  billboard screen ad",
+      "x": 25.43,
+      "y": 63.28,
+      "eye": [
+        85.4,
+        3.3,
+        40.0
+      ],
+      "target": [
+        25.43,
+        63.28,
+        9.82
+      ]
+    },
+    {
+      "id": "ts.1022661.up03",
+      "name": "Ad slot ts.1022661.up03",
+      "sub": "flat \u00b7 16x9 \u00b7 16.65\u00d79.36 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_EmbassyTheatre_1022661 Embassy Theatre billboard screen ad",
+      "x": 11.92,
+      "y": 105.61,
+      "eye": [
+        -9.7,
+        105.6,
+        1.7
+      ],
+      "target": [
+        11.92,
+        105.61,
+        21.18
+      ]
+    },
+    {
+      "id": "ts.1022661.up04",
+      "name": "Ad slot ts.1022661.up04",
+      "sub": "flat \u00b7 16x9 \u00b7 16.65\u00d79.36 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_EmbassyTheatre_1022661 Embassy Theatre billboard screen ad",
+      "x": 11.92,
+      "y": 105.61,
+      "eye": [
+        -9.7,
+        105.6,
+        19.2
+      ],
+      "target": [
+        11.92,
+        105.61,
+        31.97
+      ]
+    },
+    {
+      "id": "ts.1022661.up05",
+      "name": "Ad slot ts.1022661.up05",
+      "sub": "flat \u00b7 16x9 \u00b7 16.65\u00d79.36 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_EmbassyTheatre_1022661 Embassy Theatre billboard screen ad",
+      "x": 11.92,
+      "y": 105.61,
+      "eye": [
+        -9.7,
+        105.6,
+        25.6
+      ],
+      "target": [
+        11.92,
+        105.61,
+        42.73
+      ]
+    },
+    {
+      "id": "ts.1022661.wrap01",
+      "name": "Ad slot ts.1022661.wrap01",
+      "sub": "wrap \u00b7 16x9 \u00b7 18.65\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_EmbassyTheatre_1022661 Embassy Theatre billboard screen ad",
+      "x": 12.19,
+      "y": 105.61,
+      "eye": [
+        12.2,
+        140.6,
+        1.7
+      ],
+      "target": [
+        12.19,
+        105.61,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1022686.wrap01",
+      "name": "Ad slot ts.1022686.wrap01",
+      "sub": "wrap \u00b7 1x1 \u00b7 8.12\u00d78.22 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1022686  billboard screen ad",
+      "x": 12.97,
+      "y": 213.06,
+      "eye": [
+        3.9,
+        246.9,
+        1.7
+      ],
+      "target": [
+        12.97,
+        213.06,
+        8.91
+      ]
+    },
+    {
+      "id": "ts.1024686.wrap01",
+      "name": "Ad slot ts.1024686.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 97.35\u00d727.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_ThreeTimesSquare 3 Times Square billboard screen ad",
+      "x": -22.59,
+      "y": -222.83,
+      "eye": [
+        37.4,
+        -282.8,
+        40.0
+      ],
+      "target": [
+        -22.59,
+        -222.83,
+        20.0
+      ]
+    },
+    {
+      "id": "ts.1024706.base01",
+      "name": "Ad slot ts.1024706.base01",
+      "sub": "wrap \u00b7 4x1 \u00b7 110.2\u00d714.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_ParamountBuilding Paramount Building billboard screen ad",
+      "x": -28.15,
+      "y": -124.1,
+      "eye": [
+        31.9,
+        -184.1,
+        40.0
+      ],
+      "target": [
+        -28.15,
+        -124.1,
+        13.0
+      ]
+    },
+    {
+      "id": "ts.1024706.blade01",
+      "name": "Ad slot ts.1024706.blade01",
+      "sub": "flat \u00b7 9x16 \u00b7 3.4\u00d720.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_ParamountBuilding Paramount Building billboard screen ad",
+      "x": -14.78,
+      "y": -124.0,
+      "eye": [
+        9.2,
+        -124.0,
+        18.6
+      ],
+      "target": [
+        -14.78,
+        -124.0,
+        31.0
+      ]
+    },
+    {
+      "id": "ts.1024714.crown01",
+      "name": "Ad slot ts.1024714.crown01",
+      "sub": "flat \u00b7 16x9 \u00b7 22.0\u00d712.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneAstorPlaza One Astor Plaza billboard screen ad",
+      "x": -45.38,
+      "y": -45.0,
+      "eye": [
+        -16.8,
+        -45.0,
+        108.0
+      ],
+      "target": [
+        -45.38,
+        -45.0,
+        180.0
+      ]
+    },
+    {
+      "id": "ts.1024714.wrap01",
+      "name": "Ad slot ts.1024714.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 146.59\u00d720.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneAstorPlaza One Astor Plaza billboard screen ad",
+      "x": -34.1,
+      "y": -44.6,
+      "eye": [
+        25.9,
+        -104.6,
+        40.0
+      ],
+      "target": [
+        -34.1,
+        -44.6,
+        17.0
+      ]
+    },
+    {
+      "id": "ts.1024727.wrap01",
+      "name": "Ad slot ts.1024727.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 125.66\u00d724.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_NewYorkMarriottMarquisHotel_1024727 New York Marriott Marquis Hotel billboard screen ad",
+      "x": -41.4,
+      "y": 34.45,
+      "eye": [
+        18.6,
+        -25.5,
+        40.0
+      ],
+      "target": [
+        -41.4,
+        34.45,
+        20.0
+      ]
+    },
+    {
+      "id": "ts.1024739.wrap01",
+      "name": "Ad slot ts.1024739.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 39.49\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_LuntFontanneTheatre_1024739 Lunt-Fontanne Theatre billboard screen ad",
+      "x": -93.12,
+      "y": 83.42,
+      "eye": [
+        -58.1,
+        83.4,
+        1.7
+      ],
+      "target": [
+        -93.12,
+        83.42,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1024742.up03",
+      "name": "Ad slot ts.1024742.up03",
+      "sub": "flat \u00b7 9x16 \u00b7 11.78\u00d720.95 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024742  billboard screen ad",
+      "x": -55.79,
+      "y": 138.24,
+      "eye": [
+        -31.4,
+        144.3,
+        1.7
+      ],
+      "target": [
+        -55.79,
+        138.24,
+        26.98
+      ]
+    },
+    {
+      "id": "ts.1024742.up04",
+      "name": "Ad slot ts.1024742.up04",
+      "sub": "flat \u00b7 9x16 \u00b7 11.78\u00d720.95 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024742  billboard screen ad",
+      "x": -55.79,
+      "y": 138.24,
+      "eye": [
+        -31.4,
+        144.3,
+        29.9
+      ],
+      "target": [
+        -55.79,
+        138.24,
+        49.82
+      ]
+    },
+    {
+      "id": "ts.1024742.wrap01",
+      "name": "Ad slot ts.1024742.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 42.71\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024742  billboard screen ad",
+      "x": -79.46,
+      "y": 145.05,
+      "eye": [
+        -44.5,
+        145.1,
+        1.7
+      ],
+      "target": [
+        -79.46,
+        145.05,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1024742.wrap02",
+      "name": "Ad slot ts.1024742.wrap02",
+      "sub": "wrap \u00b7 1x1 \u00b7 13.28\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024742  billboard screen ad",
+      "x": -56.06,
+      "y": 138.18,
+      "eye": [
+        -22.3,
+        147.2,
+        1.7
+      ],
+      "target": [
+        -56.06,
+        138.18,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1024743.blade04",
+      "name": "Ad slot ts.1024743.blade04",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d720.62 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024743  billboard screen ad",
+      "x": -99.66,
+      "y": 145.84,
+      "eye": [
+        -82.1,
+        163.3,
+        1.7
+      ],
+      "target": [
+        -99.66,
+        145.84,
+        27.31
+      ]
+    },
+    {
+      "id": "ts.1024757.blade10",
+      "name": "Ad slot ts.1024757.blade10",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d726.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -46.18,
+      "y": 214.4,
+      "eye": [
+        -68.3,
+        192.4,
+        18.0
+      ],
+      "target": [
+        -46.18,
+        214.4,
+        30.0
+      ]
+    },
+    {
+      "id": "ts.1024757.blade11",
+      "name": "Ad slot ts.1024757.blade11",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d726.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -40.02,
+      "y": 214.31,
+      "eye": [
+        -60.9,
+        191.2,
+        18.0
+      ],
+      "target": [
+        -40.02,
+        214.31,
+        30.0
+      ]
+    },
+    {
+      "id": "ts.1024757.blade12",
+      "name": "Ad slot ts.1024757.blade12",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d726.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -31.55,
+      "y": 162.47,
+      "eye": [
+        -50.9,
+        138.0,
+        18.0
+      ],
+      "target": [
+        -31.55,
+        162.47,
+        30.0
+      ]
+    },
+    {
+      "id": "ts.1024757.blade13",
+      "name": "Ad slot ts.1024757.blade13",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d726.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -17.84,
+      "y": 162.53,
+      "eye": [
+        4.2,
+        140.4,
+        18.0
+      ],
+      "target": [
+        -17.84,
+        162.53,
+        30.0
+      ]
+    },
+    {
+      "id": "ts.1024757.blade14",
+      "name": "Ad slot ts.1024757.blade14",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d726.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -16.36,
+      "y": 225.55,
+      "eye": [
+        5.8,
+        247.5,
+        18.0
+      ],
+      "target": [
+        -16.36,
+        225.55,
+        30.0
+      ]
+    },
+    {
+      "id": "ts.1024757.up04",
+      "name": "Ad slot ts.1024757.up04",
+      "sub": "flat \u00b7 9x16 \u00b7 4.59\u00d78.16 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -41.99,
+      "y": 214.81,
+      "eye": [
+        -42.1,
+        196.8,
+        1.7
+      ],
+      "target": [
+        -41.99,
+        214.81,
+        20.58
+      ]
+    },
+    {
+      "id": "ts.1024757.up05",
+      "name": "Ad slot ts.1024757.up05",
+      "sub": "flat \u00b7 9x16 \u00b7 4.59\u00d78.16 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -41.99,
+      "y": 214.81,
+      "eye": [
+        -42.1,
+        196.8,
+        1.7
+      ],
+      "target": [
+        -41.99,
+        214.81,
+        29.92
+      ]
+    },
+    {
+      "id": "ts.1024757.up06",
+      "name": "Ad slot ts.1024757.up06",
+      "sub": "flat \u00b7 9x16 \u00b7 10.06\u00d717.89 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -24.77,
+      "y": 162.99,
+      "eye": [
+        10.2,
+        163.0,
+        9.3
+      ],
+      "target": [
+        -24.77,
+        162.99,
+        25.44
+      ]
+    },
+    {
+      "id": "ts.1024757.up07",
+      "name": "Ad slot ts.1024757.up07",
+      "sub": "flat \u00b7 9x16 \u00b7 10.06\u00d717.89 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -24.77,
+      "y": 162.99,
+      "eye": [
+        -64.4,
+        163.0,
+        15.0
+      ],
+      "target": [
+        -24.77,
+        162.99,
+        45.05
+      ]
+    },
+    {
+      "id": "ts.1024757.up08",
+      "name": "Ad slot ts.1024757.up08",
+      "sub": "flat \u00b7 16x9 \u00b7 25.51\u00d714.35 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -31.26,
+      "y": 225.2,
+      "eye": [
+        3.7,
+        225.2,
+        1.7
+      ],
+      "target": [
+        -31.26,
+        225.2,
+        23.67
+      ]
+    },
+    {
+      "id": "ts.1024757.up09",
+      "name": "Ad slot ts.1024757.up09",
+      "sub": "flat \u00b7 16x9 \u00b7 25.51\u00d714.35 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -31.26,
+      "y": 225.2,
+      "eye": [
+        3.9,
+        225.2,
+        13.5
+      ],
+      "target": [
+        -31.26,
+        225.2,
+        39.97
+      ]
+    },
+    {
+      "id": "ts.1024757.wrap01",
+      "name": "Ad slot ts.1024757.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 47.19\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -41.46,
+      "y": 209.67,
+      "eye": [
+        -66.2,
+        234.4,
+        1.7
+      ],
+      "target": [
+        -41.46,
+        209.67,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1024757.wrap02",
+      "name": "Ad slot ts.1024757.wrap02",
+      "sub": "wrap \u00b7 4x1 \u00b7 52.96\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -27.43,
+      "y": 174.55,
+      "eye": [
+        32.6,
+        114.6,
+        40.0
+      ],
+      "target": [
+        -27.43,
+        174.55,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1024757.wrap03",
+      "name": "Ad slot ts.1024757.wrap03",
+      "sub": "wrap \u00b7 8x1 \u00b7 68.67\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1024757  billboard screen ad",
+      "x": -26.55,
+      "y": 211.18,
+      "eye": [
+        33.5,
+        151.2,
+        40.0
+      ],
+      "target": [
+        -26.55,
+        211.18,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1076193.up04",
+      "name": "Ad slot ts.1076193.up04",
+      "sub": "flat \u00b7 16x9 \u00b7 34.0\u00d719.12 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_MorganStanleyBuilding_1076193 Morgan Stanley Building billboard screen ad",
+      "x": -69.15,
+      "y": 194.48,
+      "eye": [
+        -38.8,
+        212.0,
+        9.5
+      ],
+      "target": [
+        -69.15,
+        194.48,
+        26.06
+      ]
+    },
+    {
+      "id": "ts.1076193.up05",
+      "name": "Ad slot ts.1076193.up05",
+      "sub": "flat \u00b7 16x9 \u00b7 34.0\u00d719.12 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_MorganStanleyBuilding_1076193 Morgan Stanley Building billboard screen ad",
+      "x": -69.15,
+      "y": 194.48,
+      "eye": [
+        -48.9,
+        229.6,
+        15.3
+      ],
+      "target": [
+        -69.15,
+        194.48,
+        46.02
+      ]
+    },
+    {
+      "id": "ts.1076193.wrap01",
+      "name": "Ad slot ts.1076193.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 43.54\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_MorganStanleyBuilding_1076193 Morgan Stanley Building billboard screen ad",
+      "x": -69.41,
+      "y": 194.41,
+      "eye": [
+        -39.1,
+        211.9,
+        1.7
+      ],
+      "target": [
+        -69.41,
+        194.41,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1076844.main01",
+      "name": "Ad slot ts.1076844.main01",
+      "sub": "flat \u00b7 16x9 \u00b7 44.0\u00d724.75 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1540Broadway 1540 Broadway (Bertelsmann Building) billboard screen ad",
+      "x": 12.08,
+      "y": 31.0,
+      "eye": [
+        12.1,
+        66.0,
+        1.7
+      ],
+      "target": [
+        12.08,
+        31.0,
+        19.0
+      ]
+    },
+    {
+      "id": "ts.1076844.wrap01",
+      "name": "Ad slot ts.1076844.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 30.88\u00d724.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1540Broadway 1540 Broadway (Bertelsmann Building) billboard screen ad",
+      "x": 21.73,
+      "y": 4.47,
+      "eye": [
+        81.7,
+        -55.5,
+        40.0
+      ],
+      "target": [
+        21.73,
+        4.47,
+        18.0
+      ]
+    },
+    {
+      "id": "ts.1076844.wrap02",
+      "name": "Ad slot ts.1076844.wrap02",
+      "sub": "wrap \u00b7 4x1 \u00b7 32.1\u00d724.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1540Broadway 1540 Broadway (Bertelsmann Building) billboard screen ad",
+      "x": 21.47,
+      "y": 57.97,
+      "eye": [
+        81.5,
+        -2.0,
+        40.0
+      ],
+      "target": [
+        21.47,
+        57.97,
+        18.0
+      ]
+    },
+    {
+      "id": "ts.1083718.blade05",
+      "name": "Ad slot ts.1083718.blade05",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d718.8 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1083718  billboard screen ad",
+      "x": 10.82,
+      "y": 160.95,
+      "eye": [
+        -5.1,
+        145.0,
+        1.7
+      ],
+      "target": [
+        10.82,
+        160.95,
+        26.4
+      ]
+    },
+    {
+      "id": "ts.1083718.up04",
+      "name": "Ad slot ts.1083718.up04",
+      "sub": "flat \u00b7 16x9 \u00b7 27.54\u00d715.49 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1083718  billboard screen ad",
+      "x": 11.23,
+      "y": 176.87,
+      "eye": [
+        11.2,
+        211.9,
+        1.7
+      ],
+      "target": [
+        11.23,
+        176.87,
+        24.25
+      ]
+    },
+    {
+      "id": "ts.1083718.wrap01",
+      "name": "Ad slot ts.1083718.wrap01",
+      "sub": "wrap \u00b7 8x1 \u00b7 71.5\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1083718  billboard screen ad",
+      "x": 25.64,
+      "y": 171.62,
+      "eye": [
+        85.6,
+        111.6,
+        40.0
+      ],
+      "target": [
+        25.64,
+        171.62,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1083718.wrap02",
+      "name": "Ad slot ts.1083718.wrap02",
+      "sub": "wrap \u00b7 9x16 \u00b7 6.48\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1083718  billboard screen ad",
+      "x": 58.97,
+      "y": 163.18,
+      "eye": [
+        25.2,
+        154.1,
+        1.7
+      ],
+      "target": [
+        58.97,
+        163.18,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1083718.wrap03",
+      "name": "Ad slot ts.1083718.wrap03",
+      "sub": "wrap \u00b7 4x1 \u00b7 47.83\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1083718  billboard screen ad",
+      "x": 38.26,
+      "y": 194.54,
+      "eye": [
+        47.3,
+        228.3,
+        1.7
+      ],
+      "target": [
+        38.26,
+        194.54,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1083727.wrap01",
+      "name": "Ad slot ts.1083727.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 46.14\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1083727  billboard screen ad",
+      "x": -53.95,
+      "y": 88.39,
+      "eye": [
+        6.0,
+        28.4,
+        40.0
+      ],
+      "target": [
+        -53.95,
+        88.39,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1085493.blade06",
+      "name": "Ad slot ts.1085493.blade06",
+      "sub": "flat \u00b7 9x16 \u00b7 3.2\u00d726.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_DoubleTreeGuestSuites_1085493 Double Tree Guest Suites billboard screen ad",
+      "x": 12.04,
+      "y": 113.78,
+      "eye": [
+        -10.0,
+        91.7,
+        18.0
+      ],
+      "target": [
+        12.04,
+        113.78,
+        30.0
+      ]
+    },
+    {
+      "id": "ts.1085493.up03",
+      "name": "Ad slot ts.1085493.up03",
+      "sub": "flat \u00b7 16x9 \u00b7 20.87\u00d711.74 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_DoubleTreeGuestSuites_1085493 Double Tree Guest Suites billboard screen ad",
+      "x": 12.4,
+      "y": 126.36,
+      "eye": [
+        -14.7,
+        126.2,
+        1.7
+      ],
+      "target": [
+        12.4,
+        126.36,
+        22.37
+      ]
+    },
+    {
+      "id": "ts.1085493.up04",
+      "name": "Ad slot ts.1085493.up04",
+      "sub": "flat \u00b7 16x9 \u00b7 20.87\u00d711.74 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_DoubleTreeGuestSuites_1085493 Double Tree Guest Suites billboard screen ad",
+      "x": 12.4,
+      "y": 126.36,
+      "eye": [
+        -14.7,
+        126.2,
+        21.0
+      ],
+      "target": [
+        12.4,
+        126.36,
+        34.99
+      ]
+    },
+    {
+      "id": "ts.1085493.up05",
+      "name": "Ad slot ts.1085493.up05",
+      "sub": "flat \u00b7 16x9 \u00b7 20.87\u00d711.74 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_DoubleTreeGuestSuites_1085493 Double Tree Guest Suites billboard screen ad",
+      "x": 12.4,
+      "y": 126.36,
+      "eye": [
+        -14.7,
+        126.2,
+        29.1
+      ],
+      "target": [
+        12.4,
+        126.36,
+        48.46
+      ]
+    },
+    {
+      "id": "ts.1089850.wrap01",
+      "name": "Ad slot ts.1089850.wrap01",
+      "sub": "wrap \u00b7 3x4 \u00b7 7.45\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1089850  billboard screen ad",
+      "x": 12.96,
+      "y": 220.84,
+      "eye": [
+        3.9,
+        254.6,
+        1.7
+      ],
+      "target": [
+        12.96,
+        220.84,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1089850.wrap02",
+      "name": "Ad slot ts.1089850.wrap02",
+      "sub": "wrap \u00b7 2x1 \u00b7 23.77\u00d710.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1089850  billboard screen ad",
+      "x": 25.3,
+      "y": 224.99,
+      "eye": [
+        60.3,
+        225.0,
+        1.7
+      ],
+      "target": [
+        25.3,
+        224.99,
+        9.9
+      ]
+    },
+    {
+      "id": "ts.1551bway.blade01",
+      "name": "Ad slot ts.1551bway.blade01",
+      "sub": "flat \u00b7 9x16 \u00b7 4.0\u00d734.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1551Broadway 1551 Broadway (Duffy Square west) billboard screen ad",
+      "x": -52.39,
+      "y": 134.01,
+      "eye": [
+        -23.1,
+        162.4,
+        18.6
+      ],
+      "target": [
+        -52.39,
+        134.01,
+        31.0
+      ]
+    },
+    {
+      "id": "ts.1551bway.tower01",
+      "name": "Ad slot ts.1551bway.tower01",
+      "sub": "flat \u00b7 1x1 \u00b7 28.0\u00d731.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1551Broadway 1551 Broadway (Duffy Square west) billboard screen ad",
+      "x": -53.59,
+      "y": 114.08,
+      "eye": [
+        -17.5,
+        123.1,
+        19.8
+      ],
+      "target": [
+        -53.59,
+        114.08,
+        33.0
+      ]
+    },
+    {
+      "id": "ts.1551bway.wrap01",
+      "name": "Ad slot ts.1551bway.wrap01",
+      "sub": "wrap \u00b7 4x1 \u00b7 68.34\u00d79.5 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_1551Broadway 1551 Broadway (Duffy Square west) billboard screen ad",
+      "x": -57.95,
+      "y": 114.85,
+      "eye": [
+        2.0,
+        54.8,
+        40.0
+      ],
+      "target": [
+        -57.95,
+        114.85,
+        9.75
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad01",
+      "name": "Ad slot ts.1tsq.ad01",
+      "sub": "flat \u00b7 1x1 \u00b7 14.0\u00d714.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 22.2,
+      "y": -189.58,
+      "eye": [
+        22.2,
+        -171.4,
+        53.1
+      ],
+      "target": [
+        22.2,
+        -189.58,
+        88.5
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad02",
+      "name": "Ad slot ts.1tsq.ad02",
+      "sub": "flat \u00b7 16x9 \u00b7 16.0\u00d79.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 22.2,
+      "y": -189.58,
+      "eye": [
+        22.2,
+        -168.8,
+        45.0
+      ],
+      "target": [
+        22.2,
+        -189.58,
+        75.0
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad03",
+      "name": "Ad slot ts.1tsq.ad03",
+      "sub": "flat \u00b7 9x16 \u00b7 12.0\u00d721.3 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 22.2,
+      "y": -189.58,
+      "eye": [
+        22.2,
+        -164.0,
+        34.6
+      ],
+      "target": [
+        22.2,
+        -189.58,
+        57.65
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad04",
+      "name": "Ad slot ts.1tsq.ad04",
+      "sub": "flat \u00b7 9x16 \u00b7 7.0\u00d712.4 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 12.59,
+      "y": -188.38,
+      "eye": [
+        4.1,
+        -172.5,
+        34.3
+      ],
+      "target": [
+        12.59,
+        -188.38,
+        57.2
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad05",
+      "name": "Ad slot ts.1tsq.ad05",
+      "sub": "flat \u00b7 9x16 \u00b7 7.0\u00d712.4 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 31.81,
+      "y": -188.38,
+      "eye": [
+        40.3,
+        -172.5,
+        34.3
+      ],
+      "target": [
+        31.81,
+        -188.38,
+        57.2
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad06",
+      "name": "Ad slot ts.1tsq.ad06",
+      "sub": "flat \u00b7 3x4 \u00b7 13.0\u00d717.3 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 22.2,
+      "y": -189.58,
+      "eye": [
+        22.2,
+        -168.8,
+        21.7
+      ],
+      "target": [
+        22.2,
+        -189.58,
+        36.15
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad07",
+      "name": "Ad slot ts.1tsq.ad07",
+      "sub": "flat \u00b7 1x1 \u00b7 7.5\u00d77.5 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 32.21,
+      "y": -188.55,
+      "eye": [
+        39.5,
+        -172.1,
+        20.6
+      ],
+      "target": [
+        32.21,
+        -188.55,
+        34.25
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad08",
+      "name": "Ad slot ts.1tsq.ad08",
+      "sub": "flat \u00b7 3x4 \u00b7 6.0\u00d78.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 12.39,
+      "y": -188.55,
+      "eye": [
+        5.1,
+        -172.1,
+        20.7
+      ],
+      "target": [
+        12.39,
+        -188.55,
+        34.5
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad09",
+      "name": "Ad slot ts.1tsq.ad09",
+      "sub": "flat \u00b7 8x1 \u00b7 23.0\u00d72.9 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 22.2,
+      "y": -189.58,
+      "eye": [
+        22.2,
+        -159.7,
+        1.7
+      ],
+      "target": [
+        22.2,
+        -189.58,
+        24.45
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad10",
+      "name": "Ad slot ts.1tsq.ad10",
+      "sub": "flat \u00b7 16x9 \u00b7 23.0\u00d712.9 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 22.2,
+      "y": -189.58,
+      "eye": [
+        22.2,
+        -159.7,
+        1.7
+      ],
+      "target": [
+        22.2,
+        -189.58,
+        15.45
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad11",
+      "name": "Ad slot ts.1tsq.ad11",
+      "sub": "flat \u00b7 3x4 \u00b7 17.0\u00d722.7 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 22.3,
+      "y": -236.02,
+      "eye": [
+        22.3,
+        -263.3,
+        31.2
+      ],
+      "target": [
+        22.3,
+        -236.02,
+        52.0
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad12",
+      "name": "Ad slot ts.1tsq.ad12",
+      "sub": "flat \u00b7 3x4 \u00b7 16.0\u00d721.3 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 11.88,
+      "y": -214.0,
+      "eye": [
+        -13.7,
+        -214.0,
+        24.0
+      ],
+      "target": [
+        11.88,
+        -214.0,
+        40.0
+      ]
+    },
+    {
+      "id": "ts.1tsq.ad13",
+      "name": "Ad slot ts.1tsq.ad13",
+      "sub": "wrap \u00b7 8x1 \u00b7 96.18\u00d72.6 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 17.37,
+      "y": -214.88,
+      "eye": [
+        77.4,
+        -274.9,
+        40.0
+      ],
+      "target": [
+        17.37,
+        -214.88,
+        6.3
+      ]
+    },
+    {
+      "id": "ts.1tsq.shop01",
+      "name": "Ad slot ts.1tsq.shop01",
+      "sub": "flat \u00b7 4x1 \u00b7 6.4\u00d71.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_OneTimesSquare One Times Square billboard screen ad",
+      "x": 17.2,
+      "y": -191.58,
+      "eye": [
+        47.5,
+        -174.1,
+        1.7
+      ],
+      "target": [
+        17.2,
+        -191.58,
+        3.6
+      ]
+    },
+    {
+      "id": "ts.4tsq.ad01",
+      "name": "Ad slot ts.4tsq.ad01",
+      "sub": "curved \u00b7 16x9 \u00b7 42.53\u00d725.8 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_FourTimesSquare 4 Times Square (Nasdaq) billboard screen ad",
+      "x": 54.98,
+      "y": -178.98,
+      "eye": [
+        115.0,
+        -239.0,
+        40.0
+      ],
+      "target": [
+        54.98,
+        -178.98,
+        31.5
+      ]
+    },
+    {
+      "id": "ts.4tsq.ad02",
+      "name": "Ad slot ts.4tsq.ad02",
+      "sub": "curved \u00b7 4x1 \u00b7 42.53\u00d79.2 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_FourTimesSquare 4 Times Square (Nasdaq) billboard screen ad",
+      "x": 54.98,
+      "y": -178.98,
+      "eye": [
+        115.0,
+        -239.0,
+        40.0
+      ],
+      "target": [
+        54.98,
+        -178.98,
+        13.4
+      ]
+    },
+    {
+      "id": "ts.4tsq.ad03",
+      "name": "Ad slot ts.4tsq.ad03",
+      "sub": "curved \u00b7 1x1 \u00b7 21.36\u00d721.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_FourTimesSquare 4 Times Square (Nasdaq) billboard screen ad",
+      "x": 66.63,
+      "y": -230.47,
+      "eye": [
+        126.6,
+        -290.5,
+        40.0
+      ],
+      "target": [
+        66.63,
+        -230.47,
+        20.5
+      ]
+    },
+    {
+      "id": "ts.4tsq.ad04",
+      "name": "Ad slot ts.4tsq.ad04",
+      "sub": "flat \u00b7 3x4 \u00b7 16.0\u00d721.3 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_FourTimesSquare 4 Times Square (Nasdaq) billboard screen ad",
+      "x": 56.08,
+      "y": -204.4,
+      "eye": [
+        116.1,
+        -264.4,
+        40.0
+      ],
+      "target": [
+        56.08,
+        -204.4,
+        24.0
+      ]
+    },
+    {
+      "id": "ts.4tsq.crown1",
+      "name": "Ad slot ts.4tsq.crown1",
+      "sub": "flat \u00b7 1x1 \u00b7 14.0\u00d714.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_FourTimesSquare 4 Times Square (Nasdaq) billboard screen ad",
+      "x": 70.69,
+      "y": -181.03,
+      "eye": [
+        70.7,
+        -162.8,
+        120
+      ],
+      "target": [
+        70.69,
+        -181.03,
+        208.0
+      ]
+    },
+    {
+      "id": "ts.4tsq.crown2",
+      "name": "Ad slot ts.4tsq.crown2",
+      "sub": "flat \u00b7 1x1 \u00b7 14.0\u00d714.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_FourTimesSquare 4 Times Square (Nasdaq) billboard screen ad",
+      "x": 57.91,
+      "y": -204.57,
+      "eye": [
+        39.7,
+        -204.6,
+        120
+      ],
+      "target": [
+        57.91,
+        -204.57,
+        208.0
+      ]
+    },
+    {
+      "id": "ts.4tsq.crown3",
+      "name": "Ad slot ts.4tsq.crown3",
+      "sub": "flat \u00b7 1x1 \u00b7 14.0\u00d714.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_FourTimesSquare 4 Times Square (Nasdaq) billboard screen ad",
+      "x": 70.69,
+      "y": -227.41,
+      "eye": [
+        70.7,
+        -245.6,
+        120
+      ],
+      "target": [
+        70.69,
+        -227.41,
+        208.0
+      ]
+    },
+    {
+      "id": "ts.4tsq.shop01",
+      "name": "Ad slot ts.4tsq.shop01",
+      "sub": "flat \u00b7 4x1 \u00b7 12.0\u00d73.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_FourTimesSquare 4 Times Square (Nasdaq) billboard screen ad",
+      "x": 82.0,
+      "y": -173.38,
+      "eye": [
+        82.0,
+        -155.4,
+        1.7
+      ],
+      "target": [
+        82.0,
+        -173.38,
+        6.2
+      ]
+    },
+    {
+      "id": "ts.4tsq.shop02",
+      "name": "Ad slot ts.4tsq.shop02",
+      "sub": "flat \u00b7 4x1 \u00b7 10.0\u00d72.5 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_FourTimesSquare 4 Times Square (Nasdaq) billboard screen ad",
+      "x": 55.8,
+      "y": -204.48,
+      "eye": [
+        115.8,
+        -264.5,
+        40.0
+      ],
+      "target": [
+        55.8,
+        -204.48,
+        3.4
+      ]
+    },
+    {
+      "id": "ts.750.3d01",
+      "name": "Ad slot ts.750.3d01",
+      "sub": "anamorphic \u00b7 2x1 \u00b7 26.0\u00d720.0 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_750SeventhAve 750 Seventh Avenue billboard screen ad",
+      "x": 17.53,
+      "y": 328.03,
+      "eye": [
+        77.5,
+        268.0,
+        40.0
+      ],
+      "target": [
+        17.53,
+        328.03,
+        23.0
+      ]
+    },
+    {
+      "id": "ts.750.rib1",
+      "name": "Ad slot ts.750.rib1",
+      "sub": "wrap \u00b7 4x1 \u00b7 22.0\u00d75.4 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_750SeventhAve 750 Seventh Avenue billboard screen ad",
+      "x": 13.2,
+      "y": 351.0,
+      "eye": [
+        13.2,
+        386.0,
+        1.7
+      ],
+      "target": [
+        13.2,
+        351.0,
+        8.7
+      ]
+    },
+    {
+      "id": "ts.750.rib2",
+      "name": "Ad slot ts.750.rib2",
+      "sub": "wrap \u00b7 4x1 \u00b7 32.3\u00d75.4 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_750SeventhAve 750 Seventh Avenue billboard screen ad",
+      "x": 18.67,
+      "y": 329.0,
+      "eye": [
+        78.7,
+        269.0,
+        40.0
+      ],
+      "target": [
+        18.67,
+        329.0,
+        8.7
+      ]
+    },
+    {
+      "id": "ts.750.rib3",
+      "name": "Ad slot ts.750.rib3",
+      "sub": "wrap \u00b7 4x1 \u00b7 22.0\u00d75.4 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_750SeventhAve 750 Seventh Avenue billboard screen ad",
+      "x": 41.0,
+      "y": 323.7,
+      "eye": [
+        76.0,
+        323.7,
+        1.7
+      ],
+      "target": [
+        41.0,
+        323.7,
+        8.7
+      ]
+    },
+    {
+      "id": "ts.750.rib4",
+      "name": "Ad slot ts.750.rib4",
+      "sub": "wrap \u00b7 4x1 \u00b7 22.0\u00d75.4 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_750SeventhAve 750 Seventh Avenue billboard screen ad",
+      "x": 63.4,
+      "y": 323.7,
+      "eye": [
+        98.4,
+        323.7,
+        1.7
+      ],
+      "target": [
+        63.4,
+        323.7,
+        8.7
+      ]
+    },
+    {
+      "id": "ts.750.shop01",
+      "name": "Ad slot ts.750.shop01",
+      "sub": "flat \u00b7 8x1 \u00b7 14.0\u00d71.1 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_750SeventhAve 750 Seventh Avenue billboard screen ad",
+      "x": 26.0,
+      "y": 323.18,
+      "eye": [
+        26.0,
+        305.0,
+        1.7
+      ],
+      "target": [
+        26.0,
+        323.18,
+        4.3
+      ]
+    },
+    {
+      "id": "ts.750.shop02",
+      "name": "Ad slot ts.750.shop02",
+      "sub": "flat \u00b7 8x1 \u00b7 12.0\u00d71.1 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_750SeventhAve 750 Seventh Avenue billboard screen ad",
+      "x": 13.08,
+      "y": 350.0,
+      "eye": [
+        -4.9,
+        350.0,
+        1.7
+      ],
+      "target": [
+        13.08,
+        350.0,
+        4.3
+      ]
+    },
+    {
+      "id": "ts.w49.roof1",
+      "name": "Ad slot ts.w49.roof1",
+      "sub": "flat \u00b7 2x1 \u00b7 11.0\u00d75.5 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_W49thCorner 7th Ave & W 49th St corner billboard screen ad",
+      "x": -18.68,
+      "y": 295.6,
+      "eye": [
+        -0.7,
+        295.6,
+        1.7
+      ],
+      "target": [
+        -18.68,
+        295.6,
+        19.75
+      ]
+    },
+    {
+      "id": "ts.w49.roof2",
+      "name": "Ad slot ts.w49.roof2",
+      "sub": "flat \u00b7 2x1 \u00b7 11.0\u00d75.5 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_W49thCorner 7th Ave & W 49th St corner billboard screen ad",
+      "x": -28.5,
+      "y": 303.22,
+      "eye": [
+        -28.5,
+        321.2,
+        1.7
+      ],
+      "target": [
+        -28.5,
+        303.22,
+        19.75
+      ]
+    },
+    {
+      "id": "ts.w49.shop01",
+      "name": "Ad slot ts.w49.shop01",
+      "sub": "flat \u00b7 8x1 \u00b7 12.0\u00d71.3 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_W49thCorner 7th Ave & W 49th St corner billboard screen ad",
+      "x": -28.0,
+      "y": 304.67,
+      "eye": [
+        -28.0,
+        322.7,
+        1.7
+      ],
+      "target": [
+        -28.0,
+        304.67,
+        4.0
+      ]
+    },
+    {
+      "id": "ts.w49.shop02",
+      "name": "Ad slot ts.w49.shop02",
+      "sub": "flat \u00b7 8x1 \u00b7 10.0\u00d71.3 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_W49thCorner 7th Ave & W 49th St corner billboard screen ad",
+      "x": -17.23,
+      "y": 293.0,
+      "eye": [
+        0.8,
+        293.0,
+        1.7
+      ],
+      "target": [
+        -17.23,
+        293.0,
+        4.0
+      ]
+    },
+    {
+      "id": "ts.w49.wrap1",
+      "name": "Ad slot ts.w49.wrap1",
+      "sub": "wrap \u00b7 4x1 \u00b7 33.98\u00d78.6 m \u00b7 available",
+      "kind": "ad",
+      "keywords": "BLD_TS_W49thCorner 7th Ave & W 49th St corner billboard screen ad",
+      "x": -19.58,
+      "y": 302.71,
+      "eye": [
+        40.4,
+        242.7,
+        40.0
+      ],
+      "target": [
+        -19.58,
+        302.71,
+        9.3
+      ]
+    }
+  ]
+}

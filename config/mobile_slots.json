@@ -1,0 +1,67 @@
+{
+  "_note": "Ad slots that move (not in the Blender scene): appended to export/<district>/slot_sales.json by scripts/tools/build_slot_sales.py. Audience and score are estimates.",
+  "times_square": [
+    {
+      "slot_id": "sky.hudson.banner",
+      "title": "Aerial banner · Hudson River",
+      "kind": "Aerial banner",
+      "building": "Banner tow plane",
+      "size": "30 × 7.5 m",
+      "faces": "Hudson River Park, the West Side Highway and the Intrepid",
+      "height_above_street_m": 150,
+      "daily_audience": 60000,
+      "band": "Standard",
+      "score": 60,
+      "best_for": "Events, Entertainment, Consumer brands",
+      "aspect": "4x1",
+      "position": [
+        -1637,
+        0,
+        150
+      ],
+      "view": {
+        "eye": [
+          -1540,
+          -120,
+          120
+        ],
+        "target": [
+          -1640,
+          0,
+          150
+        ]
+      }
+    },
+    {
+      "slot_id": "boat.hudson.side",
+      "title": "Railing banners · Hudson sightseeing boat",
+      "kind": "Boat banners",
+      "building": "Hudson Sightseer (cruise boat)",
+      "size": "2 × 9.6 × 1.2 m",
+      "faces": "Pier 83, Hudson River Park, the Intrepid and the passengers on board",
+      "height_above_street_m": 7,
+      "daily_audience": 35000,
+      "band": "Standard",
+      "score": 52,
+      "best_for": "Tourism, Entertainment, Food & drink",
+      "aspect": "8x1",
+      "position": [
+        -1560,
+        -208.8,
+        7
+      ],
+      "view": {
+        "eye": [
+          -1540,
+          -260,
+          14
+        ],
+        "target": [
+          -1563,
+          -206,
+          7
+        ]
+      }
+    }
+  ]
+}

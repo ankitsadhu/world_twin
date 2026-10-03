@@ -1,0 +1,4695 @@
+{
+  "district": "times_square",
+  "count": 110,
+  "slots": [
+    {
+      "slot_id": "ts.1022610.blade13",
+      "object": "AD_TS_1022610_blade13",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 26.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        36.9,
+        -138.3,
+        30.0
+      ],
+      "normal": [
+        -0.644,
+        -0.765,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          36.9,
+          -138.3,
+          30.0,
+          -0.644,
+          -0.765,
+          0.0,
+          83.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.blade14",
+      "object": "AD_TS_1022610_blade14",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 26.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        43.6,
+        -138.19,
+        30.0
+      ],
+      "normal": [
+        -0.704,
+        -0.71,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          43.6,
+          -138.19,
+          30.0,
+          -0.704,
+          -0.71,
+          0.0,
+          83.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.blade15",
+      "object": "AD_TS_1022610_blade15",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 26.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        43.7,
+        -156.5,
+        30.0
+      ],
+      "normal": [
+        -0.704,
+        -0.71,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          43.7,
+          -156.5,
+          30.0,
+          -0.704,
+          -0.71,
+          0.0,
+          83.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up03",
+      "object": "AD_TS_1022610_up3",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 34.0,
+      "height_m": 19.12,
+      "aspect": "16x9",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        33.6,
+        -115.54,
+        26.06
+      ],
+      "normal": [
+        -0.986,
+        -0.166,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          33.6,
+          -115.54,
+          26.06,
+          -0.986,
+          -0.166,
+          0.0,
+          650.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up04",
+      "object": "AD_TS_1022610_up4",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 34.0,
+      "height_m": 19.12,
+      "aspect": "16x9",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        33.6,
+        -115.54,
+        46.53
+      ],
+      "normal": [
+        -0.986,
+        -0.166,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          33.6,
+          -115.54,
+          46.53,
+          -0.986,
+          -0.166,
+          0.0,
+          650.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up05",
+      "object": "AD_TS_1022610_up5",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 5.29,
+      "height_m": 9.41,
+      "aspect": "9x16",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        41.35,
+        -137.77,
+        21.21
+      ],
+      "normal": [
+        0.004,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          41.35,
+          -137.77,
+          21.21,
+          0.004,
+          -1.0,
+          0.0,
+          49.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up06",
+      "object": "AD_TS_1022610_up6",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 5.29,
+      "height_m": 9.41,
+      "aspect": "9x16",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        41.35,
+        -137.77,
+        32.03
+      ],
+      "normal": [
+        0.004,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          41.35,
+          -137.77,
+          32.03,
+          0.004,
+          -1.0,
+          0.0,
+          49.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up07",
+      "object": "AD_TS_1022610_up7",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 5.29,
+      "height_m": 9.41,
+      "aspect": "9x16",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        41.35,
+        -137.77,
+        42.46
+      ],
+      "normal": [
+        0.004,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          41.35,
+          -137.77,
+          42.46,
+          0.004,
+          -1.0,
+          0.0,
+          49.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up08",
+      "object": "AD_TS_1022610_up8",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 5.29,
+      "height_m": 9.41,
+      "aspect": "9x16",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        41.35,
+        -137.77,
+        53.43
+      ],
+      "normal": [
+        0.004,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          41.35,
+          -137.77,
+          53.43,
+          0.004,
+          -1.0,
+          0.0,
+          49.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up09",
+      "object": "AD_TS_1022610_up9",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 16.32,
+      "height_m": 9.18,
+      "aspect": "16x9",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        44.07,
+        -146.2,
+        21.09
+      ],
+      "normal": [
+        -1.0,
+        -0.006,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          44.07,
+          -146.2,
+          21.09,
+          -1.0,
+          -0.006,
+          0.0,
+          149.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up10",
+      "object": "AD_TS_1022610_up10",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 16.32,
+      "height_m": 9.18,
+      "aspect": "16x9",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        44.07,
+        -146.2,
+        31.18
+      ],
+      "normal": [
+        -1.0,
+        -0.006,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          44.07,
+          -146.2,
+          31.18,
+          -1.0,
+          -0.006,
+          0.0,
+          149.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up11",
+      "object": "AD_TS_1022610_up11",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 34.0,
+      "height_m": 19.12,
+      "aspect": "16x9",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        50.52,
+        -93.01,
+        26.06
+      ],
+      "normal": [
+        -0.002,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          50.52,
+          -93.01,
+          26.06,
+          -0.002,
+          1.0,
+          0.0,
+          650.3
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up12",
+      "object": "AD_TS_1022610_up12",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 34.0,
+      "height_m": 19.12,
+      "aspect": "16x9",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        50.52,
+        -93.01,
+        47.17
+      ],
+      "normal": [
+        -0.002,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          50.52,
+          -93.01,
+          47.17,
+          -0.002,
+          1.0,
+          0.0,
+          650.3
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.wrap01",
+      "object": "AD_TS_1022610_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 103.74,
+      "height_m": 10.2,
+      "aspect": "8x1",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        47.29,
+        -135.98,
+        9.9
+      ],
+      "normal": [
+        -0.985,
+        -0.174,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          34.09,
+          -115.68,
+          9.9,
+          -0.985,
+          -0.174,
+          0.0,
+          452.2
+        ],
+        [
+          61.98,
+          -155.74,
+          9.9,
+          0.004,
+          -1.0,
+          0.0,
+          349.6
+        ],
+        [
+          44.57,
+          -146.42,
+          9.9,
+          -1.0,
+          -0.03,
+          0.0,
+          191.5
+        ],
+        [
+          41.12,
+          -137.28,
+          9.9,
+          0.074,
+          -0.997,
+          0.0,
+          64.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.wrap02",
+      "object": "AD_TS_1022610_wrap2",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 39.69,
+      "height_m": 10.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_1022610",
+      "building_name": "",
+      "address": "",
+      "center": [
+        50.52,
+        -93.28,
+        9.9
+      ],
+      "normal": [
+        -0.002,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          50.52,
+          -93.28,
+          9.9,
+          -0.002,
+          1.0,
+          0.0,
+          404.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022611.wrap01",
+      "object": "AD_TS_1022611_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 28.72,
+      "height_m": 10.2,
+      "aspect": "2x1",
+      "building": "BLD_TS_CasablancaHotel_1022611",
+      "building_name": "Casablanca Hotel",
+      "address": "",
+      "center": [
+        85.06,
+        -152.19,
+        9.9
+      ],
+      "normal": [
+        -0.999,
+        -0.05,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_2x1.png",
+      "facets": [
+        [
+          88.28,
+          -155.64,
+          9.9,
+          0.004,
+          -1.0,
+          0.0,
+          186.9
+        ],
+        [
+          78.86,
+          -150.49,
+          9.9,
+          -0.999,
+          -0.05,
+          0.0,
+          106.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022612.wrap01",
+      "object": "AD_TS_1022612_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 18.25,
+      "height_m": 10.2,
+      "aspect": "16x9",
+      "building": "BLD_TS_1022612",
+      "building_name": "",
+      "address": "",
+      "center": [
+        106.57,
+        -155.58,
+        9.9
+      ],
+      "normal": [
+        0.003,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          106.57,
+          -155.58,
+          9.9,
+          0.003,
+          -1.0,
+          0.0,
+          186.1
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022612.wrap02",
+      "object": "AD_TS_1022612_wrap2",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 15.38,
+      "height_m": 10.2,
+      "aspect": "16x9",
+      "building": "BLD_TS_1022612",
+      "building_name": "",
+      "address": "",
+      "center": [
+        104.74,
+        -93.15,
+        9.9
+      ],
+      "normal": [
+        -0.002,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          104.74,
+          -93.15,
+          9.9,
+          -0.002,
+          1.0,
+          0.0,
+          156.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022621.wrap01",
+      "object": "AD_TS_1022621_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 12.43,
+      "height_m": 10.2,
+      "aspect": "1x1",
+      "building": "BLD_TS_1022621",
+      "building_name": "",
+      "address": "",
+      "center": [
+        90.84,
+        -93.19,
+        9.9
+      ],
+      "normal": [
+        -0.002,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          90.84,
+          -93.19,
+          9.9,
+          -0.002,
+          1.0,
+          0.0,
+          126.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022622.wrap01",
+      "object": "AD_TS_1022622_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 6.91,
+      "height_m": 10.2,
+      "aspect": "3x4",
+      "building": "BLD_TS_1022622",
+      "building_name": "",
+      "address": "",
+      "center": [
+        81.17,
+        -93.21,
+        9.9
+      ],
+      "normal": [
+        -0.002,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_3x4.png",
+      "facets": [
+        [
+          81.17,
+          -93.21,
+          9.9,
+          -0.002,
+          1.0,
+          0.0,
+          70.5
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022623.wrap02",
+      "object": "AD_TS_1022623_wrap2",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 7.36,
+      "height_m": 10.2,
+      "aspect": "3x4",
+      "building": "BLD_TS_1022623",
+      "building_name": "",
+      "address": "",
+      "center": [
+        74.04,
+        -93.23,
+        9.9
+      ],
+      "normal": [
+        -0.002,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_3x4.png",
+      "facets": [
+        [
+          74.04,
+          -93.23,
+          9.9,
+          -0.002,
+          1.0,
+          0.0,
+          75.1
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022633.blade07",
+      "object": "AD_TS_1022633_blade7",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 11.35,
+      "aspect": "9x16",
+      "building": "BLD_TS_LyceumTheatre_1022633",
+      "building_name": "Lyceum Theatre",
+      "address": "",
+      "center": [
+        69.04,
+        3.44,
+        22.67
+      ],
+      "normal": [
+        -0.698,
+        -0.716,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          69.04,
+          3.44,
+          22.67,
+          -0.698,
+          -0.716,
+          0.0,
+          36.3
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022653.wrap01",
+      "object": "AD_TS_1022653_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 79.54,
+      "height_m": 10.04,
+      "aspect": "8x1",
+      "building": "BLD_TS_1022653",
+      "building_name": "",
+      "address": "",
+      "center": [
+        25.43,
+        63.28,
+        9.82
+      ],
+      "normal": [
+        -0.997,
+        -0.071,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          28.88,
+          58.51,
+          9.82,
+          0.026,
+          -1.0,
+          0.0,
+          321.7
+        ],
+        [
+          28.54,
+          66.68,
+          9.82,
+          -0.012,
+          1.0,
+          0.0,
+          317.1
+        ],
+        [
+          44.61,
+          62.89,
+          9.82,
+          0.997,
+          0.071,
+          0.0,
+          79.9
+        ],
+        [
+          12.59,
+          62.07,
+          9.82,
+          -0.997,
+          -0.071,
+          0.0,
+          79.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022661.up03",
+      "object": "AD_TS_1022661_up3",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 16.65,
+      "height_m": 9.36,
+      "aspect": "16x9",
+      "building": "BLD_TS_EmbassyTheatre_1022661",
+      "building_name": "Embassy Theatre",
+      "address": "",
+      "center": [
+        11.92,
+        105.61,
+        21.18
+      ],
+      "normal": [
+        -1.0,
+        -0.002,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          11.92,
+          105.61,
+          21.18,
+          -1.0,
+          -0.002,
+          0.0,
+          155.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022661.up04",
+      "object": "AD_TS_1022661_up4",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 16.65,
+      "height_m": 9.36,
+      "aspect": "16x9",
+      "building": "BLD_TS_EmbassyTheatre_1022661",
+      "building_name": "Embassy Theatre",
+      "address": "",
+      "center": [
+        11.92,
+        105.61,
+        31.97
+      ],
+      "normal": [
+        -1.0,
+        -0.002,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          11.92,
+          105.61,
+          31.97,
+          -1.0,
+          -0.002,
+          0.0,
+          155.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022661.up05",
+      "object": "AD_TS_1022661_up5",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 16.65,
+      "height_m": 9.36,
+      "aspect": "16x9",
+      "building": "BLD_TS_EmbassyTheatre_1022661",
+      "building_name": "Embassy Theatre",
+      "address": "",
+      "center": [
+        11.92,
+        105.61,
+        42.73
+      ],
+      "normal": [
+        -1.0,
+        -0.002,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          11.92,
+          105.61,
+          42.73,
+          -1.0,
+          -0.002,
+          0.0,
+          155.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022661.wrap01",
+      "object": "AD_TS_1022661_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 18.65,
+      "height_m": 10.2,
+      "aspect": "16x9",
+      "building": "BLD_TS_EmbassyTheatre_1022661",
+      "building_name": "Embassy Theatre",
+      "address": "",
+      "center": [
+        12.19,
+        105.61,
+        9.9
+      ],
+      "normal": [
+        -1.0,
+        -0.002,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          12.19,
+          105.61,
+          9.9,
+          -1.0,
+          -0.002,
+          0.0,
+          190.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1022686.wrap01",
+      "object": "AD_TS_1022686_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 8.12,
+      "height_m": 8.22,
+      "aspect": "1x1",
+      "building": "BLD_TS_1022686",
+      "building_name": "",
+      "address": "",
+      "center": [
+        12.97,
+        213.06,
+        8.91
+      ],
+      "normal": [
+        -1.0,
+        -0.001,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          12.97,
+          213.06,
+          8.91,
+          -1.0,
+          -0.001,
+          0.0,
+          66.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024686.wrap01",
+      "object": "AD_TS_3tsq_wrap",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "hero",
+      "width_m": 97.35,
+      "height_m": 27.0,
+      "aspect": "4x1",
+      "building": "BLD_TS_ThreeTimesSquare",
+      "building_name": "3 Times Square",
+      "address": "3 Times Square (7th Ave & W 42nd St), New York, NY",
+      "center": [
+        -22.59,
+        -222.83,
+        20.0
+      ],
+      "normal": [
+        -0.028,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -19.0,
+          -202.8,
+          20.0,
+          1.0,
+          0.0,
+          0.0,
+          604.8
+        ],
+        [
+          -47.0,
+          -231.75,
+          20.0,
+          -0.028,
+          -1.0,
+          0.0,
+          486.2
+        ],
+        [
+          -16.0,
+          -183.5,
+          20.0,
+          1.0,
+          0.0,
+          0.0,
+          405.0
+        ],
+        [
+          -32.76,
+          -233.61,
+          20.0,
+          -0.293,
+          -0.956,
+          0.0,
+          296.2
+        ],
+        [
+          -17.39,
+          -218.74,
+          20.0,
+          0.947,
+          0.321,
+          0.0,
+          270.5
+        ],
+        [
+          -16.29,
+          -225.66,
+          20.0,
+          0.924,
+          -0.383,
+          0.0,
+          120.8
+        ],
+        [
+          -25.34,
+          -234.71,
+          20.0,
+          0.168,
+          -0.986,
+          0.0,
+          120.8
+        ],
+        [
+          -18.22,
+          -229.65,
+          20.0,
+          0.746,
+          -0.666,
+          0.0,
+          120.8
+        ],
+        [
+          -21.35,
+          -232.78,
+          20.0,
+          0.484,
+          -0.875,
+          0.0,
+          120.8
+        ],
+        [
+          -17.5,
+          -191.3,
+          20.0,
+          0.196,
+          -0.981,
+          0.0,
+          82.6
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024706.base01",
+      "object": "AD_TS_paramount_base",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "hero",
+      "width_m": 110.2,
+      "height_m": 14.0,
+      "aspect": "4x1",
+      "building": "BLD_TS_ParamountBuilding",
+      "building_name": "Paramount Building",
+      "address": "1501 Broadway, New York, NY",
+      "center": [
+        -28.15,
+        -124.1,
+        13.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -16.3,
+          -124.1,
+          13.0,
+          1.0,
+          -0.003,
+          0.0,
+          879.2
+        ],
+        [
+          -28.1,
+          -92.7,
+          13.0,
+          0.0,
+          1.0,
+          0.0,
+          333.2
+        ],
+        [
+          -28.2,
+          -155.5,
+          13.0,
+          0.0,
+          -1.0,
+          0.0,
+          330.4
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024706.blade01",
+      "object": "AD_TS_paramount_blade",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 3.4,
+      "height_m": 20.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_ParamountBuilding",
+      "building_name": "Paramount Building",
+      "address": "1501 Broadway, New York, NY",
+      "center": [
+        -14.78,
+        -124.0,
+        31.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -14.78,
+          -124.0,
+          31.0,
+          1.0,
+          0.0,
+          0.0,
+          68.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024714.crown01",
+      "object": "AD_TS_astor_crown",
+      "kind": "rooftop",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 22.0,
+      "height_m": 12.0,
+      "aspect": "16x9",
+      "building": "BLD_TS_OneAstorPlaza",
+      "building_name": "One Astor Plaza",
+      "address": "1515 Broadway, New York, NY",
+      "center": [
+        -45.38,
+        -45.0,
+        180.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          -45.38,
+          -45.0,
+          180.0,
+          1.0,
+          0.0,
+          0.0,
+          264.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024714.wrap01",
+      "object": "AD_TS_astor_wrap",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "hero",
+      "width_m": 146.59,
+      "height_m": 20.0,
+      "aspect": "4x1",
+      "building": "BLD_TS_OneAstorPlaza",
+      "building_name": "One Astor Plaza",
+      "address": "1515 Broadway, New York, NY",
+      "center": [
+        -34.1,
+        -44.6,
+        17.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -16.1,
+          -44.5,
+          17.0,
+          1.0,
+          0.004,
+          0.0,
+          1020.0
+        ],
+        [
+          -43.0,
+          -76.0,
+          17.0,
+          0.0,
+          -1.0,
+          0.0,
+          760.0
+        ],
+        [
+          -43.2,
+          -13.3,
+          17.0,
+          0.0,
+          1.0,
+          0.0,
+          752.0
+        ],
+        [
+          -20.0,
+          -73.0,
+          17.0,
+          0.6,
+          -0.8,
+          0.0,
+          200.0
+        ],
+        [
+          -20.3,
+          -16.15,
+          17.0,
+          0.571,
+          0.821,
+          0.0,
+          199.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024727.wrap01",
+      "object": "AD_TS_marquis_wrap",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "hero",
+      "width_m": 125.66,
+      "height_m": 24.0,
+      "aspect": "4x1",
+      "building": "BLD_TS_NewYorkMarriottMarquisHotel_1024727",
+      "building_name": "New York Marriott Marquis Hotel",
+      "address": "",
+      "center": [
+        -41.4,
+        34.45,
+        20.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -27.7,
+          34.75,
+          20.0,
+          0.984,
+          0.176,
+          0.0,
+          1255.6
+        ],
+        [
+          -46.0,
+          2.4,
+          20.0,
+          0.0,
+          -1.0,
+          0.0,
+          768.0
+        ],
+        [
+          -50.5,
+          66.2,
+          20.0,
+          0.0,
+          1.0,
+          0.0,
+          552.0
+        ],
+        [
+          -26.55,
+          5.7,
+          20.0,
+          0.691,
+          -0.723,
+          0.0,
+          229.2
+        ],
+        [
+          -35.65,
+          63.35,
+          20.0,
+          0.648,
+          0.762,
+          0.0,
+          211.1
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024739.wrap01",
+      "object": "AD_TS_1024739_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 39.49,
+      "height_m": 10.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_LuntFontanneTheatre_1024739",
+      "building_name": "Lunt-Fontanne Theatre",
+      "address": "",
+      "center": [
+        -93.12,
+        83.42,
+        9.9
+      ],
+      "normal": [
+        -0.004,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -93.12,
+          83.42,
+          9.9,
+          -0.004,
+          -1.0,
+          0.0,
+          402.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024742.up03",
+      "object": "AD_TS_1024742_up3",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 11.78,
+      "height_m": 20.95,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024742",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -55.79,
+        138.24,
+        26.98
+      ],
+      "normal": [
+        0.97,
+        0.242,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -55.79,
+          138.24,
+          26.98,
+          0.97,
+          0.242,
+          0.0,
+          246.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024742.up04",
+      "object": "AD_TS_1024742_up4",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 11.78,
+      "height_m": 20.95,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024742",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -55.79,
+        138.24,
+        49.82
+      ],
+      "normal": [
+        0.97,
+        0.242,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -55.79,
+          138.24,
+          49.82,
+          0.97,
+          0.242,
+          0.0,
+          246.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024742.wrap01",
+      "object": "AD_TS_1024742_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 42.71,
+      "height_m": 10.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_1024742",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -79.46,
+        145.05,
+        9.9
+      ],
+      "normal": [
+        0.004,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -79.46,
+          145.05,
+          9.9,
+          0.004,
+          1.0,
+          0.0,
+          435.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024742.wrap02",
+      "object": "AD_TS_1024742_wrap2",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 13.28,
+      "height_m": 10.2,
+      "aspect": "1x1",
+      "building": "BLD_TS_1024742",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -56.06,
+        138.18,
+        9.9
+      ],
+      "normal": [
+        0.97,
+        0.242,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          -56.06,
+          138.18,
+          9.9,
+          0.97,
+          0.242,
+          0.0,
+          135.5
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024743.blade04",
+      "object": "AD_TS_1024743_blade4",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 20.62,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024743",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -99.66,
+        145.84,
+        27.31
+      ],
+      "normal": [
+        0.709,
+        0.705,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -99.66,
+          145.84,
+          27.31,
+          0.709,
+          0.705,
+          0.0,
+          66.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade10",
+      "object": "AD_TS_1024757_blade10",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 26.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -46.18,
+        214.4,
+        30.0
+      ],
+      "normal": [
+        -0.709,
+        -0.705,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -46.18,
+          214.4,
+          30.0,
+          -0.709,
+          -0.705,
+          0.0,
+          83.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade11",
+      "object": "AD_TS_1024757_blade11",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 26.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -40.02,
+        214.31,
+        30.0
+      ],
+      "normal": [
+        -0.67,
+        -0.742,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -40.02,
+          214.31,
+          30.0,
+          -0.67,
+          -0.742,
+          0.0,
+          83.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade12",
+      "object": "AD_TS_1024757_blade12",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 26.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -31.55,
+        162.47,
+        30.0
+      ],
+      "normal": [
+        -0.621,
+        -0.784,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -31.55,
+          162.47,
+          30.0,
+          -0.621,
+          -0.784,
+          0.0,
+          83.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade13",
+      "object": "AD_TS_1024757_blade13",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 26.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -17.84,
+        162.53,
+        30.0
+      ],
+      "normal": [
+        0.705,
+        -0.709,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -17.84,
+          162.53,
+          30.0,
+          0.705,
+          -0.709,
+          0.0,
+          83.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade14",
+      "object": "AD_TS_1024757_blade14",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 26.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -16.36,
+        225.55,
+        30.0
+      ],
+      "normal": [
+        0.709,
+        0.705,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -16.36,
+          225.55,
+          30.0,
+          0.709,
+          0.705,
+          0.0,
+          83.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up04",
+      "object": "AD_TS_1024757_up4",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 4.59,
+      "height_m": 8.16,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -41.99,
+        214.81,
+        20.58
+      ],
+      "normal": [
+        -0.005,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -41.99,
+          214.81,
+          20.58,
+          -0.005,
+          -1.0,
+          0.0,
+          37.5
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up05",
+      "object": "AD_TS_1024757_up5",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 4.59,
+      "height_m": 8.16,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -41.99,
+        214.81,
+        29.92
+      ],
+      "normal": [
+        -0.005,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -41.99,
+          214.81,
+          29.92,
+          -0.005,
+          -1.0,
+          0.0,
+          37.5
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up06",
+      "object": "AD_TS_1024757_up6",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 10.06,
+      "height_m": 17.89,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -24.77,
+        162.99,
+        25.44
+      ],
+      "normal": [
+        -0.005,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -24.77,
+          162.99,
+          25.44,
+          -0.005,
+          -1.0,
+          0.0,
+          180.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up07",
+      "object": "AD_TS_1024757_up7",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 10.06,
+      "height_m": 17.89,
+      "aspect": "9x16",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -24.77,
+        162.99,
+        45.05
+      ],
+      "normal": [
+        -0.005,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -24.77,
+          162.99,
+          45.05,
+          -0.005,
+          -1.0,
+          0.0,
+          180.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up08",
+      "object": "AD_TS_1024757_up8",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 25.51,
+      "height_m": 14.35,
+      "aspect": "16x9",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -31.26,
+        225.2,
+        23.67
+      ],
+      "normal": [
+        0.005,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          -31.26,
+          225.2,
+          23.67,
+          0.005,
+          1.0,
+          0.0,
+          366.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up09",
+      "object": "AD_TS_1024757_up9",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 25.51,
+      "height_m": 14.35,
+      "aspect": "16x9",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -31.26,
+        225.2,
+        39.97
+      ],
+      "normal": [
+        0.005,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          -31.26,
+          225.2,
+          39.97,
+          0.005,
+          1.0,
+          0.0,
+          366.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.wrap01",
+      "object": "AD_TS_1024757_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 47.19,
+      "height_m": 10.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -41.46,
+        209.67,
+        9.9
+      ],
+      "normal": [
+        -0.999,
+        -0.046,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -37.67,
+          199.52,
+          9.9,
+          -0.994,
+          -0.107,
+          0.0,
+          327.1
+        ],
+        [
+          -45.25,
+          219.82,
+          9.9,
+          -0.999,
+          -0.046,
+          0.0,
+          96.5
+        ],
+        [
+          -42.21,
+          215.28,
+          9.9,
+          0.066,
+          -0.998,
+          0.0,
+          57.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.wrap02",
+      "object": "AD_TS_1024757_wrap2",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 52.96,
+      "height_m": 10.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -27.43,
+        174.55,
+        9.9
+      ],
+      "normal": [
+        -0.996,
+        -0.09,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -33.11,
+          173.42,
+          9.9,
+          -0.996,
+          -0.09,
+          0.0,
+          213.4
+        ],
+        [
+          -18.52,
+          173.69,
+          9.9,
+          1.0,
+          -0.002,
+          0.0,
+          204.2
+        ],
+        [
+          -24.54,
+          163.49,
+          9.9,
+          0.033,
+          -0.999,
+          0.0,
+          122.6
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.wrap03",
+      "object": "AD_TS_1024757_wrap3",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 68.67,
+      "height_m": 10.2,
+      "aspect": "8x1",
+      "building": "BLD_TS_1024757",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -26.55,
+        211.18,
+        9.9
+      ],
+      "normal": [
+        1.0,
+        0.009,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          -17.32,
+          204.28,
+          9.9,
+          1.0,
+          0.009,
+          0.0,
+          419.9
+        ],
+        [
+          -31.26,
+          224.93,
+          9.9,
+          0.005,
+          1.0,
+          0.0,
+          280.6
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1076193.up04",
+      "object": "AD_TS_1076193_up4",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 34.0,
+      "height_m": 19.12,
+      "aspect": "16x9",
+      "building": "BLD_TS_MorganStanleyBuilding_1076193",
+      "building_name": "Morgan Stanley Building",
+      "address": "",
+      "center": [
+        -69.15,
+        194.48,
+        26.06
+      ],
+      "normal": [
+        0.971,
+        0.238,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          -69.15,
+          194.48,
+          26.06,
+          0.971,
+          0.238,
+          0.0,
+          650.3
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1076193.up05",
+      "object": "AD_TS_1076193_up5",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 34.0,
+      "height_m": 19.12,
+      "aspect": "16x9",
+      "building": "BLD_TS_MorganStanleyBuilding_1076193",
+      "building_name": "Morgan Stanley Building",
+      "address": "",
+      "center": [
+        -69.15,
+        194.48,
+        46.02
+      ],
+      "normal": [
+        0.971,
+        0.238,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          -69.15,
+          194.48,
+          46.02,
+          0.971,
+          0.238,
+          0.0,
+          650.3
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1076193.wrap01",
+      "object": "AD_TS_1076193_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 43.54,
+      "height_m": 10.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_MorganStanleyBuilding_1076193",
+      "building_name": "Morgan Stanley Building",
+      "address": "",
+      "center": [
+        -69.41,
+        194.41,
+        9.9
+      ],
+      "normal": [
+        0.971,
+        0.238,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -69.41,
+          194.41,
+          9.9,
+          0.971,
+          0.238,
+          0.0,
+          444.1
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1076844.main01",
+      "object": "AD_TS_1540_main",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 44.0,
+      "height_m": 24.75,
+      "aspect": "16x9",
+      "building": "BLD_TS_1540Broadway",
+      "building_name": "1540 Broadway (Bertelsmann Building)",
+      "address": "1540 Broadway, New York, NY",
+      "center": [
+        12.08,
+        31.0,
+        19.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          12.08,
+          31.0,
+          19.0,
+          -1.0,
+          0.0,
+          0.0,
+          1089.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1076844.wrap01",
+      "object": "AD_TS_1540_wrapS",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 30.88,
+      "height_m": 24.0,
+      "aspect": "4x1",
+      "building": "BLD_TS_1540Broadway",
+      "building_name": "1540 Broadway (Bertelsmann Building)",
+      "address": "1540 Broadway, New York, NY",
+      "center": [
+        21.73,
+        4.47,
+        18.0
+      ],
+      "normal": [
+        -0.979,
+        -0.206,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          26.5,
+          3.2,
+          18.0,
+          0.0,
+          -1.0,
+          0.0,
+          648.0
+        ],
+        [
+          12.6,
+          5.1,
+          18.0,
+          -0.979,
+          -0.206,
+          0.0,
+          93.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1076844.wrap02",
+      "object": "AD_TS_1540_wrapN",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 32.1,
+      "height_m": 24.0,
+      "aspect": "4x1",
+      "building": "BLD_TS_1540Broadway",
+      "building_name": "1540 Broadway (Bertelsmann Building)",
+      "address": "1540 Broadway, New York, NY",
+      "center": [
+        21.47,
+        57.97,
+        18.0
+      ],
+      "normal": [
+        -0.011,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          26.1,
+          59.45,
+          18.0,
+          -0.011,
+          1.0,
+          0.0,
+          667.2
+        ],
+        [
+          12.2,
+          57.15,
+          18.0,
+          -1.0,
+          0.0,
+          0.0,
+          103.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.blade05",
+      "object": "AD_TS_1083718_blade5",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 18.8,
+      "aspect": "9x16",
+      "building": "BLD_TS_1083718",
+      "building_name": "",
+      "address": "",
+      "center": [
+        10.82,
+        160.95,
+        26.4
+      ],
+      "normal": [
+        -0.707,
+        -0.707,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          10.82,
+          160.95,
+          26.4,
+          -0.707,
+          -0.707,
+          0.0,
+          60.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.up04",
+      "object": "AD_TS_1083718_up4",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 27.54,
+      "height_m": 15.49,
+      "aspect": "16x9",
+      "building": "BLD_TS_1083718",
+      "building_name": "",
+      "address": "",
+      "center": [
+        11.23,
+        176.87,
+        24.25
+      ],
+      "normal": [
+        -1.0,
+        -0.001,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          11.23,
+          176.87,
+          24.25,
+          -1.0,
+          -0.001,
+          0.0,
+          426.6
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.wrap01",
+      "object": "AD_TS_1083718_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 71.5,
+      "height_m": 10.2,
+      "aspect": "8x1",
+      "building": "BLD_TS_1083718",
+      "building_name": "",
+      "address": "",
+      "center": [
+        25.64,
+        171.62,
+        9.9
+      ],
+      "normal": [
+        -1.0,
+        -0.016,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          32.72,
+          161.6,
+          9.9,
+          -0.002,
+          -1.0,
+          0.0,
+          423.4
+        ],
+        [
+          11.72,
+          176.64,
+          9.9,
+          -1.0,
+          -0.016,
+          0.0,
+          305.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.wrap02",
+      "object": "AD_TS_1083718_wrap2",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 6.48,
+      "height_m": 10.2,
+      "aspect": "9x16",
+      "building": "BLD_TS_1083718",
+      "building_name": "",
+      "address": "",
+      "center": [
+        58.97,
+        163.18,
+        9.9
+      ],
+      "normal": [
+        -0.002,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          58.97,
+          163.18,
+          9.9,
+          -0.002,
+          -1.0,
+          0.0,
+          66.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.wrap03",
+      "object": "AD_TS_1083718_wrap3",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 47.83,
+      "height_m": 10.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_1083718",
+      "building_name": "",
+      "address": "",
+      "center": [
+        38.26,
+        194.54,
+        9.9
+      ],
+      "normal": [
+        0.002,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          38.26,
+          194.54,
+          9.9,
+          0.002,
+          1.0,
+          0.0,
+          487.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1083727.wrap01",
+      "object": "AD_TS_1083727_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 46.14,
+      "height_m": 10.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_1083727",
+      "building_name": "",
+      "address": "",
+      "center": [
+        -53.95,
+        88.39,
+        9.9
+      ],
+      "normal": [
+        -0.012,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -57.89,
+          83.55,
+          9.9,
+          -0.012,
+          -1.0,
+          0.0,
+          316.0
+        ],
+        [
+          -44.23,
+          90.72,
+          9.9,
+          0.97,
+          0.241,
+          0.0,
+          154.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1085493.blade06",
+      "object": "AD_TS_1085493_blade6",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 3.2,
+      "height_m": 26.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_DoubleTreeGuestSuites_1085493",
+      "building_name": "Double Tree Guest Suites",
+      "address": "",
+      "center": [
+        12.04,
+        113.78,
+        30.0
+      ],
+      "normal": [
+        -0.706,
+        -0.708,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          12.04,
+          113.78,
+          30.0,
+          -0.706,
+          -0.708,
+          0.0,
+          83.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1085493.up03",
+      "object": "AD_TS_1085493_up3",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 20.87,
+      "height_m": 11.74,
+      "aspect": "16x9",
+      "building": "BLD_TS_DoubleTreeGuestSuites_1085493",
+      "building_name": "Double Tree Guest Suites",
+      "address": "",
+      "center": [
+        12.4,
+        126.36,
+        22.37
+      ],
+      "normal": [
+        -1.0,
+        -0.005,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          12.4,
+          126.36,
+          22.37,
+          -1.0,
+          -0.005,
+          0.0,
+          244.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1085493.up04",
+      "object": "AD_TS_1085493_up4",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 20.87,
+      "height_m": 11.74,
+      "aspect": "16x9",
+      "building": "BLD_TS_DoubleTreeGuestSuites_1085493",
+      "building_name": "Double Tree Guest Suites",
+      "address": "",
+      "center": [
+        12.4,
+        126.36,
+        34.99
+      ],
+      "normal": [
+        -1.0,
+        -0.005,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          12.4,
+          126.36,
+          34.99,
+          -1.0,
+          -0.005,
+          0.0,
+          244.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1085493.up05",
+      "object": "AD_TS_1085493_up5",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 20.87,
+      "height_m": 11.74,
+      "aspect": "16x9",
+      "building": "BLD_TS_DoubleTreeGuestSuites_1085493",
+      "building_name": "Double Tree Guest Suites",
+      "address": "",
+      "center": [
+        12.4,
+        126.36,
+        48.46
+      ],
+      "normal": [
+        -1.0,
+        -0.005,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          12.4,
+          126.36,
+          48.46,
+          -1.0,
+          -0.005,
+          0.0,
+          244.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1089850.wrap01",
+      "object": "AD_TS_1089850_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 7.45,
+      "height_m": 10.2,
+      "aspect": "3x4",
+      "building": "BLD_TS_1089850",
+      "building_name": "",
+      "address": "",
+      "center": [
+        12.96,
+        220.84,
+        9.9
+      ],
+      "normal": [
+        -1.0,
+        -0.001,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_3x4.png",
+      "facets": [
+        [
+          12.96,
+          220.84,
+          9.9,
+          -1.0,
+          -0.001,
+          0.0,
+          76.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1089850.wrap02",
+      "object": "AD_TS_1089850_wrap2",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 23.77,
+      "height_m": 10.2,
+      "aspect": "2x1",
+      "building": "BLD_TS_1089850",
+      "building_name": "",
+      "address": "",
+      "center": [
+        25.3,
+        224.99,
+        9.9
+      ],
+      "normal": [
+        0.002,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_2x1.png",
+      "facets": [
+        [
+          25.3,
+          224.99,
+          9.9,
+          0.002,
+          1.0,
+          0.0,
+          242.5
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1551bway.blade01",
+      "object": "AD_TS_1551_blade",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 4.0,
+      "height_m": 34.0,
+      "aspect": "9x16",
+      "building": "BLD_TS_1551Broadway",
+      "building_name": "1551 Broadway (Duffy Square west)",
+      "address": "1551 Broadway, New York, NY",
+      "center": [
+        -52.39,
+        134.01,
+        31.0
+      ],
+      "normal": [
+        0.719,
+        0.695,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          -52.39,
+          134.01,
+          31.0,
+          0.719,
+          0.695,
+          0.0,
+          136.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1551bway.tower01",
+      "object": "AD_TS_1551_tower",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 28.0,
+      "height_m": 31.0,
+      "aspect": "1x1",
+      "building": "BLD_TS_1551Broadway",
+      "building_name": "1551 Broadway (Duffy Square west)",
+      "address": "1551 Broadway, New York, NY",
+      "center": [
+        -53.59,
+        114.08,
+        33.0
+      ],
+      "normal": [
+        0.97,
+        0.243,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          -53.59,
+          114.08,
+          33.0,
+          0.97,
+          0.243,
+          0.0,
+          868.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1551bway.wrap01",
+      "object": "AD_TS_1551_wrap",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 68.34,
+      "height_m": 9.5,
+      "aspect": "4x1",
+      "building": "BLD_TS_1551Broadway",
+      "building_name": "1551 Broadway (Duffy Square west)",
+      "address": "1551 Broadway, New York, NY",
+      "center": [
+        -57.95,
+        114.85,
+        9.75
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -49.9,
+          114.85,
+          9.75,
+          0.971,
+          0.238,
+          0.0,
+          343.3
+        ],
+        [
+          -55.8,
+          97.3,
+          9.75,
+          0.0,
+          -1.0,
+          0.0,
+          193.8
+        ],
+        [
+          -60.1,
+          132.4,
+          9.75,
+          0.0,
+          1.0,
+          0.0,
+          112.1
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad01",
+      "object": "AD_TS_1tsq_ad01",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 14.0,
+      "height_m": 14.0,
+      "aspect": "1x1",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        22.2,
+        -189.58,
+        88.5
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          22.2,
+          -189.58,
+          88.5,
+          0.0,
+          1.0,
+          0.0,
+          196.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad02",
+      "object": "AD_TS_1tsq_ad02",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 16.0,
+      "height_m": 9.0,
+      "aspect": "16x9",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        22.2,
+        -189.58,
+        75.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          22.2,
+          -189.58,
+          75.0,
+          0.0,
+          1.0,
+          0.0,
+          144.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad03",
+      "object": "AD_TS_1tsq_ad03",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 12.0,
+      "height_m": 21.3,
+      "aspect": "9x16",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        22.2,
+        -189.58,
+        57.65
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          22.2,
+          -189.58,
+          57.65,
+          0.0,
+          1.0,
+          0.0,
+          255.6
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad04",
+      "object": "AD_TS_1tsq_ad04",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 7.0,
+      "height_m": 12.4,
+      "aspect": "9x16",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        12.59,
+        -188.38,
+        57.2
+      ],
+      "normal": [
+        -0.469,
+        0.883,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          12.59,
+          -188.38,
+          57.2,
+          -0.469,
+          0.883,
+          0.0,
+          86.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad05",
+      "object": "AD_TS_1tsq_ad05",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 7.0,
+      "height_m": 12.4,
+      "aspect": "9x16",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        31.81,
+        -188.38,
+        57.2
+      ],
+      "normal": [
+        0.469,
+        0.883,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_9x16.png",
+      "facets": [
+        [
+          31.81,
+          -188.38,
+          57.2,
+          0.469,
+          0.883,
+          0.0,
+          86.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad06",
+      "object": "AD_TS_1tsq_ad06",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 13.0,
+      "height_m": 17.3,
+      "aspect": "3x4",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        22.2,
+        -189.58,
+        36.15
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_3x4.png",
+      "facets": [
+        [
+          22.2,
+          -189.58,
+          36.15,
+          0.0,
+          1.0,
+          0.0,
+          224.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad07",
+      "object": "AD_TS_1tsq_ad07",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 7.5,
+      "height_m": 7.5,
+      "aspect": "1x1",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        32.21,
+        -188.55,
+        34.25
+      ],
+      "normal": [
+        0.407,
+        0.914,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          32.21,
+          -188.55,
+          34.25,
+          0.407,
+          0.914,
+          0.0,
+          56.3
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad08",
+      "object": "AD_TS_1tsq_ad08",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 6.0,
+      "height_m": 8.0,
+      "aspect": "3x4",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        12.39,
+        -188.55,
+        34.5
+      ],
+      "normal": [
+        -0.407,
+        0.914,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_3x4.png",
+      "facets": [
+        [
+          12.39,
+          -188.55,
+          34.5,
+          -0.407,
+          0.914,
+          0.0,
+          48.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad09",
+      "object": "AD_TS_1tsq_ad09",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 23.0,
+      "height_m": 2.9,
+      "aspect": "8x1",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        22.2,
+        -189.58,
+        24.45
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          22.2,
+          -189.58,
+          24.45,
+          0.0,
+          1.0,
+          0.0,
+          66.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad10",
+      "object": "AD_TS_1tsq_ad10",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 23.0,
+      "height_m": 12.9,
+      "aspect": "16x9",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        22.2,
+        -189.58,
+        15.45
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          22.2,
+          -189.58,
+          15.45,
+          0.0,
+          1.0,
+          0.0,
+          296.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad11",
+      "object": "AD_TS_1tsq_ad11",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 17.0,
+      "height_m": 22.7,
+      "aspect": "3x4",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        22.3,
+        -236.02,
+        52.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_3x4.png",
+      "facets": [
+        [
+          22.3,
+          -236.02,
+          52.0,
+          0.0,
+          -1.0,
+          0.0,
+          385.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad12",
+      "object": "AD_TS_1tsq_ad12",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 16.0,
+      "height_m": 21.3,
+      "aspect": "3x4",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        11.88,
+        -214.0,
+        40.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_3x4.png",
+      "facets": [
+        [
+          11.88,
+          -214.0,
+          40.0,
+          -1.0,
+          0.0,
+          0.0,
+          340.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad13",
+      "object": "AD_TS_1tsq_ad13",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 96.18,
+      "height_m": 2.6,
+      "aspect": "8x1",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        17.37,
+        -214.88,
+        6.3
+      ],
+      "normal": [
+        0.968,
+        0.252,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          26.65,
+          -213.85,
+          6.3,
+          0.968,
+          0.252,
+          0.0,
+          118.5
+        ],
+        [
+          13.2,
+          -204.85,
+          6.3,
+          -1.0,
+          0.008,
+          0.0,
+          67.9
+        ],
+        [
+          12.25,
+          -225.95,
+          6.3,
+          -1.0,
+          0.006,
+          0.0,
+          41.9
+        ],
+        [
+          17.1,
+          -191.8,
+          6.3,
+          0.0,
+          1.0,
+          0.0,
+          19.8
+        ],
+        [
+          12.7,
+          -217.9,
+          6.3,
+          0.0,
+          1.0,
+          0.0,
+          2.1
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.shop01",
+      "object": "SHOP_TS_1tsq_01",
+      "kind": "storefront",
+      "shape": "flat",
+      "tier": "standard",
+      "width_m": 6.4,
+      "height_m": 1.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_OneTimesSquare",
+      "building_name": "One Times Square",
+      "address": "1475 Broadway, New York, NY",
+      "center": [
+        17.2,
+        -191.58,
+        3.6
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          17.2,
+          -191.58,
+          3.6,
+          0.0,
+          1.0,
+          0.0,
+          7.7
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.ad01",
+      "object": "AD_TS_4tsq_ad01",
+      "kind": "billboard",
+      "shape": "curved",
+      "tier": "hero",
+      "width_m": 42.53,
+      "height_m": 25.8,
+      "aspect": "16x9",
+      "building": "BLD_TS_FourTimesSquare",
+      "building_name": "4 Times Square (Nasdaq)",
+      "address": "151 W 42nd St, New York, NY",
+      "center": [
+        54.98,
+        -178.98,
+        31.5
+      ],
+      "normal": [
+        0.921,
+        0.389,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_16x9.png",
+      "facets": [
+        [
+          49.12,
+          -176.83,
+          31.5,
+          -0.805,
+          0.593,
+          0.0,
+          82.3
+        ],
+        [
+          59.96,
+          -171.8,
+          31.5,
+          0.265,
+          0.964,
+          0.0,
+          82.3
+        ],
+        [
+          52.24,
+          -190.91,
+          31.5,
+          -0.644,
+          -0.765,
+          0.0,
+          82.3
+        ],
+        [
+          65.55,
+          -174.63,
+          31.5,
+          0.765,
+          0.644,
+          0.0,
+          82.3
+        ],
+        [
+          47.94,
+          -179.76,
+          31.5,
+          -0.945,
+          0.328,
+          0.0,
+          82.3
+        ],
+        [
+          53.76,
+          -172.63,
+          31.5,
+          -0.328,
+          0.945,
+          0.0,
+          82.3
+        ],
+        [
+          48.36,
+          -186.0,
+          31.5,
+          -0.964,
+          -0.265,
+          0.0,
+          82.3
+        ],
+        [
+          47.67,
+          -182.91,
+          31.5,
+          -0.999,
+          0.033,
+          0.0,
+          82.3
+        ],
+        [
+          62.97,
+          -172.79,
+          31.5,
+          0.539,
+          0.842,
+          0.0,
+          82.3
+        ],
+        [
+          56.8,
+          -171.74,
+          31.5,
+          -0.033,
+          0.999,
+          0.0,
+          82.3
+        ],
+        [
+          67.46,
+          -177.15,
+          31.5,
+          0.921,
+          0.389,
+          0.0,
+          82.3
+        ],
+        [
+          51.12,
+          -174.37,
+          31.5,
+          -0.593,
+          0.805,
+          0.0,
+          82.3
+        ],
+        [
+          49.93,
+          -188.75,
+          31.5,
+          -0.842,
+          -0.539,
+          0.0,
+          82.3
+        ],
+        [
+          54.08,
+          -191.95,
+          31.5,
+          -0.389,
+          -0.921,
+          0.0,
+          27.4
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.ad02",
+      "object": "AD_TS_4tsq_ad02",
+      "kind": "billboard",
+      "shape": "curved",
+      "tier": "hero",
+      "width_m": 42.53,
+      "height_m": 9.2,
+      "aspect": "4x1",
+      "building": "BLD_TS_FourTimesSquare",
+      "building_name": "4 Times Square (Nasdaq)",
+      "address": "151 W 42nd St, New York, NY",
+      "center": [
+        54.98,
+        -178.98,
+        13.4
+      ],
+      "normal": [
+        0.921,
+        0.389,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          49.12,
+          -176.83,
+          13.4,
+          -0.805,
+          0.593,
+          0.0,
+          29.3
+        ],
+        [
+          65.55,
+          -174.63,
+          13.4,
+          0.765,
+          0.644,
+          0.0,
+          29.3
+        ],
+        [
+          48.36,
+          -186.0,
+          13.4,
+          -0.964,
+          -0.265,
+          0.0,
+          29.3
+        ],
+        [
+          52.24,
+          -190.91,
+          13.4,
+          -0.644,
+          -0.765,
+          0.0,
+          29.3
+        ],
+        [
+          47.94,
+          -179.76,
+          13.4,
+          -0.945,
+          0.328,
+          0.0,
+          29.3
+        ],
+        [
+          59.96,
+          -171.8,
+          13.4,
+          0.265,
+          0.964,
+          0.0,
+          29.3
+        ],
+        [
+          53.76,
+          -172.63,
+          13.4,
+          -0.328,
+          0.945,
+          0.0,
+          29.3
+        ],
+        [
+          47.67,
+          -182.91,
+          13.4,
+          -0.999,
+          0.033,
+          0.0,
+          29.3
+        ],
+        [
+          56.8,
+          -171.74,
+          13.4,
+          -0.033,
+          0.999,
+          0.0,
+          29.3
+        ],
+        [
+          62.97,
+          -172.79,
+          13.4,
+          0.539,
+          0.842,
+          0.0,
+          29.3
+        ],
+        [
+          51.12,
+          -174.37,
+          13.4,
+          -0.593,
+          0.805,
+          0.0,
+          29.3
+        ],
+        [
+          67.46,
+          -177.15,
+          13.4,
+          0.921,
+          0.389,
+          0.0,
+          29.3
+        ],
+        [
+          49.93,
+          -188.75,
+          13.4,
+          -0.842,
+          -0.539,
+          0.0,
+          29.3
+        ],
+        [
+          54.08,
+          -191.95,
+          13.4,
+          -0.389,
+          -0.921,
+          0.0,
+          9.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.ad03",
+      "object": "AD_TS_4tsq_ad03",
+      "kind": "billboard",
+      "shape": "curved",
+      "tier": "hero",
+      "width_m": 21.36,
+      "height_m": 21.0,
+      "aspect": "1x1",
+      "building": "BLD_TS_FourTimesSquare",
+      "building_name": "4 Times Square (Nasdaq)",
+      "address": "151 W 42nd St, New York, NY",
+      "center": [
+        66.63,
+        -230.47,
+        20.5
+      ],
+      "normal": [
+        -0.976,
+        0.216,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          68.61,
+          -233.99,
+          20.5,
+          -0.462,
+          -0.887,
+          0.0,
+          56.1
+        ],
+        [
+          64.44,
+          -230.79,
+          20.5,
+          -0.843,
+          -0.537,
+          0.0,
+          56.1
+        ],
+        [
+          62.42,
+          -223.27,
+          20.5,
+          -0.976,
+          0.216,
+          0.0,
+          56.1
+        ],
+        [
+          62.42,
+          -225.93,
+          20.5,
+          -0.999,
+          -0.044,
+          0.0,
+          56.1
+        ],
+        [
+          66.31,
+          -232.66,
+          20.5,
+          -0.676,
+          -0.737,
+          0.0,
+          56.1
+        ],
+        [
+          71.17,
+          -234.68,
+          20.5,
+          -0.216,
+          -0.976,
+          0.0,
+          56.1
+        ],
+        [
+          73.83,
+          -234.68,
+          20.5,
+          0.044,
+          -0.999,
+          0.0,
+          56.1
+        ],
+        [
+          63.11,
+          -228.49,
+          20.5,
+          -0.954,
+          -0.301,
+          0.0,
+          56.1
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.ad04",
+      "object": "AD_TS_4tsq_ad04",
+      "kind": "billboard",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 16.0,
+      "height_m": 21.3,
+      "aspect": "3x4",
+      "building": "BLD_TS_FourTimesSquare",
+      "building_name": "4 Times Square (Nasdaq)",
+      "address": "151 W 42nd St, New York, NY",
+      "center": [
+        56.08,
+        -204.4,
+        24.0
+      ],
+      "normal": [
+        0.962,
+        0.275,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_3x4.png",
+      "facets": [
+        [
+          56.08,
+          -204.4,
+          24.0,
+          0.962,
+          0.275,
+          0.0,
+          340.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.crown1",
+      "object": "AD_TS_4tsq_crown1",
+      "kind": "rooftop",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 14.0,
+      "height_m": 14.0,
+      "aspect": "1x1",
+      "building": "BLD_TS_FourTimesSquare",
+      "building_name": "4 Times Square (Nasdaq)",
+      "address": "151 W 42nd St, New York, NY",
+      "center": [
+        70.69,
+        -181.03,
+        208.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          70.69,
+          -181.03,
+          208.0,
+          0.0,
+          1.0,
+          0.0,
+          196.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.crown2",
+      "object": "AD_TS_4tsq_crown2",
+      "kind": "rooftop",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 14.0,
+      "height_m": 14.0,
+      "aspect": "1x1",
+      "building": "BLD_TS_FourTimesSquare",
+      "building_name": "4 Times Square (Nasdaq)",
+      "address": "151 W 42nd St, New York, NY",
+      "center": [
+        57.91,
+        -204.57,
+        208.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          57.91,
+          -204.57,
+          208.0,
+          -1.0,
+          0.0,
+          0.0,
+          196.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.crown3",
+      "object": "AD_TS_4tsq_crown3",
+      "kind": "rooftop",
+      "shape": "flat",
+      "tier": "hero",
+      "width_m": 14.0,
+      "height_m": 14.0,
+      "aspect": "1x1",
+      "building": "BLD_TS_FourTimesSquare",
+      "building_name": "4 Times Square (Nasdaq)",
+      "address": "151 W 42nd St, New York, NY",
+      "center": [
+        70.69,
+        -227.41,
+        208.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_1x1.png",
+      "facets": [
+        [
+          70.69,
+          -227.41,
+          208.0,
+          0.0,
+          -1.0,
+          0.0,
+          196.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.shop01",
+      "object": "SHOP_TS_4tsq_01",
+      "kind": "storefront",
+      "shape": "flat",
+      "tier": "standard",
+      "width_m": 12.0,
+      "height_m": 3.0,
+      "aspect": "4x1",
+      "building": "BLD_TS_FourTimesSquare",
+      "building_name": "4 Times Square (Nasdaq)",
+      "address": "151 W 42nd St, New York, NY",
+      "center": [
+        82.0,
+        -173.38,
+        6.2
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          82.0,
+          -173.38,
+          6.2,
+          0.0,
+          1.0,
+          0.0,
+          36.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.shop02",
+      "object": "SHOP_TS_4tsq_02",
+      "kind": "storefront",
+      "shape": "flat",
+      "tier": "standard",
+      "width_m": 10.0,
+      "height_m": 2.5,
+      "aspect": "4x1",
+      "building": "BLD_TS_FourTimesSquare",
+      "building_name": "4 Times Square (Nasdaq)",
+      "address": "151 W 42nd St, New York, NY",
+      "center": [
+        55.8,
+        -204.48,
+        3.4
+      ],
+      "normal": [
+        0.962,
+        0.275,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          55.8,
+          -204.48,
+          3.4,
+          0.962,
+          0.275,
+          0.0,
+          25.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.750.3d01",
+      "object": "AD_TS_750_3d01",
+      "kind": "billboard",
+      "shape": "anamorphic",
+      "tier": "hero",
+      "width_m": 26.0,
+      "height_m": 20.0,
+      "aspect": "2x1",
+      "building": "BLD_TS_750SeventhAve",
+      "building_name": "750 Seventh Avenue",
+      "address": "750 7th Ave, New York, NY",
+      "center": [
+        17.53,
+        328.03,
+        23.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_2x1.png",
+      "facets": [
+        [
+          13.2,
+          330.2,
+          23.0,
+          -1.0,
+          0.0,
+          0.0,
+          260.0
+        ],
+        [
+          19.7,
+          323.7,
+          23.0,
+          0.0,
+          -1.0,
+          0.0,
+          260.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.750.rib1",
+      "object": "AD_TS_750_rib1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 22.0,
+      "height_m": 5.4,
+      "aspect": "4x1",
+      "building": "BLD_TS_750SeventhAve",
+      "building_name": "750 Seventh Avenue",
+      "address": "750 7th Ave, New York, NY",
+      "center": [
+        13.2,
+        351.0,
+        8.7
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          13.2,
+          351.0,
+          8.7,
+          -1.0,
+          0.0,
+          0.0,
+          118.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.750.rib2",
+      "object": "AD_TS_750_rib2",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "hero",
+      "width_m": 32.3,
+      "height_m": 5.4,
+      "aspect": "4x1",
+      "building": "BLD_TS_750SeventhAve",
+      "building_name": "750 Seventh Avenue",
+      "address": "750 7th Ave, New York, NY",
+      "center": [
+        18.67,
+        329.0,
+        8.7
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          21.4,
+          323.7,
+          8.7,
+          0.0,
+          -1.0,
+          0.0,
+          88.6
+        ],
+        [
+          13.2,
+          331.65,
+          8.7,
+          -1.0,
+          0.0,
+          0.0,
+          85.9
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.750.rib3",
+      "object": "AD_TS_750_rib3",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "premium",
+      "width_m": 22.0,
+      "height_m": 5.4,
+      "aspect": "4x1",
+      "building": "BLD_TS_750SeventhAve",
+      "building_name": "750 Seventh Avenue",
+      "address": "750 7th Ave, New York, NY",
+      "center": [
+        41.0,
+        323.7,
+        8.7
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          41.0,
+          323.7,
+          8.7,
+          0.0,
+          -1.0,
+          0.0,
+          118.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.750.rib4",
+      "object": "AD_TS_750_rib4",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "standard",
+      "width_m": 22.0,
+      "height_m": 5.4,
+      "aspect": "4x1",
+      "building": "BLD_TS_750SeventhAve",
+      "building_name": "750 Seventh Avenue",
+      "address": "750 7th Ave, New York, NY",
+      "center": [
+        63.4,
+        323.7,
+        8.7
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          63.4,
+          323.7,
+          8.7,
+          0.0,
+          -1.0,
+          0.0,
+          118.8
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.750.shop01",
+      "object": "SHOP_TS_750_01",
+      "kind": "storefront",
+      "shape": "flat",
+      "tier": "standard",
+      "width_m": 14.0,
+      "height_m": 1.1,
+      "aspect": "8x1",
+      "building": "BLD_TS_750SeventhAve",
+      "building_name": "750 Seventh Avenue",
+      "address": "750 7th Ave, New York, NY",
+      "center": [
+        26.0,
+        323.18,
+        4.3
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          26.0,
+          323.18,
+          4.3,
+          0.0,
+          -1.0,
+          0.0,
+          15.4
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.750.shop02",
+      "object": "SHOP_TS_750_02",
+      "kind": "storefront",
+      "shape": "flat",
+      "tier": "standard",
+      "width_m": 12.0,
+      "height_m": 1.1,
+      "aspect": "8x1",
+      "building": "BLD_TS_750SeventhAve",
+      "building_name": "750 Seventh Avenue",
+      "address": "750 7th Ave, New York, NY",
+      "center": [
+        13.08,
+        350.0,
+        4.3
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          13.08,
+          350.0,
+          4.3,
+          -1.0,
+          0.0,
+          0.0,
+          13.2
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.w49.roof1",
+      "object": "AD_TS_w49_roof1",
+      "kind": "rooftop",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 11.0,
+      "height_m": 5.5,
+      "aspect": "2x1",
+      "building": "BLD_TS_W49thCorner",
+      "building_name": "7th Ave & W 49th St corner",
+      "address": "SW corner of 7th Ave & W 49th St, New York, NY",
+      "center": [
+        -18.68,
+        295.6,
+        19.75
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_2x1.png",
+      "facets": [
+        [
+          -18.68,
+          295.6,
+          19.75,
+          1.0,
+          0.0,
+          0.0,
+          60.5
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.w49.roof2",
+      "object": "AD_TS_w49_roof2",
+      "kind": "rooftop",
+      "shape": "flat",
+      "tier": "premium",
+      "width_m": 11.0,
+      "height_m": 5.5,
+      "aspect": "2x1",
+      "building": "BLD_TS_W49thCorner",
+      "building_name": "7th Ave & W 49th St corner",
+      "address": "SW corner of 7th Ave & W 49th St, New York, NY",
+      "center": [
+        -28.5,
+        303.22,
+        19.75
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_2x1.png",
+      "facets": [
+        [
+          -28.5,
+          303.22,
+          19.75,
+          0.0,
+          1.0,
+          0.0,
+          60.5
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.w49.shop01",
+      "object": "SHOP_TS_w49_01",
+      "kind": "storefront",
+      "shape": "flat",
+      "tier": "standard",
+      "width_m": 12.0,
+      "height_m": 1.3,
+      "aspect": "8x1",
+      "building": "BLD_TS_W49thCorner",
+      "building_name": "7th Ave & W 49th St corner",
+      "address": "SW corner of 7th Ave & W 49th St, New York, NY",
+      "center": [
+        -28.0,
+        304.67,
+        4.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          -28.0,
+          304.67,
+          4.0,
+          0.0,
+          1.0,
+          0.0,
+          15.6
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.w49.shop02",
+      "object": "SHOP_TS_w49_02",
+      "kind": "storefront",
+      "shape": "flat",
+      "tier": "standard",
+      "width_m": 10.0,
+      "height_m": 1.3,
+      "aspect": "8x1",
+      "building": "BLD_TS_W49thCorner",
+      "building_name": "7th Ave & W 49th St corner",
+      "address": "SW corner of 7th Ave & W 49th St, New York, NY",
+      "center": [
+        -17.23,
+        293.0,
+        4.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_8x1.png",
+      "facets": [
+        [
+          -17.23,
+          293.0,
+          4.0,
+          1.0,
+          0.0,
+          0.0,
+          13.0
+        ]
+      ]
+    },
+    {
+      "slot_id": "ts.w49.wrap1",
+      "object": "AD_TS_w49_wrap1",
+      "kind": "billboard",
+      "shape": "wrap",
+      "tier": "hero",
+      "width_m": 33.98,
+      "height_m": 8.6,
+      "aspect": "4x1",
+      "building": "BLD_TS_W49thCorner",
+      "building_name": "7th Ave & W 49th St corner",
+      "address": "SW corner of 7th Ave & W 49th St, New York, NY",
+      "center": [
+        -19.58,
+        302.71,
+        9.3
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "status": "available",
+      "default_art": "slot_placeholder_4x1.png",
+      "facets": [
+        [
+          -28.35,
+          304.8,
+          9.3,
+          0.0,
+          1.0,
+          0.0,
+          148.8
+        ],
+        [
+          -17.1,
+          296.13,
+          9.3,
+          1.0,
+          0.0,
+          0.0,
+          112.3
+        ],
+        [
+          -19.25,
+          304.74,
+          9.3,
+          0.259,
+          0.966,
+          0.0,
+          7.8
+        ],
+        [
+          -17.28,
+          303.08,
+          9.3,
+          0.966,
+          0.259,
+          0.0,
+          7.8
+        ],
+        [
+          -17.72,
+          303.86,
+          9.3,
+          0.819,
+          0.574,
+          0.0,
+          7.8
+        ],
+        [
+          -18.41,
+          304.43,
+          9.3,
+          0.574,
+          0.819,
+          0.0,
+          7.8
+        ]
+      ]
+    }
+  ]
+}

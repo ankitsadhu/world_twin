@@ -1,0 +1,417 @@
+{
+  "district": "times_square",
+  "blend": "/Users/ankitsadhu/Desktop/find_a_startup/3d_city/blender/districts/times_square/times_square.blend",
+  "top_collections": {
+    "TS_REF": false,
+    "TS_TERRAIN": true,
+    "TS_HERO": true,
+    "TS_MID": true,
+    "TS_FAR": true,
+    "TS_PROPS": true,
+    "TS_SLOTS": true,
+    "TS_LIGHTS": true,
+    "TS_COLLISION": true,
+    "TS_NAV": true,
+    "TS_LOOKDEV": false
+  },
+  "collections": {
+    "TS_REF": {
+      "exported_flag": false,
+      "objects": 0
+    },
+    "TS_TERRAIN": {
+      "exported_flag": true,
+      "objects": 6
+    },
+    "TS_HERO": {
+      "exported_flag": true,
+      "objects": 2
+    },
+    "TS_HERO_Blockout": {
+      "exported_flag": null,
+      "objects": 193
+    },
+    "TS_HERO_OneTimesSquare": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_FourTimesSquare": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_750SeventhAve": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_W49thCorner": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_Signage": {
+      "exported_flag": null,
+      "objects": 22
+    },
+    "TS_HERO_DuffySquare": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_Paramount": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_MarriottMarquis": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_1551Broadway": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_OneAstorPlaza": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_ThreeTimesSquare": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_HERO_1540Broadway": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_MID": {
+      "exported_flag": true,
+      "objects": 722
+    },
+    "TS_FAR": {
+      "exported_flag": true,
+      "objects": 40
+    },
+    "TS_PROPS": {
+      "exported_flag": true,
+      "objects": 0
+    },
+    "TS_PROPS_StreetLamp": {
+      "exported_flag": null,
+      "objects": 857
+    },
+    "TS_PROPS_Hydrant": {
+      "exported_flag": null,
+      "objects": 86
+    },
+    "TS_PROPS_TrafficSignal": {
+      "exported_flag": null,
+      "objects": 204
+    },
+    "TS_PROPS_TrashBasket": {
+      "exported_flag": null,
+      "objects": 158
+    },
+    "TS_PROPS_SubwayEntrance": {
+      "exported_flag": null,
+      "objects": 9
+    },
+    "TS_PROPS_Bollard": {
+      "exported_flag": null,
+      "objects": 680
+    },
+    "TS_PROPS_Planter": {
+      "exported_flag": null,
+      "objects": 119
+    },
+    "TS_PROPS_Taxi": {
+      "exported_flag": null,
+      "objects": 131
+    },
+    "TS_PROPS_StreetSigns": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_PROPS_CarSedanWhite": {
+      "exported_flag": null,
+      "objects": 20
+    },
+    "TS_PROPS_CarSedanBlue": {
+      "exported_flag": null,
+      "objects": 8
+    },
+    "TS_PROPS_CarSUVSilver": {
+      "exported_flag": null,
+      "objects": 20
+    },
+    "TS_PROPS_CarSedanBlack": {
+      "exported_flag": null,
+      "objects": 32
+    },
+    "TS_PROPS_CarSUVRed": {
+      "exported_flag": null,
+      "objects": 9
+    },
+    "TS_SLOTS": {
+      "exported_flag": true,
+      "objects": 0
+    },
+    "TS_SLOTS_OneTimesSquare": {
+      "exported_flag": null,
+      "objects": 14
+    },
+    "TS_SLOTS_FourTimesSquare": {
+      "exported_flag": null,
+      "objects": 9
+    },
+    "TS_SLOTS_750SeventhAve": {
+      "exported_flag": null,
+      "objects": 7
+    },
+    "TS_SLOTS_W49thCorner": {
+      "exported_flag": null,
+      "objects": 5
+    },
+    "TS_SLOTS_Bowtie": {
+      "exported_flag": null,
+      "objects": 63
+    },
+    "TS_SLOTS_Paramount": {
+      "exported_flag": null,
+      "objects": 2
+    },
+    "TS_SLOTS_MarriottMarquis": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_SLOTS_1551Broadway": {
+      "exported_flag": null,
+      "objects": 3
+    },
+    "TS_SLOTS_OneAstorPlaza": {
+      "exported_flag": null,
+      "objects": 2
+    },
+    "TS_SLOTS_ThreeTimesSquare": {
+      "exported_flag": null,
+      "objects": 1
+    },
+    "TS_SLOTS_1540Broadway": {
+      "exported_flag": null,
+      "objects": 3
+    },
+    "TS_LIGHTS": {
+      "exported_flag": true,
+      "objects": 7
+    },
+    "TS_LIGHTS_ScreenGlow": {
+      "exported_flag": null,
+      "objects": 80
+    },
+    "TS_COLLISION": {
+      "exported_flag": true,
+      "objects": 11
+    },
+    "TS_NAV": {
+      "exported_flag": true,
+      "objects": 9
+    },
+    "TS_LOOKDEV": {
+      "exported_flag": false,
+      "objects": 20
+    }
+  },
+  "stray_root_objects": [],
+  "exported_objects": 3547,
+  "nonexported_objects": 20,
+  "wrong_prefix": [],
+  "wrong_prefix_count": 0,
+  "leaked_review_objects": [],
+  "none_material_meshes": [],
+  "unapplied_scale": [],
+  "slot_objects": 110,
+  "slot_ids": [
+    "ts.1022610.blade13",
+    "ts.1022610.blade14",
+    "ts.1022610.blade15",
+    "ts.1022610.up03",
+    "ts.1022610.up04",
+    "ts.1022610.up05",
+    "ts.1022610.up06",
+    "ts.1022610.up07",
+    "ts.1022610.up08",
+    "ts.1022610.up09",
+    "ts.1022610.up10",
+    "ts.1022610.up11",
+    "ts.1022610.up12",
+    "ts.1022610.wrap01",
+    "ts.1022610.wrap02",
+    "ts.1022611.wrap01",
+    "ts.1022612.wrap01",
+    "ts.1022612.wrap02",
+    "ts.1022621.wrap01",
+    "ts.1022622.wrap01",
+    "ts.1022623.wrap02",
+    "ts.1022633.blade07",
+    "ts.1022653.wrap01",
+    "ts.1022661.up03",
+    "ts.1022661.up04",
+    "ts.1022661.up05",
+    "ts.1022661.wrap01",
+    "ts.1022686.wrap01",
+    "ts.1024686.wrap01",
+    "ts.1024706.base01",
+    "ts.1024706.blade01",
+    "ts.1024714.crown01",
+    "ts.1024714.wrap01",
+    "ts.1024727.wrap01",
+    "ts.1024739.wrap01",
+    "ts.1024742.up03",
+    "ts.1024742.up04",
+    "ts.1024742.wrap01",
+    "ts.1024742.wrap02",
+    "ts.1024743.blade04",
+    "ts.1024757.blade10",
+    "ts.1024757.blade11",
+    "ts.1024757.blade12",
+    "ts.1024757.blade13",
+    "ts.1024757.blade14",
+    "ts.1024757.up04",
+    "ts.1024757.up05",
+    "ts.1024757.up06",
+    "ts.1024757.up07",
+    "ts.1024757.up08",
+    "ts.1024757.up09",
+    "ts.1024757.wrap01",
+    "ts.1024757.wrap02",
+    "ts.1024757.wrap03",
+    "ts.1076193.up04",
+    "ts.1076193.up05",
+    "ts.1076193.wrap01",
+    "ts.1076844.main01",
+    "ts.1076844.wrap01",
+    "ts.1076844.wrap02",
+    "ts.1083718.blade05",
+    "ts.1083718.up04",
+    "ts.1083718.wrap01",
+    "ts.1083718.wrap02",
+    "ts.1083718.wrap03",
+    "ts.1083727.wrap01",
+    "ts.1085493.blade06",
+    "ts.1085493.up03",
+    "ts.1085493.up04",
+    "ts.1085493.up05",
+    "ts.1089850.wrap01",
+    "ts.1089850.wrap02",
+    "ts.1551bway.blade01",
+    "ts.1551bway.tower01",
+    "ts.1551bway.wrap01",
+    "ts.1tsq.ad01",
+    "ts.1tsq.ad02",
+    "ts.1tsq.ad03",
+    "ts.1tsq.ad04",
+    "ts.1tsq.ad05",
+    "ts.1tsq.ad06",
+    "ts.1tsq.ad07",
+    "ts.1tsq.ad08",
+    "ts.1tsq.ad09",
+    "ts.1tsq.ad10",
+    "ts.1tsq.ad11",
+    "ts.1tsq.ad12",
+    "ts.1tsq.ad13",
+    "ts.1tsq.shop01",
+    "ts.4tsq.ad01",
+    "ts.4tsq.ad02",
+    "ts.4tsq.ad03",
+    "ts.4tsq.ad04",
+    "ts.4tsq.crown1",
+    "ts.4tsq.crown2",
+    "ts.4tsq.crown3",
+    "ts.4tsq.shop01",
+    "ts.4tsq.shop02",
+    "ts.750.3d01",
+    "ts.750.rib1",
+    "ts.750.rib2",
+    "ts.750.rib3",
+    "ts.750.rib4",
+    "ts.750.shop01",
+    "ts.750.shop02",
+    "ts.w49.roof1",
+    "ts.w49.roof2",
+    "ts.w49.shop01",
+    "ts.w49.shop02",
+    "ts.w49.wrap1"
+  ],
+  "slot_material_bad": [],
+  "slot_material_shared": [],
+  "tod_wired_materials": 181,
+  "prop_counts": {
+    "Bollard": 680,
+    "CarSedanBlack": 32,
+    "CarSedanBlue": 8,
+    "CarSedanWhite": 20,
+    "CarSUVRed": 9,
+    "CarSUVSilver": 20,
+    "Hydrant": 86,
+    "Planter": 119,
+    "StreetLamp": 857,
+    "SubwayEntrance": 9,
+    "Taxi": 131,
+    "TrafficSignal": 204,
+    "TrashBasket": 158
+  },
+  "hero_objects": {
+    "BLD_TS_OneAstorPlaza": true,
+    "BLD_TS_ThreeTimesSquare": true,
+    "BLD_TS_TKTSDuffySquare": true,
+    "BLD_TS_FourTimesSquare": true,
+    "BLD_TS_W49thCorner": true,
+    "BLD_TS_OneTimesSquare": true,
+    "BLD_TS_1551Broadway": true,
+    "BLD_TS_ParamountBuilding": true,
+    "BLD_TS_750SeventhAve": true,
+    "BLD_TS_1540Broadway": true
+  },
+  "hero_collections": {
+    "BLD_TS_OneAstorPlaza": [
+      "TS_HERO_OneAstorPlaza"
+    ],
+    "BLD_TS_ThreeTimesSquare": [
+      "TS_HERO_ThreeTimesSquare"
+    ],
+    "BLD_TS_TKTSDuffySquare": [
+      "TS_HERO_DuffySquare"
+    ],
+    "BLD_TS_FourTimesSquare": [
+      "TS_HERO_FourTimesSquare"
+    ],
+    "BLD_TS_W49thCorner": [
+      "TS_HERO_W49thCorner"
+    ],
+    "BLD_TS_OneTimesSquare": [
+      "TS_HERO_OneTimesSquare"
+    ],
+    "BLD_TS_1551Broadway": [
+      "TS_HERO_1551Broadway"
+    ],
+    "BLD_TS_ParamountBuilding": [
+      "TS_HERO_Paramount"
+    ],
+    "BLD_TS_750SeventhAve": [
+      "TS_HERO_750SeventhAve"
+    ],
+    "BLD_TS_1540Broadway": [
+      "TS_HERO_1540Broadway"
+    ]
+  },
+  "validate": {
+    "ok": true,
+    "errors": [],
+    "warning_count": 80,
+    "stats": {
+      "tris": {
+        "hero": 72460,
+        "mid": 82757,
+        "far": 31133,
+        "other": 35810
+      },
+      "slots": 110,
+      "exported_objects": 3547
+    }
+  }
+}

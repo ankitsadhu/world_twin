@@ -1,0 +1,188 @@
+{
+  "_doc": "Ground truth for the critics (scripts/director). Positions are Blender local metres (x across avenues, y uptown), measured from NYC Open Data footprints / OSM, not guessed. Corrected from docs/critic_roles.md.",
+  "heroes": {
+    "BLD_TS_OneTimesSquare": {
+      "center": [
+        21.0,
+        -213.0
+      ],
+      "tol_m": 15,
+      "roof_m": [
+        95,
+        110
+      ],
+      "note": "Broadway x 7th Ave, 42nd->43rd St; roof 102.7 m (NYC data), ~117 m with mast"
+    },
+    "BLD_TS_FourTimesSquare": {
+      "center": [
+        88.0,
+        -203.0
+      ],
+      "tol_m": 20,
+      "roof_m": [
+        215,
+        235
+      ],
+      "note": "Nasdaq drum at Broadway x 43rd"
+    },
+    "BLD_TS_750SeventhAve": {
+      "center": [
+        50.0,
+        354.0
+      ],
+      "tol_m": 20,
+      "roof_m": [
+        150,
+        170
+      ]
+    },
+    "BLD_TS_W49thCorner": {
+      "center": [
+        -28.4,
+        295.4
+      ],
+      "tol_m": 10,
+      "roof_m": [
+        10,
+        20
+      ],
+      "low_rise": true
+    },
+    "BLD_TS_TKTSDuffySquare": {
+      "center": [
+        -20.6,
+        120.0
+      ],
+      "tol_m": 15,
+      "roof_m": [
+        3,
+        7
+      ],
+      "low_rise": true,
+      "note": "object = whole Duffy Square ensemble (Cohan statue ~y86 .. queue ~y152); steps at y121-138, W 46th->47th St (not W 45th)"
+    },
+    "BLD_TS_ParamountBuilding": {
+      "center": [
+        -47.0,
+        -124.0
+      ],
+      "tol_m": 15,
+      "roof_m": [
+        30,
+        40
+      ],
+      "low_rise": true,
+      "note": "podium roof; tower to ~120 m is modelled as setbacks"
+    },
+    "BLD_TS_1551Broadway": {
+      "center": [
+        -60.0,
+        115.0
+      ],
+      "tol_m": 15,
+      "roof_m": [
+        12,
+        20
+      ],
+      "low_rise": true
+    },
+    "BLD_TS_OneAstorPlaza": {
+      "center": [
+        -62.0,
+        -45.0
+      ],
+      "tol_m": 20,
+      "roof_m": [
+        25,
+        35
+      ],
+      "low_rise": true,
+      "note": "podium roof; tower modelled to ~232 m"
+    },
+    "BLD_TS_ThreeTimesSquare": {
+      "center": [
+        -40.0,
+        -201.0
+      ],
+      "tol_m": 15,
+      "roof_m": [
+        30,
+        40
+      ],
+      "low_rise": true,
+      "note": "podium roof; tower to 156 m"
+    },
+    "BLD_TS_1540Broadway": {
+      "center": [
+        45.0,
+        35.0
+      ],
+      "tol_m": 15,
+      "roof_m": [
+        30,
+        40
+      ],
+      "low_rise": true,
+      "note": "podium roof; tower to ~218 m"
+    }
+  },
+  "nasdaq_object": "BLD_TS_FourTimesSquare",
+  "plazas": {
+    "DuffySquare_TKTS": [
+      -20.6,
+      128.0
+    ],
+    "BroadwayPlaza_44_45": [
+      8.0,
+      -45.0
+    ],
+    "Bowtie_42_43": [
+      12.0,
+      -175.0
+    ]
+  },
+  "street_widths_m": {
+    "avenue": 21.0,
+    "street": 10.5,
+    "wide_street": 18.0,
+    "tol_m": 2.0
+  },
+  "height_bands_m": {
+    "mid": [
+      6,
+      160
+    ],
+    "far": [
+      3,
+      330
+    ]
+  },
+  "block_density": {
+    "min": 3,
+    "max": 25,
+    "cell_m": [
+      80,
+      80
+    ]
+  },
+  "far_gap_m": 100,
+  "required_props": {
+    "StreetLamp": 50,
+    "TrafficSignal": 20,
+    "Taxi": 20,
+    "Hydrant": 10,
+    "TrashBasket": 10,
+    "SubwayEntrance": 3,
+    "NewsKiosk": 3
+  },
+  "named_destinations_min": 15,
+  "poi_max_dist_m": 120,
+  "lod_mid_gap_m": 150,
+  "hotspots": {
+    "_doc": "street corners with plaza-level foot traffic (business visibility only; not plaza surfaces)",
+    "SeventhAve_49th_corner": [
+      0.0,
+      314.0
+    ]
+  }
+}

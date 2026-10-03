@@ -1,0 +1,5045 @@
+{
+  "district": "times_square",
+  "currency": "USD",
+  "pricing_note": "Indicative monthly price from estimated audience x CPM band; final pricing set by sales.",
+  "slots": [
+    {
+      "slot_id": "ts.1024686.wrap01",
+      "title": "Wraparound screen \u00b7 3 Times Square",
+      "kind": "Wraparound screen",
+      "building": "3 Times Square",
+      "size": "97.3 \u00d7 27 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 20,
+      "daily_audience": 168442,
+      "band": "Landmark",
+      "score": 93,
+      "price_month_usd": 150600,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          37.4,
+          -282.8,
+          40.0
+        ],
+        "target": [
+          -22.59,
+          -222.83,
+          20.0
+        ]
+      },
+      "position": [
+        -19.0,
+        -202.8,
+        20.0
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad10",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "23 \u00d7 12.9 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 15,
+      "daily_audience": 167512,
+      "band": "Landmark",
+      "score": 92,
+      "price_month_usd": 146700,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          22.2,
+          -159.7,
+          1.7
+        ],
+        "target": [
+          22.2,
+          -189.58,
+          15.45
+        ]
+      },
+      "position": [
+        22.2,
+        -189.58,
+        15.45
+      ]
+    },
+    {
+      "slot_id": "ts.1024706.base01",
+      "title": "Wraparound screen \u00b7 Paramount Building",
+      "kind": "Wraparound screen",
+      "building": "Paramount Building",
+      "size": "110.2 \u00d7 14 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 13,
+      "daily_audience": 145715,
+      "band": "Landmark",
+      "score": 91,
+      "price_month_usd": 125000,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          31.9,
+          -184.1,
+          40.0
+        ],
+        "target": [
+          -28.15,
+          -124.1,
+          13.0
+        ]
+      },
+      "position": [
+        -16.3,
+        -124.1,
+        13.0
+      ]
+    },
+    {
+      "slot_id": "ts.1024714.wrap01",
+      "title": "Wraparound screen \u00b7 One Astor Plaza",
+      "kind": "Wraparound screen",
+      "building": "One Astor Plaza",
+      "size": "146.6 \u00d7 20 m",
+      "faces": "the Broadway plaza",
+      "height_above_street_m": 17,
+      "daily_audience": 198000,
+      "band": "Premium",
+      "score": 89,
+      "price_month_usd": 161600,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          25.9,
+          -104.6,
+          40.0
+        ],
+        "target": [
+          -34.1,
+          -44.6,
+          17.0
+        ]
+      },
+      "position": [
+        -16.1,
+        -44.5,
+        17.0
+      ]
+    },
+    {
+      "slot_id": "ts.1024727.wrap01",
+      "title": "Wraparound screen \u00b7 New York Marriott Marquis Hotel",
+      "kind": "Wraparound screen",
+      "building": "New York Marriott Marquis Hotel",
+      "size": "125.7 \u00d7 24 m",
+      "faces": "the Broadway plaza",
+      "height_above_street_m": 20,
+      "daily_audience": 165482,
+      "band": "Premium",
+      "score": 85,
+      "price_month_usd": 119100,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          18.6,
+          -25.5,
+          40.0
+        ],
+        "target": [
+          -41.4,
+          34.45,
+          20.0
+        ]
+      },
+      "position": [
+        -27.7,
+        34.75,
+        20.0
+      ]
+    },
+    {
+      "slot_id": "ts.1551bway.tower01",
+      "title": "Billboard \u00b7 1551 Broadway (Duffy Square west)",
+      "kind": "Billboard",
+      "building": "1551 Broadway (Duffy Square west)",
+      "size": "28 \u00d7 31 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 33,
+      "daily_audience": 145035,
+      "band": "Premium",
+      "score": 85,
+      "price_month_usd": 104400,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -17.5,
+          123.1,
+          19.8
+        ],
+        "target": [
+          -53.59,
+          114.08,
+          33.0
+        ]
+      },
+      "position": [
+        -53.59,
+        114.08,
+        33.0
+      ]
+    },
+    {
+      "slot_id": "ts.1551bway.wrap01",
+      "title": "Wraparound screen \u00b7 1551 Broadway (Duffy Square west)",
+      "kind": "Wraparound screen",
+      "building": "1551 Broadway (Duffy Square west)",
+      "size": "68.3 \u00d7 9.5 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 10,
+      "daily_audience": 137633,
+      "band": "Premium",
+      "score": 84,
+      "price_month_usd": 95800,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          2.0,
+          54.8,
+          40.0
+        ],
+        "target": [
+          -57.95,
+          114.85,
+          9.75
+        ]
+      },
+      "position": [
+        -49.9,
+        114.85,
+        9.75
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.ad01",
+      "title": "Curved screen \u00b7 4 Times Square (Nasdaq)",
+      "kind": "Curved screen",
+      "building": "4 Times Square (Nasdaq)",
+      "size": "42.5 \u00d7 25.8 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 32,
+      "daily_audience": 113562,
+      "band": "Premium",
+      "score": 82,
+      "price_month_usd": 73600,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          115.0,
+          -239.0,
+          40.0
+        ],
+        "target": [
+          54.98,
+          -178.98,
+          31.5
+        ]
+      },
+      "position": [
+        49.12,
+        -176.83,
+        31.5
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.ad02",
+      "title": "Curved screen \u00b7 4 Times Square (Nasdaq)",
+      "kind": "Curved screen",
+      "building": "4 Times Square (Nasdaq)",
+      "size": "42.5 \u00d7 9.2 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 13,
+      "daily_audience": 87297,
+      "band": "Premium",
+      "score": 77,
+      "price_month_usd": 46100,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          115.0,
+          -239.0,
+          40.0
+        ],
+        "target": [
+          54.98,
+          -178.98,
+          13.4
+        ]
+      },
+      "position": [
+        49.12,
+        -176.83,
+        13.4
+      ]
+    },
+    {
+      "slot_id": "ts.1076844.wrap02",
+      "title": "Wraparound screen \u00b7 1540 Broadway (Bertelsmann Building)",
+      "kind": "Wraparound screen",
+      "building": "1540 Broadway (Bertelsmann Building)",
+      "size": "32.1 \u00d7 24 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 18,
+      "daily_audience": 69123,
+      "band": "Premium",
+      "score": 76,
+      "price_month_usd": 34800,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          81.5,
+          -2.0,
+          40.0
+        ],
+        "target": [
+          21.47,
+          57.97,
+          18.0
+        ]
+      },
+      "position": [
+        26.1,
+        59.45,
+        18.0
+      ]
+    },
+    {
+      "slot_id": "ts.1076844.main01",
+      "title": "Billboard \u00b7 1540 Broadway (Bertelsmann Building)",
+      "kind": "Billboard",
+      "building": "1540 Broadway (Bertelsmann Building)",
+      "size": "44 \u00d7 24.8 m",
+      "faces": "the Broadway plaza",
+      "height_above_street_m": 19,
+      "daily_audience": 54233,
+      "band": "Premium",
+      "score": 75,
+      "price_month_usd": 26000,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          12.1,
+          66.0,
+          1.7
+        ],
+        "target": [
+          12.08,
+          31.0,
+          19.0
+        ]
+      },
+      "position": [
+        12.08,
+        31.0,
+        19.0
+      ]
+    },
+    {
+      "slot_id": "ts.1076844.wrap01",
+      "title": "Wraparound screen \u00b7 1540 Broadway (Bertelsmann Building)",
+      "kind": "Wraparound screen",
+      "building": "1540 Broadway (Bertelsmann Building)",
+      "size": "30.9 \u00d7 24 m",
+      "faces": "the Broadway plaza",
+      "height_above_street_m": 18,
+      "daily_audience": 112225,
+      "band": "Premium",
+      "score": 75,
+      "price_month_usd": 53900,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          81.7,
+          -55.5,
+          40.0
+        ],
+        "target": [
+          21.73,
+          4.47,
+          18.0
+        ]
+      },
+      "position": [
+        26.5,
+        3.2,
+        18.0
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad01",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "14 \u00d7 14 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 88,
+      "daily_audience": 29550,
+      "band": "Premium",
+      "score": 75,
+      "price_month_usd": 14200,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          22.2,
+          -171.4,
+          53.1
+        ],
+        "target": [
+          22.2,
+          -189.58,
+          88.5
+        ]
+      },
+      "position": [
+        22.2,
+        -189.58,
+        88.5
+      ]
+    },
+    {
+      "slot_id": "ts.1551bway.blade01",
+      "title": "Billboard \u00b7 1551 Broadway (Duffy Square west)",
+      "kind": "Billboard",
+      "building": "1551 Broadway (Duffy Square west)",
+      "size": "4 \u00d7 34 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 31,
+      "daily_audience": 48793,
+      "band": "Standard",
+      "score": 74,
+      "price_month_usd": 22900,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -23.1,
+          162.4,
+          18.6
+        ],
+        "target": [
+          -52.39,
+          134.01,
+          31.0
+        ]
+      },
+      "position": [
+        -52.39,
+        134.01,
+        31.0
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.ad03",
+      "title": "Curved screen \u00b7 4 Times Square (Nasdaq)",
+      "kind": "Curved screen",
+      "building": "4 Times Square (Nasdaq)",
+      "size": "21.4 \u00d7 21 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 20,
+      "daily_audience": 37925,
+      "band": "Standard",
+      "score": 74,
+      "price_month_usd": 17800,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          126.6,
+          -290.5,
+          40.0
+        ],
+        "target": [
+          66.63,
+          -230.47,
+          20.5
+        ]
+      },
+      "position": [
+        68.61,
+        -233.99,
+        20.5
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad06",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "13 \u00d7 17.3 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 36,
+      "daily_audience": 69742,
+      "band": "Standard",
+      "score": 73,
+      "price_month_usd": 32000,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "3:4",
+        "px": [
+          1620,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          22.2,
+          -168.8,
+          21.7
+        ],
+        "target": [
+          22.2,
+          -189.58,
+          36.15
+        ]
+      },
+      "position": [
+        22.2,
+        -189.58,
+        36.15
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad02",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "16 \u00d7 9 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 75,
+      "daily_audience": 28540,
+      "band": "Standard",
+      "score": 72,
+      "price_month_usd": 12800,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          22.2,
+          -168.8,
+          45.0
+        ],
+        "target": [
+          22.2,
+          -189.58,
+          75.0
+        ]
+      },
+      "position": [
+        22.2,
+        -189.58,
+        75.0
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.crown2",
+      "title": "Rooftop sign \u00b7 4 Times Square (Nasdaq)",
+      "kind": "Rooftop sign",
+      "building": "4 Times Square (Nasdaq)",
+      "size": "14 \u00d7 14 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 208,
+      "daily_audience": 11118,
+      "band": "Standard",
+      "score": 72,
+      "price_month_usd": 5000,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          39.7,
+          -204.6,
+          120
+        ],
+        "target": [
+          57.91,
+          -204.57,
+          208.0
+        ]
+      },
+      "position": [
+        57.91,
+        -204.57,
+        208.0
+      ]
+    },
+    {
+      "slot_id": "ts.750.3d01",
+      "title": "Corner 3D screen \u00b7 750 Seventh Avenue",
+      "kind": "Corner 3D screen",
+      "building": "750 Seventh Avenue",
+      "size": "26 \u00d7 20 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 23,
+      "daily_audience": 114196,
+      "band": "Standard",
+      "score": 72,
+      "price_month_usd": 51200,
+      "price_is_estimate": true,
+      "best_for": "Retail, Travel",
+      "status": "available",
+      "artwork": {
+        "aspect": "2:1",
+        "px": [
+          3840,
+          1920
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          77.5,
+          268.0,
+          40.0
+        ],
+        "target": [
+          17.53,
+          328.03,
+          23.0
+        ]
+      },
+      "position": [
+        13.2,
+        330.2,
+        23.0
+      ]
+    },
+    {
+      "slot_id": "ts.w49.wrap1",
+      "title": "Wraparound screen \u00b7 7th Ave & W 49th St corner",
+      "kind": "Wraparound screen",
+      "building": "7th Ave & W 49th St corner",
+      "size": "34 \u00d7 8.6 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 9,
+      "daily_audience": 102038,
+      "band": "Standard",
+      "score": 72,
+      "price_month_usd": 45800,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          40.4,
+          242.7,
+          40.0
+        ],
+        "target": [
+          -19.58,
+          302.71,
+          9.3
+        ]
+      },
+      "position": [
+        -28.35,
+        304.8,
+        9.3
+      ]
+    },
+    {
+      "slot_id": "ts.1024706.blade01",
+      "title": "Billboard \u00b7 Paramount Building",
+      "kind": "Billboard",
+      "building": "Paramount Building",
+      "size": "3.4 \u00d7 20 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 31,
+      "daily_audience": 25304,
+      "band": "Standard",
+      "score": 71,
+      "price_month_usd": 11100,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          9.2,
+          -124.0,
+          18.6
+        ],
+        "target": [
+          -14.78,
+          -124.0,
+          31.0
+        ]
+      },
+      "position": [
+        -14.78,
+        -124.0,
+        31.0
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad03",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "12 \u00d7 21.3 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 58,
+      "daily_audience": 47151,
+      "band": "Standard",
+      "score": 71,
+      "price_month_usd": 20700,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          22.2,
+          -164.0,
+          34.6
+        ],
+        "target": [
+          22.2,
+          -189.58,
+          57.65
+        ]
+      },
+      "position": [
+        22.2,
+        -189.58,
+        57.65
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 44th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "103.7 \u00d7 10.2 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 10,
+      "daily_audience": 112821,
+      "band": "Standard",
+      "score": 70,
+      "price_month_usd": 48200,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          107.3,
+          -196.0,
+          40.0
+        ],
+        "target": [
+          47.29,
+          -135.98,
+          9.9
+        ]
+      },
+      "position": [
+        34.09,
+        -115.68,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad09",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "23 \u00d7 2.9 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 24,
+      "daily_audience": 51507,
+      "band": "Standard",
+      "score": 69,
+      "price_month_usd": 21500,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          22.2,
+          -159.7,
+          1.7
+        ],
+        "target": [
+          22.2,
+          -189.58,
+          24.45
+        ]
+      },
+      "position": [
+        22.2,
+        -189.58,
+        24.45
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad13",
+      "title": "Wraparound screen \u00b7 One Times Square",
+      "kind": "Wraparound screen",
+      "building": "One Times Square",
+      "size": "96.2 \u00d7 2.6 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 6,
+      "daily_audience": 61325,
+      "band": "Standard",
+      "score": 69,
+      "price_month_usd": 25600,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          77.4,
+          -274.9,
+          40.0
+        ],
+        "target": [
+          17.37,
+          -214.88,
+          6.3
+        ]
+      },
+      "position": [
+        26.65,
+        -213.85,
+        6.3
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad04",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "7 \u00d7 12.4 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 57,
+      "daily_audience": 23817,
+      "band": "Standard",
+      "score": 68,
+      "price_month_usd": 9700,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          4.1,
+          -172.5,
+          34.3
+        ],
+        "target": [
+          12.59,
+          -188.38,
+          57.2
+        ]
+      },
+      "position": [
+        12.59,
+        -188.38,
+        57.2
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad08",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "6 \u00d7 8 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 34,
+      "daily_audience": 30542,
+      "band": "Standard",
+      "score": 68,
+      "price_month_usd": 12400,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "3:4",
+        "px": [
+          1620,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          5.1,
+          -172.1,
+          20.7
+        ],
+        "target": [
+          12.39,
+          -188.55,
+          34.5
+        ]
+      },
+      "position": [
+        12.39,
+        -188.55,
+        34.5
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.crown1",
+      "title": "Rooftop sign \u00b7 4 Times Square (Nasdaq)",
+      "kind": "Rooftop sign",
+      "building": "4 Times Square (Nasdaq)",
+      "size": "14 \u00d7 14 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 208,
+      "daily_audience": 13196,
+      "band": "Standard",
+      "score": 68,
+      "price_month_usd": 5400,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          70.7,
+          -162.8,
+          120
+        ],
+        "target": [
+          70.69,
+          -181.03,
+          208.0
+        ]
+      },
+      "position": [
+        70.69,
+        -181.03,
+        208.0
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.crown3",
+      "title": "Rooftop sign \u00b7 4 Times Square (Nasdaq)",
+      "kind": "Rooftop sign",
+      "building": "4 Times Square (Nasdaq)",
+      "size": "14 \u00d7 14 m",
+      "faces": "7th Ave & W 42nd St",
+      "height_above_street_m": 208,
+      "daily_audience": 0,
+      "band": "Standard",
+      "score": 68,
+      "price_month_usd": 0,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          70.7,
+          -245.6,
+          120
+        ],
+        "target": [
+          70.69,
+          -227.41,
+          208.0
+        ]
+      },
+      "position": [
+        70.69,
+        -227.41,
+        208.0
+      ]
+    },
+    {
+      "slot_id": "ts.1085493.up03",
+      "title": "Billboard \u00b7 Double Tree Guest Suites",
+      "kind": "Billboard",
+      "building": "Double Tree Guest Suites",
+      "size": "20.9 \u00d7 11.7 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 22,
+      "daily_audience": 98309,
+      "band": "Standard",
+      "score": 67,
+      "price_month_usd": 38900,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -14.7,
+          126.2,
+          1.7
+        ],
+        "target": [
+          12.4,
+          126.36,
+          22.37
+        ]
+      },
+      "position": [
+        12.4,
+        126.36,
+        22.37
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad05",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "7 \u00d7 12.4 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 57,
+      "daily_audience": 16564,
+      "band": "Standard",
+      "score": 67,
+      "price_month_usd": 6600,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          40.3,
+          -172.5,
+          34.3
+        ],
+        "target": [
+          31.81,
+          -188.38,
+          57.2
+        ]
+      },
+      "position": [
+        31.81,
+        -188.38,
+        57.2
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad07",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "7.5 \u00d7 7.5 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 34,
+      "daily_audience": 19257,
+      "band": "Standard",
+      "score": 67,
+      "price_month_usd": 7600,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          39.5,
+          -172.1,
+          20.6
+        ],
+        "target": [
+          32.21,
+          -188.55,
+          34.25
+        ]
+      },
+      "position": [
+        32.21,
+        -188.55,
+        34.25
+      ]
+    },
+    {
+      "slot_id": "ts.750.rib2",
+      "title": "Wraparound screen \u00b7 750 Seventh Avenue",
+      "kind": "Wraparound screen",
+      "building": "750 Seventh Avenue",
+      "size": "32.3 \u00d7 5.4 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 9,
+      "daily_audience": 90982,
+      "band": "Standard",
+      "score": 67,
+      "price_month_usd": 36000,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          78.7,
+          269.0,
+          40.0
+        ],
+        "target": [
+          18.67,
+          329.0,
+          8.7
+        ]
+      },
+      "position": [
+        21.4,
+        323.7,
+        8.7
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up06",
+      "title": "Billboard at 7th Ave & W 47th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "10.1 \u00d7 17.9 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 25,
+      "daily_audience": 72403,
+      "band": "Standard",
+      "score": 66,
+      "price_month_usd": 27900,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          10.2,
+          163.0,
+          9.3
+        ],
+        "target": [
+          -24.77,
+          162.99,
+          25.44
+        ]
+      },
+      "position": [
+        -24.77,
+        162.99,
+        25.44
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.ad04",
+      "title": "Billboard \u00b7 4 Times Square (Nasdaq)",
+      "kind": "Billboard",
+      "building": "4 Times Square (Nasdaq)",
+      "size": "16 \u00d7 21.3 m",
+      "faces": "7th Ave & W 43rd St",
+      "height_above_street_m": 24,
+      "daily_audience": 4255,
+      "band": "Standard",
+      "score": 66,
+      "price_month_usd": 1600,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "3:4",
+        "px": [
+          1620,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          116.1,
+          -264.4,
+          40.0
+        ],
+        "target": [
+          56.08,
+          -204.4,
+          24.0
+        ]
+      },
+      "position": [
+        56.08,
+        -204.4,
+        24.0
+      ]
+    },
+    {
+      "slot_id": "ts.1024742.up03",
+      "title": "Billboard at 7th Ave & W 47th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "11.8 \u00d7 20.9 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 27,
+      "daily_audience": 74566,
+      "band": "Standard",
+      "score": 65,
+      "price_month_usd": 28000,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -31.4,
+          144.3,
+          1.7
+        ],
+        "target": [
+          -55.79,
+          138.24,
+          26.98
+        ]
+      },
+      "position": [
+        -55.79,
+        138.24,
+        26.98
+      ]
+    },
+    {
+      "slot_id": "ts.1024742.wrap02",
+      "title": "Wraparound screen at 7th Ave & W 47th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "13.3 \u00d7 10.2 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 10,
+      "daily_audience": 70322,
+      "band": "Standard",
+      "score": 65,
+      "price_month_usd": 26400,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -22.3,
+          147.2,
+          1.7
+        ],
+        "target": [
+          -56.06,
+          138.18,
+          9.9
+        ]
+      },
+      "position": [
+        -56.06,
+        138.18,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.shop01",
+      "title": "Storefront sign \u00b7 One Times Square",
+      "kind": "Storefront sign",
+      "building": "One Times Square",
+      "size": "6.4 \u00d7 1.2 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 4,
+      "daily_audience": 32967,
+      "band": "Standard",
+      "score": 65,
+      "price_month_usd": 12400,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          47.5,
+          -174.1,
+          1.7
+        ],
+        "target": [
+          17.2,
+          -191.58,
+          3.6
+        ]
+      },
+      "position": [
+        17.2,
+        -191.58,
+        3.6
+      ]
+    },
+    {
+      "slot_id": "ts.1022661.wrap01",
+      "title": "Wraparound screen \u00b7 Embassy Theatre",
+      "kind": "Wraparound screen",
+      "building": "Embassy Theatre",
+      "size": "18.6 \u00d7 10.2 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 10,
+      "daily_audience": 75014,
+      "band": "Standard",
+      "score": 64,
+      "price_month_usd": 27300,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          12.2,
+          140.6,
+          1.7
+        ],
+        "target": [
+          12.19,
+          105.61,
+          9.9
+        ]
+      },
+      "position": [
+        12.19,
+        105.61,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.w49.roof1",
+      "title": "Rooftop sign \u00b7 7th Ave & W 49th St corner",
+      "kind": "Rooftop sign",
+      "building": "7th Ave & W 49th St corner",
+      "size": "11 \u00d7 5.5 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 20,
+      "daily_audience": 40371,
+      "band": "Standard",
+      "score": 64,
+      "price_month_usd": 14700,
+      "price_is_estimate": true,
+      "best_for": "Retail, Travel",
+      "status": "available",
+      "artwork": {
+        "aspect": "2:1",
+        "px": [
+          3840,
+          1920
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -0.7,
+          295.6,
+          1.7
+        ],
+        "target": [
+          -18.68,
+          295.6,
+          19.75
+        ]
+      },
+      "position": [
+        -18.68,
+        295.6,
+        19.75
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up03",
+      "title": "Billboard at 7th Ave & W 44th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "34 \u00d7 19.1 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 26,
+      "daily_audience": 76705,
+      "band": "Standard",
+      "score": 63,
+      "price_month_usd": 27200,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -10.0,
+          -122.9,
+          1.7
+        ],
+        "target": [
+          33.6,
+          -115.54,
+          26.06
+        ]
+      },
+      "position": [
+        33.6,
+        -115.54,
+        26.06
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up09",
+      "title": "Billboard at 7th Ave & W 43rd St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "16.3 \u00d7 9.2 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 21,
+      "daily_audience": 59518,
+      "band": "Standard",
+      "score": 63,
+      "price_month_usd": 21100,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          22.9,
+          -146.3,
+          1.7
+        ],
+        "target": [
+          44.07,
+          -146.2,
+          21.09
+        ]
+      },
+      "position": [
+        44.07,
+        -146.2,
+        21.09
+      ]
+    },
+    {
+      "slot_id": "ts.1022661.up03",
+      "title": "Billboard \u00b7 Embassy Theatre",
+      "kind": "Billboard",
+      "building": "Embassy Theatre",
+      "size": "16.6 \u00d7 9.4 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 21,
+      "daily_audience": 64864,
+      "band": "Standard",
+      "score": 63,
+      "price_month_usd": 23000,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -9.7,
+          105.6,
+          1.7
+        ],
+        "target": [
+          11.92,
+          105.61,
+          21.18
+        ]
+      },
+      "position": [
+        11.92,
+        105.61,
+        21.18
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up05",
+      "title": "Billboard at 7th Ave & W 43rd St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "5.3 \u00d7 9.4 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 21,
+      "daily_audience": 28237,
+      "band": "Standard",
+      "score": 61,
+      "price_month_usd": 9400,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          41.4,
+          -155.8,
+          1.7
+        ],
+        "target": [
+          41.35,
+          -137.77,
+          21.21
+        ]
+      },
+      "position": [
+        41.35,
+        -137.77,
+        21.21
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up11",
+      "title": "Billboard at 7th Ave & W 44th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "34 \u00d7 19.1 m",
+      "faces": "the Broadway plaza",
+      "height_above_street_m": 26,
+      "daily_audience": 77509,
+      "band": "Standard",
+      "score": 61,
+      "price_month_usd": 25800,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          85.5,
+          -93.0,
+          9.5
+        ],
+        "target": [
+          50.52,
+          -93.01,
+          26.06
+        ]
+      },
+      "position": [
+        50.52,
+        -93.01,
+        26.06
+      ]
+    },
+    {
+      "slot_id": "ts.w49.roof2",
+      "title": "Rooftop sign \u00b7 7th Ave & W 49th St corner",
+      "kind": "Rooftop sign",
+      "building": "7th Ave & W 49th St corner",
+      "size": "11 \u00d7 5.5 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 20,
+      "daily_audience": 24813,
+      "band": "Standard",
+      "score": 61,
+      "price_month_usd": 8300,
+      "price_is_estimate": true,
+      "best_for": "Retail, Travel",
+      "status": "available",
+      "artwork": {
+        "aspect": "2:1",
+        "px": [
+          3840,
+          1920
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -28.5,
+          321.2,
+          1.7
+        ],
+        "target": [
+          -28.5,
+          303.22,
+          19.75
+        ]
+      },
+      "position": [
+        -28.5,
+        303.22,
+        19.75
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.wrap02",
+      "title": "Wraparound screen at 7th Ave & W 47th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "53 \u00d7 10.2 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 10,
+      "daily_audience": 71770,
+      "band": "Standard",
+      "score": 60,
+      "price_month_usd": 23100,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          32.6,
+          114.6,
+          40.0
+        ],
+        "target": [
+          -27.43,
+          174.55,
+          9.9
+        ]
+      },
+      "position": [
+        -33.11,
+        173.42,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.blade05",
+      "title": "Billboard at 7th Ave & W 47th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 18.8 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 26,
+      "daily_audience": 35533,
+      "band": "Standard",
+      "score": 60,
+      "price_month_usd": 11500,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -5.1,
+          145.0,
+          1.7
+        ],
+        "target": [
+          10.82,
+          160.95,
+          26.4
+        ]
+      },
+      "position": [
+        10.82,
+        160.95,
+        26.4
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.up04",
+      "title": "Billboard at 7th Ave & W 47th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "27.5 \u00d7 15.5 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 24,
+      "daily_audience": 59257,
+      "band": "Standard",
+      "score": 60,
+      "price_month_usd": 19100,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          11.2,
+          211.9,
+          1.7
+        ],
+        "target": [
+          11.23,
+          176.87,
+          24.25
+        ]
+      },
+      "position": [
+        11.23,
+        176.87,
+        24.25
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 47th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "71.5 \u00d7 10.2 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 10,
+      "daily_audience": 74590,
+      "band": "Standard",
+      "score": 60,
+      "price_month_usd": 24100,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          85.6,
+          111.6,
+          40.0
+        ],
+        "target": [
+          25.64,
+          171.62,
+          9.9
+        ]
+      },
+      "position": [
+        32.72,
+        161.6,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad11",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "17 \u00d7 22.7 m",
+      "faces": "7th Ave & W 42nd St",
+      "height_above_street_m": 52,
+      "daily_audience": 0,
+      "band": "Standard",
+      "score": 60,
+      "price_month_usd": 0,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "3:4",
+        "px": [
+          1620,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          22.3,
+          -263.3,
+          31.2
+        ],
+        "target": [
+          22.3,
+          -236.02,
+          52.0
+        ]
+      },
+      "position": [
+        22.3,
+        -236.02,
+        52.0
+      ]
+    },
+    {
+      "slot_id": "ts.1tsq.ad12",
+      "title": "Billboard \u00b7 One Times Square",
+      "kind": "Billboard",
+      "building": "One Times Square",
+      "size": "16 \u00d7 21.3 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 40,
+      "daily_audience": 4898,
+      "band": "Standard",
+      "score": 60,
+      "price_month_usd": 1600,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "3:4",
+        "px": [
+          1620,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -13.7,
+          -214.0,
+          24.0
+        ],
+        "target": [
+          11.88,
+          -214.0,
+          40.0
+        ]
+      },
+      "position": [
+        11.88,
+        -214.0,
+        40.0
+      ]
+    },
+    {
+      "slot_id": "sky.hudson.banner",
+      "title": "Aerial banner \u00b7 Hudson River",
+      "kind": "Aerial banner",
+      "building": "Banner tow plane",
+      "size": "30 \u00d7 7.5 m",
+      "faces": "Hudson River Park, the West Side Highway and the Intrepid",
+      "height_above_street_m": 150,
+      "daily_audience": 60000,
+      "band": "Standard",
+      "score": 60,
+      "best_for": "Events, Entertainment, Consumer brands",
+      "position": [
+        -1637,
+        0,
+        150
+      ],
+      "view": {
+        "eye": [
+          -1540,
+          -120,
+          120
+        ],
+        "target": [
+          -1640,
+          0,
+          150
+        ]
+      },
+      "price_month_usd": 19400,
+      "price_is_estimate": true,
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG"
+        ]
+      }
+    },
+    {
+      "slot_id": "ts.1022610.blade13",
+      "title": "Billboard at 7th Ave & W 43rd St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 26 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 30,
+      "daily_audience": 38852,
+      "band": "Standard",
+      "score": 59,
+      "price_month_usd": 12100,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          16.8,
+          -162.2,
+          18.0
+        ],
+        "target": [
+          36.9,
+          -138.3,
+          30.0
+        ]
+      },
+      "position": [
+        36.9,
+        -138.3,
+        30.0
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.blade14",
+      "title": "Billboard at 7th Ave & W 43rd St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 26 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 30,
+      "daily_audience": 36888,
+      "band": "Standard",
+      "score": 59,
+      "price_month_usd": 11500,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          21.6,
+          -160.3,
+          18.0
+        ],
+        "target": [
+          43.6,
+          -138.19,
+          30.0
+        ]
+      },
+      "position": [
+        43.6,
+        -138.19,
+        30.0
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.blade15",
+      "title": "Billboard at 7th Ave & W 43rd St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 26 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 30,
+      "daily_audience": 42124,
+      "band": "Standard",
+      "score": 59,
+      "price_month_usd": 13100,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          21.7,
+          -178.7,
+          18.0
+        ],
+        "target": [
+          43.7,
+          -156.5,
+          30.0
+        ]
+      },
+      "position": [
+        43.7,
+        -156.5,
+        30.0
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade13",
+      "title": "Billboard at 7th Ave & W 47th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 26 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 30,
+      "daily_audience": 37086,
+      "band": "Standard",
+      "score": 59,
+      "price_month_usd": 11600,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          4.2,
+          140.4,
+          18.0
+        ],
+        "target": [
+          -17.84,
+          162.53,
+          30.0
+        ]
+      },
+      "position": [
+        -17.84,
+        162.53,
+        30.0
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.shop02",
+      "title": "Storefront sign \u00b7 4 Times Square (Nasdaq)",
+      "kind": "Storefront sign",
+      "building": "4 Times Square (Nasdaq)",
+      "size": "10 \u00d7 2.5 m",
+      "faces": "7th Ave & W 43rd St",
+      "height_above_street_m": 3,
+      "daily_audience": 1016,
+      "band": "Standard",
+      "score": 59,
+      "price_month_usd": 300,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          115.8,
+          -264.5,
+          40.0
+        ],
+        "target": [
+          55.8,
+          -204.48,
+          3.4
+        ]
+      },
+      "position": [
+        55.8,
+        -204.48,
+        3.4
+      ]
+    },
+    {
+      "slot_id": "ts.w49.shop02",
+      "title": "Storefront sign \u00b7 7th Ave & W 49th St corner",
+      "kind": "Storefront sign",
+      "building": "7th Ave & W 49th St corner",
+      "size": "10 \u00d7 1.3 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 4,
+      "daily_audience": 19596,
+      "band": "Standard",
+      "score": 59,
+      "price_month_usd": 6100,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          0.8,
+          293.0,
+          1.7
+        ],
+        "target": [
+          -17.23,
+          293.0,
+          4.0
+        ]
+      },
+      "position": [
+        -17.23,
+        293.0,
+        4.0
+      ]
+    },
+    {
+      "slot_id": "ts.1022653.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 46th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "79.5 \u00d7 10 m",
+      "faces": "7th Ave & W 46th St",
+      "height_above_street_m": 10,
+      "daily_audience": 62110,
+      "band": "Standard",
+      "score": 58,
+      "price_month_usd": 18700,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          85.4,
+          3.3,
+          40.0
+        ],
+        "target": [
+          25.43,
+          63.28,
+          9.82
+        ]
+      },
+      "position": [
+        28.88,
+        58.51,
+        9.82
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade12",
+      "title": "Billboard at 7th Ave & W 47th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 26 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 30,
+      "daily_audience": 33784,
+      "band": "Standard",
+      "score": 58,
+      "price_month_usd": 10200,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -50.9,
+          138.0,
+          18.0
+        ],
+        "target": [
+          -31.55,
+          162.47,
+          30.0
+        ]
+      },
+      "position": [
+        -31.55,
+        162.47,
+        30.0
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up07",
+      "title": "Billboard at 7th Ave & W 47th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "10.1 \u00d7 17.9 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 45,
+      "daily_audience": 49781,
+      "band": "Standard",
+      "score": 58,
+      "price_month_usd": 15000,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -64.4,
+          163.0,
+          15.0
+        ],
+        "target": [
+          -24.77,
+          162.99,
+          45.05
+        ]
+      },
+      "position": [
+        -24.77,
+        162.99,
+        45.05
+      ]
+    },
+    {
+      "slot_id": "ts.1085493.blade06",
+      "title": "Billboard \u00b7 Double Tree Guest Suites",
+      "kind": "Billboard",
+      "building": "Double Tree Guest Suites",
+      "size": "3.2 \u00d7 26 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 30,
+      "daily_audience": 29424,
+      "band": "Standard",
+      "score": 58,
+      "price_month_usd": 8900,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -10.0,
+          91.7,
+          18.0
+        ],
+        "target": [
+          12.04,
+          113.78,
+          30.0
+        ]
+      },
+      "position": [
+        12.04,
+        113.78,
+        30.0
+      ]
+    },
+    {
+      "slot_id": "ts.1085493.up04",
+      "title": "Billboard \u00b7 Double Tree Guest Suites",
+      "kind": "Billboard",
+      "building": "Double Tree Guest Suites",
+      "size": "20.9 \u00d7 11.7 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 35,
+      "daily_audience": 68770,
+      "band": "Standard",
+      "score": 58,
+      "price_month_usd": 20700,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -14.7,
+          126.2,
+          21.0
+        ],
+        "target": [
+          12.4,
+          126.36,
+          34.99
+        ]
+      },
+      "position": [
+        12.4,
+        126.36,
+        34.99
+      ]
+    },
+    {
+      "slot_id": "ts.4tsq.shop01",
+      "title": "Storefront sign \u00b7 4 Times Square (Nasdaq)",
+      "kind": "Storefront sign",
+      "building": "4 Times Square (Nasdaq)",
+      "size": "12 \u00d7 3 m",
+      "faces": "7th Ave & W 43rd St",
+      "height_above_street_m": 6,
+      "daily_audience": 7366,
+      "band": "Standard",
+      "score": 58,
+      "price_month_usd": 2200,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          82.0,
+          -155.4,
+          1.7
+        ],
+        "target": [
+          82.0,
+          -173.38,
+          6.2
+        ]
+      },
+      "position": [
+        82.0,
+        -173.38,
+        6.2
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up10",
+      "title": "Billboard at 7th Ave & W 43rd St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "16.3 \u00d7 9.2 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 31,
+      "daily_audience": 47838,
+      "band": "Standard",
+      "score": 57,
+      "price_month_usd": 13900,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          22.9,
+          -146.3,
+          18.7
+        ],
+        "target": [
+          44.07,
+          -146.2,
+          31.18
+        ]
+      },
+      "position": [
+        44.07,
+        -146.2,
+        31.18
+      ]
+    },
+    {
+      "slot_id": "ts.1022661.up04",
+      "title": "Billboard \u00b7 Embassy Theatre",
+      "kind": "Billboard",
+      "building": "Embassy Theatre",
+      "size": "16.6 \u00d7 9.4 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 32,
+      "daily_audience": 49849,
+      "band": "Standard",
+      "score": 57,
+      "price_month_usd": 14500,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -9.7,
+          105.6,
+          19.2
+        ],
+        "target": [
+          11.92,
+          105.61,
+          31.97
+        ]
+      },
+      "position": [
+        11.92,
+        105.61,
+        31.97
+      ]
+    },
+    {
+      "slot_id": "ts.1024742.up04",
+      "title": "Billboard at 7th Ave & W 47th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "11.8 \u00d7 20.9 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 50,
+      "daily_audience": 48519,
+      "band": "Standard",
+      "score": 57,
+      "price_month_usd": 14100,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -31.4,
+          144.3,
+          29.9
+        ],
+        "target": [
+          -55.79,
+          138.24,
+          49.82
+        ]
+      },
+      "position": [
+        -55.79,
+        138.24,
+        49.82
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up04",
+      "title": "Billboard at 7th Ave & W 44th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "34 \u00d7 19.1 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 47,
+      "daily_audience": 58513,
+      "band": "Standard",
+      "score": 56,
+      "price_month_usd": 16400,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -10.0,
+          -122.9,
+          27.9
+        ],
+        "target": [
+          33.6,
+          -115.54,
+          46.53
+        ]
+      },
+      "position": [
+        33.6,
+        -115.54,
+        46.53
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up06",
+      "title": "Billboard at 7th Ave & W 43rd St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "5.3 \u00d7 9.4 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 32,
+      "daily_audience": 24549,
+      "band": "Standard",
+      "score": 56,
+      "price_month_usd": 6900,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          41.4,
+          -155.8,
+          19.2
+        ],
+        "target": [
+          41.35,
+          -137.77,
+          32.03
+        ]
+      },
+      "position": [
+        41.35,
+        -137.77,
+        32.03
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.wrap02",
+      "title": "Wraparound screen at 7th Ave & W 44th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "39.7 \u00d7 10.2 m",
+      "faces": "the Broadway plaza",
+      "height_above_street_m": 10,
+      "daily_audience": 60893,
+      "band": "Standard",
+      "score": 56,
+      "price_month_usd": 17100,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          85.5,
+          -93.3,
+          1.7
+        ],
+        "target": [
+          50.52,
+          -93.28,
+          9.9
+        ]
+      },
+      "position": [
+        50.52,
+        -93.28,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1083727.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 46th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "46.1 \u00d7 10.2 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 10,
+      "daily_audience": 59863,
+      "band": "Standard",
+      "score": 56,
+      "price_month_usd": 16800,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          6.0,
+          28.4,
+          40.0
+        ],
+        "target": [
+          -53.95,
+          88.39,
+          9.9
+        ]
+      },
+      "position": [
+        -57.89,
+        83.55,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.750.rib1",
+      "title": "Wraparound screen \u00b7 750 Seventh Avenue",
+      "kind": "Wraparound screen",
+      "building": "750 Seventh Avenue",
+      "size": "22 \u00d7 5.4 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 9,
+      "daily_audience": 30705,
+      "band": "Standard",
+      "score": 56,
+      "price_month_usd": 8600,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          13.2,
+          386.0,
+          1.7
+        ],
+        "target": [
+          13.2,
+          351.0,
+          8.7
+        ]
+      },
+      "position": [
+        13.2,
+        351.0,
+        8.7
+      ]
+    },
+    {
+      "slot_id": "ts.w49.shop01",
+      "title": "Storefront sign \u00b7 7th Ave & W 49th St corner",
+      "kind": "Storefront sign",
+      "building": "7th Ave & W 49th St corner",
+      "size": "12 \u00d7 1.3 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 4,
+      "daily_audience": 13455,
+      "band": "Standard",
+      "score": 56,
+      "price_month_usd": 3800,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -28.0,
+          322.7,
+          1.7
+        ],
+        "target": [
+          -28.0,
+          304.67,
+          4.0
+        ]
+      },
+      "position": [
+        -28.0,
+        304.67,
+        4.0
+      ]
+    },
+    {
+      "slot_id": "ts.1024714.crown01",
+      "title": "Rooftop sign \u00b7 One Astor Plaza",
+      "kind": "Rooftop sign",
+      "building": "One Astor Plaza",
+      "size": "22 \u00d7 12 m",
+      "faces": "the Broadway plaza",
+      "height_above_street_m": 180,
+      "daily_audience": 14492,
+      "band": "Standard",
+      "score": 55,
+      "price_month_usd": 3900,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -16.8,
+          -45.0,
+          108.0
+        ],
+        "target": [
+          -45.38,
+          -45.0,
+          180.0
+        ]
+      },
+      "position": [
+        -45.38,
+        -45.0,
+        180.0
+      ]
+    },
+    {
+      "slot_id": "ts.1076193.up04",
+      "title": "Billboard \u00b7 Morgan Stanley Building",
+      "kind": "Billboard",
+      "building": "Morgan Stanley Building",
+      "size": "34 \u00d7 19.1 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 26,
+      "daily_audience": 51133,
+      "band": "Standard",
+      "score": 55,
+      "price_month_usd": 13800,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -38.8,
+          212.0,
+          9.5
+        ],
+        "target": [
+          -69.15,
+          194.48,
+          26.06
+        ]
+      },
+      "position": [
+        -69.15,
+        194.48,
+        26.06
+      ]
+    },
+    {
+      "slot_id": "ts.1085493.up05",
+      "title": "Billboard \u00b7 Double Tree Guest Suites",
+      "kind": "Billboard",
+      "building": "Double Tree Guest Suites",
+      "size": "20.9 \u00d7 11.7 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 48,
+      "daily_audience": 51146,
+      "band": "Standard",
+      "score": 55,
+      "price_month_usd": 13800,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -14.7,
+          126.2,
+          29.1
+        ],
+        "target": [
+          12.4,
+          126.36,
+          48.46
+        ]
+      },
+      "position": [
+        12.4,
+        126.36,
+        48.46
+      ]
+    },
+    {
+      "slot_id": "ts.750.rib3",
+      "title": "Wraparound screen \u00b7 750 Seventh Avenue",
+      "kind": "Wraparound screen",
+      "building": "750 Seventh Avenue",
+      "size": "22 \u00d7 5.4 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 9,
+      "daily_audience": 25981,
+      "band": "Standard",
+      "score": 55,
+      "price_month_usd": 7000,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          76.0,
+          323.7,
+          1.7
+        ],
+        "target": [
+          41.0,
+          323.7,
+          8.7
+        ]
+      },
+      "position": [
+        41.0,
+        323.7,
+        8.7
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up07",
+      "title": "Billboard at 7th Ave & W 43rd St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "5.3 \u00d7 9.4 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 42,
+      "daily_audience": 20966,
+      "band": "Value",
+      "score": 53,
+      "price_month_usd": 5500,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          41.4,
+          -155.8,
+          25.5
+        ],
+        "target": [
+          41.35,
+          -137.77,
+          42.46
+        ]
+      },
+      "position": [
+        41.35,
+        -137.77,
+        42.46
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up08",
+      "title": "Billboard at 7th Ave & W 43rd St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "5.3 \u00d7 9.4 m",
+      "faces": "the 42nd St crossroads",
+      "height_above_street_m": 53,
+      "daily_audience": 17634,
+      "band": "Value",
+      "score": 53,
+      "price_month_usd": 4700,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          41.4,
+          -155.8,
+          32.1
+        ],
+        "target": [
+          41.35,
+          -137.77,
+          53.43
+        ]
+      },
+      "position": [
+        41.35,
+        -137.77,
+        53.43
+      ]
+    },
+    {
+      "slot_id": "ts.1022610.up12",
+      "title": "Billboard at 7th Ave & W 44th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "34 \u00d7 19.1 m",
+      "faces": "the Broadway plaza",
+      "height_above_street_m": 47,
+      "daily_audience": 60018,
+      "band": "Value",
+      "score": 53,
+      "price_month_usd": 15900,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          92.0,
+          -93.0,
+          15.6
+        ],
+        "target": [
+          50.52,
+          -93.01,
+          47.17
+        ]
+      },
+      "position": [
+        50.52,
+        -93.01,
+        47.17
+      ]
+    },
+    {
+      "slot_id": "ts.1022661.up05",
+      "title": "Billboard \u00b7 Embassy Theatre",
+      "kind": "Billboard",
+      "building": "Embassy Theatre",
+      "size": "16.6 \u00d7 9.4 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 43,
+      "daily_audience": 40793,
+      "band": "Value",
+      "score": 53,
+      "price_month_usd": 10800,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -9.7,
+          105.6,
+          25.6
+        ],
+        "target": [
+          11.92,
+          105.61,
+          42.73
+        ]
+      },
+      "position": [
+        11.92,
+        105.61,
+        42.73
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up04",
+      "title": "Billboard at 7th Ave & W 48th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "4.6 \u00d7 8.2 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 21,
+      "daily_audience": 13525,
+      "band": "Value",
+      "score": 53,
+      "price_month_usd": 3600,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -42.1,
+          196.8,
+          1.7
+        ],
+        "target": [
+          -41.99,
+          214.81,
+          20.58
+        ]
+      },
+      "position": [
+        -41.99,
+        214.81,
+        20.58
+      ]
+    },
+    {
+      "slot_id": "ts.750.shop01",
+      "title": "Storefront sign \u00b7 750 Seventh Avenue",
+      "kind": "Storefront sign",
+      "building": "750 Seventh Avenue",
+      "size": "14 \u00d7 1.1 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 4,
+      "daily_audience": 15436,
+      "band": "Value",
+      "score": 53,
+      "price_month_usd": 4100,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          26.0,
+          305.0,
+          1.7
+        ],
+        "target": [
+          26.0,
+          323.18,
+          4.3
+        ]
+      },
+      "position": [
+        26.0,
+        323.18,
+        4.3
+      ]
+    },
+    {
+      "slot_id": "ts.1024743.blade04",
+      "title": "Billboard at 7th Ave & W 47th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 20.6 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 27,
+      "daily_audience": 15903,
+      "band": "Value",
+      "score": 52,
+      "price_month_usd": 4200,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -82.1,
+          163.3,
+          1.7
+        ],
+        "target": [
+          -99.66,
+          145.84,
+          27.31
+        ]
+      },
+      "position": [
+        -99.66,
+        145.84,
+        27.31
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.wrap03",
+      "title": "Wraparound screen at 7th Ave & W 48th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "68.7 \u00d7 10.2 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 10,
+      "daily_audience": 36297,
+      "band": "Value",
+      "score": 52,
+      "price_month_usd": 9500,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          33.5,
+          151.2,
+          40.0
+        ],
+        "target": [
+          -26.55,
+          211.18,
+          9.9
+        ]
+      },
+      "position": [
+        -17.32,
+        204.28,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1076193.wrap01",
+      "title": "Wraparound screen \u00b7 Morgan Stanley Building",
+      "kind": "Wraparound screen",
+      "building": "Morgan Stanley Building",
+      "size": "43.5 \u00d7 10.2 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 10,
+      "daily_audience": 40651,
+      "band": "Value",
+      "score": 52,
+      "price_month_usd": 10600,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -39.1,
+          211.9,
+          1.7
+        ],
+        "target": [
+          -69.41,
+          194.41,
+          9.9
+        ]
+      },
+      "position": [
+        -69.41,
+        194.41,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.wrap02",
+      "title": "Wraparound screen at 7th Ave & W 47th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "6.5 \u00d7 10.2 m",
+      "faces": "7th Ave & W 47th St",
+      "height_above_street_m": 10,
+      "daily_audience": 13516,
+      "band": "Value",
+      "score": 52,
+      "price_month_usd": 3500,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          25.2,
+          154.1,
+          1.7
+        ],
+        "target": [
+          58.97,
+          163.18,
+          9.9
+        ]
+      },
+      "position": [
+        58.97,
+        163.18,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.750.rib4",
+      "title": "Wraparound screen \u00b7 750 Seventh Avenue",
+      "kind": "Wraparound screen",
+      "building": "750 Seventh Avenue",
+      "size": "22 \u00d7 5.4 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 9,
+      "daily_audience": 15846,
+      "band": "Value",
+      "score": 52,
+      "price_month_usd": 4100,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          98.4,
+          323.7,
+          1.7
+        ],
+        "target": [
+          63.4,
+          323.7,
+          8.7
+        ]
+      },
+      "position": [
+        63.4,
+        323.7,
+        8.7
+      ]
+    },
+    {
+      "slot_id": "boat.hudson.side",
+      "title": "Railing banners \u00b7 Hudson sightseeing boat",
+      "kind": "Boat banners",
+      "building": "Hudson Sightseer (cruise boat)",
+      "size": "2 \u00d7 9.6 \u00d7 1.2 m",
+      "faces": "Pier 83, Hudson River Park, the Intrepid and the passengers on board",
+      "height_above_street_m": 7,
+      "daily_audience": 35000,
+      "band": "Standard",
+      "score": 52,
+      "best_for": "Tourism, Entertainment, Food & drink",
+      "position": [
+        -1560,
+        -208.8,
+        7
+      ],
+      "view": {
+        "eye": [
+          -1540,
+          -260,
+          14
+        ],
+        "target": [
+          -1563,
+          -206,
+          7
+        ]
+      },
+      "price_month_usd": 9200,
+      "price_is_estimate": true,
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG"
+        ]
+      }
+    },
+    {
+      "slot_id": "ts.1022611.wrap01",
+      "title": "Wraparound screen \u00b7 Casablanca Hotel",
+      "kind": "Wraparound screen",
+      "building": "Casablanca Hotel",
+      "size": "28.7 \u00d7 10.2 m",
+      "faces": "7th Ave & W 43rd St",
+      "height_above_street_m": 10,
+      "daily_audience": 32525,
+      "band": "Value",
+      "score": 51,
+      "price_month_usd": 8400,
+      "price_is_estimate": true,
+      "best_for": "Retail, Travel",
+      "status": "available",
+      "artwork": {
+        "aspect": "2:1",
+        "px": [
+          3840,
+          1920
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          145.1,
+          -212.2,
+          40.0
+        ],
+        "target": [
+          85.06,
+          -152.19,
+          9.9
+        ]
+      },
+      "position": [
+        88.28,
+        -155.64,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1022623.wrap02",
+      "title": "Wraparound screen at 7th Ave & W 44th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "7.4 \u00d7 10.2 m",
+      "faces": "7th Ave & W 44th St",
+      "height_above_street_m": 10,
+      "daily_audience": 16688,
+      "band": "Value",
+      "score": 51,
+      "price_month_usd": 4300,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "3:4",
+        "px": [
+          1620,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          109.0,
+          -93.2,
+          1.7
+        ],
+        "target": [
+          74.04,
+          -93.23,
+          9.9
+        ]
+      },
+      "position": [
+        74.04,
+        -93.23,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1024742.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 47th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "42.7 \u00d7 10.2 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 10,
+      "daily_audience": 23141,
+      "band": "Value",
+      "score": 51,
+      "price_month_usd": 6000,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -44.5,
+          145.1,
+          1.7
+        ],
+        "target": [
+          -79.46,
+          145.05,
+          9.9
+        ]
+      },
+      "position": [
+        -79.46,
+        145.05,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.750.shop02",
+      "title": "Storefront sign \u00b7 750 Seventh Avenue",
+      "kind": "Storefront sign",
+      "building": "750 Seventh Avenue",
+      "size": "12 \u00d7 1.1 m",
+      "faces": "7th Ave & W 49th St",
+      "height_above_street_m": 4,
+      "daily_audience": 9494,
+      "band": "Value",
+      "score": 51,
+      "price_month_usd": 2500,
+      "price_is_estimate": true,
+      "best_for": "Wayfinding, F&B, News ticker",
+      "status": "available",
+      "artwork": {
+        "aspect": "8:1",
+        "px": [
+          3840,
+          480
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -4.9,
+          350.0,
+          1.7
+        ],
+        "target": [
+          13.08,
+          350.0,
+          4.3
+        ]
+      },
+      "position": [
+        13.08,
+        350.0,
+        4.3
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up08",
+      "title": "Billboard at 7th Ave & W 48th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "25.5 \u00d7 14.3 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 24,
+      "daily_audience": 32457,
+      "band": "Value",
+      "score": 50,
+      "price_month_usd": 8300,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          3.7,
+          225.2,
+          1.7
+        ],
+        "target": [
+          -31.26,
+          225.2,
+          23.67
+        ]
+      },
+      "position": [
+        -31.26,
+        225.2,
+        23.67
+      ]
+    },
+    {
+      "slot_id": "ts.1022621.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 44th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "12.4 \u00d7 10.2 m",
+      "faces": "7th Ave & W 44th St",
+      "height_above_street_m": 10,
+      "daily_audience": 16171,
+      "band": "Value",
+      "score": 49,
+      "price_month_usd": 4100,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          125.8,
+          -93.2,
+          1.7
+        ],
+        "target": [
+          90.84,
+          -93.19,
+          9.9
+        ]
+      },
+      "position": [
+        90.84,
+        -93.19,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1022622.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 44th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "6.9 \u00d7 10.2 m",
+      "faces": "7th Ave & W 44th St",
+      "height_above_street_m": 10,
+      "daily_audience": 14227,
+      "band": "Value",
+      "score": 49,
+      "price_month_usd": 3600,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "3:4",
+        "px": [
+          1620,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          116.2,
+          -93.2,
+          1.7
+        ],
+        "target": [
+          81.17,
+          -93.21,
+          9.9
+        ]
+      },
+      "position": [
+        81.17,
+        -93.21,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1022686.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 48th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "8.1 \u00d7 8.2 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 9,
+      "daily_audience": 11110,
+      "band": "Value",
+      "score": 49,
+      "price_month_usd": 2800,
+      "price_is_estimate": true,
+      "best_for": "Tech, Social, Food",
+      "status": "available",
+      "artwork": {
+        "aspect": "1:1",
+        "px": [
+          2160,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          3.9,
+          246.9,
+          1.7
+        ],
+        "target": [
+          12.97,
+          213.06,
+          8.91
+        ]
+      },
+      "position": [
+        12.97,
+        213.06,
+        8.91
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade11",
+      "title": "Billboard at 7th Ave & W 48th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 26 m",
+      "faces": "7th Ave & W 47th St",
+      "height_above_street_m": 30,
+      "daily_audience": 15017,
+      "band": "Value",
+      "score": 49,
+      "price_month_usd": 3800,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -60.9,
+          191.2,
+          18.0
+        ],
+        "target": [
+          -40.02,
+          214.31,
+          30.0
+        ]
+      },
+      "position": [
+        -40.02,
+        214.31,
+        30.0
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up05",
+      "title": "Billboard at 7th Ave & W 48th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "4.6 \u00d7 8.2 m",
+      "faces": "Duffy Square & the red steps",
+      "height_above_street_m": 30,
+      "daily_audience": 13084,
+      "band": "Value",
+      "score": 49,
+      "price_month_usd": 3300,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -42.1,
+          196.8,
+          1.7
+        ],
+        "target": [
+          -41.99,
+          214.81,
+          29.92
+        ]
+      },
+      "position": [
+        -41.99,
+        214.81,
+        29.92
+      ]
+    },
+    {
+      "slot_id": "ts.1076193.up05",
+      "title": "Billboard \u00b7 Morgan Stanley Building",
+      "kind": "Billboard",
+      "building": "Morgan Stanley Building",
+      "size": "34 \u00d7 19.1 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 46,
+      "daily_audience": 42935,
+      "band": "Value",
+      "score": 49,
+      "price_month_usd": 10900,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -48.9,
+          229.6,
+          15.3
+        ],
+        "target": [
+          -69.15,
+          194.48,
+          46.02
+        ]
+      },
+      "position": [
+        -69.15,
+        194.48,
+        46.02
+      ]
+    },
+    {
+      "slot_id": "ts.1083718.wrap03",
+      "title": "Wraparound screen at 7th Ave & W 48th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "47.8 \u00d7 10.2 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 10,
+      "daily_audience": 30577,
+      "band": "Value",
+      "score": 49,
+      "price_month_usd": 7800,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          47.3,
+          228.3,
+          1.7
+        ],
+        "target": [
+          38.26,
+          194.54,
+          9.9
+        ]
+      },
+      "position": [
+        38.26,
+        194.54,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade10",
+      "title": "Billboard at 7th Ave & W 48th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 26 m",
+      "faces": "7th Ave & W 47th St",
+      "height_above_street_m": 30,
+      "daily_audience": 13502,
+      "band": "Value",
+      "score": 48,
+      "price_month_usd": 3400,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -68.3,
+          192.4,
+          18.0
+        ],
+        "target": [
+          -46.18,
+          214.4,
+          30.0
+        ]
+      },
+      "position": [
+        -46.18,
+        214.4,
+        30.0
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 48th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "47.2 \u00d7 10.2 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 10,
+      "daily_audience": 17893,
+      "band": "Value",
+      "score": 48,
+      "price_month_usd": 4500,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -66.2,
+          234.4,
+          1.7
+        ],
+        "target": [
+          -41.46,
+          209.67,
+          9.9
+        ]
+      },
+      "position": [
+        -37.67,
+        199.52,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1089850.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 48th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "7.5 \u00d7 10.2 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 10,
+      "daily_audience": 10692,
+      "band": "Value",
+      "score": 48,
+      "price_month_usd": 2700,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "3:4",
+        "px": [
+          1620,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          3.9,
+          254.6,
+          1.7
+        ],
+        "target": [
+          12.96,
+          220.84,
+          9.9
+        ]
+      },
+      "position": [
+        12.96,
+        220.84,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1022612.wrap01",
+      "title": "Wraparound screen at 7th Ave & W 43rd St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "18.2 \u00d7 10.2 m",
+      "faces": "7th Ave & W 43rd St",
+      "height_above_street_m": 10,
+      "daily_audience": 10392,
+      "band": "Value",
+      "score": 47,
+      "price_month_usd": 2600,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          141.6,
+          -155.6,
+          1.7
+        ],
+        "target": [
+          106.57,
+          -155.58,
+          9.9
+        ]
+      },
+      "position": [
+        106.57,
+        -155.58,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1089850.wrap02",
+      "title": "Wraparound screen at 7th Ave & W 48th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "23.8 \u00d7 10.2 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 10,
+      "daily_audience": 26238,
+      "band": "Value",
+      "score": 47,
+      "price_month_usd": 6500,
+      "price_is_estimate": true,
+      "best_for": "Retail, Travel",
+      "status": "available",
+      "artwork": {
+        "aspect": "2:1",
+        "px": [
+          3840,
+          1920
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          60.3,
+          225.0,
+          1.7
+        ],
+        "target": [
+          25.3,
+          224.99,
+          9.9
+        ]
+      },
+      "position": [
+        25.3,
+        224.99,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1022612.wrap02",
+      "title": "Wraparound screen at 7th Ave & W 44th St",
+      "kind": "Wraparound screen",
+      "building": "",
+      "size": "15.4 \u00d7 10.2 m",
+      "faces": "7th Ave & W 44th St",
+      "height_above_street_m": 10,
+      "daily_audience": 14430,
+      "band": "Value",
+      "score": 46,
+      "price_month_usd": 3500,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          139.7,
+          -93.2,
+          1.7
+        ],
+        "target": [
+          104.74,
+          -93.15,
+          9.9
+        ]
+      },
+      "position": [
+        104.74,
+        -93.15,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.blade14",
+      "title": "Billboard at 7th Ave & W 48th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "3.2 \u00d7 26 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 30,
+      "daily_audience": 13773,
+      "band": "Value",
+      "score": 45,
+      "price_month_usd": 3300,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          5.8,
+          247.5,
+          18.0
+        ],
+        "target": [
+          -16.36,
+          225.55,
+          30.0
+        ]
+      },
+      "position": [
+        -16.36,
+        225.55,
+        30.0
+      ]
+    },
+    {
+      "slot_id": "ts.1024739.wrap01",
+      "title": "Wraparound screen \u00b7 Lunt-Fontanne Theatre",
+      "kind": "Wraparound screen",
+      "building": "Lunt-Fontanne Theatre",
+      "size": "39.5 \u00d7 10.2 m",
+      "faces": "7th Ave & W 46th St",
+      "height_above_street_m": 10,
+      "daily_audience": 22804,
+      "band": "Value",
+      "score": 44,
+      "price_month_usd": 5500,
+      "price_is_estimate": true,
+      "best_for": "Finance, Telecom, Retail",
+      "status": "available",
+      "artwork": {
+        "aspect": "4:1",
+        "px": [
+          3840,
+          960
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          -58.1,
+          83.4,
+          1.7
+        ],
+        "target": [
+          -93.12,
+          83.42,
+          9.9
+        ]
+      },
+      "position": [
+        -93.12,
+        83.42,
+        9.9
+      ]
+    },
+    {
+      "slot_id": "ts.1022633.blade07",
+      "title": "Billboard \u00b7 Lyceum Theatre",
+      "kind": "Billboard",
+      "building": "Lyceum Theatre",
+      "size": "3.2 \u00d7 11.3 m",
+      "faces": "the Broadway plaza",
+      "height_above_street_m": 23,
+      "daily_audience": 15188,
+      "band": "Value",
+      "score": 43,
+      "price_month_usd": 3600,
+      "price_is_estimate": true,
+      "best_for": "Fashion, Entertainment, Beauty",
+      "status": "available",
+      "artwork": {
+        "aspect": "9:16",
+        "px": [
+          2160,
+          3840
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          56.5,
+          -9.4,
+          1.7
+        ],
+        "target": [
+          69.04,
+          3.44,
+          22.67
+        ]
+      },
+      "position": [
+        69.04,
+        3.44,
+        22.67
+      ]
+    },
+    {
+      "slot_id": "ts.1024757.up09",
+      "title": "Billboard at 7th Ave & W 48th St",
+      "kind": "Billboard",
+      "building": "",
+      "size": "25.5 \u00d7 14.3 m",
+      "faces": "7th Ave & W 48th St",
+      "height_above_street_m": 40,
+      "daily_audience": 27763,
+      "band": "Value",
+      "score": 43,
+      "price_month_usd": 6600,
+      "price_is_estimate": true,
+      "best_for": "Entertainment, Auto, Tech",
+      "status": "available",
+      "artwork": {
+        "aspect": "16:9",
+        "px": [
+          3840,
+          2160
+        ],
+        "formats": [
+          "PNG",
+          "JPG",
+          "MP4 (\u226415 s)"
+        ]
+      },
+      "view": {
+        "eye": [
+          3.9,
+          225.2,
+          13.5
+        ],
+        "target": [
+          -31.26,
+          225.2,
+          39.97
+        ]
+      },
+      "position": [
+        -31.26,
+        225.2,
+        39.97
+      ]
+    }
+  ]
+}

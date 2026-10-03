@@ -1,0 +1,1249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Times Square Viewer</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #07070b; color: var(--ink); font: var(--t-body)/1.4 var(--font); overflow: hidden; }
+  canvas { display: block; }
+  /* top-left: neighbourhood switcher + menu (tour, settings) */
+  #hud { position: fixed; top: var(--s4); left: var(--s4); z-index: 12; }
+  #districtbtn { display: inline-flex; align-items: center; gap: var(--s1); font-size: var(--t-headline); }
+  #menu { position: absolute; top: 52px; left: 0; width: 260px; padding: var(--s2); }
+  #menu[hidden] { display: none; }
+  #menu .item { display: flex; align-items: center; gap: var(--s3); width: 100%; min-height: var(--hit); padding: 0 var(--s3);
+    background: none; border: none; border-radius: var(--r-control); color: var(--ink); font: var(--t-body) var(--font); cursor: pointer; }
+  #menu .item:hover { background: var(--fill); }
+  #menu .sep { height: 1px; background: var(--glass-border); margin: var(--s2) var(--s2); }
+  #menu .setting { padding: var(--s2) var(--s3); }
+  #menu label { display: flex; justify-content: space-between; color: var(--ink-2); font-size: var(--t-caption); margin-bottom: var(--s1); }
+  #menu input[type=range] { width: 100%; accent-color: var(--accent); }
+  #menu .soon { padding: var(--s2) var(--s3); color: var(--ink-3); font-size: var(--t-caption); }
+  /* bottom-right: control dock (Apple Maps style) */
+  #dock { position: fixed; right: var(--s4); bottom: var(--s4); z-index: 12; display: flex; flex-direction: column; padding: var(--s1); gap: 2px; }
+  .dockbtn { width: var(--hit); height: var(--hit); display: grid; place-items: center; background: none; border: none; color: var(--ink);
+    border-radius: var(--r-control); cursor: pointer; position: relative; }
+  .dockbtn:hover { background: var(--fill); }
+  .dockbtn[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  #soundbtn[aria-pressed="true"] { background: none; color: inherit; }   /* sound is a setting, not a mode: the icon shows it */
+  .dockbtn span { position: absolute; right: 52px; white-space: nowrap; background: var(--glass-strong); color: var(--ink); padding: var(--s1) var(--s2);
+    border-radius: 8px; font-size: var(--t-caption); opacity: 0; pointer-events: none; transition: opacity .15s; }
+  .dockbtn:hover span, .dockbtn:focus-visible span { opacity: 1; }
+  .dockbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  #dock .sep { height: 1px; background: var(--glass-border); margin: var(--s1) var(--s2); }
+  .dockbtn em { display: none; font: var(--w-semibold) 10px var(--font); font-style: normal; margin-top: 2px; }
+  body[data-input="touch"] [data-t] { display: none !important; }              /* touch rotates with two fingers */
+  #loading { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: radial-gradient(120% 80% at 50% 30%, #2a1630 0%, #0b0b12 60%, #050508 100%); color: var(--ink); font-family: var(--font);
+    transition: opacity .9s ease; }
+  #loading.gone { opacity: 0; pointer-events: none; }
+  #loading h1 { font-size: 40px; font-weight: 700; letter-spacing: -.02em; margin: 0 0 6px; }
+  #loading p { color: var(--ink-2); margin: 0 0 28px; font-size: var(--t-body); }
+  #bar { width: 220px; height: 4px; background: rgba(255,255,255,.12); border-radius: 2px; overflow: hidden; }
+  #bar > div { height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  body.loading #hud, body.loading #where, body.loading #minimap, body.loading #dock, body.loading #bizbtn, body.loading #zoom { visibility: hidden; }
+  /* + / − sit just above the control dock (bottom bar on phones) */
+  #zoom { position: fixed; right: var(--s4); z-index: 12; display: flex; flex-direction: column; padding: var(--s1); gap: 2px; }
+  @media (max-width: 640px) { #zoom { right: var(--s3); } }
+  #minimap { position: fixed; left: var(--s4); bottom: var(--s4); width: 200px; height: 200px; border-radius: 50%;
+             border: 1.5px solid rgba(255,255,255,.35); box-shadow: var(--shadow); cursor: pointer; z-index: 5; }
+</style>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/mobile.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+  "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.8.3/build/index.module.js"
+} }
+</script>
+</head>
+<body class="loading">
+<div id="hud">
+  <button id="districtbtn" class="ui-btn ui-surface" aria-haspopup="menu" aria-expanded="false" aria-controls="menu">Times Square <i data-icon="chevron"></i></button>
+  <div id="menu" class="ui-surface" role="menu" hidden>
+    <button class="item" id="whatbtn" role="menuitem"><i data-icon="help"></i>What can I do?</button>
+    <button class="item" id="tourbtn" role="menuitem"><i data-icon="tour"></i>Take the 60-second tour</button>
+    <button class="item" id="sightbtn" role="menuitem"><i data-icon="tour"></i>Sightseeing tours: walk, sail, fly</button>
+    <button class="item" id="bizmenu" role="menuitem"><i data-icon="screen"></i>For businesses: screens & buildings</button>
+    <button class="item" id="setbtn" role="menuitem"><i data-icon="settings"></i>Settings <span style="margin-left:auto;color:var(--ink-3);font-size:var(--t-caption)">Esc</span></button>
+    <div class="sep"></div>
+    <div class="setting"><label for="tod">Time of day <span id="todv"></span></label>
+      <button id="livebtn" class="ui-chip accent" style="border:none;cursor:pointer;margin-bottom:var(--s2)">Live · New York time</button>
+      <input id="tod" autocomplete="off" type="range" min="0" max="1" step="0.01" value="0.92"></div>
+    <div class="setting"><label for="people">People <span id="peoplev"></span></label>
+      <input id="people" autocomplete="off" type="range" min="0" max="160" step="2" value="50"></div>
+    <div class="sep"></div>
+    <div class="soon">More neighbourhoods coming soon</div>
+  </div>
+</div>
+<div id="dock" class="ui-surface" role="toolbar" aria-label="View controls">
+  <button id="explorebtn" class="dockbtn" aria-pressed="true" aria-label="Explore"><i data-icon="explore"></i><span>Explore from above</span><em>Explore</em></button>
+  <button id="walk" class="dockbtn" aria-pressed="false" aria-label="Walk"><i data-icon="walk"></i><span>Walk at street level</span><em>Walk</em></button>
+  <div class="sep"></div>
+  <button id="mapbtn" class="dockbtn" aria-label="Map"><i data-icon="map"></i><span>Map (M)</span><em>Map</em></button>
+  <button id="soundbtn" class="dockbtn" aria-pressed="false" aria-label="City sound"><i data-icon="sound"></i><span>Sound on / off</span><em>Sound</em></button>
+  <div class="sep"></div>
+</div>
+<div id="zoom" class="ui-surface" role="group" aria-label="Zoom">
+  <button class="dockbtn" id="zoomin" aria-label="Zoom in"><i data-icon="plus"></i><span>Zoom in (+)</span></button>
+  <button class="dockbtn" id="zoomout" aria-label="Zoom out"><i data-icon="minus"></i><span>Zoom out (−)</span></button>
+</div>
+<div id="loading"><h1>Times Square</h1><p id="loadtxt">Getting the lights on…</p><div id="bar"><div></div></div></div>
+<canvas id="minimap" width="440" height="440"></canvas>
+
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
+import { MapControls } from "three/addons/controls/MapControls.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+import { Collider } from "./js/collision.js";
+import { Crowd, tktsSeats } from "./js/crowd.js";
+import { Navigator } from "./js/nav.js";
+import { CityMap, drawPlaceIcon } from "./js/map.js";
+import { StreetWalk } from "./js/walk.js";
+import { Business } from "./js/business.js";
+import { ICON } from "./js/icons.js";
+import { optimizeChunk } from "./js/optimize.js";
+import { Screens } from "./js/screens.js";
+import { CityAudio } from "./js/audio.js";
+import { Ride } from "./js/ride.js";
+import { Traffic } from "./js/traffic.js";
+import { Settings, Progress, PauseMenu } from "./js/settings.js";
+import { Pad, BTN, navigateFocus, prompt } from "./js/gamepad.js";
+import { caption } from "./js/captions.js";
+import { Messages } from "./js/messages.js";
+import { makeScreenViews } from "./js/screenview.js";
+import { Flight, BANNER_SLOT } from "./js/flight.js";
+import { Boat, BOAT_SLOT } from "./js/boat.js";
+import { Helm } from "./js/helm.js";
+import { Harbor } from "./js/harbor.js";
+import { IntrepidVisit } from "./js/intrepid.js";
+import { Trip } from "./js/trip.js";
+import { Avatar, Npcs, PLAYER, PLAYER_OUTFITS } from "./js/avatar.js";
+import { Fares } from "./js/fares.js";
+import { applyStorefronts } from "./js/storefront4.js";
+import { Tours } from "./js/tours.js";
+import { Plan } from "./js/plan.js";
+document.querySelectorAll("[data-icon]").forEach(el => el.outerHTML = ICON[el.dataset.icon]);
+const menuBtn = document.getElementById("districtbtn"), menu = document.getElementById("menu");
+menuBtn.onclick = e => { e.stopPropagation(); menu.hidden = !menu.hidden; menuBtn.setAttribute("aria-expanded", String(!menu.hidden)); };
+addEventListener("pointerdown", e => { if (!menu.hidden && !document.getElementById("hud").contains(e.target)) { menu.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); } });
+
+const ROOT = "../";
+// Blender (Z-up, metres) -> three (Y-up): (x, y, z) -> (x, z, -y)
+const B = (x, y, z) => new THREE.Vector3(x, z, -y);
+
+// ---------------------------------------------------------------- renderer / scene
+// no WebGL (very old browser / blocked GPU): say so plainly instead of a blank page
+if (!document.createElement("canvas").getContext("webgl2")) {
+  document.getElementById("loadtxt").textContent = "This browser can't show 3D. Try the latest Chrome, Safari, Edge or Firefox.";
+  throw new Error("WebGL2 unavailable");
+}
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.AgXToneMapping;
+renderer.toneMappingExposure = 1.0;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 16000);   // far enough for the Statue from Midtown (9 km)
+scene.fog = new THREE.FogExp2(0x0b0a14, 0.00012);
+
+// sky dome: gradient by time of day (matches the Blender lookdev camera sky). Colours are linear and go through AgX +
+// sRGB in the output pass, which lightens and desaturates them a lot: they're set deep on purpose so the sky reads blue,
+// and the blue starts ~25 degrees up (most of the sky you see from the street or a plane is near the horizon)
+const skyMat = new THREE.ShaderMaterial({
+  side: THREE.BackSide, depthWrite: false,
+  uniforms: { top: { value: new THREE.Color() }, horizon: { value: new THREE.Color() } },
+  vertexShader: "varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }",
+  fragmentShader: "uniform vec3 top; uniform vec3 horizon; varying vec3 vP; void main(){ float t = clamp(vP.y*2.2,0.,1.); gl_FragColor = vec4(mix(horizon, top, pow(t,.55)),1.); }",
+});
+const sky = new THREE.Mesh(new THREE.SphereGeometry(6000, 32, 16), skyMat);
+sky.renderOrder = -10;                                         // drawn first, writes no depth: anything farther still shows
+scene.add(sky);
+// the river reaches the horizon: the Hudson's own water material on a wide disc that follows the camera (replacing the
+// district's water mesh, so there's no seam where the model ends), fading into the horizon haze far out. From a plane,
+// a boat or a tower the edge of the model never shows as a void or a line on the water.
+const worldWater = new THREE.Mesh(new THREE.CircleGeometry(14000, 128).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x213538, roughness: 0.06 }));
+worldWater.position.y = -1.8; worldWater.raycast = () => {}; worldWater.name = "WORLD_water";
+scene.add(worldWater);
+function horizonFade(mat) {                      // mix toward the horizon colour with distance (on top of the fog)
+  mat.onBeforeCompile = sh => {
+    sh.uniforms.uHorizon = skyMat.uniforms.horizon; sh.uniforms.uEye = { value: camera.position };
+    sh.vertexShader = sh.vertexShader.replace("#include <common>", "#include <common>\nvarying vec3 vWorldW;")
+      .replace("#include <begin_vertex>", "#include <begin_vertex>\nvWorldW = (modelMatrix * vec4(transformed, 1.0)).xyz;");
+    sh.fragmentShader = sh.fragmentShader.replace("#include <common>", "#include <common>\nuniform vec3 uHorizon; uniform vec3 uEye; varying vec3 vWorldW;")
+      .replace("#include <fog_fragment>", "#include <fog_fragment>\n  float dW = length(vWorldW.xz - uEye.xz);\n  gl_FragColor.rgb = mix(gl_FragColor.rgb, uHorizon, smoothstep(900., 11000., dW + uEye.y * 1.5));");
+  };
+  mat.customProgramCacheKey = () => "horizon-fade";
+  mat.needsUpdate = true;
+}
+horizonFade(worldWater.material);
+// once the district loads: the world water takes the Hudson's exact material and the district's own water mesh hides
+function adoptWater(root) {
+  root.traverse(o => {
+    if (!o.isMesh || o.material?.name !== "M_Water_Hudson" || o === worldWater) return;
+    const m = o.material.clone(); m.name = "M_Water_World"; horizonFade(m);
+    worldWater.material = m; o.visible = false;
+  });
+}
+// the river reflects the real sky (its gradient at this time of day), re-shot when the light changes. A single cube
+// shot can't place the city's reflections correctly (it shows hard seams), and a true mirror would render the whole
+// city twice per frame, so the water mirrors the sky only, never the street photo the rest of the scene is lit by.
+const waterCube = new THREE.WebGLCubeRenderTarget(128, { type: THREE.HalfFloatType });
+const waterCubeCam = new THREE.CubeCamera(1, 7000, waterCube);
+const skyOnly = new THREE.Scene();
+let waterReflTod = -1, waterReflTex = null;
+function captureWaterReflection(force) {
+  if (!worldWater.material || (!force && Math.abs(curTod - waterReflTod) < 0.04)) return;
+  waterReflTod = curTod;
+  const parent = sky.parent, skyAt = sky.position.clone();
+  skyOnly.add(sky); sky.position.set(0, 0, 0); waterCubeCam.position.set(0, 0, 0);
+  waterCubeCam.update(renderer, skyOnly);
+  parent.add(sky); sky.position.copy(skyAt);
+  const t = pmrem.fromCubemap(waterCube.texture).texture;
+  waterReflTex?.dispose(); waterReflTex = t;
+  const m = worldWater.material, night = smooth(0.45, 0.8, curTod);
+  // a lightly rippled river with a strong sky sheen at low angles: the real sky at this hour (never the lighting photo,
+  // whose street and waterfront would show up in the open harbour), dark water after dusk
+  m.envMap = t;
+  m.envMapIntensity = 2.2 - 1.6 * night; m.roughness = 0.1 - 0.04 * night;
+  m.color.set(0x2a4148).lerp(new THREE.Color(0x070b10), night); m.needsUpdate = true;
+}
+
+const sun = new THREE.DirectionalLight(0xffffff, 3);
+sun.position.set(300, 600, 200);
+scene.add(sun);
+const hemi = new THREE.HemisphereLight(0xbfd8ff, 0x3a3a40, 0.6);
+scene.add(hemi);
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.4, 0.35, 0.9);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+// environment lighting from the same HDRIs used in Blender
+const pmrem = new THREE.PMREMGenerator(renderer);
+const env = {};
+const rgbe = new RGBELoader();
+function loadEnv(key, file) {
+  return new Promise(res => rgbe.load(ROOT + "blender/library/hdri/" + file, t => {
+    env[key] = pmrem.fromEquirectangular(t).texture; t.dispose(); res();
+  }, undefined, () => res()));
+}
+
+// ---------------------------------------------------------------- day / night (mirrors NG_TOD in Blender)
+// exported emissive strength = the NIGHT value; daytime ratio per material family:
+const DAY_RATIO = [
+  [/^MAT_SLOT_/, 7.0 / 2.2], [/^M_LED_/, 7.0 / 2.2],
+  [/^M_Glass_Curtain|^M_Facade_/, 0.0], [/^M_Storefront|^M_ShopSign/, 0.35 / 1.8],
+  [/^M_Light_StreetWarm/, 0.0], [/^M_Light_StoreSign/, 0.3], [/^M_Light_Signal/, 8 / 12],
+  [/^M_Light_WalkHand/, 5 / 8], [/^M_Light_SubwayGreen/, 1 / 6], [/^M_Light_Headlight/, 0.05],
+  [/^M_Light_Taillight/, 0.1], [/^M_Light_TaxiTop/, 0.3], [/^M_Light_Turn/, 0.15], [/^M_Glass_TKTSRed/, 0.14],
+  [/^M_Light_BoatCabin/, 0.0],
+  [/^M_Light_ShipBridge/, 0.0], [/^M_Light_LibertyFlood/, 0.0], [/^M_Light_LibertyTorch/, 0.05], [/^M_Light_WTCBeacon/, 0.3],   // floodlit / lit after dark                                     // the sightseeing boat's saloon windows: lit only at night
+];
+const emissives = [];
+function registerMaterial(m) {
+  if (!m || m.userData._reg) return;
+  m.userData._reg = true;
+  if (/^M_Car_Paint_TaxiYellow/.test(m.name)) {     // AgX + a full clear-coat wash cab yellow out to cream: deepen it
+    m.color.setRGB(0.62, 0.38, 0.0); if ("clearcoat" in m) m.clearcoat = 0.4;
+  }
+  if (m.name === "M_Road_Asphalt") m.color.setRGB(0.5, 0.5, 0.52);   // NYC asphalt is dark (albedo ~0.1): streets must read against the pale sidewalks, even from the air
+  if (m.emissive && (m.emissive.r + m.emissive.g + m.emissive.b > 0 || m.emissiveMap)) {
+    const rule = DAY_RATIO.find(([re]) => re.test(m.name));
+    // Blender strengths are tuned for EEVEE+AgX; three.js needs a lower scale per family
+    const k = /^MAT_SLOT_|^M_LED_/.test(m.name) ? 0.55 : /^M_Light_/.test(m.name) ? 0.35 : 0.7;
+    const night = m.emissiveIntensity * k;
+    emissives.push({ m, night, day: night * (rule ? Math.min(rule[1], 1.2) : 0.3) });
+  }
+}
+const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+// real New York time -> tod (0 = noon .. 1 = midnight, mirrored through the morning)
+function nycTod() {
+  const p = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "numeric", minute: "numeric", hour12: false })
+    .formatToParts(new Date());
+  const h = (+p.find(x => x.type === "hour").value % 24) + (+p.find(x => x.type === "minute").value) / 60;
+  return Math.min(1, Math.abs(h - 12) / 12 * 1.15);
+}
+function nycClock() {
+  return new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "numeric", minute: "2-digit" }).format(new Date());
+}
+let live = true;
+let curTod = 0;
+function setTime(tod) {
+  curTod = tod;
+  document.getElementById("todv").textContent = live ? nycClock() : tod < 0.3 ? "Day" : tod < 0.65 ? "Dusk" : "Night";
+  document.getElementById("livebtn").style.opacity = live ? 1 : 0.5;
+  const night = smooth(0.45, 0.8, tod), dusk = smooth(0.25, 0.55, tod);
+  for (const e of emissives) e.m.emissiveIntensity = e.day + (e.night - e.day) * night;
+  const sunE = Math.max(0, 1 - smooth(0.35, 0.62, tod));
+  sun.intensity = 3.2 * sunE;
+  sun.color.setRGB(1, 1 - 0.25 * dusk, 1 - 0.5 * dusk);
+  const elev = THREE.MathUtils.degToRad(62 - 103 * Math.min(tod, 0.65));
+  sun.position.set(Math.cos(elev) * 600, Math.sin(elev) * 600 + 1, 300);
+  hemi.intensity = 0.55 * (1 - night) + 0.08 * night;
+  skyMat.uniforms.top.value.setRGB(0.03, 0.16, 0.62).lerp(new THREE.Color(0.012, 0.014, 0.04), night);
+  skyMat.uniforms.horizon.value.setRGB(0.42, 0.6, 0.86).lerp(new THREE.Color(0.9, 0.55, 0.35), dusk * (1 - night))
+    .lerp(new THREE.Color(0.11, 0.06, 0.12), night);
+  scene.environment = night > 0.5 ? (env.night || env.day) : (env.day || null);
+  scene.environmentIntensity = 0.9 * (1 - night) + 0.25 * night;
+  scene.fog.color.copy(skyMat.uniforms.horizon.value);
+  bloom.strength = 0.1 + 0.35 * night;
+  if (typeof captureWaterReflection === "function" && waterReflTod >= 0) setTimeout(() => captureWaterReflection(false), 50);   // light changed: re-shoot
+  bloom.threshold = 0.98 - 0.13 * night;
+}
+
+// ---------------------------------------------------------------- load the district from world.json
+const draco = new DRACOLoader().setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/");
+const gltf = new GLTFLoader().setDRACOLoader(draco);
+const pickables = [];
+const perf = { chunks: {} };
+const NOOPT = new URLSearchParams(location.search).has("noopt");   // debugging: load the chunks exactly as exported                                  // load-time optimisation stats (see ?debug)
+let demoBrands = null, demoOn = true;
+const slotMaterials = new Map();  // slot_id -> {material, placeholder}
+
+const HERO_VIEW = { eye: [-14.5, 137.5, 6.4], target: [16, -215, 40] };   // top of the red steps, 1 Times Sq on a third
+let resolveCity; const cityReady = new Promise(r => resolveCity = r);
+
+function loadChunk(path) {
+  return new Promise((res, rej) => gltf.load(ROOT + path, g => {
+    const st = NOOPT ? {} : optimizeChunk(g.scene);          // few big draws instead of one per building / prop
+    perf.chunks[path.split("/").pop()] = st;
+    g.scene.traverse(o => {
+      if (!o.isMesh) return;
+      (Array.isArray(o.material) ? o.material : [o.material]).forEach(registerMaterial);
+      let p = o;
+      while (p && !p.userData.slot_id) p = p.parent;
+      if (p) { pickables.push(o); slotMaterials.set(p.userData.slot_id, { mat: o.material, ph: o.material.emissiveMap }); screens.add(p.userData.slot_id, o.material); }
+    });
+    scene.add(g.scene);
+    adoptWater(g.scene);
+    res();
+  }, undefined, rej));
+}
+
+async function load() {
+  const world = await (await fetch(ROOT + "config/world.json")).json();
+  const district = world.districts.find(d => d.enabled);
+  business.salesContact = world.sales_contact;            // set in config/world.json (checked before deploy)
+  plan.salesContact = world.sales_contact;
+  plan.paymentLink = world.checkout?.payment_link || null;  // e.g. a Stripe Payment Link; without one: invoice requests
+  const all = Object.entries(district.files.chunks).filter(([k]) => k !== "collision");
+  const FIRST = ["hero", "terrain", "props", "water"];          // what you see from the red steps
+  const first = all.filter(([k]) => FIRST.includes(k)), rest = all.filter(([k]) => !FIRST.includes(k));
+  const bar = document.querySelector("#bar > div");
+  let done = 0;
+  const tick = () => { done++; bar.style.width = (100 * done / (first.length + 2)) + "%"; };
+  await Promise.all([loadEnv("day", "wide_street_01_2k.hdr").then(tick), loadEnv("night", "shanghai_bund_2k.hdr").then(tick)]);
+  await Promise.all(first.map(([, path]) => loadChunk(path).then(tick)));
+  try { demoBrands = (await (await fetch(ROOT + "data/times_square/demo_brands.json", { cache: "no-cache" })).json()).hero; } catch (e) {}
+  applyDemo(true);
+  setTime(+document.getElementById("tod").value);
+  await Promise.race([colliderReady, new Promise(r => setTimeout(r, 4000))]);   // needed to judge a saved spot
+  reveal();
+  // the rest of Midtown streams in behind the reveal
+  Promise.all(rest.map(([, path]) => loadChunk(path))).then(() => {
+    applyDemo(true); business.refreshOutlines(); setTimeout(() => captureWaterReflection(true), 500);
+    groundUnderlay();
+    applyStorefronts(scene, ROOT);                           // 4x the shopfront variety (js/storefront4.js)
+    harbor.load().then(() => setTime(curTod));               // then the harbour and the Statue of Liberty stream in
+  });
+}
+
+// an asphalt underlay just below street level across Midtown's land (east of 12th Ave's riverbank): the street meshes
+// have small gaps (58 found on a 20 m grid in the 2026-10 review, e.g. W 37th St west of 8th Ave) where you saw the
+// river through the road. Gaps now show asphalt. It never shows anywhere else (it's 8 cm under every surface).
+function groundUnderlay() {
+  let asphalt = null;
+  scene.traverse(o => { if (!asphalt && o.isMesh) for (const m of [].concat(o.material)) if (m?.name === "M_Road_Asphalt") asphalt = m; });
+  const [x0, y0, x1, y1] = [-1300, -720, 960, 740];
+  const g = new THREE.PlaneGeometry(x1 - x0, y1 - y0); g.rotateX(-Math.PI / 2);
+  const uv = g.attributes.uv;                                  // tile the asphalt every 4 m, like the streets
+  for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * (x1 - x0) / 4, uv.getY(i) * (y1 - y0) / 4);
+  const m = new THREE.Mesh(g, asphalt || new THREE.MeshStandardMaterial({ color: 0x3a3b3e, roughness: 0.95 }));
+  m.position.set((x0 + x1) / 2, -0.08, -(y0 + y1) / 2); m.name = "GROUND_underlay";
+  scene.add(m);
+}
+
+const saved = Progress.load();                                 // where you were last time (this browser)
+function reveal() {
+  resolveCity();
+  document.body.classList.remove("loading");
+  document.getElementById("loading").classList.add("gone");
+  if (saved?.cam && safeSpot(B(...saved.cam))) {               // welcome back: right where you left off, no fly-in
+    goTo(saved.cam, saved.tgt);
+    if (saved.mode === "walk") setMode("walk");
+    try { localStorage.setItem("ts_welcomed", "1"); } catch (e) { /* private mode */ }   // returning: no first-visit card
+    nav.afterReveal(); afterReveal();
+    toast("Welcome back", "Start at the red steps", () => { if (mode === "walk") setMode("orbit"); nav.flyTo({ ...HERO_VIEW, name: "Times Square" }); });
+    return;
+  }
+  if (Settings.reduceMotion) { goTo(HERO_VIEW.eye, HERO_VIEW.target); nav.afterReveal(); afterReveal(); return; }
+  goTo([60, -330, 210], [-15, 60, 0]);                         // start high over the bowtie...
+  nav.flyTo({ ...HERO_VIEW, name: "Times Square" }, { duration: 4.2, arc: 20 });   // ...and settle onto the steps
+  const skip = () => { if (nav.flight) nav.flight.t = 0.999; };  // any click / key / button skips the fly-in
+  addEventListener("pointerdown", skip, { once: true, capture: true });
+  addEventListener("keydown", skip, { once: true, capture: true });
+  revealSkip = skip;
+  setTimeout(() => { revealSkip = null; nav.afterReveal(); afterReveal(); }, 4300);
+}
+let revealSkip = null;
+// after the city appears: ask about sound once, then check the frame rate
+function afterReveal() {
+  if (new URLSearchParams(location.search).has("business") && !business.on) business.setMode(true);   // direct link for buyers
+  const askSound = () => toast("Hear the city?", "Sound on", () => Settings.set({ sound: true }), "Not now", () => Settings.set({ sound: false }));
+  if (Settings.v.sound === null) {                             // one question at a time: after the welcome card, if it's showing
+    if (document.getElementById("welcome").style.display === "flex") nav.onWelcomeClosed = askSound; else askSound();
+  }
+  else if (Settings.v.sound) addEventListener("pointerdown", () => audio.start(), { once: true });
+  watchFrameRate();
+}
+
+// ---------------------------------------------------------------- branding at runtime
+// Each screen plays a playlist (see js/screens.js). Demo mode rotates its own creative with two others of the
+// same shape; a buyer's upload (image or video) becomes a one-item playlist.
+const screens = new Screens();
+function demoPlaylist(slotId) {
+  const own = demoBrands && demoBrands[slotId];
+  if (!own) return [];
+  const shape = own.image.match(/_(\d+x\d+)\./)?.[1];
+  const same = [...new Set(Object.values(demoBrands).map(b => b.image))].filter(i => i !== own.image && i.includes("_" + shape + "."));
+  let h = 0; for (const ch of slotId) h = (h * 31 + ch.charCodeAt(0)) >>> 0;   // stable per screen
+  const pick = [own.image]; for (let k = 0; k < 2 && same.length; k++) pick.push(same.splice((h >> (k * 5)) % same.length, 1)[0]);
+  if (own.video) pick.unshift(own.video);                       // motion creative leads the rotation
+  return pick.map(i => ROOT + i);
+}
+function setSlotImage(slotId, url, reset) {
+  if (reset) return screens.setPlaylist(slotId, demoOn ? demoPlaylist(slotId) : []);
+  screens.setPlaylist(slotId, url ? [url] : []);
+}
+function applyDemo(on) {
+  demoOn = on;
+  for (const id of slotMaterials.keys()) screens.setPlaylist(id, on ? demoPlaylist(id) : []);
+}
+
+// ---------------------------------------------------------------- controls
+const ray = new THREE.Raycaster();
+// solid things in front of you (statues, kiosks, poles): a short ray at chest height against static geometry
+const aheadRay = new THREE.Raycaster();
+function blockedAhead(pos, dir, dist) {
+  aheadRay.set(new THREE.Vector3(pos.x, pos.y - 0.4, pos.z), dir);
+  aheadRay.far = dist;
+  return aheadRay.intersectObjects(scene.children, true)
+    .some(h => h.object !== sky && !h.object.userData.crowd && h.object.visible && h.object.parent !== nav.beacon);
+}
+// Explore = Google Maps / Earth conventions: drag pans, right-drag (or Ctrl/Shift-drag) rotates, scroll zooms
+const orbit = new MapControls(camera, renderer.domElement);
+orbit.enableDamping = true;
+orbit.maxPolarAngle = Math.PI * 0.97;   // allow looking up at the towers from street level
+orbit.screenSpacePanning = false;        // right-drag pans along the ground, like a map
+orbit.zoomToCursor = true;               // scroll zooms toward what you point at, so zoom = travel
+orbit.minDistance = 2; orbit.maxDistance = 2500;
+const walk = new StreetWalk({ camera, dom: renderer.domElement, getCollider: () => collider,
+  groundAt: p => groundAt(p), onExit: () => setMode("orbit"), blockedAhead: (p, d, l) => blockedAhead(p, d, l) });
+walk.onWalk = () => nav?.doneTip("walk");
+let mode = "orbit";
+const keys = {};
+addEventListener("keydown", e => keys[e.code] = true);
+addEventListener("keyup", e => keys[e.code] = false);
+
+function goTo(eye, target) {      // Blender coords
+  camera.position.copy(B(...eye));
+  orbit.target.copy(B(...target));
+  camera.lookAt(orbit.target);
+  orbit.update();
+}
+// Which view you're in (one rule each, so it never surprises you):
+//   Explore (aerial)  start-up / fly-in, the Explore tab, "Go" from search or the map, double-click a building,
+//                     View screen, the tour, "Back to the red steps"
+//   Walk (on foot)    the Walk tab, "Walk here", ALWAYS after getting out of any car, walking over to a car
+//   Ride (in a car)   Get in / Hop in. While you're in a car, "Go" re-routes the car and nothing moves the camera away.
+//   Fly (in a plane)  tap the plane on the Intrepid deck, or "Fly a plane" on the Intrepid's map card. Getting out of the
+//                     plane goes to Explore over the deck (you can't walk on the carrier deck).
+//   Boat (at the helm) tap the sightseeing boat, or "Take the helm" on Pier 83's map card. "Go ashore" when tied up to a
+//                     pier = Walk on that pier; "Leave the helm" anywhere else = Explore above the boat.
+function setMode(m) {
+  if (m === "walk") placeWalker();
+  mode = m;
+  document.getElementById("walk").setAttribute("aria-pressed", String(m === "walk"));
+  orbit.enabled = m === "orbit";
+  if (m === "walk") walk.enable(); else walk.disable();
+  if (m === "ride" || m === "fly" || m === "boat") { nav.setHint?.(); return; }   // the cab / plane / boat drives the camera
+  if (m === "orbit") {   // come back up a little behind where you were walking
+    const dir = new THREE.Vector3(); camera.getWorldDirection(dir); dir.y = 0; dir.normalize();
+    orbit.target.copy(camera.position).addScaledVector(dir, 20); orbit.target.y = 2;
+    camera.position.addScaledVector(dir, -14); camera.position.y += 10;
+  }
+  nav?.setHint();
+}
+// drop the walker on the street near what you were looking at: never on a roof or inside a building
+function placeWalker() {
+  const high = camera.position.y > 25;
+  const base = high ? orbit.target.clone() : camera.position.clone();
+  let [x, y] = [base.x, -base.z];
+  const feetNow = Math.max(0, camera.position.y - 1.7);
+  if (collider && collider.blocked(x, y, 0.4, high ? 0.5 : feetNow + 0.5, true)) {
+    found: for (let r = 2; r < 200; r += 2) for (let a = 0; a < 6.28; a += 0.4) {
+      const nx = x + r * Math.cos(a), ny = y + r * Math.sin(a);
+      if (!collider.blocked(nx, ny, 0.4, 0.5)) { x = nx; y = ny; break found; }
+    }
+  }
+  const look = high ? orbit.target.clone().sub(camera.position) : new THREE.Vector3().subVectors(orbit.target, camera.position);
+  look.y = 0; if (look.lengthSq() < 1e-6) look.set(0, 0, -1); look.normalize();
+  // find the surface you're standing over, looking down from just above you (lands ON the red steps, not under them)
+  const probeY = high ? 12 : Math.max(camera.position.y, 2);
+  camera.position.set(x, probeY, -y);
+  // stand up where you were sitting: the highest surface within a metre below you (the top step, not the street behind it)
+  let g = groundAt(camera.position);
+  if (!high) for (const [ox, oz] of [[1, 0], [-1, 0], [0, 1], [0, -1], [0.7, 0.7], [-0.7, 0.7], [0.7, -0.7], [-0.7, -0.7]]) {
+    const q = groundAt(new THREE.Vector3(x + ox, probeY, -y + oz));
+    if (q > g + 0.3) { g = q; camera.position.x = x + ox; camera.position.z = -y + oz; }
+  }
+  camera.position.y = g + 1.7;
+  camera.lookAt(camera.position.clone().add(look));
+}
+document.getElementById("walk").onclick = () => { flight.forceOut(); helm.forceOut(); if (ride.inCar) ride.getOut(); if (mode !== "walk") setMode("walk"); };
+document.getElementById("explorebtn").onclick = () => { flight.forceOut(); helm.forceOut(); if (ride.inCar) ride.getOut(); if (mode !== "orbit") setMode("orbit"); };
+// the dock shows which mode you're in (Explore / Walk / Ride): one selected at a time
+function syncDock() {
+  const m = flight?.active || helm?.active || ride.inCar || ride.approaching || ["choose", "coming", "waiting"].includes(ride.state) ? "ride" : mode === "walk" ? "walk" : "explore";
+  if (syncDock.m === m && document.getElementById("walk").getAttribute("aria-pressed") === String(m === "walk")) return;
+  syncDock.m = m;
+  document.getElementById("explorebtn").setAttribute("aria-pressed", String(m === "explore"));
+  document.getElementById("walk").setAttribute("aria-pressed", String(m === "walk"));
+  document.getElementById("ridebtn")?.setAttribute("aria-pressed", String(m === "ride"));
+}
+document.getElementById("mapbtn").onclick = () => toggleMap();
+function zoomBy(dir) {
+  if (mode === "walk") {                                   // on foot: + steps forward, − steps back
+    const f = new THREE.Vector3(); camera.getWorldDirection(f); f.y = 0; f.normalize();
+    return walk.walkTo(camera.position.clone().addScaledVector(f, dir * 8).setY(0));
+  }
+  nav.zoom(dir);
+}
+document.getElementById("zoomin").onclick = () => zoomBy(1);
+document.getElementById("zoomout").onclick = () => zoomBy(-1);
+addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || cityMap?.isOpen) return;
+  if (e.key === "+" || e.key === "=") zoomBy(1);
+  if (e.key === "-" || e.key === "_") zoomBy(-1);
+});
+const placeZoom = () => {                                  // keep the zoom pill just above the dock / bottom bar
+  const r = document.getElementById("dock").getBoundingClientRect();
+  document.getElementById("zoom").style.bottom = (innerHeight - r.top + 8) + "px";
+};
+addEventListener("resize", placeZoom); setTimeout(placeZoom, 0); setTimeout(placeZoom, 1500);
+document.getElementById("tourbtn").onclick = () => { menu.hidden = true; nav.startTour(); };
+document.getElementById("tod").oninput = e => { live = false; setTime(+e.target.value); };
+document.getElementById("livebtn").onclick = () => { live = true; document.getElementById("tod").value = nycTod(); setTime(nycTod()); };
+setInterval(() => { if (live) { document.getElementById("tod").value = nycTod(); setTime(nycTod()); } }, 60000);
+
+const down = new THREE.Raycaster();
+function groundAt(p) {
+  down.set(new THREE.Vector3(p.x, p.y + 50, p.z), new THREE.Vector3(0, -1, 0));
+  down.far = 120;
+  const hit = down.intersectObjects(scene.children, true).find(h => h.object !== sky && h.point.y < p.y + 0.6);
+  return hit ? hit.point.y : 0;
+}
+
+// ---------------------------------------------------------------- double-click anything: fly there
+// phones: two quick taps in the same spot = double-click (touch browsers don't reliably send dblclick)
+let lastTap = null, touchDoubleAt = -1e9;
+renderer.domElement.addEventListener("pointerup", e => {
+  if (e.pointerType !== "touch") return;
+  const now = performance.now();
+  if (lastTap && now - lastTap.t < 320 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 30) { lastTap = null; touchDoubleAt = now; onDouble(e); }
+  else lastTap = { t: now, x: e.clientX, y: e.clientY };
+});
+renderer.domElement.addEventListener("dblclick", e => { if (performance.now() - touchDoubleAt > 600) onDouble(e); });
+function onDouble(e) {
+  if (mode === "ride" || mode === "fly" || mode === "boat") return;   // in the cab / plane / boat: drag looks around
+  ray.setFromCamera(new THREE.Vector2(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1), camera);
+  const hit = ray.intersectObjects(scene.children, true).find(h => h.object !== sky && h.object.visible && !nav.beacon.getObjectById(h.object.id));
+  if (!hit) return;
+  if (mode === "walk") return walkToHit(hit);
+  // a screen: look straight at it (its curated view)
+  let sp = hit.object; while (sp && !sp.userData.slot_id) sp = sp.parent;
+  const sale = sp && business.sales?.get(sp.userData.slot_id);
+  if (sale) return nav.flyTo({ ...(screenViews?.viewFor(sale.slot_id) || sale.view), name: sale.title, kind: "ad" }, { duration: 1.4 });
+  // a building (not the street): show all of it instead of flying into its wall. Walk along the ray into the
+  // building: the first footprint tall enough to contain the hit is the one you meant (not a podium behind a sign)
+  let bld = null;
+  if (hit.point.y > 1.5 && !hit.object.userData.crowd && collider) {
+    for (let t = 0.3; t < 12 && !bld; t += 0.5) {
+      const q = hit.point.clone().addScaledVector(ray.ray.direction, t);
+      const b = collider.buildingAt(q.x, -q.z, 0.2);
+      if (b && b.h > hit.point.y - 3) bld = b;
+    }
+  }
+  if (bld) nav.frameBuilding(bld); else nav.flyToHit(hit.point);
+}
+
+// ---------------------------------------------------------------- tap a screen -> visitor prompt / business sheet
+let downAt = [0, 0];
+renderer.domElement.addEventListener("pointerdown", e => { downAt = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener("click", e => {
+  if (Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 5) return;   // that was a drag, not a click
+  ray.setFromCamera(new THREE.Vector2(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1), camera);
+  const hit = ray.intersectObjects(pickables, false)[0];
+  let p = hit && hit.object;
+  while (p && !p.userData.slot_id) p = p.parent;
+  if (p) return business.onScreen(p.userData.slot_id);
+  if (mode === "fly" || mode === "boat") return;
+  if (flight.plane && ray.intersectObject(flight.plane, true).length) return void flight.board();   // tap the plane: fly it
+  if (boat.group && ray.intersectObject(boat.group, true).length) return void helm.board();          // tap the boat: take the helm
+  if (mode !== "ride" && ride.tapCar(ray)) return;            // tap a car: hop in (the whole fleet is shared)
+  if (mode === "walk") {                         // Street View: tap the street to walk there
+    const g = ray.intersectObjects(scene.children, true).find(h => h.object !== sky && !h.object.userData.crowd
+      && h.point.y < camera.position.y - 0.5);
+    if (g) walkToHit(g);
+  }
+});
+// on foot: a click on the pavement walks there; a click on a wall or a shopfront walks you up to it (to the
+// pavement in front of it), never into it - that squeezed the camera against the wall and hid you
+function walkToHit(hit) {
+  const n = hit.face ? hit.face.normal.clone().transformDirection(hit.object.matrixWorld) : new THREE.Vector3(0, 1, 0);
+  const p = hit.point.clone(), me = walk.eye;
+  if (n.y < 0.6) {
+    const back = new THREE.Vector3(me.x - p.x, 0, me.z - p.z);
+    const d = back.length();
+    if (d < 1.6) return;                                     // already there
+    p.addScaledVector(back.normalize(), 1.4);
+  }
+  p.y = 0;
+  walk.walkTo(p);
+}
+
+// ---------------------------------------------------------------- collision
+let collider = null, crowd = null, resolveCollider;
+const colliderReady = new Promise(r => { resolveCollider = r; });
+const nav = new Navigator({ camera, orbit, scene, B, root: ROOT, setMode, getMode: () => mode, getCollider: () => collider,
+  onArrive: () => {}, groundAt: p => groundAt(p), blockedAhead });
+nav.load(ROOT + "export/times_square/places.json");
+// start from clean defaults (browsers may restore old slider values on reload)
+document.getElementById("tod").value = nycTod();          // follow real New York time by default
+const business = new Business({ root: ROOT, district: "times_square", nav, setSlotImage, ask: (t, a, o) => Messages.ask(t, a, o),
+  slotMeshes: () => pickables, camera });
+// buying screens and buildings into a plan, then checkout (js/plan.js): the only money in the game
+const plan = new Plan({ business, nav, root: ROOT, district: "times_square", toast: t => Messages.ask(t, [], { ms: 3500 }) });
+nav.onBuilding = b => plan.onBuilding(b);
+if (new URLSearchParams(location.search).has("debug"))      // developer handle, only with ?debug
+  window.__views = () => screenViews;
+if (new URLSearchParams(location.search).has("debug"))
+  window.__dbg = { nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
+let traffic = null;
+const trafficCount = () => Math.round((Settings.quality === "low" ? 24 : matchMedia("(max-width: 640px)").matches ? 36 : 80) * Settings.v.traffic);   // review 2026-10: side streets felt empty
+Promise.all([fetch(ROOT + "export/times_square/collision2d.json").then(r => r.json()),
+             fetch(ROOT + "data/times_square/ground.json").then(r => r.json()),
+             fetch(ROOT + "config/districts/times_square.json").then(r => r.json())]).then(([col, ground, district]) => {
+  collider = new Collider(col); resolveCollider();
+  collider.walkable = (x, y) => helm.onPier(x, y);          // on foot you can walk out onto the piers (exact outlines)
+  // beyond Midtown: the harbour's real land and piers are solid ground, its water is not (nothing at all past its edge)
+  collider.outside = (x, y) => !(harbor.inFrame(x, y) && (harbor.isLand(x, y) || harbor.isPier(x, y)));
+  // up on the Intrepid's flight deck you can't walk off its edge (deck(x, y, true): "am I up there at all?")
+  collider.deck = (x, y, probe) => probe ? intrepid.onDeck(camera.position.x, -camera.position.z) : intrepid.onDeck(x, y);
+  cityReady.then(async () => {                              // people and traffic appear with the city, never in a void
+    // living street: one-way traffic, signals on a green wave, crosswalk phases (js/traffic.js)
+    const trafficModels = await gltf.loadAsync(ROOT + "export/vehicles/traffic.glb").then(g => {
+      g.scene.traverse(o => { if (o.isMesh) for (const m of [].concat(o.material)) registerMaterial(m); });
+      return g.scene;
+    }).catch(() => null);                                         // the props chunk's older cars still work
+    traffic = new Traffic({ scene, camera, grid: district.street_grid_local, bounds: ground.play_area, models: trafficModels,
+      crowd: () => ({ near: (x, y, r) => [...(crowd?.near(x, y, r) || []), ...(npcs?.near(x, y, r) || [])] }),   // cars stop for people
+      audio, count: trafficCount(), getCollider: () => collider });
+    if (traffic.init()) ride.setTraffic(traffic); else traffic = null;
+    if (saved?.parked?.length) ride.restoreParked(saved.parked);   // the cars you left last time are still there
+    crowd = new Crowd(scene, ground, collider, { seated: tktsSeats(), camera, traffic,
+      movers: () => [...(traffic ? traffic.obstacles() : []), ...(ride.car?.visible && ride.state !== "idle" ? [ride.pose()] : [])] });
+    // no stand-in crowd: only real characters walk Times Square (the crowd's walkable sidewalk map still guides them)
+    crowd.setCount(0);
+    npcs = new Npcs({ loader: gltf, root: ROOT, scene, camera, crowd, collider, groundAt, playerId: meId || PLAYER,
+      count: peopleCount(),
+      movers: () => [...(traffic ? traffic.obstacles() : []), ...(ride.car?.visible && ride.state !== "idle" ? [ride.pose()] : [])],
+      player: () => mode === "walk" ? [walk.eye.x, -walk.eye.z] : null });
+  });
+});
+// ---------------------------------------------------------------- people: how many real characters walk the city
+// (automatic by graphics quality until you move the slider; later: the live number of players)
+function peopleCount() {
+  return Settings.v.people ?? { low: 16, balanced: 50, high: 100 }[Settings.quality] ?? 50;
+}
+document.getElementById("people").value = peopleCount();
+document.getElementById("peoplev").textContent = peopleCount();
+document.getElementById("people").oninput = e => {
+  const n = +e.target.value;
+  document.getElementById("peoplev").textContent = n;
+  Settings.set({ people: n });
+  npcs?.setCount(n);
+};
+// ---------------------------------------------------------------- you: your character, seen from behind when you walk
+let npcs = null, me = null, meId = null;
+async function wearCharacter(id) {
+  if (id === meId) return;
+  meId = id;
+  const a = await Avatar.create(gltf, ROOT, id).catch(e => { console.warn("character", e); return null; });
+  if (!a || meId !== id) return;
+  if (me) scene.remove(me.object);
+  me = a; me.object.visible = false; scene.add(me.object);
+}
+Settings.on(v => { const id = PLAYER_OUTFITS.includes(v.outfit) ? v.outfit : PLAYER; wearCharacter(id); npcs?.setPlayer(id); });
+addEventListener("keydown", e => {                         // V: see yourself (third person) or through your eyes
+  if (e.target.tagName === "INPUT" || e.code !== "KeyV" || e.repeat) return;
+  Settings.set({ view: walk.third ? "first" : "third" });
+  if (mode === "walk") toast(walk.third ? "Third person · V for first person" : "First person · V to see yourself");
+});
+function drawMe(dt) {
+  const show = mode === "walk" && walk.third && !!me;
+  if (me) me.object.visible = show;
+  if (!show) return;
+  const e = camera.position;
+  me.set(e.x, e.y - 1.7, e.z, walk.heading ?? walk.yaw + Math.PI, walk.speed || 0, walk.air || 0);
+  me.update(dt);
+}
+// ---------------------------------------------------------------- sound
+const audio = new CityAudio({ camera, crowdCount: () => 600,      // the city's murmur (traffic, distant voices)
+  carNear: () => {                                                    // a horn comes from a real car within 120 m
+    const c = camera.position, cars = traffic?.ready ? traffic.obstacles().filter(([x, y]) => Math.hypot(x - c.x, -y - c.z) < 120) : [];
+    if (!cars.length) return null;
+    const [x, y] = cars[Math.floor(Math.random() * cars.length)];
+    return new THREE.Vector3(x, 1.2, -y);
+  },
+  isWalking: () => mode === "walk", night: () => smooth(0.45, 0.8, curTod) });
+// a clear view of any screen, worked out in the live scene (js/screenview.js)
+let screenViews = null;
+fetch(ROOT + "data/times_square/slots.json").then(r => r.json()).then(d => {
+  const slotOf = o => { while (o && !o.userData.slot_id) o = o.parent; return o?.userData.slot_id; };
+  screenViews = makeScreenViews({ scene, camera, getCollider: () => collider, slots: d.slots,
+    slotObjects: id => pickables.filter(o => slotOf(o) === id) });
+  business.viewFor = id => (id === BANNER_SLOT ? flight.bannerView() : id === BOAT_SLOT ? boat.bannerView() : screenViews.viewFor(id));
+  nav.screenView = id => screenViews.viewFor(id);
+});
+
+// screens in search read like the sales sheet ("Wraparound screen · Casablanca Hotel"), not as raw slot ids
+(function nameScreens() {
+  if (!business.sales || !nav.places?.length) return setTimeout(nameScreens, 400);
+  for (const p of nav.places) {
+    const s = p.kind === "ad" && business.sales.get(p.id);
+    if (s) { p.name = s.title; p.sub = `Screen · ${s.band} · ${s.size}`; p.keywords = `${p.keywords || ""} ${s.building} screen billboard ad`; }
+  }
+})();
+
+// city sound: one button on the dock (and in Settings): a speaker with waves when on, a speaker with an x when muted
+const soundBtn = document.getElementById("soundbtn");
+const syncSound = () => {
+  const on = Settings.v.sound === true;
+  soundBtn.setAttribute("aria-pressed", String(on));
+  soundBtn.querySelector("svg").outerHTML = on ? ICON.sound : ICON.muted;
+  soundBtn.querySelector("span").textContent = on ? "Sound on · tap to mute" : "Sound off · tap for city sound";
+  soundBtn.setAttribute("aria-label", on ? "Mute city sound" : "Turn on city sound");
+};
+soundBtn.onclick = () => { const on = Settings.v.sound !== true; Settings.set({ sound: on }); if (on) audio.start(); syncSound(); };
+Settings.on(syncSound); syncSound();
+
+// ---------------------------------------------------------------- self-driving cab (book a ride, or take the wheel)
+const ride = new Ride({ root: ROOT, district: "times_square", scene, camera, dom: renderer.domElement, nav, walk, groundAt: p => groundAt(p),
+  getCollider: () => collider, setMode, getMode: () => mode, loader: gltf, registerMaterial,
+  refreshTime: () => setTime(curTod), screens, audio,
+  demoArt: shape => demoBrands ? [...new Set(Object.values(demoBrands).map(b => b.image))].filter(i => i.includes("_" + shape + ".")).map(i => ROOT + i) : [],
+  setWalkerAt: (pos, fwd) => stepOutAt(pos, fwd) });
+// step out of a vehicle onto the street (or a pier), facing the same way
+function stepOutAt(pos, fwd) {
+  camera.position.set(pos.x, groundAt(pos.clone().setY(3)) + 1.7, pos.z);
+  orbit.target.copy(camera.position).addScaledVector(fwd, 20);
+  camera.lookAt(camera.position.clone().add(fwd));
+  setMode("walk");
+}
+nav.beforeGo = place => (ride.inCar || ride.state === "choose" ? (ride.setDestination(place), true) : false);
+
+// ---------------------------------------------------------------- the Intrepid museum: the carrier model + its visitor elevator
+const intrepid = new IntrepidVisit({ camera, getMode: () => mode, getCollider: () => collider, walk });
+cityReady.then(() => loadChunk("export/times_square/intrepid.glb").then(() => {
+  scene.traverse(o => {                                        // the plain footprint block it replaces: hidden, not hittable
+    if (o.name === "BLD_TS_USSIntrepid") { o.visible = false; o.traverse(m => { m.raycast = () => {}; }); }
+  });
+}).catch(e => console.warn("intrepid", e)));
+// ---------------------------------------------------------------- planes: the Hudson banner tow + a plane to fly off the Intrepid
+const INTREPID_VIEW = { eye: [-1330, -70, 70], target: [-1420, 30, 18] };
+const flight = new Flight({ root: ROOT, scene, camera, dom: renderer.domElement, loader: gltf, getCollider: () => collider,
+  setMode, getMode: () => mode, registerMaterial, screens, audio, pickables,
+  demoArt: shape => demoBrands ? [...new Set(Object.values(demoBrands).map(b => b.image))].filter(i => i.includes("_" + shape + ".")).map(i => ROOT + i) : [],
+  isNight: () => smooth(0.45, 0.8, curTod),
+  toast: t => Messages.ask(t, [], { ms: 3500 }),
+  holdBanner: () => business.current?.slot_id === BANNER_SLOT,
+  onBoard: () => { Messages.dismiss("Welcome back"); helm.forceOut(); if (ride.inCar) ride.getOut(); if (ride.active) ride.end(); nav.setWaypoint?.(null); },
+  onLeave: p => {                                               // out of the plane: on the Intrepid, or above it at an airport
+    setMode("orbit");
+    if (!flight.base || flight.base.r.code === "INT") return goTo(INTREPID_VIEW.eye, INTREPID_VIEW.target);
+    const c = Math.cos(p.h), s = Math.sin(p.h);
+    goTo([p.x - c * 70 + s * 50, p.y - s * 70 - c * 50, 45], [p.x, p.y, 2]);
+  } });
+flight.forceOut = () => { if (flight.active) { flight.state = "idle"; flight.park(); flight.render(); audio.setPlane?.("you", 0, camera.position); } };
+flight.onBump = () => pad?.rumble(0.8, 0.5, 260);
+// the Hudson sightseeing boat: Pier 83 -> up the river past the Intrepid -> back (js/boat.js)
+const boat = new Boat({ root: ROOT, scene, loader: gltf, registerMaterial, screens, audio, pickables,
+  demoArt: shape => demoBrands ? [...new Set(Object.values(demoBrands).map(b => b.image))].filter(i => i.includes("_" + shape + ".")).map(i => ROOT + i) : [],
+  hold: () => business.current?.slot_id === BOAT_SLOT });
+// take the helm of the sightseeing boat (js/helm.js): engine-order telegraph, rudder, tide, real piers
+const helm = new Helm({ root: ROOT, district: "times_square", boat, camera, dom: renderer.domElement, setMode, getMode: () => mode,
+  getCollider: () => collider, audio, toast: t => Messages.ask(t, [], { ms: 3500 }), stepOut: (pos, fwd) => stepOutAt(pos, fwd),
+  onBoard: () => { flight.forceOut(); if (ride.inCar) ride.getOut(); if (ride.active) ride.end(); nav.setWaypoint?.(null); },
+  onLeave: ({ x, y, h }) => {                                   // up above the boat, looking at her
+    setMode("orbit");
+    goTo([x - Math.cos(h) * 70 + Math.sin(h) * 60, y - Math.sin(h) * 70 - Math.cos(h) * 60, 45], [x, y, 4]);
+  } });
+helm.onBump = s => pad?.rumble(0.5 + 0.4 * s, 0.4, 200);
+// New York Harbor: Lower Manhattan, Jersey City, Governors / Ellis / Liberty Islands and the Statue (js/harbor.js)
+const harbor = new Harbor({ root: ROOT, scene, loader: gltf, loadChunk: p => loadChunk(p), registerMaterial });
+helm.harbor = harbor; flight.harbor = harbor;
+// The wider region (js/region.js: the coast out to Teterboro, LaGuardia, Newark, their runways, a city infill) is built
+// but NOT loaded: the game area is Midtown + the harbour (it's a website - keep it small). To bring it back:
+//   const region = new Region({ root: ROOT, scene, skipReady: harbor.ready, skip: (x, y) => ... }); flight.region = region;
+// with import { Region } from "./js/region.js", and region.update(camera) in the frame loop.
+const region = null;
+// Directions: walk / cab / boat / plane, mixed like a maps app (js/trip.js)
+const trip = new Trip({ nav, ride, helm, flight, harbor, boat, camera, getMode: () => mode, toast: t => Messages.ask(t, [], { ms: 4500 }) });
+ride.onDirections = p => trip.open(p);
+ride.toast = t => Messages.ask(t, [], { ms: 3500 });
+// cab fares (J in a cab you drive): the first job loop; rated in stars, no money (money is only for property / billboards)
+const fares = new Fares({ ride, nav, scene, camera, loader: gltf, root: ROOT, getCrowd: () => crowd, groundAt,
+  toast: t => Messages.ask(t, [], { ms: 5000 }), playerId: () => meId || PLAYER });
+ride.fares = fares;
+// sightseeing tours (menu: Sightseeing tours): walk, sail or fly a landmark route against the clock
+const tours = new Tours({ scene, camera, flight, helm, boat, walk, harbor, getMode: () => mode, setMode: m => setMode(m), goTo: (e, t) => goTo(e, t),
+  toast: t => Messages.ask(t, [], { ms: 6500 }) });
+ride.onFares = () => fares.toggle();
+nav.walkToPoint = (x, y) => walk.walkTo(new THREE.Vector3(x, 0, -y));
+ride.people = (x, y, r) => npcs?.near(x, y, r) || [];
+fetch(ROOT + "data/harbor/places.json").then(r => r.json()).then(d => {      // harbour landmarks in search / the map card
+  (function add() { if (!nav.places?.length) return setTimeout(add, 400); nav.places.push(...d.places); })();
+}).catch(() => {});
+
+// ---------------------------------------------------------------- settings, pause menu, saved progress
+const pause = new PauseMenu({
+  onOpen: () => { paused = true; audio.ctx?.suspend(); },
+  onClose: () => { paused = false; clock.getDelta(); if (Settings.v.sound) audio.ctx?.resume(); },
+  actions: [
+    { label: "What can I do?", run: () => nav.openWelcome() },
+    { label: "For businesses", run: () => { if (!business.on) business.setMode(true); } },
+    { label: "Sightseeing tours", run: () => tours.open() },
+    { label: "Back to the red steps", run: () => { flight.forceOut(); helm.forceOut(); if (ride.inCar) ride.getOut(); if (mode === "walk") setMode("orbit"); nav.flyTo({ ...HERO_VIEW, name: "Times Square" }); } },
+  ] });
+let forgotten = false;                                         // "Forget my place": no autosave for the rest of this visit
+pause.onForget = () => { for (const v of ride.parked) scene.remove(v.group); ride.parked = []; forgotten = true; };
+document.getElementById("setbtn").onclick = () => { menu.hidden = true; pause.open(); };
+document.getElementById("bizmenu").onclick = () => { menu.hidden = true; if (!business.on) business.setMode(true); };
+document.getElementById("sightbtn").onclick = () => { menu.hidden = true; tours.open(); };
+document.getElementById("whatbtn").onclick = () => { menu.hidden = true; nav.openWelcome(); };
+// a settings button inside the search bar (the only always-visible spot on phones)
+document.getElementById("where").insertAdjacentHTML("beforeend", `<button id="gearbtn" class="ui-btn" aria-label="Settings">${ICON.settings}</button>`);
+const gearCss = document.createElement("style");
+gearCss.textContent = `#gearbtn { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); min-height: 36px; width: 36px; padding: 0;
+  display: none; place-items: center; background: none; } body[data-input="touch"] #gearbtn, body[data-input="pad"] #gearbtn { display: grid; }
+  body[data-input="touch"] #where .kbd, body[data-input="pad"] #where .kbd { display: none !important; }`;
+document.head.appendChild(gearCss);
+document.getElementById("gearbtn").onclick = () => pause.open();
+// Esc = pause (unless something else is open and wants it: map, sheet, search, menu)
+addEventListener("keydown", e => {                           // capture: decide before the map / sheet handlers act
+  if (e.key !== "Escape" || e.target.tagName === "INPUT") return;
+  if (cityMap.isOpen || business.current || !menu.hidden || document.getElementById("welcome").style.display === "flex") {
+    if (document.getElementById("welcome").style.display === "flex") nav.closeWelcome();
+    return;
+  }
+  pause.toggle();
+}, true);
+
+// gentle questions / notices go through the one message system (js/messages.js): queued, one at a time
+function toast(text, a1, f1, a2, f2, ms = 9000) {
+  Messages.ask(text, [a1 && [a1, f1, true], a2 && [a2, f2]].filter(Boolean), { ms });
+}
+
+// graphics quality: resolution + glow; "auto" steps down by itself if the frame rate suffers
+let qualityOverride = null;
+function applyQuality() {
+  const q = qualityOverride || Settings.quality, dpr = devicePixelRatio || 1;
+  const ratio = q === "low" ? 1 : q === "balanced" ? Math.min(dpr, 1.5) : Math.min(dpr, 2);
+  renderer.setPixelRatio(ratio); composer.setPixelRatio?.(ratio);
+  renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight);
+  bloom.enabled = q !== "low";
+  if (traffic) traffic.count = trafficCount();
+}
+Settings.on((v, patch) => { if (!patch || "quality" in patch) { qualityOverride = null; applyQuality(); } if (patch && "traffic" in patch && traffic) traffic.count = trafficCount(); });
+function watchFrameRate() {
+  if (Settings.v.quality !== "auto") return;
+  let n = 0; const t0 = performance.now();
+  const count = () => { n++; if (performance.now() - t0 < 6000) requestAnimationFrame(count); else check(); };
+  const check = () => {
+    const fps = n / 6;
+    if (fps >= 40) return;
+    qualityOverride = Settings.quality === "high" ? "balanced" : "low";
+    applyQuality();
+    toast("Lowered the graphics for smoother play", "Settings", () => pause.open());
+  };
+  requestAnimationFrame(count);
+}
+
+// progress: where you are + the cars you parked, every few seconds and when leaving the page
+// a spot is worth saving / restoring only if it's a sensible place to stand: not inside a building, not pressed
+// against a wall or a shop window, on the ground or clearly up in the air
+function safeSpot(p) {
+  if (!collider) return false;
+  const x = p.x, y = -p.z, feet = Math.max(0, p.y - 1.7);
+  if (collider.blocked(x, y, 1.0, p.y > 25 ? p.y : feet)) return false;
+  if (p.y > 25) return true;
+  for (let a = 0; a < 6.28; a += 1.57) if (blockedAhead(p, new THREE.Vector3(Math.cos(a), 0, Math.sin(a)), 1.2)) return false;
+  return true;
+}
+function saveProgress() {
+  if (forgotten || document.body.classList.contains("loading") || ride.inCar || flight.active || helm.active || nav.flight) return;
+  if (!safeSpot(camera.position)) return;                    // keep the last good spot instead
+  const L = v => [+v.x.toFixed(2), +(-v.z).toFixed(2), +v.y.toFixed(2)];   // three -> Blender local
+  const f = new THREE.Vector3(); camera.getWorldDirection(f);
+  const tgt = mode === "orbit" ? orbit.target : camera.position.clone().addScaledVector(f, 20);
+  Progress.save({ cam: L(camera.position), tgt: L(tgt), mode: mode === "walk" ? "walk" : "orbit",
+    parked: ride.parked.map(v => ({ type: v.type, x: v.group.position.x, y: -v.group.position.z, h: v.heading })) });
+}
+setInterval(saveProgress, 5000);
+addEventListener("pagehide", saveProgress);
+document.addEventListener("visibilitychange", () => { if (document.hidden) saveProgress(); });
+
+// "What can I do?" tiles
+nav.onWelcome = k => {
+  Messages.dismiss("Welcome back");                          // you've picked something to do
+  const out = () => { flight.forceOut(); helm.forceOut(); if (ride.inCar && k !== "fares") ride.getOut(); };
+  if (k === "fly") { out(); flight.board({ home: true }); }
+  else if (k === "sail") { out(); helm.board(); }
+  else if (k === "tours") tours.open();
+  else if (k === "fares") {                                   // into a yellow cab, then the first fare
+    out();
+    if (ride.inCar) fares.toggle();
+    else {
+      if (mode !== "walk") { goTo([-262.5, -120, 1.7], [-275, -60, 1.2]); setMode("walk"); }
+      nav.tip("fares", `Walk up to a yellow cab and ${inputDeviceLabel()}, then Take fares (J)`);
+    }
+  }
+  else if (k === "walk") setMode("walk");
+  else if (k === "ride") ride.open();
+  else if (k === "business") { if (!business.on) business.setMode(true); }
+  else if (k === "drive") {                                   // put you on a busy sidewalk, next to the traffic
+    if (mode !== "walk") { goTo([-262.5, -120, 1.7], [-275, -60, 1.2]); setMode("walk"); }
+    nav.tip("drive", `Walk up to any car and ${inputDeviceLabel()} to hop in`);
+  }
+};
+const inputDeviceLabel = () => { const p = prompt("interact"); return p ? `press ${p}` : "tap Hop in"; };
+
+// ---------------------------------------------------------------- game controller
+const pad = new Pad();
+pad.toast = t => toast(t);
+ride.onBump = s => pad.rumble(0.4 + 0.5 * s, 0.3, 120 + 120 * s);
+function handlePad(dt) {
+  const P = pad.poll();
+  walk.pad = nav.pad = ride.pad = null;
+  if (!P) return;
+  if (P.pressed(BTN.OPTIONS)) { pause.toggle(); return; }
+  if (revealSkip && P.pressed(BTN.CROSS)) { revealSkip(); return; }
+  // menus and dialogs: d-pad / stick moves focus, ✕ presses, ○ closes
+  const dialog = pause.isOpen ? pause.el : document.getElementById("welcome").style.display === "flex" ? document.getElementById("welcome")
+    : cityMap.isOpen && cityMap.card.style.display === "block" ? cityMap.card : null;
+  if (dialog) {
+    pad.navT = (pad.navT || 0) - dt;
+    const dir = P.pressed(BTN.DOWN) || P.pressed(BTN.RIGHT) ? 1 : P.pressed(BTN.UP) || P.pressed(BTN.LEFT) ? -1
+      : pad.navT < 0 && Math.abs(P.ly) > 0.6 ? Math.sign(P.ly) : 0;
+    if (dir) { navigateFocus(dialog, dir); pad.navT = 0.25; }
+    if (P.pressed(BTN.CROSS)) document.activeElement?.click();
+    if (P.pressed(BTN.CIRCLE)) { if (pause.isOpen) pause.close(); else if (dialog.id === "welcome") nav.closeWelcome(); else cityMap.select(null); }
+    return;
+  }
+  if (cityMap.isOpen) {                                      // full map: sticks pan / zoom, ○ closes
+    cityMap.cx += P.lx * 400 * dt / cityMap.s; cityMap.cy -= P.ly * 400 * dt / cityMap.s;
+    if (P.r2 > 0.1 || P.l2 > 0.1) cityMap.zoomAt(Math.exp((P.r2 - P.l2) * dt * 2));
+    if (P.lx || P.ly) { cityMap.clamp(); cityMap.draw(); }
+    if (P.pressed(BTN.CROSS)) cityMap.tap(cityMap.W / 2, cityMap.H / 2);
+    if (P.pressed(BTN.CIRCLE) || P.pressed(BTN.TRIANGLE)) cityMap.close();
+    return;
+  }
+  if (P.pressed(BTN.TRIANGLE)) return toggleMap();
+  flight.pad = null; helm.pad = null;
+  if (helm.active) {
+    helm.pad = P;
+    if (P.pressed(BTN.UP)) helm.step(1);
+    if (P.pressed(BTN.DOWN)) helm.step(-1);
+    if (P.pressed(BTN.CROSS)) helm.context();
+    if (P.pressed(BTN.SQUARE)) helm.horn();
+    if (P.pressed(BTN.R3)) helm.toggleView();
+    if (P.pressed(BTN.CIRCLE)) helm.leave();
+    return;
+  }
+  if (flight.active) {
+    flight.pad = P;
+    if (P.pressed(BTN.CROSS)) flight.takeOff();
+    if (P.pressed(BTN.CIRCLE)) flight.state === "air" ? flight.action("home") : flight.getOut();
+    return;
+  }
+  if (P.pressed(BTN.CROSS) && flight.near) return void flight.board();
+  if (P.pressed(BTN.CROSS) && helm.near) return void helm.board();
+  if (ride.inCar) {
+    ride.pad = P;
+    if (P.pressed(BTN.SQUARE)) ride.honk();
+    if (P.pressed(BTN.CIRCLE)) ride.getOut();
+    if (P.pressed(BTN.R3) && ride.vehicle?.kind === "taxi") ride.action("view");
+    if (P.pressed(BTN.CROSS)) ride.panel.querySelector(".ui-btn.primary:not([disabled])")?.click();
+    return;
+  }
+  if (P.pressed(BTN.CROSS)) {                                 // interact: hop in > get in > tap whatever is in the middle of the view
+    if (ride.approaching) return void ride.enter(ride.approaching.t);
+    if (ride.hopTarget) return void ride.approach(ride.hopTarget);
+    if (ride.state === "waiting") return void ride.approach({ booked: true });
+    centreTap();
+  }
+  if (P.pressed(BTN.CIRCLE) && mode === "walk") setMode("orbit");
+  if (P.pressed(BTN.R3) || P.pressed(BTN.L3)) setMode(mode === "walk" ? "orbit" : "walk");
+  if (P.pressed(BTN.L1)) nav.turn(Math.PI / 6);
+  if (P.pressed(BTN.R1)) nav.turn(-Math.PI / 6);
+  if (P.pressed(BTN.UP)) zoomBy(1);
+  if (P.pressed(BTN.DOWN)) zoomBy(-1);
+  if (P.r2 > 0.15 || P.l2 > 0.15) { pad.zt = (pad.zt || 0) - dt; if (pad.zt < 0) { zoomBy(P.r2 > P.l2 ? 1 : -1); pad.zt = 0.35; } }
+  if (mode === "walk") { walk.pad = { ...P, run: P.held(BTN.L3) || P.l2 > 0.5 }; if (P.pressed(BTN.SQUARE)) walk.jump(); }
+  else nav.pad = P;
+}
+// ✕ with nothing nearby: act on whatever is in the centre of the screen (a screen, a car, the ground)
+function centreTap() {
+  ray.setFromCamera(new THREE.Vector2(0, 0), camera);
+  const hit = ray.intersectObjects(pickables, false)[0];
+  let p = hit?.object; while (p && !p.userData.slot_id) p = p.parent;
+  if (p) return business.onScreen(p.userData.slot_id);
+  if (ride.tapCar(ray)) return;
+  if (mode === "walk") {
+    const g = ray.intersectObjects(scene.children, true).find(h => h.object !== sky && !h.object.userData.crowd && h.point.y < camera.position.y - 0.5);
+    if (g) walk.walkTo(g.point);
+  }
+}
+
+// ---------------------------------------------------------------- minimap (heading-up, baked per district)
+// Same symbols as the full map: blue dot + heading cone = you, red pin = destination, red discs = landmarks.
+const mm = document.getElementById("minimap"), mx = mm.getContext("2d");
+let mapImg = null, mapData = null;
+fetch(ROOT + "export/times_square/map.json").then(r => r.json()).then(d => {
+  mapData = d; mapImg = new Image(); mapImg.src = ROOT + "export/times_square/map.png";
+  fetch(ROOT + "export/harbor/map.json").then(r => r.json()).then(h => {      // the harbour layer, drawn underneath
+    harborMap = { ...h, img: new Image() }; harborMap.img.src = ROOT + "export/harbor/map.webp";
+    mapData.labels = [...mapData.labels, ...h.labels.filter(l => l.kind !== "island")];
+    mapData.markers = [...mapData.markers, ...h.markers];      // harbour landmarks on the minimap too
+  }).catch(() => {});
+});
+let harborMap = null;
+const cityMap = new CityMap({ root: ROOT, district: "times_square", camera, nav,
+  onGo: p => nav.go(p),                                      // in a car this re-routes it (nav.beforeGo)
+  onWalk: p => { if (ride.inCar) ride.getOut(); nav.walkTo(p); },
+  canLand: () => flight.state === "air",
+  onRide: p => (p?.id?.startsWith("apt_") ? flight.startLanding(p.id.slice(4)) : p?.id === "intrepid" ? flight.board({ home: true }) : p?.id === "pier83" ? helm.board()
+    : ride.inCar || ride.state === "coming" || ride.state === "waiting" ? ride.setDestination(p) : ride.book(p)),
+  inCar: () => ride.inCar, route: () => tours.mapInfo() || fares.mapInfo() || trip.mapInfo() || ride.mapInfo(), onDirections: p => trip.open(p),
+  getSlot: id => business.sales?.get(id), onScreen: id => business.open(id), region,
+  whereAmI: () => {                                          // the blue dot: you, not the camera behind you
+    const o = flight.active ? flight.plane.position : helm.active && boat.group ? boat.group.position : mode === "walk" ? walk.eye : null;
+    return o ? [o.x, -o.z] : null;
+  } });
+const toggleMap = () => cityMap.toggle();
+let mmHits = [];                                             // screen dots drawn on the minimap (canvas px)
+mm.addEventListener("click", e => {                          // tap a yellow screen = preview it; anywhere else = full map
+  const r = mm.getBoundingClientRect(), k = mm.width / r.width;
+  if (nav.showAds && mmHits.length && r.width >= 120) {     // the tiny phone minimap always opens the big map
+    const u = (e.clientX - r.left) * k, v = (e.clientY - r.top) * k;
+    let best = null, bd = 16 * k;                            // 16 css px: a comfortable fingertip
+    for (const h of mmHits) { const d = Math.hypot(h.u - u, h.v - v); if (d < bd) { bd = d; best = h; } }
+    if (best) return business.open(best.id);
+  }
+  cityMap.open();
+});
+addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT") return;
+  if (e.code === "KeyM") toggleMap();
+});
+function drawMinimap() {
+  if (!mapImg || !mapImg.complete || !mapData) return;
+  const S = mm.width, k = mapData.px_per_m, [x0, , , y1] = mapData.bounds;
+  const you = mode === "walk" ? walk.eye : camera.position;           // walking in third person: you, not the camera
+  const px = you.x, py = -you.z;                                      // you, in local metres
+  const dir = new THREE.Vector3(); camera.getWorldDirection(dir);
+  const heading = Math.atan2(dir.x, -dir.z);                          // 0 = uptown (+Y)
+  const zoom = camera.position.y > 80 ? 0.35 : 0.9;                   // screen px per map px
+  mx.save(); mx.fillStyle = "#16191e"; mx.fillRect(0, 0, S, S);           // beyond the maps
+  mx.translate(S / 2, S / 2); mx.rotate(-heading); mx.scale(zoom, zoom);   // heading-up, like in-car navigation
+  const RT = cityMap.regionTiles, RM = region?.map, reach = S / zoom / k * 0.75;
+  if (RT) {                                                           // the region's street map tiles around you
+    for (const t of RT) {
+      const [tx0, ty0, tx1, ty1] = t.bounds;
+      if (tx1 < px - reach || tx0 > px + reach || ty1 < py - reach || ty0 > py + reach) continue;
+      if (!t.img) { t.img = new Image(); t.img.src = t.url; }
+      if (t.img.complete && t.img.naturalWidth) mx.drawImage(t.img, -(px - tx0) * k, -(ty1 - py) * k, (tx1 - tx0) * k, (ty1 - ty0) * k);
+    }
+  } else if (RM) {                                                    // the wider region (coast, airports): under everything
+    const [rx0, , , ry1] = RM.bounds, kr = RM.px_per_m, r = S / zoom / k * 0.75;   // just the patch around you (the
+    mx.drawImage(RM.img, (px - r - rx0) * kr, (ry1 - py - r) * kr, 2 * r * kr, 2 * r * kr,     // whole image scaled up
+      -r * k, -r * k, 2 * r * k, 2 * r * k);                                                   // is too big to draw)
+  }
+  if (harborMap?.img.complete) {                                      // harbour layer underneath, in the same pixel units
+    const [hx0, , , hy1] = harborMap.bounds, f = k / harborMap.px_per_m;
+    mx.drawImage(harborMap.img, -(px - hx0) * k, -(hy1 - py) * k, harborMap.img.width * f, harborMap.img.height * f);
+  }
+  mx.drawImage(mapImg, -(px - x0) * k, -(y1 - py) * k);
+  const P = (x, y) => [(x - px) * k, -(y - py) * k];
+  const rideInfo = tours?.mapInfo() || fares?.mapInfo() || trip?.mapInfo() || ride.mapInfo();
+  if (rideInfo?.route?.length > 1) {                                  // the route still to drive (Google blue)
+    mx.beginPath(); rideInfo.route.forEach(([x, y], i) => { const [u, v] = P(x, y); i ? mx.lineTo(u, v) : mx.moveTo(u, v); });
+    mx.lineWidth = 9 / zoom; mx.strokeStyle = "#0a84ff"; mx.lineJoin = mx.lineCap = "round"; mx.stroke();
+  }
+  mx.restore();
+  const c = Math.cos(-heading), sn = Math.sin(-heading);
+  const place = (x, y) => { const [u, v] = P(x, y); return [S / 2 + (u * c - v * sn) * zoom, S / 2 + (u * sn + v * c) * zoom]; };
+  const R = S / 2 - 18;
+  mmHits = [];
+  // street names: nearest roads first, never overlapping, never over you (skipped when too small to read)
+  if (mm.clientWidth >= 150) {
+    const fs = 15, taken = [], reach = S * 0.3 / zoom / k;
+    mx.textAlign = "center"; mx.textBaseline = "middle"; mx.font = `600 ${fs}px -apple-system, sans-serif`;
+    const tryLabel = (text, x, y, color) => {
+      const [u, v] = place(x, y), w = mx.measureText(text).width + 10, h = fs + 6;
+      if (Math.hypot(u - S / 2, v - S / 2) > R - w / 2 || Math.hypot(u - S / 2, v - S / 2) < 26) return false;
+      if (taken.some(t => Math.abs(t[0] - u) < (t[2] + w) / 2 && Math.abs(t[1] - v) < (t[3] + h) / 2)) return false;
+      taken.push([u, v, w, h]);
+      mx.fillStyle = "rgba(10,12,16,.72)"; mx.beginPath(); mx.roundRect(u - w / 2, v - h / 2, w, h, 5); mx.fill();
+      mx.fillStyle = color; mx.fillText(text, u, v + 1);
+      return true;
+    };
+    const cands = [];
+    for (const l of mapData.labels) {
+      // Midtown's grid names only where that grid is (an avenue's name at the Battery would be wrong)
+      const inMid = (q) => q[0] > -1750 && q[0] < 960 && q[1] > Math.max(-720, l.ymin ?? -720) && q[1] < 740;
+      if (l.kind === "avenue") { const pts = [[l.x, py + reach * 0.55], [l.x, py - reach * 0.55], [l.x, py]].filter(inMid); if (pts.length) cands.push({ t: l.text, d: Math.abs(l.x - px), pts }); }
+      else if (l.kind === "street") { const pts = [[px + reach * 0.5, l.y], [px - reach * 0.5, l.y], [px, l.y]].filter(inMid); if (pts.length) cands.push({ t: l.text, d: Math.abs(l.y - py), pts }); }
+      else cands.push({ t: l.text, d: Math.hypot(l.x - px, l.y - py), pts: [[l.x, l.y]], c: l.kind === "road" || l.kind === "area" ? "#e6e8ec" : "#8fc3ff" });
+    }
+    const bw = mapData.paths?.Broadway;
+    if (bw) {
+      const pts = [];
+      for (let i = 0; i < bw.length - 1; i++) for (let t = 0; t < 1; t += 0.25)
+        pts.push([bw[i][0] + (bw[i + 1][0] - bw[i][0]) * t, bw[i][1] + (bw[i + 1][1] - bw[i][1]) * t]);
+      pts.sort((a, b) => Math.abs(Math.hypot(a[0] - px, a[1] - py) - reach * 0.5) - Math.abs(Math.hypot(b[0] - px, b[1] - py) - reach * 0.5));
+      cands.push({ t: "Broadway", d: Math.min(...pts.map(q => Math.hypot(q[0] - px, q[1] - py))), pts: pts.slice(0, 6), c: "#ffd27a" });
+    }
+    cands.sort((a, b) => a.d - b.d);
+    for (const cnd of cands) for (const q of cnd.pts) if (tryLabel(cnd.t, q[0], q[1], cnd.c || "#e9e9ee")) break;
+  }
+  // places: the same red pin as the full map, with its symbol (✈ plane, ⚓ boat, ★ landmark). Blue is only ever you.
+  for (const m of mapData.markers) {
+    if (m.icon === "slot") continue;
+    const [u, v] = place(m.x, m.y);
+    if (Math.hypot(u - S / 2, v - S / 2) > R) continue;
+    mx.beginPath(); mx.arc(u, v, 10, 0, 7);
+    mx.fillStyle = "#d93025"; mx.fill();
+    mx.lineWidth = 2.5; mx.strokeStyle = "#fff"; mx.stroke();
+    drawPlaceIcon(mx, m.icon, u, v, 10);
+  }
+  // business view: every sellable screen, tappable (yellow = the business colour everywhere)
+  if (nav.showAds) {
+    for (const m of mapData.markers) {
+      if (m.icon !== "slot") continue;
+      const [u, v] = place(m.x, m.y);
+      if (Math.hypot(u - S / 2, v - S / 2) > R) continue;
+      const hc = Settings.v.contrast;
+      mx.beginPath(); mx.arc(u, v, hc ? 11 : 8, 0, 7); mx.fillStyle = "#64d2ff"; mx.fill();
+      mx.lineWidth = hc ? 4 : 2.5; mx.strokeStyle = hc ? "#ffffff" : "#1c1c1e"; mx.stroke();
+      mmHits.push({ u, v, id: m.id });
+    }
+  }
+  if (rideInfo && !ride.inCar) {                                      // your cab on its way
+    const [u, v] = place(...rideInfo.car);
+    if (Math.hypot(u - S / 2, v - S / 2) < R) { mx.beginPath(); mx.roundRect(u - 9, v - 9, 18, 18, 5); mx.fillStyle = "#ffcc00"; mx.fill();
+      mx.lineWidth = 2.5; mx.strokeStyle = "#1c1c1e"; mx.stroke(); }
+  }
+  // destination: red pin, clamped to the rim when off-map (points the way)
+  if (nav.waypoint) {
+    let [wu, wv] = place(nav.waypoint.x, nav.waypoint.y);
+    const dx = wu - S / 2, dy = wv - S / 2, dd = Math.hypot(dx, dy), lim = S / 2 - 22;
+    if (dd > lim) { wu = S / 2 + dx / dd * lim; wv = S / 2 + dy / dd * lim; }
+    mx.save(); mx.translate(wu, wv - 22);
+    mx.beginPath(); mx.arc(0, 0, 10, Math.PI * 0.85, Math.PI * 0.15); mx.lineTo(0, 22); mx.closePath();
+    mx.fillStyle = "#ff453a"; mx.fill(); mx.beginPath(); mx.arc(0, 0, 3.5, 0, 7); mx.fillStyle = "#7a1712"; mx.fill(); mx.restore();
+  }
+  // you: blue dot with a heading cone (the map is heading-up, so the cone always points up)
+  const g = mx.createRadialGradient(S / 2, S / 2, 4, S / 2, S / 2, 52);
+  g.addColorStop(0, "rgba(10,132,255,.55)"); g.addColorStop(1, "rgba(10,132,255,0)");
+  mx.beginPath(); mx.moveTo(S / 2, S / 2); mx.arc(S / 2, S / 2, 52, -Math.PI / 2 - 0.5, -Math.PI / 2 + 0.5); mx.closePath();
+  mx.fillStyle = g; mx.fill();
+  mx.beginPath(); mx.arc(S / 2, S / 2, 10, 0, 7); mx.fillStyle = "#0a84ff"; mx.fill();
+  mx.lineWidth = 3.5; mx.strokeStyle = "#fff"; mx.stroke();
+  // compass (Apple Maps style): dark disc on the rim at upper right, red needle = true north
+  const north = -heading - THREE.MathUtils.degToRad(mapData.grid_rotation_deg || 0);
+  const cx = S / 2 + Math.cos(-Math.PI / 4) * (S / 2 - 30), cy = S / 2 + Math.sin(-Math.PI / 4) * (S / 2 - 30);
+  mx.beginPath(); mx.arc(cx, cy, 22, 0, 7); mx.fillStyle = "rgba(18,18,24,.92)"; mx.fill();
+  mx.lineWidth = 1.5; mx.strokeStyle = "rgba(255,255,255,.25)"; mx.stroke();
+  mx.save(); mx.translate(cx, cy); mx.rotate(north);
+  mx.beginPath(); mx.moveTo(0, -15); mx.lineTo(5, 0); mx.lineTo(-5, 0); mx.closePath(); mx.fillStyle = "#ff453a"; mx.fill();
+  mx.beginPath(); mx.moveTo(0, 15); mx.lineTo(5, 0); mx.lineTo(-5, 0); mx.closePath(); mx.fillStyle = "#d1d1d6"; mx.fill();
+  mx.restore();
+}
+
+// ---------------------------------------------------------------- loop
+const clock = new THREE.Clock();
+let paused = false;
+function tick() {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  handlePad(dt);
+  if (paused) { composer.render(); requestAnimationFrame(tick); return; }   // the world holds still behind the menu
+  if (mode === "walk") walk.update(dt, document.activeElement?.tagName === "INPUT" ? {} : keys);
+  else if (mode === "orbit" && !nav.flight) orbit.update();
+  ride.update(dt);
+  flight.update(dt);
+  region?.update(camera);
+  boat.update(dt);
+  helm.update(dt);
+  intrepid.update();
+  trip.update();
+  fares.update(dt);
+  tours.update(dt);
+  traffic?.update(dt);
+  nav.update(dt, keys);
+  if (crowd) crowd.update(dt);
+  npcs?.update(dt);
+  screens.update(dt);
+  audio.update(dt);
+  business.update(clock.elapsedTime);
+  sky.position.copy(camera.position);
+  worldWater.position.x = camera.position.x; worldWater.position.z = camera.position.z;   // always reaches the horizon
+  const near = camera.position.y > 300 ? 1.0 : camera.position.y > 60 ? 0.4 : 0.1;   // depth precision for a 16 km view
+  drawMe(dt);
+  if (mode === "walk") walk.applyView(dt);                   // third person: the camera steps back behind you to draw
+  if (camera.near !== near) { camera.near = near; camera.updateProjectionMatrix(); }
+  composer.render();
+  drawMinimap();
+  Messages.layout();
+  syncDock();
+  requestAnimationFrame(tick);
+}
+addEventListener("resize", () => {
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight);
+});
+goTo(HERO_VIEW.eye, HERO_VIEW.target);
+tick();
+load().catch(err => {                                         // plain words + a way out, never a raw error
+  console.error(err);
+  const t = document.getElementById("loadtxt");
+  t.innerHTML = navigator.onLine ? "Something went wrong loading the city." : "You seem to be offline.";
+  t.insertAdjacentHTML("beforeend", ` <button class="ui-btn primary" style="margin-left:8px" onclick="location.reload()">Try again</button>`);
+});
+</script>
+</body>
+</html>

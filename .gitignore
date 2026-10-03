@@ -1,0 +1,24 @@
+# Python env / caches
+.venv/
+__pycache__/
+.ruff_cache/
+*.pyc
+
+# OS / editor
+.DS_Store
+
+# Blender auto-backups
+*.blend1
+*.blend2
+
+# local preview renders (regenerate with the render scripts)
+renders/
+
+# raw OpenStreetMap downloads: large, re-fetchable with scripts/blender/fetch_*.py
+data/harbor/osm.json
+data/harbor/footprints.geojson
+data/harbor/_prev/
+data/region/map_osm.json
+
+# region street-map tiles (the region is not wired into the game; rebuild with scripts/tools/build_region_map.py)
+export/region/

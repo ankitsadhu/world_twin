@@ -1,0 +1,12 @@
+{
+  "id": "example_bob_woman",
+  "name": "Example: bob haircut, mustard tee (pipeline demo)",
+  "height": 1.64,
+  "body": { "head_scale": 1.3, "skin": "#B9825F", "shoulder_width": 0.32, "waist": 0.115, "hips": 0.15 },
+  "face": { "eyes": "big_oval", "eye_color": "#1E1714", "lashes": true, "brows": "#1A1412", "lips": "#B5554C", "blush": "#D98A7E" },
+  "hair": { "style": "bob", "color": "#1C1612", "highlight": "#2E241D", "part": "side" },
+  "top": { "type": "tshirt", "crop": false, "sleeve": "short", "color": "#E2B23C" },
+  "bottom": { "type": "wide_jeans", "rise": "high", "color": "#2F4A73", "seam": "#24395A" },
+  "shoes": { "type": "sneakers", "color": "#FAFAFA", "sole": "#D8D8D8" },
+  "pose": "hand_on_hip"
+}

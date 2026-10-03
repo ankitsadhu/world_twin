@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "city-viewer",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "scripts/tools/serve.py",
+        "8765"
+      ],
+      "port": 8765
+    }
+  ]
+}

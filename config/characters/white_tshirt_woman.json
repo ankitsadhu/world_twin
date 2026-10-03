@@ -1,0 +1,48 @@
+{
+  "id": "white_tshirt_woman",
+  "name": "White T-shirt woman",
+  "reference": "references/characters/white_tshirt_woman/reference.webp",
+  "start_model": "references/characters/white_tshirt_woman/start.glb",
+  "height": 1.68,
+  "body": {
+    "head_scale": 1.4,
+    "skin": "#F3C6A2",
+    "shoulder_width": 0.31,
+    "waist": 0.115,
+    "hips": 0.15
+  },
+  "face": {
+    "eyes": "big_oval",
+    "eye_color": "#1E1714",
+    "lashes": true,
+    "brows": "#4E3020",
+    "lips": "#D9776E",
+    "blush": "#F2A8A0"
+  },
+  "hair": {
+    "style": "long_wavy",
+    "color": "#5B3826",
+    "highlight": "#7A4E35",
+    "end_height": 0.6,
+    "part": "side",
+    "fringe": true
+  },
+  "top": {
+    "type": "tshirt",
+    "crop": true,
+    "sleeve": "short",
+    "color": "#F7F6F2"
+  },
+  "bottom": {
+    "type": "wide_jeans",
+    "rise": "high",
+    "color": "#6E9FD6",
+    "seam": "#5683BD"
+  },
+  "shoes": {
+    "type": "sneakers",
+    "color": "#FAFAFA",
+    "sole": "#E6E6E6"
+  },
+  "pose": "hand_on_hip"
+}

@@ -1,0 +1,56 @@
+/* Times Square design system: one material, one accent, an 8-pt grid, one type scale.
+   Every panel, sheet, card and button in the viewer uses these tokens. */
+:root {
+  /* material: dark translucent glass that stays legible over bright billboards */
+  --glass: rgba(18, 18, 24, 0.86);
+  --glass-strong: rgba(14, 14, 20, 0.95);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --blur: saturate(160%) blur(18px);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+
+  /* colour */
+  --ink: #f5f5f7;            /* primary text */
+  --ink-2: #c7c7cc;          /* secondary text: >= 7:1 on --glass */
+  --ink-3: #98989f;          /* tertiary / captions */
+  --accent: #ffcc00;         /* taxi yellow: the one accent */
+  --accent-ink: #1c1c1e;     /* text on accent */
+  --biz: #64d2ff;            /* business view only: screens for sale (never confused with the yellow actions) */
+  --biz-ink: #00222e;
+  --fill: rgba(255, 255, 255, 0.08);
+  --fill-hover: rgba(255, 255, 255, 0.14);
+  --good: #30d158;
+  --danger: #ff453a;
+
+  /* geometry: 8-pt grid, two radii */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+  --r-control: 12px;         /* buttons, inputs, chips */
+  --r-surface: 18px;         /* panels, sheets, cards */
+  --hit: 44px;               /* minimum touch target */
+
+  /* type scale (SF / system) */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  --t-caption: 12px; --t-body: 15px; --t-headline: 17px; --t-title: 22px; --t-large: 28px;
+  --w-regular: 400; --w-semibold: 600; --w-bold: 700;
+}
+
+.ui-surface { background: var(--glass); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border); border-radius: var(--r-surface); box-shadow: var(--shadow); color: var(--ink);
+  font-family: var(--font); }
+.ui-btn { min-height: var(--hit); padding: 0 var(--s4); border-radius: var(--r-control); border: none; cursor: pointer;
+  background: var(--fill); color: var(--ink); font: var(--w-semibold) var(--t-body) var(--font); }
+.ui-btn:hover { background: var(--fill-hover); }
+.ui-btn.primary { background: var(--accent); color: var(--accent-ink); }
+.ui-btn.primary:hover { filter: brightness(1.06); }
+.ui-btn:focus-visible, .ui-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ui-input { min-height: var(--hit); padding: 0 var(--s3); border-radius: var(--r-control); border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.35); color: var(--ink); font: var(--t-body) var(--font); box-sizing: border-box; width: 100%; }
+.ui-chip { display: inline-flex; align-items: center; gap: var(--s1); height: 24px; padding: 0 var(--s2);
+  border-radius: 999px; font: var(--w-semibold) var(--t-caption) var(--font); background: var(--fill); color: var(--ink-2); }
+.ui-chip.accent { background: rgba(255, 204, 0, 0.16); color: var(--accent); }
+.ui-chip.biz { background: rgba(100, 210, 255, 0.16); color: var(--biz); }
+.ui-chip.good { background: rgba(48, 209, 88, 0.16); color: var(--good); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+/* a button floating directly over the scene needs the glass material, not a translucent fill */
+.ui-btn.ui-surface { background: var(--glass); }
+.ui-btn.ui-surface:hover { background: var(--glass-strong); }
+.ui-btn.ui-surface.on { background: var(--accent); color: var(--accent-ink); }

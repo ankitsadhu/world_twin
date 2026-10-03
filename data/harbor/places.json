@@ -1,0 +1,157 @@
+{
+  "district": "harbor",
+  "places": [
+    {
+      "id": "liberty",
+      "name": "Statue of Liberty",
+      "sub": "Liberty Island \u00b7 93 m from the ground to the torch",
+      "kind": "landmark",
+      "keywords": "statue liberty island lady torch",
+      "x": -643.6,
+      "y": -9108.0,
+      "eye": [
+        -383.6,
+        -9368.0,
+        70
+      ],
+      "target": [
+        -643.6,
+        -9108.0,
+        130
+      ]
+    },
+    {
+      "id": "ellis",
+      "name": "Ellis Island",
+      "sub": "Immigration museum \u00b7 12 million arrivals, 1892-1954",
+      "kind": "landmark",
+      "keywords": "ellis island immigration museum",
+      "x": -832.7,
+      "y": -7907.3,
+      "eye": [
+        -612.7,
+        -7747.3,
+        60
+      ],
+      "target": [
+        -832.7,
+        -7907.3,
+        40
+      ]
+    },
+    {
+      "id": "governors",
+      "name": "Governors Island",
+      "sub": "Park island \u00b7 Fort Jay and Castle Williams",
+      "kind": "landmark",
+      "keywords": "governors island park",
+      "x": 1388.5,
+      "y": -7948.9,
+      "eye": [
+        968.5,
+        -8208.9,
+        120
+      ],
+      "target": [
+        1388.5,
+        -7948.9,
+        20
+      ]
+    },
+    {
+      "id": "battery",
+      "name": "The Battery",
+      "sub": "Southern tip of Manhattan \u00b7 ferries to the Statue",
+      "kind": "landmark",
+      "keywords": "battery park castle clinton ferry",
+      "x": 629.0,
+      "y": -6613.4,
+      "eye": [
+        329.0,
+        -6863.4,
+        60
+      ],
+      "target": [
+        629.0,
+        -6613.4,
+        10
+      ]
+    },
+    {
+      "id": "onewtc",
+      "name": "One World Trade Center",
+      "sub": "541 m (1,776 ft) \u00b7 the tallest building in the Western Hemisphere",
+      "kind": "landmark",
+      "keywords": "one world trade center wtc freedom tower 911 memorial",
+      "x": 387,
+      "y": -5512,
+      "eye": [
+        -313,
+        -6112,
+        260
+      ],
+      "target": [
+        387,
+        -5512,
+        300
+      ]
+    },
+    {
+      "id": "exchange",
+      "name": "Exchange Place",
+      "sub": "Jersey City waterfront \u00b7 skyline view of Lower Manhattan",
+      "kind": "landmark",
+      "keywords": "jersey city exchange place new jersey",
+      "x": -1245.2,
+      "y": -5997.7,
+      "eye": [
+        -825.2,
+        -6147.7,
+        70
+      ],
+      "target": [
+        -1245.2,
+        -5997.7,
+        30
+      ]
+    },
+    {
+      "id": "hoboken",
+      "name": "Hoboken waterfront",
+      "sub": "Pier A Park \u00b7 across from Midtown",
+      "kind": "landmark",
+      "keywords": "hoboken pier a new jersey",
+      "x": -1917.4,
+      "y": -3672.0,
+      "eye": [
+        -1517.4,
+        -3872.0,
+        60
+      ],
+      "target": [
+        -1917.4,
+        -3672.0,
+        10
+      ]
+    },
+    {
+      "id": "pier25",
+      "name": "Pier 25",
+      "sub": "Hudson River Park \u00b7 Tribeca",
+      "kind": "landmark",
+      "keywords": "pier 25 tribeca hudson river park",
+      "x": -120.3,
+      "y": -4826.9,
+      "eye": [
+        -370.3,
+        -4976.9,
+        50
+      ],
+      "target": [
+        -120.3,
+        -4826.9,
+        5
+      ]
+    }
+  ]
+}

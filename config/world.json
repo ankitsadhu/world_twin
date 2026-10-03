@@ -1,0 +1,54 @@
+{
+ "schema_version": 1,
+ "name": "Find-A-Startup City",
+ "units": "meters",
+ "up_axis": "Z (Blender) / Y (glTF)",
+ "world_origin": {
+  "lat": 40.758,
+  "lon": -73.9855,
+  "note": "Broadway x 7th Ave x W 45th St"
+ },
+ "districts": [
+  {
+   "id": "times_square",
+   "manifest": "config/districts/times_square.json",
+   "enabled": true,
+   "files": {
+    "chunks": {
+     "collision": "export/times_square/collision.glb",
+     "far": "export/times_square/far.glb",
+     "hero": "export/times_square/hero.glb",
+     "mid_n": "export/times_square/mid_n.glb",
+     "mid_s": "export/times_square/mid_s.glb",
+     "props": "export/times_square/props.glb",
+     "terrain": "export/times_square/terrain.glb",
+     "water": "export/times_square/water.glb"
+    },
+    "slots": "data/times_square/slots.json",
+    "nav": "data/times_square/nav.json",
+    "sign_slots": "data/times_square/sign_slots.json",
+    "properties": "data/times_square/properties.json"
+   },
+   "world_offset": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "grid_rotation_deg": 29.0
+  }
+ ],
+ "time_of_day": {
+  "default": 0.75,
+  "range": [
+   0.0,
+   1.0
+  ],
+  "note": "0 = noon, 1 = midnight"
+ },
+ "sales_contact": "sales@example.com",
+ "_sales_contact_note": "PLACEHOLDER: replace with the real sales inbox before deploy (predeploy_check.py enforces this)",
+ "checkout": {
+  "payment_link": null,
+  "note": "Optional hosted payment page (e.g. a Stripe Payment Link). Without one, checkout sends the order to sales_contact for an invoice. Orders carry client_reference_id = the order number."
+ }
+}

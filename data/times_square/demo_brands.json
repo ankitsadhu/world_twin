@@ -1,0 +1,557 @@
+{
+ "note": "fictional demo brands for previews; real sales come from the brands API (docs/branding_pipeline.md)",
+ "hero": {
+  "ts.1022610.blade13": {
+   "image": "export/times_square/demo_art/demo_ad_08_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.blade14": {
+   "image": "export/times_square/demo_art/demo_ad_01_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.blade15": {
+   "image": "export/times_square/demo_art/demo_ad_03_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up03": {
+   "image": "export/times_square/demo_art/demo_ad_06_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up04": {
+   "image": "export/times_square/demo_art/demo_ad_05_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up05": {
+   "image": "export/times_square/demo_art/demo_ad_03_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up06": {
+   "image": "export/times_square/demo_art/demo_ad_03_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up07": {
+   "image": "export/times_square/demo_art/demo_ad_01_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up08": {
+   "image": "export/times_square/demo_art/demo_ad_04_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up09": {
+   "image": "export/times_square/demo_art/demo_ad_00_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up10": {
+   "image": "export/times_square/demo_art/demo_ad_03_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up11": {
+   "image": "export/times_square/demo_art/demo_ad_03_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.up12": {
+   "image": "export/times_square/demo_art/demo_ad_09_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_01_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022610.wrap02": {
+   "image": "export/times_square/demo_art/demo_ad_07_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022611.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_07_2x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022612.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_02_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022612.wrap02": {
+   "image": "export/times_square/demo_art/demo_ad_00_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022621.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_04_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022622.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_09_3x4.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022623.wrap02": {
+   "image": "export/times_square/demo_art/demo_ad_09_3x4.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022633.blade07": {
+   "image": "export/times_square/demo_art/demo_ad_00_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022653.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_08_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022661.up03": {
+   "image": "export/times_square/demo_art/demo_ad_07_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022661.up04": {
+   "image": "export/times_square/demo_art/demo_ad_08_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022661.up05": {
+   "image": "export/times_square/demo_art/demo_ad_06_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022661.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_08_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1022686.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_09_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024686.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_04_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024706.base01": {
+   "image": "export/times_square/demo_art/demo_ad_03_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024706.blade01": {
+   "image": "export/times_square/demo_art/demo_ad_09_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024714.crown01": {
+   "image": "export/times_square/demo_art/demo_ad_03_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024714.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_08_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024727.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_04_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024739.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_05_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024742.up03": {
+   "image": "export/times_square/demo_art/demo_ad_06_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024742.up04": {
+   "image": "export/times_square/demo_art/demo_ad_05_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024742.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_02_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024742.wrap02": {
+   "image": "export/times_square/demo_art/demo_ad_00_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024743.blade04": {
+   "image": "export/times_square/demo_art/demo_ad_05_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.blade10": {
+   "image": "export/times_square/demo_art/demo_ad_07_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.blade11": {
+   "image": "export/times_square/demo_art/demo_ad_01_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.blade12": {
+   "image": "export/times_square/demo_art/demo_ad_07_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.blade13": {
+   "image": "export/times_square/demo_art/demo_ad_09_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.blade14": {
+   "image": "export/times_square/demo_art/demo_ad_00_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.up04": {
+   "image": "export/times_square/demo_art/demo_ad_04_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.up05": {
+   "image": "export/times_square/demo_art/demo_ad_00_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.up06": {
+   "image": "export/times_square/demo_art/demo_ad_00_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.up07": {
+   "image": "export/times_square/demo_art/demo_ad_04_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.up08": {
+   "image": "export/times_square/demo_art/demo_ad_03_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.up09": {
+   "image": "export/times_square/demo_art/demo_ad_03_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_09_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.wrap02": {
+   "image": "export/times_square/demo_art/demo_ad_09_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1024757.wrap03": {
+   "image": "export/times_square/demo_art/demo_ad_01_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1076193.up04": {
+   "image": "export/times_square/demo_art/demo_ad_05_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1076193.up05": {
+   "image": "export/times_square/demo_art/demo_ad_01_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1076193.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_09_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1076844.main01": {
+   "image": "export/times_square/demo_art/demo_ad_03_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1076844.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_09_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1076844.wrap02": {
+   "image": "export/times_square/demo_art/demo_ad_07_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1083718.blade05": {
+   "image": "export/times_square/demo_art/demo_ad_01_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1083718.up04": {
+   "image": "export/times_square/demo_art/demo_ad_02_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1083718.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_07_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1083718.wrap02": {
+   "image": "export/times_square/demo_art/demo_ad_09_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1083718.wrap03": {
+   "image": "export/times_square/demo_art/demo_ad_07_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1083727.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_02_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1085493.blade06": {
+   "image": "export/times_square/demo_art/demo_ad_07_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1085493.up03": {
+   "image": "export/times_square/demo_art/demo_ad_00_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1085493.up04": {
+   "image": "export/times_square/demo_art/demo_ad_05_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1085493.up05": {
+   "image": "export/times_square/demo_art/demo_ad_01_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1089850.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_07_3x4.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1089850.wrap02": {
+   "image": "export/times_square/demo_art/demo_ad_03_2x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1551bway.blade01": {
+   "image": "export/times_square/demo_art/demo_ad_05_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1551bway.tower01": {
+   "image": "export/times_square/demo_art/demo_ad_09_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1551bway.wrap01": {
+   "image": "export/times_square/demo_art/demo_ad_07_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad01": {
+   "image": "export/times_square/demo_art/demo_ad_06_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad02": {
+   "image": "export/times_square/demo_art/demo_ad_02_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand",
+   "video": "export/times_square/demo_video/demo_ad_02_16x9.mp4"
+  },
+  "ts.1tsq.ad03": {
+   "image": "export/times_square/demo_art/demo_ad_06_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad04": {
+   "image": "export/times_square/demo_art/demo_ad_09_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad05": {
+   "image": "export/times_square/demo_art/demo_ad_03_9x16.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad06": {
+   "image": "export/times_square/demo_art/demo_ad_03_3x4.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad07": {
+   "image": "export/times_square/demo_art/demo_ad_07_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad08": {
+   "image": "export/times_square/demo_art/demo_ad_02_3x4.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad09": {
+   "image": "export/times_square/demo_art/demo_ad_04_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad10": {
+   "image": "export/times_square/demo_art/demo_ad_01_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand",
+   "video": "export/times_square/demo_video/demo_ad_01_16x9.mp4"
+  },
+  "ts.1tsq.ad11": {
+   "image": "export/times_square/demo_art/demo_ad_05_3x4.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad12": {
+   "image": "export/times_square/demo_art/demo_ad_01_3x4.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.ad13": {
+   "image": "export/times_square/demo_art/demo_ad_03_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.1tsq.shop01": {
+   "image": "export/times_square/demo_art/demo_ad_01_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.4tsq.ad01": {
+   "image": "export/times_square/demo_art/demo_ad_03_16x9.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.4tsq.ad02": {
+   "image": "export/times_square/demo_art/demo_ad_09_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.4tsq.ad03": {
+   "image": "export/times_square/demo_art/demo_ad_07_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.4tsq.ad04": {
+   "image": "export/times_square/demo_art/demo_ad_08_3x4.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.4tsq.crown1": {
+   "image": "export/times_square/demo_art/demo_ad_00_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.4tsq.crown2": {
+   "image": "export/times_square/demo_art/demo_ad_02_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.4tsq.crown3": {
+   "image": "export/times_square/demo_art/demo_ad_04_1x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.4tsq.shop01": {
+   "image": "export/times_square/demo_art/demo_ad_01_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.4tsq.shop02": {
+   "image": "export/times_square/demo_art/demo_ad_09_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.750.3d01": {
+   "image": "export/times_square/demo_art/demo_ad_02_2x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.750.rib1": {
+   "image": "export/times_square/demo_art/demo_ad_05_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.750.rib2": {
+   "image": "export/times_square/demo_art/demo_ad_05_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.750.rib3": {
+   "image": "export/times_square/demo_art/demo_ad_07_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.750.rib4": {
+   "image": "export/times_square/demo_art/demo_ad_04_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.750.shop01": {
+   "image": "export/times_square/demo_art/demo_ad_00_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.750.shop02": {
+   "image": "export/times_square/demo_art/demo_ad_00_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.w49.roof1": {
+   "image": "export/times_square/demo_art/demo_ad_01_2x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.w49.roof2": {
+   "image": "export/times_square/demo_art/demo_ad_07_2x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.w49.shop01": {
+   "image": "export/times_square/demo_art/demo_ad_06_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.w49.shop02": {
+   "image": "export/times_square/demo_art/demo_ad_00_8x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  },
+  "ts.w49.wrap1": {
+   "image": "export/times_square/demo_art/demo_ad_06_4x1.png",
+   "link": "https://example.com",
+   "name": "Demo brand"
+  }
+ }
+}

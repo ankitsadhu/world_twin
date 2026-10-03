@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "id": "harbor",
+  "prefix": "HB",
+  "name": "New York Harbor",
+  "placement": "geo",
+  "geo_anchor": {
+    "lat": 40.758,
+    "lon": -73.9855
+  },
+  "grid_rotation_deg": 29.0,
+  "grid_rotation_note": "same anchor and rotation as times_square: one shared local frame, no offsets",
+  "world_offset": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "blend_file": "blender/districts/harbor/harbor.blend",
+  "bounds_geo": {
+    "south": 40.66842,
+    "west": -74.0716,
+    "north": 40.79162,
+    "east": -73.94103
+  },
+  "exclude_local_rect": [
+    -1750,
+    -720,
+    960,
+    740
+  ],
+  "exclude_note": "the Times Square district's own area (its buildings and terrain come from times_square)",
+  "chunks": [
+    "land",
+    "buildings",
+    "piers",
+    "liberty"
+  ],
+  "outputs": {
+    "export_dir": "export/harbor",
+    "footprints": "data/harbor/footprints.geojson",
+    "osm": "data/harbor/osm.json"
+  },
+  "local_rect": [
+    -2800,
+    -9750,
+    2750,
+    2600
+  ],
+  "local_rect_note": "the harbour IS this rectangle in the shared local frame (axis-aligned with Times Square's grid). It surrounds Times Square's rectangle (excluded) on the west, east and north, so the map and scenery have no gaps around Midtown: from Liberty Island up to ~77th St / Central Park"
+}

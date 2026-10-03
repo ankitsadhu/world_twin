@@ -1,0 +1,8570 @@
+{
+  "district": "harbor",
+  "bounds": [
+    -2800.0,
+    -9750.0,
+    2750.0,
+    -720.0
+  ],
+  "px_per_m": 0.5,
+  "size": [
+    2775,
+    4515
+  ],
+  "labels": [
+    {
+      "text": "Hudson River",
+      "x": -800.3,
+      "y": -4643.8,
+      "kind": "water"
+    },
+    {
+      "text": "Upper New York Bay",
+      "x": 346.6,
+      "y": -8017.3,
+      "kind": "area_water"
+    },
+    {
+      "text": "East River",
+      "x": 2351.3,
+      "y": -5633.3,
+      "kind": "area_water"
+    },
+    {
+      "text": "Jersey City",
+      "x": -2823.8,
+      "y": -6210.9,
+      "kind": "area"
+    },
+    {
+      "text": "Hoboken",
+      "x": -2737.6,
+      "y": -3235.7,
+      "kind": "area"
+    },
+    {
+      "text": "Liberty State Park",
+      "x": -2258.0,
+      "y": -8188.3,
+      "kind": "area"
+    },
+    {
+      "text": "Lower Manhattan",
+      "x": 867.3,
+      "y": -5564.9,
+      "kind": "area"
+    },
+    {
+      "text": "Battery Park City",
+      "x": 223.3,
+      "y": -5794.6,
+      "kind": "area"
+    },
+    {
+      "text": "Tribeca",
+      "x": 435.5,
+      "y": -4786.0,
+      "kind": "area"
+    },
+    {
+      "text": "West Village",
+      "x": -206.7,
+      "y": -3105.6,
+      "kind": "area"
+    },
+    {
+      "text": "Chelsea",
+      "x": -485.6,
+      "y": -1732.9,
+      "kind": "area"
+    },
+    {
+      "text": "Brooklyn",
+      "x": 2930.6,
+      "y": -6330.4,
+      "kind": "area"
+    },
+    {
+      "text": "Liberty Island",
+      "x": -804.2,
+      "y": -9037.0,
+      "kind": "island"
+    },
+    {
+      "text": "Ellis Island",
+      "x": -992.6,
+      "y": -8123.2,
+      "kind": "island"
+    },
+    {
+      "text": "Governors Island",
+      "x": 1371.1,
+      "y": -8213.1,
+      "kind": "island"
+    },
+    {
+      "text": "Central Park",
+      "x": 232.8,
+      "y": 2101.9,
+      "kind": "island"
+    },
+    {
+      "text": "Upper West Side",
+      "x": -835.7,
+      "y": 2464.2,
+      "kind": "area"
+    },
+    {
+      "text": "Upper East Side",
+      "x": 1454.2,
+      "y": 2333.4,
+      "kind": "area"
+    },
+    {
+      "text": "Midtown East",
+      "x": 1368.9,
+      "y": 313.3,
+      "kind": "area"
+    },
+    {
+      "text": "Murray Hill",
+      "x": 1092.8,
+      "y": -667.0,
+      "kind": "area"
+    },
+    {
+      "text": "Kips Bay",
+      "x": 1423.8,
+      "y": -1438.1,
+      "kind": "area"
+    },
+    {
+      "text": "Long Island City",
+      "x": 3309.8,
+      "y": 116.4,
+      "kind": "area"
+    },
+    {
+      "text": "Roosevelt Island",
+      "x": 2473.3,
+      "y": 1625.5,
+      "kind": "island"
+    },
+    {
+      "text": "Weehawken",
+      "x": -3138.0,
+      "y": -339.4,
+      "kind": "area"
+    },
+    {
+      "text": "Lincoln Square",
+      "x": -816.7,
+      "y": 1647.4,
+      "kind": "area"
+    },
+    {
+      "text": "Craig Road South",
+      "x": 1461.5,
+      "y": -8279.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.098
+    },
+    {
+      "text": "Craig Road South",
+      "x": 1285.6,
+      "y": -8581.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.106
+    },
+    {
+      "text": "Craig Road South",
+      "x": 1045.6,
+      "y": -8810.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.957
+    },
+    {
+      "text": "Kimmel Road",
+      "x": 1709.1,
+      "y": -7771.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.8
+    },
+    {
+      "text": "Kimmel Road",
+      "x": 1633.2,
+      "y": -8090.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.675
+    },
+    {
+      "text": "Dikeman Street",
+      "x": 2536.4,
+      "y": -9104.1,
+      "kind": "road",
+      "major": false,
+      "angle": 2.917
+    },
+    {
+      "text": "Dikeman Street",
+      "x": 2195.3,
+      "y": -9025.8,
+      "kind": "road",
+      "major": false,
+      "angle": 2.914
+    },
+    {
+      "text": "Reed Street",
+      "x": 2178.1,
+      "y": -9344.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.223
+    },
+    {
+      "text": "Freedom Way",
+      "x": -1958.5,
+      "y": -8964.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.878
+    },
+    {
+      "text": "Freedom Way",
+      "x": -1877.6,
+      "y": -8632.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.449
+    },
+    {
+      "text": "Theodore Conrad Drive",
+      "x": -2626.5,
+      "y": -8794.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.13
+    },
+    {
+      "text": "Theodore Conrad Drive",
+      "x": -2279.4,
+      "y": -8839.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.13
+    },
+    {
+      "text": "Theodore Conrad Drive",
+      "x": -1972.6,
+      "y": -8879.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.135
+    },
+    {
+      "text": "Edward Hart Road",
+      "x": -2481.3,
+      "y": -8939.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.445
+    },
+    {
+      "text": "Edward Hart Road",
+      "x": -2437.5,
+      "y": -8592.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.445
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1687.9,
+      "y": -9378.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.04
+    },
+    {
+      "text": "Coffey Street",
+      "x": 2077.8,
+      "y": -9079.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.227
+    },
+    {
+      "text": "Beard Street",
+      "x": 2194.1,
+      "y": -9269.6,
+      "kind": "road",
+      "major": false,
+      "angle": 2.918
+    },
+    {
+      "text": "Ferris Street",
+      "x": 2012.0,
+      "y": -8983.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.794
+    },
+    {
+      "text": "Wolcott Street",
+      "x": 1925.2,
+      "y": -8882.1,
+      "kind": "road",
+      "major": false,
+      "angle": 2.916
+    },
+    {
+      "text": "Van Brunt Street",
+      "x": 2238.4,
+      "y": -9394.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.782
+    },
+    {
+      "text": "Morris Pesin Drive",
+      "x": -2637.1,
+      "y": -9095.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.128
+    },
+    {
+      "text": "Van Dyke Street",
+      "x": 2211.3,
+      "y": -9192.3,
+      "kind": "road",
+      "major": false,
+      "angle": 2.916
+    },
+    {
+      "text": "Freedom Way",
+      "x": -1832.3,
+      "y": -8293.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.439
+    },
+    {
+      "text": "Freedom Way",
+      "x": -1652.1,
+      "y": -8010.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.113
+    },
+    {
+      "text": "Freedom Way",
+      "x": -1649.7,
+      "y": -7668.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.426
+    },
+    {
+      "text": "Freedom Way",
+      "x": -1565.0,
+      "y": -7330.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.45
+    },
+    {
+      "text": "Craig Road North",
+      "x": 869.8,
+      "y": -8665.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.702
+    },
+    {
+      "text": "Craig Road North",
+      "x": 926.1,
+      "y": -8322.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.409
+    },
+    {
+      "text": "Craig Road North",
+      "x": 984.1,
+      "y": -7977.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.406
+    },
+    {
+      "text": "Craig Road North",
+      "x": 1041.8,
+      "y": -7675.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.431
+    },
+    {
+      "text": "Clayton Road",
+      "x": 1165.0,
+      "y": -7949.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.353
+    },
+    {
+      "text": "Clayton Road",
+      "x": 1462.4,
+      "y": -8061.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.92
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -2484.2,
+      "y": -9175.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.136
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -2153.8,
+      "y": -9218.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.301
+    },
+    {
+      "text": "Conover Street",
+      "x": 2161.0,
+      "y": -9099.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.349
+    },
+    {
+      "text": "The Oval",
+      "x": 1207.0,
+      "y": -8453.3,
+      "kind": "road",
+      "major": false,
+      "angle": -3.081
+    },
+    {
+      "text": "Center Way",
+      "x": 1158.3,
+      "y": -8268.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.004
+    },
+    {
+      "text": "Hammock Grove",
+      "x": 1220.8,
+      "y": -8152.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.845
+    },
+    {
+      "text": "West Way",
+      "x": 1247.2,
+      "y": -8215.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.291
+    },
+    {
+      "text": "Play Way",
+      "x": 1123.0,
+      "y": -7993.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.755
+    },
+    {
+      "text": "Carder Road",
+      "x": 1188.9,
+      "y": -7612.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.531
+    },
+    {
+      "text": "Carder Road",
+      "x": 1516.8,
+      "y": -7579.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.384
+    },
+    {
+      "text": "Hay Road",
+      "x": 1126.6,
+      "y": -7825.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.065
+    },
+    {
+      "text": "Hay Road",
+      "x": 1327.2,
+      "y": -8008.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.819
+    },
+    {
+      "text": "Wheeler Avenue",
+      "x": 1108.6,
+      "y": -7917.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.9
+    },
+    {
+      "text": "Division Road",
+      "x": 1356.3,
+      "y": -8146.9,
+      "kind": "road",
+      "major": false,
+      "angle": 2.785
+    },
+    {
+      "text": "Comfort Road",
+      "x": 1394.4,
+      "y": -7979.9,
+      "kind": "road",
+      "major": false,
+      "angle": 2.408
+    },
+    {
+      "text": "Comfort Road",
+      "x": 1186.3,
+      "y": -7806.1,
+      "kind": "road",
+      "major": false,
+      "angle": 2.465
+    },
+    {
+      "text": "Andes Road",
+      "x": 1220.1,
+      "y": -7647.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.429
+    },
+    {
+      "text": "Andes Road",
+      "x": 1518.3,
+      "y": -7664.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.4
+    },
+    {
+      "text": "Flagpole Plaza",
+      "x": -771.4,
+      "y": -9036.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.162
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1511.4,
+      "y": -8547.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.501
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1475.0,
+      "y": -8199.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.424
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1404.9,
+      "y": -7866.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.298
+    },
+    {
+      "text": "Thomas McGovern Drive",
+      "x": -2625.7,
+      "y": -8509.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.082
+    },
+    {
+      "text": "Thomas McGovern Drive",
+      "x": -2277.0,
+      "y": -8540.0,
+      "kind": "road",
+      "major": false,
+      "angle": -0.092
+    },
+    {
+      "text": "Thomas McGovern Drive",
+      "x": -2009.0,
+      "y": -8542.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.082
+    },
+    {
+      "text": "Yeaton Road",
+      "x": 1277.1,
+      "y": -8298.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.918
+    },
+    {
+      "text": "Morris Pesin Drive",
+      "x": -2297.1,
+      "y": -9140.0,
+      "kind": "road",
+      "major": false,
+      "angle": -0.13
+    },
+    {
+      "text": "Morris Pesin Drive",
+      "x": -1993.0,
+      "y": -9179.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.149
+    },
+    {
+      "text": "Division Road",
+      "x": 1049.4,
+      "y": -8034.2,
+      "kind": "road",
+      "major": false,
+      "angle": 2.779
+    },
+    {
+      "text": "U.S. Flag Plaza",
+      "x": -1677.2,
+      "y": -9217.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.5
+    },
+    {
+      "text": "King Avenue",
+      "x": 1395.0,
+      "y": -8097.4,
+      "kind": "road",
+      "major": false,
+      "angle": -1.872
+    },
+    {
+      "text": "Evans Road",
+      "x": 1556.8,
+      "y": -7945.8,
+      "kind": "road",
+      "major": false,
+      "angle": 2.226
+    },
+    {
+      "text": "Willow Place",
+      "x": 2596.4,
+      "y": -6853.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.415
+    },
+    {
+      "text": "Imlay Street",
+      "x": 2329.0,
+      "y": -8649.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.351
+    },
+    {
+      "text": "Visitation Place",
+      "x": 2483.6,
+      "y": -8684.6,
+      "kind": "road",
+      "major": false,
+      "angle": 2.912
+    },
+    {
+      "text": "Pioneer Street",
+      "x": 2430.6,
+      "y": -8754.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.226
+    },
+    {
+      "text": "Carroll Street",
+      "x": 2610.6,
+      "y": -8053.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.151
+    },
+    {
+      "text": "Hicks Street",
+      "x": 2727.6,
+      "y": -7386.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.413
+    },
+    {
+      "text": "Van Dyke Street",
+      "x": 2563.3,
+      "y": -9273.1,
+      "kind": "road",
+      "major": false,
+      "angle": 2.915
+    },
+    {
+      "text": "Poplar Street",
+      "x": 2583.0,
+      "y": -5834.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.155
+    },
+    {
+      "text": "Columbia Place",
+      "x": 2536.1,
+      "y": -6863.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.418
+    },
+    {
+      "text": "Middagh Street",
+      "x": 2624.7,
+      "y": -5904.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.979
+    },
+    {
+      "text": "Richards Street",
+      "x": 2617.2,
+      "y": -8471.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.789
+    },
+    {
+      "text": "Garden Place",
+      "x": 2736.4,
+      "y": -6811.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.415
+    },
+    {
+      "text": "President Street",
+      "x": 2626.2,
+      "y": -7971.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.994
+    },
+    {
+      "text": "Orange Street",
+      "x": 2543.1,
+      "y": -6073.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.989
+    },
+    {
+      "text": "Henry Street",
+      "x": 2716.3,
+      "y": -6223.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.415
+    },
+    {
+      "text": "Commerce Street",
+      "x": 2601.1,
+      "y": -8467.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.226
+    },
+    {
+      "text": "Seabring Street",
+      "x": 2609.8,
+      "y": -8388.4,
+      "kind": "road",
+      "major": false,
+      "angle": 2.915
+    },
+    {
+      "text": "Degraw Street",
+      "x": 2561.0,
+      "y": -7737.5,
+      "kind": "road",
+      "major": true,
+      "angle": 0.152
+    },
+    {
+      "text": "Columbia Heights",
+      "x": 2429.2,
+      "y": -6303.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.739
+    },
+    {
+      "text": "Columbia Heights",
+      "x": 2382.2,
+      "y": -6007.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.732
+    },
+    {
+      "text": "Tiffany Place",
+      "x": 2715.7,
+      "y": -7597.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.728
+    },
+    {
+      "text": "Love Lane",
+      "x": 2672.1,
+      "y": -6394.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.096
+    },
+    {
+      "text": "Brooklyn-Battery Tunnel",
+      "x": 697.6,
+      "y": -6516.4,
+      "kind": "road",
+      "major": true,
+      "angle": -1.191
+    },
+    {
+      "text": "Brooklyn-Battery Tunnel",
+      "x": 897.2,
+      "y": -6800.5,
+      "kind": "road",
+      "major": true,
+      "angle": -0.793
+    },
+    {
+      "text": "Brooklyn-Battery Tunnel",
+      "x": 1143.3,
+      "y": -7049.4,
+      "kind": "road",
+      "major": true,
+      "angle": -0.791
+    },
+    {
+      "text": "Brooklyn-Battery Tunnel",
+      "x": 1389.3,
+      "y": -7298.4,
+      "kind": "road",
+      "major": true,
+      "angle": -0.792
+    },
+    {
+      "text": "Brooklyn-Battery Tunnel",
+      "x": 1637.5,
+      "y": -7545.0,
+      "kind": "road",
+      "major": true,
+      "angle": -0.715
+    },
+    {
+      "text": "Brooklyn-Battery Tunnel",
+      "x": 1931.6,
+      "y": -7733.6,
+      "kind": "road",
+      "major": true,
+      "angle": -0.51
+    },
+    {
+      "text": "Brooklyn-Battery Tunnel",
+      "x": 2234.6,
+      "y": -7908.6,
+      "kind": "road",
+      "major": true,
+      "angle": -0.607
+    },
+    {
+      "text": "Brooklyn-Battery Tunnel",
+      "x": 2501.6,
+      "y": -8133.0,
+      "kind": "road",
+      "major": true,
+      "angle": -0.846
+    },
+    {
+      "text": "Cranberry Street",
+      "x": 2531.2,
+      "y": -5997.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.154
+    },
+    {
+      "text": "Brooklyn-Queens Expressway",
+      "x": 2482.2,
+      "y": -6917.7,
+      "kind": "road",
+      "major": true,
+      "angle": -1.162
+    },
+    {
+      "text": "Verona Street",
+      "x": 2666.7,
+      "y": -8645.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.226
+    },
+    {
+      "text": "Columbia Street",
+      "x": 2615.9,
+      "y": -7469.1,
+      "kind": "road",
+      "major": true,
+      "angle": -1.417
+    },
+    {
+      "text": "Flatbush Avenue Extension",
+      "x": 2663.1,
+      "y": -5372.5,
+      "kind": "road",
+      "major": true,
+      "angle": 2.475
+    },
+    {
+      "text": "Flatbush Avenue Extension (lower level)",
+      "x": 2658.7,
+      "y": -5382.9,
+      "kind": "road",
+      "major": true,
+      "angle": 2.477
+    },
+    {
+      "text": "Sackett Street",
+      "x": 2619.4,
+      "y": -7810.0,
+      "kind": "road",
+      "major": false,
+      "angle": -2.99
+    },
+    {
+      "text": "Kane Street",
+      "x": 2682.3,
+      "y": -7482.1,
+      "kind": "road",
+      "major": false,
+      "angle": -3.049
+    },
+    {
+      "text": "Warren Street",
+      "x": 2656.3,
+      "y": -7329.7,
+      "kind": "road",
+      "major": false,
+      "angle": -3.061
+    },
+    {
+      "text": "Baltic Street",
+      "x": 2668.2,
+      "y": -7404.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.103
+    },
+    {
+      "text": "Congress Street",
+      "x": 2645.8,
+      "y": -7254.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.152
+    },
+    {
+      "text": "Brooklyn-Queens Expressway",
+      "x": 2402.4,
+      "y": -6451.5,
+      "kind": "road",
+      "major": true,
+      "angle": 1.73
+    },
+    {
+      "text": "Brooklyn-Queens Expressway",
+      "x": 2351.8,
+      "y": -6105.5,
+      "kind": "road",
+      "major": true,
+      "angle": 1.545
+    },
+    {
+      "text": "Remsen Street",
+      "x": 2625.3,
+      "y": -6614.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.13
+    },
+    {
+      "text": "Grace Court",
+      "x": 2551.7,
+      "y": -6698.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.977
+    },
+    {
+      "text": "Pierrepont Street",
+      "x": 2642.1,
+      "y": -6452.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.16
+    },
+    {
+      "text": "Willow Street",
+      "x": 2471.9,
+      "y": -6084.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.413
+    },
+    {
+      "text": "Union Street",
+      "x": 2619.8,
+      "y": -7890.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.153
+    },
+    {
+      "text": "Sullivan Street",
+      "x": 2364.1,
+      "y": -8901.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.227
+    },
+    {
+      "text": "Richards Street",
+      "x": 2546.2,
+      "y": -8797.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.794
+    },
+    {
+      "text": "Van Brunt Street",
+      "x": 2483.8,
+      "y": -8293.5,
+      "kind": "road",
+      "major": true,
+      "angle": -1.791
+    },
+    {
+      "text": "Van Brunt Street",
+      "x": 2407.1,
+      "y": -8635.0,
+      "kind": "road",
+      "major": true,
+      "angle": -1.791
+    },
+    {
+      "text": "Van Brunt Street",
+      "x": 2330.6,
+      "y": -8976.6,
+      "kind": "road",
+      "major": true,
+      "angle": -1.79
+    },
+    {
+      "text": "Summit Street",
+      "x": 2647.0,
+      "y": -8129.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.986
+    },
+    {
+      "text": "Delavan Street",
+      "x": 2592.5,
+      "y": -8547.6,
+      "kind": "road",
+      "major": false,
+      "angle": 2.918
+    },
+    {
+      "text": "Columbia Street",
+      "x": 2681.9,
+      "y": -7881.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.414
+    },
+    {
+      "text": "Brooklyn-Queens Expressway",
+      "x": 2732.4,
+      "y": -7346.0,
+      "kind": "road",
+      "major": true,
+      "angle": -1.415
+    },
+    {
+      "text": "Otsego Street",
+      "x": 2713.5,
+      "y": -9182.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.736
+    },
+    {
+      "text": "Dwight Street",
+      "x": 2627.3,
+      "y": -9206.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.791
+    },
+    {
+      "text": "Wolcott Street",
+      "x": 2414.0,
+      "y": -8993.8,
+      "kind": "road",
+      "major": false,
+      "angle": 2.917
+    },
+    {
+      "text": "Bridge Park Drive",
+      "x": 2331.8,
+      "y": -6893.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.727
+    },
+    {
+      "text": "Pineapple Street",
+      "x": 2554.8,
+      "y": -6150.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.158
+    },
+    {
+      "text": "Clark Street",
+      "x": 2566.4,
+      "y": -6225.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.979
+    },
+    {
+      "text": "Brooklyn Heights Promenade",
+      "x": 2401.7,
+      "y": -6456.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.73
+    },
+    {
+      "text": "Brooklyn Heights Promenade",
+      "x": 2350.2,
+      "y": -6110.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.575
+    },
+    {
+      "text": "Dwight Street",
+      "x": 2724.1,
+      "y": -8782.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.787
+    },
+    {
+      "text": "Van Brunt Street",
+      "x": 2489.9,
+      "y": -7911.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.406
+    },
+    {
+      "text": "Barry Road",
+      "x": 1667.5,
+      "y": -7842.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.526
+    },
+    {
+      "text": "King Street",
+      "x": 2147.7,
+      "y": -8771.4,
+      "kind": "road",
+      "major": false,
+      "angle": 2.922
+    },
+    {
+      "text": "Furman Street",
+      "x": 2360.4,
+      "y": -6264.3,
+      "kind": "road",
+      "major": true,
+      "angle": -1.414
+    },
+    {
+      "text": "Furman Street",
+      "x": 2416.2,
+      "y": -6609.8,
+      "kind": "road",
+      "major": true,
+      "angle": -1.409
+    },
+    {
+      "text": "Imlay Street",
+      "x": 2384.5,
+      "y": -8401.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.349
+    },
+    {
+      "text": "Imlay Street",
+      "x": 2452.1,
+      "y": -8110.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.942
+    },
+    {
+      "text": "Hicks Street",
+      "x": 2676.9,
+      "y": -6875.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.732
+    },
+    {
+      "text": "Beard Street",
+      "x": 2502.9,
+      "y": -9340.6,
+      "kind": "road",
+      "major": true,
+      "angle": -0.224
+    },
+    {
+      "text": "Joralemon Street",
+      "x": 2564.3,
+      "y": -6769.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.876
+    },
+    {
+      "text": "Montague Street",
+      "x": 2556.2,
+      "y": -6545.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.983
+    },
+    {
+      "text": "Hicks Street",
+      "x": 2595.8,
+      "y": -6362.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.735
+    },
+    {
+      "text": "Hicks Street",
+      "x": 2539.7,
+      "y": -6016.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.73
+    },
+    {
+      "text": "Willow Street",
+      "x": 2515.3,
+      "y": -6353.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.41
+    },
+    {
+      "text": "State Street",
+      "x": 2680.2,
+      "y": -6931.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.155
+    },
+    {
+      "text": "Coffey Street",
+      "x": 2590.8,
+      "y": -9198.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.225
+    },
+    {
+      "text": "Furman Street",
+      "x": 2464.3,
+      "y": -6900.0,
+      "kind": "road",
+      "major": true,
+      "angle": -1.409
+    },
+    {
+      "text": "Richards Street",
+      "x": 2469.7,
+      "y": -9130.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.791
+    },
+    {
+      "text": "Bowne Street",
+      "x": 2552.7,
+      "y": -8293.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.223
+    },
+    {
+      "text": "Pier 3 Plaza",
+      "x": 2130.7,
+      "y": -6415.8,
+      "kind": "road",
+      "major": false,
+      "angle": -2.314
+    },
+    {
+      "text": "Furman Street",
+      "x": 2307.5,
+      "y": -5922.5,
+      "kind": "road",
+      "major": true,
+      "angle": -1.43
+    },
+    {
+      "text": "Henry Street",
+      "x": 2662.7,
+      "y": -5881.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.42
+    },
+    {
+      "text": "Little West Street",
+      "x": 489.0,
+      "y": -6344.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.797
+    },
+    {
+      "text": "River Terrace",
+      "x": -58.2,
+      "y": -5246.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.708
+    },
+    {
+      "text": "Holland Tunnel",
+      "x": -2343.2,
+      "y": -4730.1,
+      "kind": "road",
+      "major": true,
+      "angle": 3.007
+    },
+    {
+      "text": "Pavonia Avenue",
+      "x": -2561.2,
+      "y": -5308.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.384
+    },
+    {
+      "text": "Bay Street",
+      "x": -1805.4,
+      "y": -5791.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.777
+    },
+    {
+      "text": "10th Street",
+      "x": -2492.1,
+      "y": -5105.4,
+      "kind": "road",
+      "major": false,
+      "angle": -2.756
+    },
+    {
+      "text": "Monmouth Street",
+      "x": -2726.8,
+      "y": -6554.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.686
+    },
+    {
+      "text": "Monmouth Street",
+      "x": -2762.6,
+      "y": -6251.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.69
+    },
+    {
+      "text": "Bright Street",
+      "x": -2379.0,
+      "y": -6529.1,
+      "kind": "road",
+      "major": false,
+      "angle": -3.028
+    },
+    {
+      "text": "1st Street",
+      "x": -2684.7,
+      "y": -6051.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.4
+    },
+    {
+      "text": "Barrow Street",
+      "x": -2317.5,
+      "y": -6440.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.7
+    },
+    {
+      "text": "16th Street",
+      "x": -2704.8,
+      "y": -4676.5,
+      "kind": "road",
+      "major": false,
+      "angle": -2.748
+    },
+    {
+      "text": "Mercer Street",
+      "x": -2192.2,
+      "y": -6263.6,
+      "kind": "road",
+      "major": false,
+      "angle": -3.026
+    },
+    {
+      "text": "Mercer Street",
+      "x": -2477.6,
+      "y": -6296.9,
+      "kind": "road",
+      "major": false,
+      "angle": -3.024
+    },
+    {
+      "text": "7th Street",
+      "x": -2682.4,
+      "y": -5534.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.392
+    },
+    {
+      "text": "Morgan Street",
+      "x": -2126.9,
+      "y": -5993.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.388
+    },
+    {
+      "text": "Morgan Street",
+      "x": -1647.0,
+      "y": -5815.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.359
+    },
+    {
+      "text": "Marin Boulevard",
+      "x": -1836.1,
+      "y": -6725.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.929
+    },
+    {
+      "text": "Greene Street",
+      "x": -1556.3,
+      "y": -5863.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.92
+    },
+    {
+      "text": "5th Street",
+      "x": -2717.5,
+      "y": -5722.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.388
+    },
+    {
+      "text": "Phillip Street",
+      "x": -2340.3,
+      "y": -7766.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.88
+    },
+    {
+      "text": "Phillip Street",
+      "x": -2295.6,
+      "y": -7449.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.933
+    },
+    {
+      "text": "Varick Street",
+      "x": -2605.2,
+      "y": -6393.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.462
+    },
+    {
+      "text": "Jersey City Boulevard",
+      "x": -2604.5,
+      "y": -7896.3,
+      "kind": "road",
+      "major": false,
+      "angle": 2.72
+    },
+    {
+      "text": "Johnston Avenue",
+      "x": -2431.7,
+      "y": -7445.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.777
+    },
+    {
+      "text": "Holland Tunnel",
+      "x": -2029.5,
+      "y": -4784.9,
+      "kind": "road",
+      "major": true,
+      "angle": 0.214
+    },
+    {
+      "text": "Holland Tunnel",
+      "x": -1696.6,
+      "y": -4681.0,
+      "kind": "road",
+      "major": true,
+      "angle": 0.393
+    },
+    {
+      "text": "Holland Tunnel",
+      "x": -1371.9,
+      "y": -4550.9,
+      "kind": "road",
+      "major": true,
+      "angle": 0.295
+    },
+    {
+      "text": "Holland Tunnel",
+      "x": -1037.0,
+      "y": -4449.0,
+      "kind": "road",
+      "major": true,
+      "angle": 0.295
+    },
+    {
+      "text": "FDR Drive",
+      "x": 541.3,
+      "y": -6361.6,
+      "kind": "road",
+      "major": true,
+      "angle": -1.354
+    },
+    {
+      "text": "Park Lane South",
+      "x": -1874.0,
+      "y": -4459.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.751
+    },
+    {
+      "text": "Town Square Place",
+      "x": -1869.8,
+      "y": -5027.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.756
+    },
+    {
+      "text": "Metro Plaza Drive",
+      "x": -1992.9,
+      "y": -5559.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.701
+    },
+    {
+      "text": "14th Street",
+      "x": -2405.2,
+      "y": -4709.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.837
+    },
+    {
+      "text": "Steuben Street",
+      "x": -1828.0,
+      "y": -5968.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.295
+    },
+    {
+      "text": "Pearl Street",
+      "x": -1554.1,
+      "y": -5938.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.771
+    },
+    {
+      "text": "Hudson Street",
+      "x": -1550.2,
+      "y": -5586.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.96
+    },
+    {
+      "text": "11th Street",
+      "x": -2515.4,
+      "y": -5050.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.388
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1200.7,
+      "y": -6065.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.307
+    },
+    {
+      "text": "Communipaw Avenue",
+      "x": -2650.8,
+      "y": -7540.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.263
+    },
+    {
+      "text": "Wilson Street",
+      "x": -2611.6,
+      "y": -7750.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.05
+    },
+    {
+      "text": "Morris Street",
+      "x": -1977.6,
+      "y": -6610.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.777
+    },
+    {
+      "text": "Dudley Street",
+      "x": -1499.9,
+      "y": -6617.0,
+      "kind": "road",
+      "major": false,
+      "angle": -2.787
+    },
+    {
+      "text": "3rd Street",
+      "x": -2638.2,
+      "y": -5860.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.391
+    },
+    {
+      "text": "3rd Street",
+      "x": -2314.6,
+      "y": -5726.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.386
+    },
+    {
+      "text": "Grove Street",
+      "x": -2222.2,
+      "y": -5946.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.184
+    },
+    {
+      "text": "Newport Parkway",
+      "x": -1938.9,
+      "y": -4741.4,
+      "kind": "road",
+      "major": false,
+      "angle": -2.962
+    },
+    {
+      "text": "Van Vorst Street",
+      "x": -1782.2,
+      "y": -6466.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.93
+    },
+    {
+      "text": "Montgomery Street",
+      "x": -2702.5,
+      "y": -6406.3,
+      "kind": "road",
+      "major": false,
+      "angle": -3.027
+    },
+    {
+      "text": "Sussex Street",
+      "x": -1546.2,
+      "y": -6379.5,
+      "kind": "road",
+      "major": false,
+      "angle": -2.779
+    },
+    {
+      "text": "Sussex Street",
+      "x": -1780.5,
+      "y": -6468.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.777
+    },
+    {
+      "text": "Wayne Street",
+      "x": -2322.0,
+      "y": -6199.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.116
+    },
+    {
+      "text": "Marin Boulevard",
+      "x": -2241.1,
+      "y": -5532.7,
+      "kind": "road",
+      "major": true,
+      "angle": 1.959
+    },
+    {
+      "text": "6th Street",
+      "x": -2339.0,
+      "y": -5478.8,
+      "kind": "road",
+      "major": false,
+      "angle": -2.753
+    },
+    {
+      "text": "West Street",
+      "x": 525.6,
+      "y": -6346.3,
+      "kind": "road",
+      "major": true,
+      "angle": -1.351
+    },
+    {
+      "text": "Holland Tunnel",
+      "x": 40.9,
+      "y": -4057.8,
+      "kind": "road",
+      "major": true,
+      "angle": -2.761
+    },
+    {
+      "text": "Holland Tunnel",
+      "x": -284.6,
+      "y": -4186.5,
+      "kind": "road",
+      "major": true,
+      "angle": -2.772
+    },
+    {
+      "text": "Holland Tunnel",
+      "x": -612.8,
+      "y": -4307.3,
+      "kind": "road",
+      "major": true,
+      "angle": -2.856
+    },
+    {
+      "text": "Coles Street",
+      "x": -2733.3,
+      "y": -5829.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.177
+    },
+    {
+      "text": "Coles Street",
+      "x": -2634.0,
+      "y": -6146.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.449
+    },
+    {
+      "text": "Warren Street",
+      "x": -1557.2,
+      "y": -6667.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.21
+    },
+    {
+      "text": "Jersey Avenue",
+      "x": -2565.6,
+      "y": -5857.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.961
+    },
+    {
+      "text": "Johnston Avenue",
+      "x": -2707.3,
+      "y": -7396.2,
+      "kind": "road",
+      "major": false,
+      "angle": 2.825
+    },
+    {
+      "text": "9th Street",
+      "x": -2658.6,
+      "y": -5258.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.394
+    },
+    {
+      "text": "Grand Street",
+      "x": -1475.5,
+      "y": -6265.2,
+      "kind": "road",
+      "major": false,
+      "angle": 0.353
+    },
+    {
+      "text": "Christopher Columbus Drive",
+      "x": -1903.6,
+      "y": -6066.8,
+      "kind": "road",
+      "major": false,
+      "angle": -3.024
+    },
+    {
+      "text": "Greene Street",
+      "x": -1435.9,
+      "y": -6163.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.952
+    },
+    {
+      "text": "Warren Street",
+      "x": -1650.6,
+      "y": -6417.4,
+      "kind": "road",
+      "major": false,
+      "angle": -1.201
+    },
+    {
+      "text": "York Street",
+      "x": -1374.7,
+      "y": -6140.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.36
+    },
+    {
+      "text": "Washington Street",
+      "x": -1698.4,
+      "y": -5874.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.219
+    },
+    {
+      "text": "Montgomery Street",
+      "x": -2068.0,
+      "y": -6312.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.785
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1187.8,
+      "y": -7340.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.078
+    },
+    {
+      "text": "Essex Street",
+      "x": -1400.9,
+      "y": -6494.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.79
+    },
+    {
+      "text": "Hoboken Newport Walkway- Hudson River Waterfront Walkway",
+      "x": -1953.2,
+      "y": -4358.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.129
+    },
+    {
+      "text": "Jersey Avenue",
+      "x": -2696.3,
+      "y": -5539.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.956
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1094.7,
+      "y": -6321.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.21
+    },
+    {
+      "text": "6th Street",
+      "x": -2733.0,
+      "y": -5641.5,
+      "kind": "road",
+      "major": false,
+      "angle": -2.752
+    },
+    {
+      "text": "River Street",
+      "x": -2334.9,
+      "y": -6661.1,
+      "kind": "road",
+      "major": false,
+      "angle": 2.14
+    },
+    {
+      "text": "Christopher Columbus Drive",
+      "x": -2331.2,
+      "y": -6115.6,
+      "kind": "road",
+      "major": true,
+      "angle": 0.11
+    },
+    {
+      "text": "Newark Avenue",
+      "x": -2675.8,
+      "y": -6005.9,
+      "kind": "road",
+      "major": true,
+      "angle": 3.057
+    },
+    {
+      "text": "Washington Street",
+      "x": -1573.4,
+      "y": -6214.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.225
+    },
+    {
+      "text": "Jersey Avenue",
+      "x": -2433.0,
+      "y": -6700.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.678
+    },
+    {
+      "text": "New Jersey Turnpike Newark Bay Extension",
+      "x": -2666.5,
+      "y": -7168.2,
+      "kind": "road",
+      "major": true,
+      "angle": -0.838
+    },
+    {
+      "text": "New Jersey Turnpike Newark Bay Extension",
+      "x": -2555.1,
+      "y": -7492.0,
+      "kind": "road",
+      "major": true,
+      "angle": -1.61
+    },
+    {
+      "text": "New Jersey Turnpike Newark Bay Extension",
+      "x": -2680.2,
+      "y": -7815.3,
+      "kind": "road",
+      "major": true,
+      "angle": -2.05
+    },
+    {
+      "text": "River Drive South",
+      "x": -1803.6,
+      "y": -4831.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.968
+    },
+    {
+      "text": "Hoboken Newport Walkway",
+      "x": -1686.2,
+      "y": -5397.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.807
+    },
+    {
+      "text": "Hoboken Newport Walkway",
+      "x": -1435.1,
+      "y": -5409.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.167
+    },
+    {
+      "text": "Hoboken Newport Walkway",
+      "x": -1391.6,
+      "y": -5657.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.218
+    },
+    {
+      "text": "Hoboken Newport Walkway",
+      "x": -1261.3,
+      "y": -5919.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.025
+    },
+    {
+      "text": "Aetna Street",
+      "x": -2454.1,
+      "y": -7077.4,
+      "kind": "road",
+      "major": false,
+      "angle": -2.788
+    },
+    {
+      "text": "FDR Drive",
+      "x": 947.3,
+      "y": -6705.6,
+      "kind": "road",
+      "major": true,
+      "angle": 0.308
+    },
+    {
+      "text": "Mall Drive East",
+      "x": -2167.1,
+      "y": -5006.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.381
+    },
+    {
+      "text": "Mall Drive East",
+      "x": -2067.7,
+      "y": -5241.4,
+      "kind": "road",
+      "major": false,
+      "angle": -2.737
+    },
+    {
+      "text": "Mall Drive West",
+      "x": -2281.0,
+      "y": -5132.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.961
+    },
+    {
+      "text": "18th Street",
+      "x": -2335.6,
+      "y": -4410.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.761
+    },
+    {
+      "text": "18th Street",
+      "x": -2617.1,
+      "y": -4497.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.087
+    },
+    {
+      "text": "Newport Parkway",
+      "x": -2171.2,
+      "y": -4845.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.393
+    },
+    {
+      "text": "12th Street",
+      "x": -2708.3,
+      "y": -5027.8,
+      "kind": "road",
+      "major": true,
+      "angle": 0.389
+    },
+    {
+      "text": "Marin Boulevard",
+      "x": -2607.3,
+      "y": -4642.7,
+      "kind": "road",
+      "major": true,
+      "angle": -1.179
+    },
+    {
+      "text": "Barnum Street",
+      "x": -2308.1,
+      "y": -4722.0,
+      "kind": "road",
+      "major": false,
+      "angle": 2.852
+    },
+    {
+      "text": "Park Lane North",
+      "x": -2026.1,
+      "y": -4437.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.761
+    },
+    {
+      "text": "North Boulevard",
+      "x": -1990.5,
+      "y": -4662.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.92
+    },
+    {
+      "text": "4th Street",
+      "x": -2505.2,
+      "y": -5718.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.749
+    },
+    {
+      "text": "4th Street",
+      "x": -2799.1,
+      "y": -5840.5,
+      "kind": "road",
+      "major": false,
+      "angle": -2.749
+    },
+    {
+      "text": "1st Street",
+      "x": -2187.4,
+      "y": -5846.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.386
+    },
+    {
+      "text": "2nd Street",
+      "x": -2017.4,
+      "y": -5689.0,
+      "kind": "road",
+      "major": false,
+      "angle": -2.756
+    },
+    {
+      "text": "Manila Avenue",
+      "x": -2587.0,
+      "y": -5061.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.176
+    },
+    {
+      "text": "Thomas Gangemi Drive",
+      "x": -2214.8,
+      "y": -5442.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.045
+    },
+    {
+      "text": "2nd Street",
+      "x": -1618.5,
+      "y": -5542.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.745
+    },
+    {
+      "text": "Christopher Columbus Drive",
+      "x": -2703.3,
+      "y": -6156.0,
+      "kind": "road",
+      "major": true,
+      "angle": 0.12
+    },
+    {
+      "text": "Phillip Street",
+      "x": -2667.3,
+      "y": -8226.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.71
+    },
+    {
+      "text": "Phillip Street",
+      "x": -2504.5,
+      "y": -7986.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.066
+    },
+    {
+      "text": "Regent Street",
+      "x": -2076.4,
+      "y": -6578.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.789
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -2206.4,
+      "y": -7242.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.306
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1897.0,
+      "y": -7123.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.364
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1622.4,
+      "y": -7022.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.331
+    },
+    {
+      "text": "Newark Avenue",
+      "x": -2261.9,
+      "y": -6040.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.058
+    },
+    {
+      "text": "Manila Avenue",
+      "x": -2463.4,
+      "y": -5361.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.178
+    },
+    {
+      "text": "Rector Place",
+      "x": 229.2,
+      "y": -6045.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.557
+    },
+    {
+      "text": "Montgomery Street",
+      "x": -1671.6,
+      "y": -6152.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.785
+    },
+    {
+      "text": "8th Street",
+      "x": -2689.7,
+      "y": -5450.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.751
+    },
+    {
+      "text": "Marin Boulevard",
+      "x": -2060.2,
+      "y": -5970.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.968
+    },
+    {
+      "text": "Grove Street",
+      "x": -2128.0,
+      "y": -6421.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.458
+    },
+    {
+      "text": "Erie Street",
+      "x": -2419.9,
+      "y": -5839.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.959
+    },
+    {
+      "text": "Erie Street",
+      "x": -2534.1,
+      "y": -5560.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.969
+    },
+    {
+      "text": "York Street",
+      "x": -2423.0,
+      "y": -6451.2,
+      "kind": "road",
+      "major": false,
+      "angle": 0.11
+    },
+    {
+      "text": "York Street",
+      "x": -2077.7,
+      "y": -6402.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.366
+    },
+    {
+      "text": "York Street",
+      "x": -1749.8,
+      "y": -6279.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.365
+    },
+    {
+      "text": "Warren Street",
+      "x": -2038.8,
+      "y": -5473.9,
+      "kind": "road",
+      "major": false,
+      "angle": 2.459
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -880.0,
+      "y": -6980.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.936
+    },
+    {
+      "text": "Audrey Zapp Drive",
+      "x": -2135.8,
+      "y": -7329.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.362
+    },
+    {
+      "text": "Audrey Zapp Drive",
+      "x": -1808.3,
+      "y": -7206.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.361
+    },
+    {
+      "text": "Audrey Zapp Drive",
+      "x": -1480.9,
+      "y": -7082.2,
+      "kind": "road",
+      "major": false,
+      "angle": 0.356
+    },
+    {
+      "text": "Audrey Zapp Drive",
+      "x": -1152.9,
+      "y": -6960.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.358
+    },
+    {
+      "text": "Morris Street",
+      "x": -1590.1,
+      "y": -6481.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.361
+    },
+    {
+      "text": "Warren Street",
+      "x": -1846.3,
+      "y": -5889.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.93
+    },
+    {
+      "text": "2nd Street",
+      "x": -2444.5,
+      "y": -5865.8,
+      "kind": "road",
+      "major": false,
+      "angle": -2.75
+    },
+    {
+      "text": "2nd Street",
+      "x": -2741.7,
+      "y": -5999.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.79
+    },
+    {
+      "text": "Grand Street",
+      "x": -2277.4,
+      "y": -6564.4,
+      "kind": "road",
+      "major": true,
+      "angle": -2.766
+    },
+    {
+      "text": "Wayne Street",
+      "x": -2692.8,
+      "y": -6240.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.127
+    },
+    {
+      "text": "Jersey Avenue",
+      "x": -2361.4,
+      "y": -7293.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.796
+    },
+    {
+      "text": "Hoboken Newport Walkway- Hudson River Waterfront Walkway",
+      "x": -1860.2,
+      "y": -4591.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.147
+    },
+    {
+      "text": "Hoboken Newport Walkway- Hudson River Waterfront Walkway",
+      "x": -1675.7,
+      "y": -4796.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.172
+    },
+    {
+      "text": "Hoboken Newport Walkway- Hudson River Waterfront Walkway",
+      "x": -1865.0,
+      "y": -5183.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.196
+    },
+    {
+      "text": "Manila Avenue",
+      "x": -2297.9,
+      "y": -5762.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.179
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1503.2,
+      "y": -6797.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.784
+    },
+    {
+      "text": "13th Street",
+      "x": -2450.7,
+      "y": -4829.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.753
+    },
+    {
+      "text": "Essex Street",
+      "x": -1661.6,
+      "y": -6591.4,
+      "kind": "road",
+      "major": false,
+      "angle": -2.788
+    },
+    {
+      "text": "Bay Street",
+      "x": -2230.8,
+      "y": -5951.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.754
+    },
+    {
+      "text": "Washington Boulevard",
+      "x": -1952.7,
+      "y": -5171.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.385
+    },
+    {
+      "text": "Montgomery Street",
+      "x": -2397.2,
+      "y": -6369.2,
+      "kind": "road",
+      "major": false,
+      "angle": -3.009
+    },
+    {
+      "text": "15th Street",
+      "x": -2643.7,
+      "y": -4738.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.385
+    },
+    {
+      "text": "1st Street",
+      "x": -1880.5,
+      "y": -5729.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.368
+    },
+    {
+      "text": "Erie Street",
+      "x": -2770.8,
+      "y": -4986.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.964
+    },
+    {
+      "text": "River Drive",
+      "x": -1919.3,
+      "y": -4619.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.921
+    },
+    {
+      "text": "Hudson Street",
+      "x": -1472.3,
+      "y": -5836.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.221
+    },
+    {
+      "text": "Hudson River Waterfront Walkway",
+      "x": -1129.7,
+      "y": -6846.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.358
+    },
+    {
+      "text": "Regent Street",
+      "x": -2320.6,
+      "y": -6737.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.805
+    },
+    {
+      "text": "York Street",
+      "x": -2698.4,
+      "y": -6483.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.123
+    },
+    {
+      "text": "10th Street",
+      "x": -2743.9,
+      "y": -5208.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.754
+    },
+    {
+      "text": "Szold Place",
+      "x": 2447.8,
+      "y": -2723.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.577
+    },
+    {
+      "text": "West 9th Street",
+      "x": 453.4,
+      "y": -2873.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "Holland Tunnel Rotary",
+      "x": 321.6,
+      "y": -4306.3,
+      "kind": "road",
+      "major": true,
+      "angle": -0.249
+    },
+    {
+      "text": "Spruce Street",
+      "x": 1142.0,
+      "y": -5398.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.395
+    },
+    {
+      "text": "Pitt Street",
+      "x": 2398.3,
+      "y": -4046.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.609
+    },
+    {
+      "text": "Broadway",
+      "x": 883.5,
+      "y": -4297.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.635
+    },
+    {
+      "text": "Cornelia Street",
+      "x": 212.7,
+      "y": -3260.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.947
+    },
+    {
+      "text": "Delancey Street",
+      "x": 2528.1,
+      "y": -3853.2,
+      "kind": "road",
+      "major": false,
+      "angle": -3.017
+    },
+    {
+      "text": "Thomas Street",
+      "x": 668.3,
+      "y": -4902.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.112
+    },
+    {
+      "text": "Kenmare Street",
+      "x": 1251.4,
+      "y": -4031.2,
+      "kind": "road",
+      "major": true,
+      "angle": -3.053
+    },
+    {
+      "text": "Duane Street",
+      "x": 610.5,
+      "y": -4968.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.043
+    },
+    {
+      "text": "East 10th Street",
+      "x": 761.5,
+      "y": -2800.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.001
+    },
+    {
+      "text": "East 10th Street",
+      "x": 1080.1,
+      "y": -2800.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.02
+    },
+    {
+      "text": "Great Jones Street",
+      "x": 1026.0,
+      "y": -3319.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.067
+    },
+    {
+      "text": "Commerce Street",
+      "x": -7.8,
+      "y": -3373.0,
+      "kind": "road",
+      "major": false,
+      "angle": -2.24
+    },
+    {
+      "text": "East 15th Street",
+      "x": 2462.3,
+      "y": -2388.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "Broad Street",
+      "x": 897.8,
+      "y": -6099.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.649
+    },
+    {
+      "text": "Oliver Street",
+      "x": 1529.6,
+      "y": -4927.1,
+      "kind": "road",
+      "major": false,
+      "angle": 2.291
+    },
+    {
+      "text": "Gouverneur Street",
+      "x": 2598.2,
+      "y": -4381.6,
+      "kind": "road",
+      "major": false,
+      "angle": 2.177
+    },
+    {
+      "text": "Broome Street",
+      "x": 1305.9,
+      "y": -4111.8,
+      "kind": "road",
+      "major": true,
+      "angle": -3.123
+    },
+    {
+      "text": "Mott Street",
+      "x": 1231.0,
+      "y": -3959.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.358
+    },
+    {
+      "text": "Mott Street",
+      "x": 1303.2,
+      "y": -4302.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.432
+    },
+    {
+      "text": "Peck Slip",
+      "x": 1531.3,
+      "y": -5534.6,
+      "kind": "road",
+      "major": false,
+      "angle": 2.731
+    },
+    {
+      "text": "Waverly Place",
+      "x": 273.4,
+      "y": -3036.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.075
+    },
+    {
+      "text": "Waverly Place",
+      "x": 805.3,
+      "y": -3073.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.071
+    },
+    {
+      "text": "Washington Mews",
+      "x": 656.6,
+      "y": -3001.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.005
+    },
+    {
+      "text": "Wooster Street",
+      "x": 673.9,
+      "y": -3926.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.632
+    },
+    {
+      "text": "Saint Marks Place",
+      "x": 1318.1,
+      "y": -2950.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "Cedar Street",
+      "x": 1107.1,
+      "y": -5893.8,
+      "kind": "road",
+      "major": false,
+      "angle": 2.954
+    },
+    {
+      "text": "Desbrosses Street",
+      "x": 82.5,
+      "y": -4351.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.768
+    },
+    {
+      "text": "Hubert Street",
+      "x": 99.5,
+      "y": -4585.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.377
+    },
+    {
+      "text": "Thompson Street",
+      "x": 556.3,
+      "y": -3375.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.635
+    },
+    {
+      "text": "Thompson Street",
+      "x": 502.4,
+      "y": -4270.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.657
+    },
+    {
+      "text": "Minetta Street",
+      "x": 339.4,
+      "y": -3395.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.874
+    },
+    {
+      "text": "East 13th Street",
+      "x": 2435.0,
+      "y": -2563.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "Downing Street",
+      "x": 202.7,
+      "y": -3538.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.255
+    },
+    {
+      "text": "Rivington Street",
+      "x": 2284.7,
+      "y": -3752.2,
+      "kind": "road",
+      "major": false,
+      "angle": -3.012
+    },
+    {
+      "text": "East 3rd Street",
+      "x": 2435.9,
+      "y": -3336.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "Cherry Street",
+      "x": 2407.1,
+      "y": -4581.5,
+      "kind": "road",
+      "major": false,
+      "angle": -2.51
+    },
+    {
+      "text": "Bowery",
+      "x": 1252.3,
+      "y": -3399.3,
+      "kind": "road",
+      "major": true,
+      "angle": -1.33
+    },
+    {
+      "text": "Avenue C Loop",
+      "x": 2171.1,
+      "y": -2241.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.637
+    },
+    {
+      "text": "Ridge Street",
+      "x": 2286.4,
+      "y": -3780.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.443
+    },
+    {
+      "text": "West 8th Street",
+      "x": 432.3,
+      "y": -2950.2,
+      "kind": "road",
+      "major": true,
+      "angle": 0.001
+    },
+    {
+      "text": "Saint John's Lane",
+      "x": 493.2,
+      "y": -4429.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.945
+    },
+    {
+      "text": "14th Street Loop",
+      "x": 1958.9,
+      "y": -2347.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.128
+    },
+    {
+      "text": "Centre Market Place",
+      "x": 1143.1,
+      "y": -4184.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.507
+    },
+    {
+      "text": "First Avenue Loop",
+      "x": 1793.0,
+      "y": -2235.1,
+      "kind": "road",
+      "major": false,
+      "angle": -1.559
+    },
+    {
+      "text": "Sullivan Street",
+      "x": 476.9,
+      "y": -3420.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.507
+    },
+    {
+      "text": "Fulton Street",
+      "x": 1434.9,
+      "y": -5730.8,
+      "kind": "road",
+      "major": false,
+      "angle": 2.645
+    },
+    {
+      "text": "John Street",
+      "x": 895.3,
+      "y": -5648.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.248
+    },
+    {
+      "text": "Clinton Street",
+      "x": 2397.9,
+      "y": -4550.6,
+      "kind": "road",
+      "major": false,
+      "angle": 2.195
+    },
+    {
+      "text": "Stone Street",
+      "x": 928.1,
+      "y": -6352.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.478
+    },
+    {
+      "text": "South Street",
+      "x": 1924.8,
+      "y": -5121.1,
+      "kind": "road",
+      "major": true,
+      "angle": 0.695
+    },
+    {
+      "text": "Reade Street",
+      "x": 883.3,
+      "y": -5052.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.106
+    },
+    {
+      "text": "Vandam Street",
+      "x": 16.7,
+      "y": -3977.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.374
+    },
+    {
+      "text": "Hester Street",
+      "x": 1386.9,
+      "y": -4375.7,
+      "kind": "road",
+      "major": false,
+      "angle": -3.075
+    },
+    {
+      "text": "Hester Street",
+      "x": 1696.7,
+      "y": -4341.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.131
+    },
+    {
+      "text": "Columbia Street",
+      "x": 2622.9,
+      "y": -3994.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.699
+    },
+    {
+      "text": "North Moore Street",
+      "x": 454.1,
+      "y": -4606.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.77
+    },
+    {
+      "text": "Attorney Street",
+      "x": 2216.9,
+      "y": -3830.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.702
+    },
+    {
+      "text": "Willett Street",
+      "x": 2467.6,
+      "y": -3985.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.435
+    },
+    {
+      "text": "East 12th Street",
+      "x": 936.7,
+      "y": -2642.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "East 12th Street",
+      "x": 1208.1,
+      "y": -2643.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.007
+    },
+    {
+      "text": "Pell Street",
+      "x": 1407.2,
+      "y": -4715.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.895
+    },
+    {
+      "text": "Rector Street",
+      "x": 620.8,
+      "y": -6019.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.102
+    },
+    {
+      "text": "North End Avenue",
+      "x": 62.3,
+      "y": -5239.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.6
+    },
+    {
+      "text": "Jones Street",
+      "x": 149.5,
+      "y": -3222.2,
+      "kind": "road",
+      "major": false,
+      "angle": 0.94
+    },
+    {
+      "text": "Monroe Street",
+      "x": 1771.9,
+      "y": -4937.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.622
+    },
+    {
+      "text": "East 9th Street",
+      "x": 1540.5,
+      "y": -2875.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "East 9th Street",
+      "x": 2374.9,
+      "y": -2877.4,
+      "kind": "road",
+      "major": false,
+      "angle": 3.138
+    },
+    {
+      "text": "East 9th Street",
+      "x": 2093.9,
+      "y": -2877.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "East 9th Street",
+      "x": 798.4,
+      "y": -2873.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "Warren Street",
+      "x": 16.2,
+      "y": -5166.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.038
+    },
+    {
+      "text": "Washington Square East",
+      "x": 723.6,
+      "y": -3144.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.494
+    },
+    {
+      "text": "West Washington Place",
+      "x": 349.5,
+      "y": -3119.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.068
+    },
+    {
+      "text": "FDR Drive",
+      "x": 2583.9,
+      "y": -2278.9,
+      "kind": "road",
+      "major": true,
+      "angle": -0.918
+    },
+    {
+      "text": "Norfolk Street",
+      "x": 2016.0,
+      "y": -4056.5,
+      "kind": "road",
+      "major": true,
+      "angle": 1.711
+    },
+    {
+      "text": "Washington Square South",
+      "x": 491.2,
+      "y": -3206.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.079
+    },
+    {
+      "text": "Worth Street",
+      "x": 614.6,
+      "y": -4829.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.034
+    },
+    {
+      "text": "LaGuardia Place",
+      "x": 623.8,
+      "y": -3451.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.516
+    },
+    {
+      "text": "Franklin Street",
+      "x": 594.2,
+      "y": -4675.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.035
+    },
+    {
+      "text": "East 5th Street",
+      "x": 2235.7,
+      "y": -3181.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.01
+    },
+    {
+      "text": "East 5th Street",
+      "x": 1541.3,
+      "y": -3180.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.136
+    },
+    {
+      "text": "East 5th Street",
+      "x": 1981.5,
+      "y": -3181.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "New Street",
+      "x": 845.0,
+      "y": -6177.4,
+      "kind": "road",
+      "major": false,
+      "angle": -1.416
+    },
+    {
+      "text": "Church Street",
+      "x": 663.3,
+      "y": -5470.1,
+      "kind": "road",
+      "major": true,
+      "angle": 1.583
+    },
+    {
+      "text": "Rutgers Street",
+      "x": 2162.2,
+      "y": -4666.4,
+      "kind": "road",
+      "major": false,
+      "angle": 2.189
+    },
+    {
+      "text": "Morton Street",
+      "x": -3.0,
+      "y": -3462.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.372
+    },
+    {
+      "text": "Renwick Street",
+      "x": 79.3,
+      "y": -4141.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.195
+    },
+    {
+      "text": "East 11th Street",
+      "x": 1132.9,
+      "y": -2723.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.134
+    },
+    {
+      "text": "East 11th Street",
+      "x": 777.0,
+      "y": -2724.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "East 16th Street",
+      "x": 1578.6,
+      "y": -2306.0,
+      "kind": "road",
+      "major": false,
+      "angle": -3.141
+    },
+    {
+      "text": "East 16th Street",
+      "x": 2379.2,
+      "y": -2308.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "Greene Street",
+      "x": 750.9,
+      "y": -3917.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.509
+    },
+    {
+      "text": "Greene Street",
+      "x": 767.9,
+      "y": -3644.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.508
+    },
+    {
+      "text": "Greene Street",
+      "x": 798.7,
+      "y": -3154.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.499
+    },
+    {
+      "text": "University Place",
+      "x": 747.0,
+      "y": -2837.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.494
+    },
+    {
+      "text": "Orchard Street",
+      "x": 1832.3,
+      "y": -4293.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.701
+    },
+    {
+      "text": "Carmine Street",
+      "x": 164.4,
+      "y": -3485.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.907
+    },
+    {
+      "text": "Water Street",
+      "x": 2664.8,
+      "y": -4463.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.597
+    },
+    {
+      "text": "Water Street",
+      "x": 1876.9,
+      "y": -5079.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.709
+    },
+    {
+      "text": "East 8th Street",
+      "x": 2206.8,
+      "y": -2952.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.0
+    },
+    {
+      "text": "FDR Drive",
+      "x": 2718.2,
+      "y": -2948.1,
+      "kind": "road",
+      "major": false,
+      "angle": -1.497
+    },
+    {
+      "text": "Baruch Drive",
+      "x": 2720.7,
+      "y": -3570.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.553
+    },
+    {
+      "text": "Crosby Street",
+      "x": 982.9,
+      "y": -4010.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.507
+    },
+    {
+      "text": "Crosby Street",
+      "x": 1002.6,
+      "y": -3688.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.511
+    },
+    {
+      "text": "Dey Street",
+      "x": 735.0,
+      "y": -5610.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.098
+    },
+    {
+      "text": "East Broadway",
+      "x": 1615.9,
+      "y": -4759.5,
+      "kind": "road",
+      "major": true,
+      "angle": 0.616
+    },
+    {
+      "text": "Jay Street",
+      "x": 375.1,
+      "y": -4880.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.355
+    },
+    {
+      "text": "Vesey Street",
+      "x": 735.6,
+      "y": -5479.5,
+      "kind": "road",
+      "major": true,
+      "angle": -0.037
+    },
+    {
+      "text": "Gold Street",
+      "x": 1149.5,
+      "y": -5642.1,
+      "kind": "road",
+      "major": false,
+      "angle": -1.798
+    },
+    {
+      "text": "Washington Street",
+      "x": 619.8,
+      "y": -6312.4,
+      "kind": "road",
+      "major": false,
+      "angle": -1.346
+    },
+    {
+      "text": "West 4th Street",
+      "x": 347.0,
+      "y": -3196.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.068
+    },
+    {
+      "text": "Water Street",
+      "x": 2646.4,
+      "y": -5507.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.687
+    },
+    {
+      "text": "York Street",
+      "x": 2598.6,
+      "y": -5681.4,
+      "kind": "road",
+      "major": false,
+      "angle": 2.854
+    },
+    {
+      "text": "FDR Drive",
+      "x": 2554.4,
+      "y": -4627.5,
+      "kind": "road",
+      "major": true,
+      "angle": -2.484
+    },
+    {
+      "text": "FDR Drive",
+      "x": 2277.6,
+      "y": -4841.7,
+      "kind": "road",
+      "major": true,
+      "angle": -2.47
+    },
+    {
+      "text": "FDR Drive",
+      "x": 2009.2,
+      "y": -5066.4,
+      "kind": "road",
+      "major": true,
+      "angle": -2.484
+    },
+    {
+      "text": "South Street",
+      "x": 1688.3,
+      "y": -5316.2,
+      "kind": "road",
+      "major": true,
+      "angle": -2.44
+    },
+    {
+      "text": "Church Street",
+      "x": 687.1,
+      "y": -4525.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.556
+    },
+    {
+      "text": "West Houston Street",
+      "x": -103.4,
+      "y": -3763.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.763
+    },
+    {
+      "text": "Vestry Street",
+      "x": 139.8,
+      "y": -4406.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.381
+    },
+    {
+      "text": "Washington Street",
+      "x": 29.6,
+      "y": -4374.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.947
+    },
+    {
+      "text": "West Houston Street",
+      "x": 251.1,
+      "y": -3620.6,
+      "kind": "road",
+      "major": true,
+      "angle": -2.765
+    },
+    {
+      "text": "Washington Square North",
+      "x": 505.9,
+      "y": -3051.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.075
+    },
+    {
+      "text": "Murray Street",
+      "x": 744.8,
+      "y": -5261.2,
+      "kind": "road",
+      "major": true,
+      "angle": 3.092
+    },
+    {
+      "text": "East 13th Street",
+      "x": 1576.3,
+      "y": -2562.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "East 2nd Street",
+      "x": 2383.1,
+      "y": -3419.2,
+      "kind": "road",
+      "major": false,
+      "angle": -3.136
+    },
+    {
+      "text": "East 10th Street",
+      "x": 1980.2,
+      "y": -2802.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "East 14th Street",
+      "x": 2494.2,
+      "y": -2476.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "East 12th Street",
+      "x": 2384.9,
+      "y": -2650.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.0
+    },
+    {
+      "text": "Avenue D",
+      "x": 2550.1,
+      "y": -2991.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.571
+    },
+    {
+      "text": "Thompson Street",
+      "x": 531.9,
+      "y": -3790.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.622
+    },
+    {
+      "text": "Mercer Street",
+      "x": 877.7,
+      "y": -3125.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.635
+    },
+    {
+      "text": "Mercer Street",
+      "x": 853.9,
+      "y": -3474.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.637
+    },
+    {
+      "text": "Robert F. Wagner Sr. Place",
+      "x": 1488.0,
+      "y": -5329.2,
+      "kind": "road",
+      "major": true,
+      "angle": -0.324
+    },
+    {
+      "text": "Avenue of the Finest",
+      "x": 1320.6,
+      "y": -5252.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.492
+    },
+    {
+      "text": "Rose Street",
+      "x": 1214.7,
+      "y": -5259.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.94
+    },
+    {
+      "text": "Ari Halbertam Memorial Ramp",
+      "x": 1287.1,
+      "y": -5325.4,
+      "kind": "road",
+      "major": false,
+      "angle": 2.836
+    },
+    {
+      "text": "FDR Drive",
+      "x": 1392.3,
+      "y": -6075.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.209
+    },
+    {
+      "text": "FDR Drive",
+      "x": 1487.7,
+      "y": -5823.2,
+      "kind": "road",
+      "major": true,
+      "angle": 1.209
+    },
+    {
+      "text": "FDR Drive",
+      "x": 1260.4,
+      "y": -6374.7,
+      "kind": "road",
+      "major": true,
+      "angle": -1.967
+    },
+    {
+      "text": "FDR Drive",
+      "x": 1671.5,
+      "y": -5424.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.175
+    },
+    {
+      "text": "Avenue C",
+      "x": 2247.7,
+      "y": -2096.9,
+      "kind": "road",
+      "major": true,
+      "angle": -0.877
+    },
+    {
+      "text": "Avenue C",
+      "x": 2087.1,
+      "y": -1889.9,
+      "kind": "road",
+      "major": true,
+      "angle": 2.265
+    },
+    {
+      "text": "FDR Drive",
+      "x": 2257.9,
+      "y": -2064.9,
+      "kind": "road",
+      "major": true,
+      "angle": 2.264
+    },
+    {
+      "text": "FDR Drive",
+      "x": 2033.2,
+      "y": -1796.5,
+      "kind": "road",
+      "major": true,
+      "angle": 2.268
+    },
+    {
+      "text": "Doughty Street",
+      "x": 2406.1,
+      "y": -5781.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.984
+    },
+    {
+      "text": "Broome Street",
+      "x": 2281.9,
+      "y": -4015.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.128
+    },
+    {
+      "text": "East Broadway",
+      "x": 2319.6,
+      "y": -4261.0,
+      "kind": "road",
+      "major": true,
+      "angle": 0.615
+    },
+    {
+      "text": "Williamsburg Bridge",
+      "x": 2470.2,
+      "y": -3904.3,
+      "kind": "road",
+      "major": true,
+      "angle": 0.128
+    },
+    {
+      "text": "Williamsburg Bridge",
+      "x": 2749.0,
+      "y": -3868.3,
+      "kind": "road",
+      "major": true,
+      "angle": 0.131
+    },
+    {
+      "text": "Bowery",
+      "x": 1317.1,
+      "y": -3671.3,
+      "kind": "road",
+      "major": true,
+      "angle": -1.338
+    },
+    {
+      "text": "Bond Street",
+      "x": 1156.4,
+      "y": -3412.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.075
+    },
+    {
+      "text": "Forsyth Street",
+      "x": 1580.4,
+      "y": -4037.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.705
+    },
+    {
+      "text": "Forsyth Street",
+      "x": 1532.0,
+      "y": -3691.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.739
+    },
+    {
+      "text": "Varick Street",
+      "x": 172.4,
+      "y": -3788.1,
+      "kind": "road",
+      "major": true,
+      "angle": -1.188
+    },
+    {
+      "text": "Lafayette Street",
+      "x": 1037.2,
+      "y": -4338.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.669
+    },
+    {
+      "text": "Lafayette Street",
+      "x": 1003.7,
+      "y": -4689.7,
+      "kind": "road",
+      "major": true,
+      "angle": -1.647
+    },
+    {
+      "text": "Allen Street",
+      "x": 1761.7,
+      "y": -4275.6,
+      "kind": "road",
+      "major": true,
+      "angle": -1.435
+    },
+    {
+      "text": "Henry Street",
+      "x": 2550.6,
+      "y": -4185.2,
+      "kind": "road",
+      "major": false,
+      "angle": 0.648
+    },
+    {
+      "text": "Henry Street",
+      "x": 2209.9,
+      "y": -4432.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.616
+    },
+    {
+      "text": "Water Street",
+      "x": 1445.8,
+      "y": -5565.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.089
+    },
+    {
+      "text": "Maiden Lane",
+      "x": 920.7,
+      "y": -5724.1,
+      "kind": "road",
+      "major": false,
+      "angle": 2.654
+    },
+    {
+      "text": "South Street",
+      "x": 1338.7,
+      "y": -6158.9,
+      "kind": "road",
+      "major": true,
+      "angle": -1.914
+    },
+    {
+      "text": "Nassau Street",
+      "x": 938.4,
+      "y": -5558.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.417
+    },
+    {
+      "text": "Murray Street",
+      "x": 347.2,
+      "y": -5272.6,
+      "kind": "road",
+      "major": true,
+      "angle": 0.3
+    },
+    {
+      "text": "Greenwich Street",
+      "x": 440.2,
+      "y": -5322.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.249
+    },
+    {
+      "text": "Washington Street",
+      "x": 554.8,
+      "y": -6019.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.35
+    },
+    {
+      "text": "Brooklyn Bridge",
+      "x": 1684.3,
+      "y": -5438.3,
+      "kind": "road",
+      "major": true,
+      "angle": -0.304
+    },
+    {
+      "text": "Brooklyn Bridge",
+      "x": 2018.3,
+      "y": -5543.0,
+      "kind": "road",
+      "major": true,
+      "angle": -0.304
+    },
+    {
+      "text": "Brooklyn Bridge",
+      "x": 2352.2,
+      "y": -5647.7,
+      "kind": "road",
+      "major": true,
+      "angle": -0.304
+    },
+    {
+      "text": "Canal Street",
+      "x": 1777.1,
+      "y": -4706.7,
+      "kind": "road",
+      "major": true,
+      "angle": -0.664
+    },
+    {
+      "text": "Canal Street",
+      "x": 2052.6,
+      "y": -4922.5,
+      "kind": "road",
+      "major": true,
+      "angle": -0.664
+    },
+    {
+      "text": "Canal Street",
+      "x": 2328.2,
+      "y": -5138.3,
+      "kind": "road",
+      "major": true,
+      "angle": -0.664
+    },
+    {
+      "text": "Canal Street",
+      "x": 2557.4,
+      "y": -5317.8,
+      "kind": "road",
+      "major": true,
+      "angle": -0.664
+    },
+    {
+      "text": "East 20th Street",
+      "x": 2018.0,
+      "y": -2011.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "Norfolk Street",
+      "x": 1959.9,
+      "y": -3637.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.7
+    },
+    {
+      "text": "West Broadway",
+      "x": 585.4,
+      "y": -4039.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.507
+    },
+    {
+      "text": "West Broadway",
+      "x": 607.7,
+      "y": -3690.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.507
+    },
+    {
+      "text": "Harrison Street",
+      "x": 346.6,
+      "y": -4807.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.365
+    },
+    {
+      "text": "Leonard Street",
+      "x": 912.7,
+      "y": -4765.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.083
+    },
+    {
+      "text": "Leonard Street",
+      "x": 563.1,
+      "y": -4750.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.108
+    },
+    {
+      "text": "South Street",
+      "x": 2405.8,
+      "y": -4729.1,
+      "kind": "road",
+      "major": true,
+      "angle": 0.663
+    },
+    {
+      "text": "Broome Street",
+      "x": 974.4,
+      "y": -4114.2,
+      "kind": "road",
+      "major": true,
+      "angle": -3.123
+    },
+    {
+      "text": "Columbia Street",
+      "x": 2586.6,
+      "y": -3696.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.7
+    },
+    {
+      "text": "Vandam Street",
+      "x": 293.0,
+      "y": -3866.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.761
+    },
+    {
+      "text": "King Street",
+      "x": -43.8,
+      "y": -3826.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.378
+    },
+    {
+      "text": "Stanton Street",
+      "x": 2409.4,
+      "y": -3597.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.134
+    },
+    {
+      "text": "Christopher Street",
+      "x": -386.9,
+      "y": -3453.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.427
+    },
+    {
+      "text": "East 7th Street",
+      "x": 2375.1,
+      "y": -3031.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "East 7th Street",
+      "x": 2094.3,
+      "y": -3030.5,
+      "kind": "road",
+      "major": false,
+      "angle": 3.134
+    },
+    {
+      "text": "East 6th Street",
+      "x": 1830.1,
+      "y": -3103.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.003
+    },
+    {
+      "text": "East 6th Street",
+      "x": 2092.2,
+      "y": -3104.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.001
+    },
+    {
+      "text": "Leroy Street",
+      "x": 131.3,
+      "y": -3411.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.906
+    },
+    {
+      "text": "Barrow Street",
+      "x": 95.2,
+      "y": -3179.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.943
+    },
+    {
+      "text": "Grove Street",
+      "x": -51.7,
+      "y": -3250.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.907
+    },
+    {
+      "text": "Brooklyn-Queens Expressway",
+      "x": 2455.5,
+      "y": -5843.7,
+      "kind": "road",
+      "major": true,
+      "angle": -2.237
+    },
+    {
+      "text": "Front Street",
+      "x": 1295.4,
+      "y": -6038.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.881
+    },
+    {
+      "text": "East 14th Street",
+      "x": 1761.4,
+      "y": -2473.8,
+      "kind": "road",
+      "major": true,
+      "angle": -0.002
+    },
+    {
+      "text": "Centre Street",
+      "x": 1095.9,
+      "y": -4385.8,
+      "kind": "road",
+      "major": true,
+      "angle": 1.539
+    },
+    {
+      "text": "Grand Street",
+      "x": 719.0,
+      "y": -4224.1,
+      "kind": "road",
+      "major": true,
+      "angle": -0.069
+    },
+    {
+      "text": "East 8th Street",
+      "x": 1031.8,
+      "y": -2950.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.009
+    },
+    {
+      "text": "Grand Street",
+      "x": 1845.6,
+      "y": -4180.7,
+      "kind": "road",
+      "major": true,
+      "angle": 0.126
+    },
+    {
+      "text": "West Street",
+      "x": -675.8,
+      "y": -3052.8,
+      "kind": "road",
+      "major": true,
+      "angle": -1.129
+    },
+    {
+      "text": "West Street",
+      "x": -526.2,
+      "y": -3369.3,
+      "kind": "road",
+      "major": true,
+      "angle": -1.131
+    },
+    {
+      "text": "West Street",
+      "x": -378.9,
+      "y": -3686.7,
+      "kind": "road",
+      "major": true,
+      "angle": -1.137
+    },
+    {
+      "text": "Suffolk Street",
+      "x": 2046.9,
+      "y": -3712.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.437
+    },
+    {
+      "text": "Wall Street",
+      "x": 948.9,
+      "y": -5994.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.19
+    },
+    {
+      "text": "Hudson Street",
+      "x": 462.2,
+      "y": -4932.4,
+      "kind": "road",
+      "major": true,
+      "angle": 1.963
+    },
+    {
+      "text": "Centre Street",
+      "x": 1087.7,
+      "y": -4654.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.573
+    },
+    {
+      "text": "Madison Street",
+      "x": 2639.7,
+      "y": -4216.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.653
+    },
+    {
+      "text": "Madison Street",
+      "x": 2035.5,
+      "y": -4654.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.604
+    },
+    {
+      "text": "East 3rd Street",
+      "x": 1541.6,
+      "y": -3335.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "Chambers Street",
+      "x": 458.1,
+      "y": -5102.3,
+      "kind": "road",
+      "major": true,
+      "angle": 3.099
+    },
+    {
+      "text": "Eldridge Street",
+      "x": 1699.9,
+      "y": -4338.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.707
+    },
+    {
+      "text": "Fulton Street",
+      "x": 593.2,
+      "y": -5548.2,
+      "kind": "road",
+      "major": false,
+      "angle": 0.086
+    },
+    {
+      "text": "Bleecker Street",
+      "x": 573.5,
+      "y": -3460.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.073
+    },
+    {
+      "text": "Bleecker Street",
+      "x": 922.6,
+      "y": -3486.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.071
+    },
+    {
+      "text": "Washington Square West",
+      "x": 419.8,
+      "y": -3123.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.633
+    },
+    {
+      "text": "Elizabeth Street",
+      "x": 1333.4,
+      "y": -4090.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.793
+    },
+    {
+      "text": "East 10th Street",
+      "x": 2434.7,
+      "y": -2800.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "East 14th Street",
+      "x": 2042.8,
+      "y": -2474.9,
+      "kind": "road",
+      "major": true,
+      "angle": -0.004
+    },
+    {
+      "text": "Spring Street",
+      "x": 1149.2,
+      "y": -3949.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.017
+    },
+    {
+      "text": "Washington Street",
+      "x": -140.6,
+      "y": -3936.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.209
+    },
+    {
+      "text": "6th Avenue",
+      "x": 351.0,
+      "y": -3751.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.78
+    },
+    {
+      "text": "Water Street",
+      "x": 1149.5,
+      "y": -6285.1,
+      "kind": "road",
+      "major": true,
+      "angle": -1.914
+    },
+    {
+      "text": "West Street",
+      "x": 99.6,
+      "y": -4821.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.916
+    },
+    {
+      "text": "West Street",
+      "x": 367.9,
+      "y": -5656.4,
+      "kind": "road",
+      "major": true,
+      "angle": 1.922
+    },
+    {
+      "text": "Avenue A",
+      "x": 1870.1,
+      "y": -3345.2,
+      "kind": "road",
+      "major": true,
+      "angle": 1.573
+    },
+    {
+      "text": "Allen Street",
+      "x": 1713.4,
+      "y": -3754.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.705
+    },
+    {
+      "text": "South Street",
+      "x": 1460.0,
+      "y": -5841.0,
+      "kind": "road",
+      "major": true,
+      "angle": 1.202
+    },
+    {
+      "text": "Greenwich Street",
+      "x": 541.0,
+      "y": -5620.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.805
+    },
+    {
+      "text": "Greenwich Street",
+      "x": 681.7,
+      "y": -6296.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.76
+    },
+    {
+      "text": "Broadway",
+      "x": 843.3,
+      "y": -4908.1,
+      "kind": "road",
+      "major": true,
+      "angle": -1.636
+    },
+    {
+      "text": "Prince Street",
+      "x": 492.2,
+      "y": -3758.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.068
+    },
+    {
+      "text": "Broome Street",
+      "x": 361.0,
+      "y": -4084.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.759
+    },
+    {
+      "text": "Mercer Street",
+      "x": 801.3,
+      "y": -4318.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.636
+    },
+    {
+      "text": "West 4th Street",
+      "x": 838.0,
+      "y": -3230.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.073
+    },
+    {
+      "text": "Clinton Street",
+      "x": 2140.9,
+      "y": -3839.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.706
+    },
+    {
+      "text": "Attorney Street",
+      "x": 2179.5,
+      "y": -3555.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.7
+    },
+    {
+      "text": "Beaver Street",
+      "x": 992.6,
+      "y": -6184.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.609
+    },
+    {
+      "text": "Avenue D",
+      "x": 2550.5,
+      "y": -3342.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.574
+    },
+    {
+      "text": "Laight Street",
+      "x": 74.4,
+      "y": -4511.9,
+      "kind": "road",
+      "major": true,
+      "angle": -2.761
+    },
+    {
+      "text": "Reade Street",
+      "x": 591.0,
+      "y": -5042.3,
+      "kind": "road",
+      "major": true,
+      "angle": 3.105
+    },
+    {
+      "text": "Warren Street",
+      "x": 533.9,
+      "y": -5179.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.03
+    },
+    {
+      "text": "Lispenard Street",
+      "x": 781.9,
+      "y": -4452.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.041
+    },
+    {
+      "text": "White Street",
+      "x": 912.6,
+      "y": -4611.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.061
+    },
+    {
+      "text": "Pearl Street",
+      "x": 1192.3,
+      "y": -4969.0,
+      "kind": "road",
+      "major": false,
+      "angle": 2.974
+    },
+    {
+      "text": "Park Row",
+      "x": 1246.3,
+      "y": -5057.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.79
+    },
+    {
+      "text": "Madison Street",
+      "x": 1309.8,
+      "y": -5171.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.594
+    },
+    {
+      "text": "Worth Street",
+      "x": 1167.3,
+      "y": -4854.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.092
+    },
+    {
+      "text": "Lafayette Street",
+      "x": 1052.3,
+      "y": -3870.2,
+      "kind": "road",
+      "major": true,
+      "angle": 1.78
+    },
+    {
+      "text": "Astor Place",
+      "x": 1024.8,
+      "y": -2999.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.307
+    },
+    {
+      "text": "Bedford Street",
+      "x": 171.3,
+      "y": -3504.7,
+      "kind": "road",
+      "major": false,
+      "angle": 2.489
+    },
+    {
+      "text": "East Houston Street",
+      "x": 2397.4,
+      "y": -3456.9,
+      "kind": "road",
+      "major": true,
+      "angle": 0.129
+    },
+    {
+      "text": "Canal Street",
+      "x": 135.8,
+      "y": -4233.8,
+      "kind": "road",
+      "major": true,
+      "angle": 2.871
+    },
+    {
+      "text": "Hudson Street",
+      "x": 49.8,
+      "y": -3885.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.952
+    },
+    {
+      "text": "West Street",
+      "x": -99.3,
+      "y": -4333.0,
+      "kind": "road",
+      "major": true,
+      "angle": -1.211
+    },
+    {
+      "text": "West Street",
+      "x": -262.0,
+      "y": -3940.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.141
+    },
+    {
+      "text": "Park Row",
+      "x": 1082.2,
+      "y": -5268.3,
+      "kind": "road",
+      "major": true,
+      "angle": -3.106
+    },
+    {
+      "text": "Pike Slip",
+      "x": 2086.2,
+      "y": -4907.4,
+      "kind": "road",
+      "major": true,
+      "angle": -0.94
+    },
+    {
+      "text": "Hudson Street",
+      "x": -97.9,
+      "y": -3519.0,
+      "kind": "road",
+      "major": true,
+      "angle": 1.955
+    },
+    {
+      "text": "Broadway",
+      "x": 908.3,
+      "y": -2599.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.228
+    },
+    {
+      "text": "East 11th Street",
+      "x": 2631.9,
+      "y": -2725.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "FDR Drive",
+      "x": 2698.5,
+      "y": -2555.7,
+      "kind": "road",
+      "major": true,
+      "angle": -1.41
+    },
+    {
+      "text": "Brooklyn Bridge",
+      "x": 1326.3,
+      "y": -5326.2,
+      "kind": "road",
+      "major": true,
+      "angle": -0.303
+    },
+    {
+      "text": "6th Avenue",
+      "x": 279.2,
+      "y": -3135.1,
+      "kind": "road",
+      "major": true,
+      "angle": 1.574
+    },
+    {
+      "text": "Grand Street",
+      "x": 1254.5,
+      "y": -4243.5,
+      "kind": "road",
+      "major": true,
+      "angle": 0.101
+    },
+    {
+      "text": "Spring Street",
+      "x": 789.8,
+      "y": -3940.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.069
+    },
+    {
+      "text": "MacDougal Street",
+      "x": 385.4,
+      "y": -3670.1,
+      "kind": "road",
+      "major": false,
+      "angle": -1.606
+    },
+    {
+      "text": "Ludlow Street",
+      "x": 1881.3,
+      "y": -4142.1,
+      "kind": "road",
+      "major": false,
+      "angle": -1.435
+    },
+    {
+      "text": "Ludlow Street",
+      "x": 1922.9,
+      "y": -4447.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.427
+    },
+    {
+      "text": "East 15th Street",
+      "x": 1320.7,
+      "y": -2386.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "Rutgers Slip",
+      "x": 2232.5,
+      "y": -4786.6,
+      "kind": "road",
+      "major": false,
+      "angle": 2.188
+    },
+    {
+      "text": "Broadway",
+      "x": 946.0,
+      "y": -3317.7,
+      "kind": "road",
+      "major": true,
+      "angle": -1.639
+    },
+    {
+      "text": "Dominick Street",
+      "x": 203.5,
+      "y": -4072.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.755
+    },
+    {
+      "text": "Spring Street",
+      "x": 320.4,
+      "y": -3947.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.379
+    },
+    {
+      "text": "Bleecker Street",
+      "x": 148.4,
+      "y": -3316.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.653
+    },
+    {
+      "text": "Avenue D",
+      "x": 2549.5,
+      "y": -2683.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.574
+    },
+    {
+      "text": "East 12th Street",
+      "x": 1829.9,
+      "y": -2644.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "East 13th Street",
+      "x": 1917.4,
+      "y": -2563.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "East 11th Street",
+      "x": 2147.5,
+      "y": -2726.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "East 11th Street",
+      "x": 1797.5,
+      "y": -2725.8,
+      "kind": "road",
+      "major": false,
+      "angle": -3.141
+    },
+    {
+      "text": "Saint Marks Place",
+      "x": 1761.9,
+      "y": -2952.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "East 7th Street",
+      "x": 1540.8,
+      "y": -3029.5,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "East 6th Street",
+      "x": 1541.1,
+      "y": -3103.0,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "East 4th Street",
+      "x": 1762.7,
+      "y": -3257.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.0
+    },
+    {
+      "text": "East 3rd Street",
+      "x": 2146.3,
+      "y": -3336.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "East 3rd Street",
+      "x": 1796.3,
+      "y": -3335.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "Clarkson Street",
+      "x": -101.3,
+      "y": -3673.8,
+      "kind": "road",
+      "major": true,
+      "angle": 0.381
+    },
+    {
+      "text": "Gould Plaza",
+      "x": 821.2,
+      "y": -3299.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.321
+    },
+    {
+      "text": "Greene Street Walk",
+      "x": 780.8,
+      "y": -3545.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.514
+    },
+    {
+      "text": "20th Street Loop",
+      "x": 1985.7,
+      "y": -2136.3,
+      "kind": "road",
+      "major": false,
+      "angle": -3.11
+    },
+    {
+      "text": "Pitt Street",
+      "x": 2361.7,
+      "y": -3743.5,
+      "kind": "road",
+      "major": false,
+      "angle": 1.707
+    },
+    {
+      "text": "Christopher Street",
+      "x": -125.0,
+      "y": -3221.3,
+      "kind": "road",
+      "major": false,
+      "angle": -2.435
+    },
+    {
+      "text": "Essex Street",
+      "x": 1976.9,
+      "y": -4303.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.706
+    },
+    {
+      "text": "West Houston Street",
+      "x": 847.4,
+      "y": -3637.4,
+      "kind": "road",
+      "major": true,
+      "angle": -0.072
+    },
+    {
+      "text": "Mercer Street",
+      "x": 833.2,
+      "y": -3824.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.635
+    },
+    {
+      "text": "3rd Avenue",
+      "x": 1208.8,
+      "y": -2558.7,
+      "kind": "road",
+      "major": true,
+      "angle": 1.575
+    },
+    {
+      "text": "East 2nd Street",
+      "x": 1346.6,
+      "y": -3418.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.003
+    },
+    {
+      "text": "Wall Street",
+      "x": 1301.0,
+      "y": -6060.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.327
+    },
+    {
+      "text": "Franklin Street",
+      "x": 900.1,
+      "y": -4688.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.07
+    },
+    {
+      "text": "Greenwich Street",
+      "x": 292.2,
+      "y": -4857.1,
+      "kind": "road",
+      "major": false,
+      "angle": -1.198
+    },
+    {
+      "text": "East Broadway",
+      "x": 2076.4,
+      "y": -4434.1,
+      "kind": "road",
+      "major": true,
+      "angle": 0.619
+    },
+    {
+      "text": "Avenue A",
+      "x": 1868.5,
+      "y": -2682.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.575
+    },
+    {
+      "text": "Canal Street",
+      "x": 1054.1,
+      "y": -4473.9,
+      "kind": "road",
+      "major": true,
+      "angle": 2.893
+    },
+    {
+      "text": "Greenwich Street",
+      "x": 107.3,
+      "y": -4385.4,
+      "kind": "road",
+      "major": false,
+      "angle": -1.196
+    },
+    {
+      "text": "Liberty Street",
+      "x": 492.1,
+      "y": -5759.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.011
+    },
+    {
+      "text": "Baxter Street",
+      "x": 1156.3,
+      "y": -4377.4,
+      "kind": "road",
+      "major": false,
+      "angle": -1.536
+    },
+    {
+      "text": "Wanamaker Place",
+      "x": 1035.9,
+      "y": -2873.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "Cooper Square",
+      "x": 1148.5,
+      "y": -3019.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.837
+    },
+    {
+      "text": "East 6th Street",
+      "x": 2650.4,
+      "y": -3104.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.004
+    },
+    {
+      "text": "Bowery",
+      "x": 1457.1,
+      "y": -4299.0,
+      "kind": "road",
+      "major": true,
+      "angle": -1.454
+    },
+    {
+      "text": "East 4th Street",
+      "x": 2044.9,
+      "y": -3258.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.009
+    },
+    {
+      "text": "East 4th Street",
+      "x": 2394.9,
+      "y": -3259.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "West 3rd Street",
+      "x": 757.2,
+      "y": -3305.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.072
+    },
+    {
+      "text": "West 3rd Street",
+      "x": 344.9,
+      "y": -3277.4,
+      "kind": "road",
+      "major": false,
+      "angle": 3.073
+    },
+    {
+      "text": "Montgomery Street",
+      "x": 2536.3,
+      "y": -4460.8,
+      "kind": "road",
+      "major": true,
+      "angle": 2.188
+    },
+    {
+      "text": "Madison Street",
+      "x": 2431.0,
+      "y": -4372.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.631
+    },
+    {
+      "text": "Stuyvesant Street",
+      "x": 1313.8,
+      "y": -2840.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.577
+    },
+    {
+      "text": "Barclay Street",
+      "x": 388.1,
+      "y": -5386.0,
+      "kind": "road",
+      "major": true,
+      "angle": 3.115
+    },
+    {
+      "text": "Mulberry Street",
+      "x": 1236.7,
+      "y": -4451.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.635
+    },
+    {
+      "text": "Pike Street",
+      "x": 2017.6,
+      "y": -4794.7,
+      "kind": "road",
+      "major": true,
+      "angle": 2.193
+    },
+    {
+      "text": "East 1st Street",
+      "x": 1721.9,
+      "y": -3501.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.142
+    },
+    {
+      "text": "Ludlow Street",
+      "x": 1807.6,
+      "y": -3602.4,
+      "kind": "road",
+      "major": false,
+      "angle": -1.434
+    },
+    {
+      "text": "Avenue B",
+      "x": 2092.7,
+      "y": -2683.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.567
+    },
+    {
+      "text": "Evacuation Day Plaza",
+      "x": 780.8,
+      "y": -6261.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.032
+    },
+    {
+      "text": "Broadway",
+      "x": 780.3,
+      "y": -5893.8,
+      "kind": "road",
+      "major": true,
+      "angle": -1.619
+    },
+    {
+      "text": "Ludlow Street",
+      "x": 1845.2,
+      "y": -3880.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.437
+    },
+    {
+      "text": "Stanton Street",
+      "x": 1965.6,
+      "y": -3653.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.127
+    },
+    {
+      "text": "Avenue B",
+      "x": 2093.2,
+      "y": -3144.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.573
+    },
+    {
+      "text": "6th Avenue",
+      "x": 402.7,
+      "y": -3996.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.779
+    },
+    {
+      "text": "MacDougal Street",
+      "x": 404.2,
+      "y": -3365.1,
+      "kind": "road",
+      "major": false,
+      "angle": -1.633
+    },
+    {
+      "text": "Bayard Street",
+      "x": 1403.7,
+      "y": -4650.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.077
+    },
+    {
+      "text": "Ann Street",
+      "x": 1011.0,
+      "y": -5517.0,
+      "kind": "road",
+      "major": false,
+      "angle": -0.095
+    },
+    {
+      "text": "Mulberry Street",
+      "x": 1150.0,
+      "y": -3942.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.785
+    },
+    {
+      "text": "Mulberry Street",
+      "x": 1091.8,
+      "y": -3620.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.733
+    },
+    {
+      "text": "Pine Street",
+      "x": 1102.4,
+      "y": -5943.7,
+      "kind": "road",
+      "major": false,
+      "angle": 2.985
+    },
+    {
+      "text": "Elizabeth Street",
+      "x": 1245.8,
+      "y": -3694.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.78
+    },
+    {
+      "text": "North Moore Street",
+      "x": 160.8,
+      "y": -4720.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.763
+    },
+    {
+      "text": "1st Avenue",
+      "x": 1655.0,
+      "y": -2656.5,
+      "kind": "road",
+      "major": true,
+      "angle": 1.58
+    },
+    {
+      "text": "Eldridge Street",
+      "x": 1626.7,
+      "y": -3804.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.707
+    },
+    {
+      "text": "Howard Street",
+      "x": 947.7,
+      "y": -4361.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.102
+    },
+    {
+      "text": "Broadway",
+      "x": 860.7,
+      "y": -4649.9,
+      "kind": "road",
+      "major": true,
+      "angle": -1.631
+    },
+    {
+      "text": "Broadway",
+      "x": 911.1,
+      "y": -3869.7,
+      "kind": "road",
+      "major": true,
+      "angle": -1.634
+    },
+    {
+      "text": "Prince Street",
+      "x": 759.6,
+      "y": -3778.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.071
+    },
+    {
+      "text": "West Street",
+      "x": 269.7,
+      "y": -5398.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.262
+    },
+    {
+      "text": "Prince Street",
+      "x": 1170.1,
+      "y": -3788.9,
+      "kind": "road",
+      "major": false,
+      "angle": -3.136
+    },
+    {
+      "text": "East 1st Street",
+      "x": 1363.1,
+      "y": -3499.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.137
+    },
+    {
+      "text": "East 2nd Street",
+      "x": 1796.4,
+      "y": -3417.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "Varick Street",
+      "x": 281.7,
+      "y": -4043.5,
+      "kind": "road",
+      "major": true,
+      "angle": -1.219
+    },
+    {
+      "text": "Bedford Street",
+      "x": -57.2,
+      "y": -3331.2,
+      "kind": "road",
+      "major": false,
+      "angle": 2.491
+    },
+    {
+      "text": "Charlton Street",
+      "x": 269.1,
+      "y": -3789.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.76
+    },
+    {
+      "text": "East 11th Street",
+      "x": 1540.9,
+      "y": -2725.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.137
+    },
+    {
+      "text": "East 10th Street",
+      "x": 1540.6,
+      "y": -2801.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "West Broadway",
+      "x": 547.6,
+      "y": -4896.4,
+      "kind": "road",
+      "major": true,
+      "angle": -1.6
+    },
+    {
+      "text": "East 12th Street",
+      "x": 1540.5,
+      "y": -2643.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "Wooster Street",
+      "x": 650.4,
+      "y": -4286.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.636
+    },
+    {
+      "text": "White Street",
+      "x": 621.6,
+      "y": -4598.4,
+      "kind": "road",
+      "major": false,
+      "angle": 3.091
+    },
+    {
+      "text": "Crosby Street",
+      "x": 964.7,
+      "y": -4290.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.502
+    },
+    {
+      "text": "Chrystie Street",
+      "x": 1474.4,
+      "y": -3781.7,
+      "kind": "road",
+      "major": true,
+      "angle": 1.71
+    },
+    {
+      "text": "Delancey Street",
+      "x": 2270.9,
+      "y": -3949.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.12
+    },
+    {
+      "text": "Pier 35",
+      "x": 2384.9,
+      "y": -4800.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.948
+    },
+    {
+      "text": "Barrow Street",
+      "x": -362.9,
+      "y": -3517.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.764
+    },
+    {
+      "text": "Grand Street",
+      "x": 2353.4,
+      "y": -4124.7,
+      "kind": "road",
+      "major": true,
+      "angle": 0.13
+    },
+    {
+      "text": "Old Slip Plaza",
+      "x": 1275.4,
+      "y": -6142.1,
+      "kind": "road",
+      "major": false,
+      "angle": 2.829
+    },
+    {
+      "text": "Greenwich Street",
+      "x": -209.7,
+      "y": -3530.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.87
+    },
+    {
+      "text": "Greenwich Street",
+      "x": -58.3,
+      "y": -3965.2,
+      "kind": "road",
+      "major": false,
+      "angle": 1.953
+    },
+    {
+      "text": "Washington Street",
+      "x": -318.4,
+      "y": -3468.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.213
+    },
+    {
+      "text": "Golden Hill Plaza",
+      "x": 1129.2,
+      "y": -5824.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.971
+    },
+    {
+      "text": "Gwathmey Plaza",
+      "x": 577.8,
+      "y": -5917.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.615
+    },
+    {
+      "text": "Confucius Plaza Courtyard",
+      "x": 1559.8,
+      "y": -4660.0,
+      "kind": "road",
+      "major": false,
+      "angle": -2.619
+    },
+    {
+      "text": "Broadway",
+      "x": 973.3,
+      "y": -2875.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.632
+    },
+    {
+      "text": "East 13th Street",
+      "x": 1122.0,
+      "y": -2560.4,
+      "kind": "road",
+      "major": false,
+      "angle": -3.14
+    },
+    {
+      "text": "Greene Street",
+      "x": 729.9,
+      "y": -4241.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.501
+    },
+    {
+      "text": "Catherine Street",
+      "x": 1726.0,
+      "y": -5051.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.886
+    },
+    {
+      "text": "Cherry Street",
+      "x": 1893.1,
+      "y": -4997.5,
+      "kind": "road",
+      "major": false,
+      "angle": -2.442
+    },
+    {
+      "text": "Park Place",
+      "x": 598.3,
+      "y": -5325.0,
+      "kind": "road",
+      "major": false,
+      "angle": -0.036
+    },
+    {
+      "text": "Liberty Street",
+      "x": 968.5,
+      "y": -5804.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.321
+    },
+    {
+      "text": "South Street",
+      "x": 2202.4,
+      "y": -4891.8,
+      "kind": "road",
+      "major": true,
+      "angle": 0.697
+    },
+    {
+      "text": "Henry Street",
+      "x": 1979.2,
+      "y": -4595.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.616
+    },
+    {
+      "text": "Elizabeth Street",
+      "x": 1395.0,
+      "y": -4578.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.643
+    },
+    {
+      "text": "Mott Street",
+      "x": 1325.8,
+      "y": -4621.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.495
+    },
+    {
+      "text": "Stanton Street",
+      "x": 1404.4,
+      "y": -3725.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.143
+    },
+    {
+      "text": "Avenue A",
+      "x": 1869.5,
+      "y": -3066.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.574
+    },
+    {
+      "text": "Walker Street",
+      "x": 734.5,
+      "y": -4523.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.034
+    },
+    {
+      "text": "Walker Street",
+      "x": 1084.4,
+      "y": -4534.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "Orchard Street",
+      "x": 1758.7,
+      "y": -3749.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.704
+    },
+    {
+      "text": "Lafayette Street",
+      "x": 1070.4,
+      "y": -3128.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.502
+    },
+    {
+      "text": "Sullivan Street",
+      "x": 449.9,
+      "y": -3902.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.52
+    },
+    {
+      "text": "Clinton Street",
+      "x": 2104.3,
+      "y": -3565.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.709
+    },
+    {
+      "text": "West Street",
+      "x": 463.4,
+      "y": -6063.6,
+      "kind": "road",
+      "major": true,
+      "angle": -1.337
+    },
+    {
+      "text": "Greenwich Street",
+      "x": 200.8,
+      "y": -4623.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.192
+    },
+    {
+      "text": "Mott Street",
+      "x": 1176.0,
+      "y": -3697.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.388
+    },
+    {
+      "text": "East 4th Street",
+      "x": 1352.1,
+      "y": -3257.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "Hudson Square Plaza",
+      "x": 378.0,
+      "y": -4006.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.228
+    },
+    {
+      "text": "Chrystie Street",
+      "x": 2438.7,
+      "y": -5196.0,
+      "kind": "road",
+      "major": true,
+      "angle": 2.475
+    },
+    {
+      "text": "Chrystie Street",
+      "x": 2163.6,
+      "y": -4979.6,
+      "kind": "road",
+      "major": true,
+      "angle": 2.475
+    },
+    {
+      "text": "Chrystie Street",
+      "x": 1888.5,
+      "y": -4763.3,
+      "kind": "road",
+      "major": true,
+      "angle": 2.475
+    },
+    {
+      "text": "Chrystie Street",
+      "x": 1655.3,
+      "y": -4580.4,
+      "kind": "road",
+      "major": true,
+      "angle": 2.485
+    },
+    {
+      "text": "Canal Street (lower level)",
+      "x": 2429.6,
+      "y": -5203.4,
+      "kind": "road",
+      "major": true,
+      "angle": 2.477
+    },
+    {
+      "text": "Canal Street (lower level)",
+      "x": 2154.1,
+      "y": -4987.5,
+      "kind": "road",
+      "major": true,
+      "angle": 2.477
+    },
+    {
+      "text": "Canal Street (lower level)",
+      "x": 1878.6,
+      "y": -4771.6,
+      "kind": "road",
+      "major": true,
+      "angle": 2.477
+    },
+    {
+      "text": "Babbio Drive",
+      "x": -2206.1,
+      "y": -2725.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.696
+    },
+    {
+      "text": "Newark Street",
+      "x": -2667.4,
+      "y": -4124.1,
+      "kind": "road",
+      "major": true,
+      "angle": 0.692
+    },
+    {
+      "text": "9th Street",
+      "x": -2631.6,
+      "y": -2800.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.28
+    },
+    {
+      "text": "14th Street",
+      "x": -2583.7,
+      "y": -2079.5,
+      "kind": "road",
+      "major": false,
+      "angle": -2.849
+    },
+    {
+      "text": "Bernard McFeeley Shipyard Lane",
+      "x": -2578.4,
+      "y": -2152.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.294
+    },
+    {
+      "text": "Bloomfield Street",
+      "x": -2268.6,
+      "y": -4006.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.85
+    },
+    {
+      "text": "3rd Street",
+      "x": -2607.5,
+      "y": -3658.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.279
+    },
+    {
+      "text": "3rd Street",
+      "x": -2320.3,
+      "y": -3577.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.264
+    },
+    {
+      "text": "River Terrace",
+      "x": -2236.3,
+      "y": -3215.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.853
+    },
+    {
+      "text": "Sinatra Drive",
+      "x": -2013.8,
+      "y": -3674.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.853
+    },
+    {
+      "text": "Sinatra Drive",
+      "x": -2140.4,
+      "y": -3221.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.754
+    },
+    {
+      "text": "Castle Point Terrace",
+      "x": -2352.2,
+      "y": -2798.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.851
+    },
+    {
+      "text": "Park Avenue",
+      "x": -2452.8,
+      "y": -3955.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.855
+    },
+    {
+      "text": "Park Avenue",
+      "x": -2548.4,
+      "y": -3619.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.854
+    },
+    {
+      "text": "Adams Street",
+      "x": -2749.2,
+      "y": -4089.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.854
+    },
+    {
+      "text": "11th Street",
+      "x": -2715.3,
+      "y": -2518.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.282
+    },
+    {
+      "text": "Willow Avenue",
+      "x": -2752.2,
+      "y": -3203.1,
+      "kind": "road",
+      "major": true,
+      "angle": -1.297
+    },
+    {
+      "text": "Willow Avenue",
+      "x": -2655.8,
+      "y": -3539.5,
+      "kind": "road",
+      "major": true,
+      "angle": -1.291
+    },
+    {
+      "text": "Willow Avenue",
+      "x": -2559.1,
+      "y": -3875.9,
+      "kind": "road",
+      "major": true,
+      "angle": -1.292
+    },
+    {
+      "text": "Hudson Street",
+      "x": -2664.4,
+      "y": -2033.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.843
+    },
+    {
+      "text": "11th Street",
+      "x": -2446.5,
+      "y": -2431.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.864
+    },
+    {
+      "text": "Sinatra Drive North",
+      "x": -2544.5,
+      "y": -1977.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.039
+    },
+    {
+      "text": "Hoboken Newport Walkway- Hudson River Waterfront Walkway",
+      "x": -2538.9,
+      "y": -1967.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.894
+    },
+    {
+      "text": "7th Street",
+      "x": -2635.0,
+      "y": -3102.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.28
+    },
+    {
+      "text": "Maxwell Lane",
+      "x": -2498.4,
+      "y": -2378.2,
+      "kind": "road",
+      "major": false,
+      "angle": 2.484
+    },
+    {
+      "text": "12th Street",
+      "x": -2505.8,
+      "y": -2310.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.267
+    },
+    {
+      "text": "Garden Street",
+      "x": -2753.5,
+      "y": -2615.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.29
+    },
+    {
+      "text": "5th Street",
+      "x": -2522.4,
+      "y": -3371.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.265
+    },
+    {
+      "text": "5th Street",
+      "x": -2180.1,
+      "y": -3273.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.293
+    },
+    {
+      "text": "4th Street",
+      "x": -2348.6,
+      "y": -3433.4,
+      "kind": "road",
+      "major": false,
+      "angle": -2.871
+    },
+    {
+      "text": "Washington Street",
+      "x": -2754.4,
+      "y": -2058.9,
+      "kind": "road",
+      "major": false,
+      "angle": 1.855
+    },
+    {
+      "text": "Hudson Street",
+      "x": -2224.2,
+      "y": -3564.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.293
+    },
+    {
+      "text": "River Street",
+      "x": -2078.9,
+      "y": -3766.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.853
+    },
+    {
+      "text": "Hoboken Newport Walkway- Hudson River Waterfront Walkway",
+      "x": -1891.7,
+      "y": -4078.8,
+      "kind": "road",
+      "major": false,
+      "angle": -2.621
+    },
+    {
+      "text": "Bloomfield Street",
+      "x": -2475.6,
+      "y": -3288.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.856
+    },
+    {
+      "text": "Bloomfield Street",
+      "x": -2572.4,
+      "y": -2952.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.853
+    },
+    {
+      "text": "Bloomfield Street",
+      "x": -2669.0,
+      "y": -2615.6,
+      "kind": "road",
+      "major": false,
+      "angle": 1.847
+    },
+    {
+      "text": "Bloomfield Street",
+      "x": -2764.9,
+      "y": -2279.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.846
+    },
+    {
+      "text": "Newark Street",
+      "x": -2406.9,
+      "y": -3967.3,
+      "kind": "road",
+      "major": true,
+      "angle": -2.88
+    },
+    {
+      "text": "2nd Street",
+      "x": -2227.5,
+      "y": -3701.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.865
+    },
+    {
+      "text": "Hudson Street",
+      "x": -2559.6,
+      "y": -2394.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.293
+    },
+    {
+      "text": "Bloomfield Street",
+      "x": -2387.3,
+      "y": -3595.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.933
+    },
+    {
+      "text": "Washington Street",
+      "x": -2297.1,
+      "y": -3654.4,
+      "kind": "road",
+      "major": true,
+      "angle": 1.853
+    },
+    {
+      "text": "Washington Street",
+      "x": -2448.2,
+      "y": -3131.8,
+      "kind": "road",
+      "major": true,
+      "angle": 1.848
+    },
+    {
+      "text": "Washington Street",
+      "x": -2531.7,
+      "y": -2838.8,
+      "kind": "road",
+      "major": true,
+      "angle": 1.844
+    },
+    {
+      "text": "8th Street",
+      "x": -2620.9,
+      "y": -2947.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.866
+    },
+    {
+      "text": "Grand Street",
+      "x": -2735.3,
+      "y": -3846.1,
+      "kind": "road",
+      "major": false,
+      "angle": -1.294
+    },
+    {
+      "text": "1st Street",
+      "x": -2618.0,
+      "y": -3964.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.275
+    },
+    {
+      "text": "Sinatra Drive North",
+      "x": -2388.7,
+      "y": -2354.2,
+      "kind": "road",
+      "major": false,
+      "angle": -1.181
+    },
+    {
+      "text": "Hoboken Newport Walkway \u2013 Hudson River Waterfront Walkway",
+      "x": -2452.2,
+      "y": -2186.0,
+      "kind": "road",
+      "major": false,
+      "angle": -1.301
+    },
+    {
+      "text": "Hoboken Newport Walkway \u2013 Hudson River Waterfront Walkway",
+      "x": -2271.0,
+      "y": -2406.1,
+      "kind": "road",
+      "major": false,
+      "angle": 0.35
+    },
+    {
+      "text": "Observer Highway",
+      "x": -2579.8,
+      "y": -4174.2,
+      "kind": "road",
+      "major": true,
+      "angle": -2.865
+    },
+    {
+      "text": "2nd Street",
+      "x": -2515.5,
+      "y": -3783.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.852
+    },
+    {
+      "text": "2nd Street",
+      "x": -2799.0,
+      "y": -3864.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.86
+    },
+    {
+      "text": "Park Avenue",
+      "x": -2661.1,
+      "y": -3228.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.842
+    },
+    {
+      "text": "Park Avenue",
+      "x": -2731.7,
+      "y": -2978.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.844
+    },
+    {
+      "text": "River Street",
+      "x": -2166.0,
+      "y": -3457.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.843
+    },
+    {
+      "text": "Babbio West Patio",
+      "x": -2241.7,
+      "y": -3155.0,
+      "kind": "road",
+      "major": false,
+      "angle": 1.075
+    },
+    {
+      "text": "Sinatra Drive",
+      "x": -2444.2,
+      "y": -2518.1,
+      "kind": "road",
+      "major": false,
+      "angle": 2.938
+    },
+    {
+      "text": "Sinatra Drive",
+      "x": -2133.3,
+      "y": -2693.4,
+      "kind": "road",
+      "major": false,
+      "angle": 2.551
+    },
+    {
+      "text": "Washington Street",
+      "x": -2609.9,
+      "y": -2566.3,
+      "kind": "road",
+      "major": true,
+      "angle": 1.851
+    },
+    {
+      "text": "Hudson Street",
+      "x": -2384.0,
+      "y": -3007.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.285
+    },
+    {
+      "text": "Babbio East Patio",
+      "x": -2181.7,
+      "y": -3140.5,
+      "kind": "road",
+      "major": false,
+      "angle": -3.091
+    },
+    {
+      "text": "6th Street",
+      "x": -2598.5,
+      "y": -3242.7,
+      "kind": "road",
+      "major": false,
+      "angle": -2.859
+    },
+    {
+      "text": "Clinton Street",
+      "x": -2666.1,
+      "y": -3795.8,
+      "kind": "road",
+      "major": false,
+      "angle": 1.862
+    },
+    {
+      "text": "Clinton Street",
+      "x": -2738.3,
+      "y": -3544.7,
+      "kind": "road",
+      "major": false,
+      "angle": 1.81
+    },
+    {
+      "text": "Washington Street",
+      "x": -2374.8,
+      "y": -3385.3,
+      "kind": "road",
+      "major": true,
+      "angle": 1.849
+    },
+    {
+      "text": "Hudson Street",
+      "x": -2463.4,
+      "y": -2728.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.279
+    },
+    {
+      "text": "Garden Street",
+      "x": -2486.9,
+      "y": -3543.4,
+      "kind": "road",
+      "major": false,
+      "angle": -1.284
+    },
+    {
+      "text": "Garden Street",
+      "x": -2390.4,
+      "y": -3879.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.292
+    },
+    {
+      "text": "Garden Street",
+      "x": -2657.5,
+      "y": -2944.9,
+      "kind": "road",
+      "major": false,
+      "angle": -1.29
+    },
+    {
+      "text": "Garden Street",
+      "x": -2561.3,
+      "y": -3281.4,
+      "kind": "road",
+      "major": false,
+      "angle": -1.288
+    },
+    {
+      "text": "10th Street",
+      "x": -2694.7,
+      "y": -2666.8,
+      "kind": "road",
+      "major": false,
+      "angle": -2.866
+    },
+    {
+      "text": "9th Street",
+      "x": -2379.3,
+      "y": -2728.2,
+      "kind": "road",
+      "major": false,
+      "angle": 0.294
+    },
+    {
+      "text": "West 20th Street",
+      "x": -933.2,
+      "y": -2004.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.136
+    },
+    {
+      "text": "West 29th Street",
+      "x": 430.4,
+      "y": -1291.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.134
+    },
+    {
+      "text": "West 13th Street",
+      "x": 413.8,
+      "y": -2561.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "West 13th Street",
+      "x": 63.8,
+      "y": -2560.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "East 26th Street",
+      "x": 663.7,
+      "y": -1526.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.011
+    },
+    {
+      "text": "East 15th Street",
+      "x": 679.5,
+      "y": -2385.9,
+      "kind": "road",
+      "major": false,
+      "angle": -3.138
+    },
+    {
+      "text": "Horatio Street",
+      "x": -564.8,
+      "y": -2761.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.504
+    },
+    {
+      "text": "West 22nd Street",
+      "x": -930.6,
+      "y": -1850.4,
+      "kind": "road",
+      "major": false,
+      "angle": 3.135
+    },
+    {
+      "text": "Irving Place",
+      "x": 1054.0,
+      "y": -2352.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.572
+    },
+    {
+      "text": "West 27th Street",
+      "x": 431.0,
+      "y": -1449.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.135
+    },
+    {
+      "text": "West 27th Drive",
+      "x": -691.0,
+      "y": -1443.0,
+      "kind": "road",
+      "major": false,
+      "angle": -3.141
+    },
+    {
+      "text": "Hudson Street",
+      "x": -474.5,
+      "y": -2599.8,
+      "kind": "road",
+      "major": false,
+      "angle": -1.19
+    },
+    {
+      "text": "East 24th Street",
+      "x": 816.0,
+      "y": -1684.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.009
+    },
+    {
+      "text": "Union Square East",
+      "x": 901.1,
+      "y": -2309.4,
+      "kind": "road",
+      "major": true,
+      "angle": 1.574
+    },
+    {
+      "text": "East 18th Street",
+      "x": 1026.7,
+      "y": -2155.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "West 34th Street",
+      "x": 412.0,
+      "y": -890.5,
+      "kind": "road",
+      "major": true,
+      "angle": 3.14
+    },
+    {
+      "text": "Gramercy Park North",
+      "x": 1053.0,
+      "y": -1932.2,
+      "kind": "road",
+      "major": false,
+      "angle": -3.138
+    },
+    {
+      "text": "West 28th Street",
+      "x": -629.8,
+      "y": -1367.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "Gramercy Park South",
+      "x": 1074.1,
+      "y": -2007.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.005
+    },
+    {
+      "text": "West 17th Street",
+      "x": 431.5,
+      "y": -2230.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "East 14th Street",
+      "x": 650.9,
+      "y": -2473.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "Bank Street",
+      "x": -179.6,
+      "y": -2787.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.695
+    },
+    {
+      "text": "Bank Street",
+      "x": -449.9,
+      "y": -3008.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.687
+    },
+    {
+      "text": "East 30th Street",
+      "x": 663.1,
+      "y": -1212.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "West 15th Street",
+      "x": 432.9,
+      "y": -2386.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "Madison Avenue",
+      "x": 740.1,
+      "y": -1687.0,
+      "kind": "road",
+      "major": true,
+      "angle": 1.572
+    },
+    {
+      "text": "East 28th Street",
+      "x": 663.4,
+      "y": -1370.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.0
+    },
+    {
+      "text": "West 33rd Street",
+      "x": 442.2,
+      "y": -976.5,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 11th Street",
+      "x": -131.8,
+      "y": -2842.1,
+      "kind": "road",
+      "major": false,
+      "angle": -2.45
+    },
+    {
+      "text": "East 32nd Street",
+      "x": 663.2,
+      "y": -1055.7,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "Mount Carmel Place",
+      "x": 1551.7,
+      "y": -1449.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.574
+    },
+    {
+      "text": "Charles Street",
+      "x": -110.4,
+      "y": -3018.6,
+      "kind": "road",
+      "major": false,
+      "angle": -2.44
+    },
+    {
+      "text": "West 36th Street",
+      "x": -919.6,
+      "y": -726.2,
+      "kind": "road",
+      "major": true,
+      "angle": -0.004
+    },
+    {
+      "text": "East 33rd Street",
+      "x": 1536.7,
+      "y": -981.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "East 21st Street",
+      "x": 785.8,
+      "y": -1931.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "West 14th Street",
+      "x": 442.4,
+      "y": -2473.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.138
+    },
+    {
+      "text": "West 19th Street",
+      "x": 410.9,
+      "y": -2081.1,
+      "kind": "road",
+      "major": false,
+      "angle": -3.141
+    },
+    {
+      "text": "West 19th Street",
+      "x": 60.9,
+      "y": -2080.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "West 19th Street",
+      "x": -270.3,
+      "y": -2079.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.134
+    },
+    {
+      "text": "East 27th Street",
+      "x": 744.4,
+      "y": -1448.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.136
+    },
+    {
+      "text": "Jane Street",
+      "x": -536.9,
+      "y": -2824.0,
+      "kind": "road",
+      "major": false,
+      "angle": -2.633
+    },
+    {
+      "text": "East 16th Street",
+      "x": 679.7,
+      "y": -2304.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "Park Avenue South",
+      "x": 901.3,
+      "y": -2006.8,
+      "kind": "road",
+      "major": true,
+      "angle": 1.567
+    },
+    {
+      "text": "East 31st Street",
+      "x": 1313.8,
+      "y": -1134.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.142
+    },
+    {
+      "text": "Perry Street",
+      "x": -147.1,
+      "y": -2953.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.698
+    },
+    {
+      "text": "West 10th Street",
+      "x": -350.5,
+      "y": -3320.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.707
+    },
+    {
+      "text": "East 28th Street",
+      "x": 1730.5,
+      "y": -1354.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.02
+    },
+    {
+      "text": "East 36th Street",
+      "x": 662.3,
+      "y": -728.6,
+      "kind": "road",
+      "major": true,
+      "angle": -0.002
+    },
+    {
+      "text": "East 19th Street",
+      "x": 1540.1,
+      "y": -2082.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 35th Street",
+      "x": -114.6,
+      "y": -806.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "Washington Street",
+      "x": -701.8,
+      "y": -2555.7,
+      "kind": "road",
+      "major": false,
+      "angle": -1.563
+    },
+    {
+      "text": "East 17th Street",
+      "x": 1480.8,
+      "y": -2231.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "East 17th Street",
+      "x": 1130.8,
+      "y": -2230.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.138
+    },
+    {
+      "text": "West 24th Street",
+      "x": -951.3,
+      "y": -1681.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "10th Avenue",
+      "x": -786.7,
+      "y": -2721.5,
+      "kind": "road",
+      "major": true,
+      "angle": -1.526
+    },
+    {
+      "text": "West 21st Street",
+      "x": -947.4,
+      "y": -1930.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.005
+    },
+    {
+      "text": "West 19th Street",
+      "x": -918.6,
+      "y": -2078.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.008
+    },
+    {
+      "text": "West 27th Street",
+      "x": -957.9,
+      "y": -1445.8,
+      "kind": "road",
+      "major": false,
+      "angle": -3.136
+    },
+    {
+      "text": "West 30th Street",
+      "x": -633.7,
+      "y": -1190.1,
+      "kind": "road",
+      "major": true,
+      "angle": 3.123
+    },
+    {
+      "text": "FDR Drive",
+      "x": 1784.8,
+      "y": -894.7,
+      "kind": "road",
+      "major": true,
+      "angle": -1.46
+    },
+    {
+      "text": "FDR Drive",
+      "x": 1863.8,
+      "y": -1171.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.219
+    },
+    {
+      "text": "East 20th Street",
+      "x": 1316.3,
+      "y": -2006.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "West 20th Street",
+      "x": 177.6,
+      "y": -2006.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "West 20th Street",
+      "x": 527.6,
+      "y": -2007.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "12th Avenue",
+      "x": -1202.7,
+      "y": -1752.7,
+      "kind": "road",
+      "major": true,
+      "angle": 2.473
+    },
+    {
+      "text": "West 30th Street",
+      "x": 485.8,
+      "y": -1212.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.0
+    },
+    {
+      "text": "East 22nd Street",
+      "x": 1076.2,
+      "y": -1854.2,
+      "kind": "road",
+      "major": false,
+      "angle": 0.001
+    },
+    {
+      "text": "East 22nd Street",
+      "x": 1426.2,
+      "y": -1855.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.034
+    },
+    {
+      "text": "West 15th Street",
+      "x": -680.6,
+      "y": -2383.5,
+      "kind": "road",
+      "major": true,
+      "angle": -3.135
+    },
+    {
+      "text": "Charles Street",
+      "x": -332.6,
+      "y": -3204.2,
+      "kind": "road",
+      "major": false,
+      "angle": -2.431
+    },
+    {
+      "text": "Perry Street",
+      "x": -495.6,
+      "y": -3243.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.692
+    },
+    {
+      "text": "West 30th Street",
+      "x": -1232.0,
+      "y": -1212.3,
+      "kind": "road",
+      "major": true,
+      "angle": -0.002
+    },
+    {
+      "text": "East 35th Street",
+      "x": 662.4,
+      "y": -807.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.138
+    },
+    {
+      "text": "11th Avenue",
+      "x": -1096.1,
+      "y": -1305.0,
+      "kind": "road",
+      "major": true,
+      "angle": -1.56
+    },
+    {
+      "text": "West 36th Street",
+      "x": -137.3,
+      "y": -727.4,
+      "kind": "road",
+      "major": true,
+      "angle": 0.001
+    },
+    {
+      "text": "West 33rd Street",
+      "x": -1280.4,
+      "y": -974.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 34th Street",
+      "x": -1246.4,
+      "y": -889.0,
+      "kind": "road",
+      "major": true,
+      "angle": 3.14
+    },
+    {
+      "text": "West 31st Street",
+      "x": 430.9,
+      "y": -1134.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.137
+    },
+    {
+      "text": "East 33rd Street",
+      "x": 736.7,
+      "y": -977.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.135
+    },
+    {
+      "text": "Park Avenue Tunnel",
+      "x": 894.5,
+      "y": -814.4,
+      "kind": "road",
+      "major": true,
+      "angle": 1.571
+    },
+    {
+      "text": "West 36th Street",
+      "x": 430.4,
+      "y": -728.1,
+      "kind": "road",
+      "major": true,
+      "angle": -0.002
+    },
+    {
+      "text": "West 4th Street",
+      "x": -81.4,
+      "y": -2941.3,
+      "kind": "road",
+      "major": false,
+      "angle": 2.295
+    },
+    {
+      "text": "West 4th Street",
+      "x": -282.2,
+      "y": -2686.7,
+      "kind": "road",
+      "major": false,
+      "angle": 2.087
+    },
+    {
+      "text": "West 13th Street",
+      "x": -631.4,
+      "y": -2558.5,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "Waverly Place",
+      "x": -48.1,
+      "y": -2774.0,
+      "kind": "road",
+      "major": false,
+      "angle": -0.85
+    },
+    {
+      "text": "East 26th Street",
+      "x": 1745.3,
+      "y": -1526.4,
+      "kind": "road",
+      "major": false,
+      "angle": -3.141
+    },
+    {
+      "text": "East 23rd Street",
+      "x": 1774.9,
+      "y": -1770.7,
+      "kind": "road",
+      "major": true,
+      "angle": -0.001
+    },
+    {
+      "text": "West 20th Street",
+      "x": -134.7,
+      "y": -2004.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.001
+    },
+    {
+      "text": "West 23rd Street",
+      "x": -957.5,
+      "y": -1765.7,
+      "kind": "road",
+      "major": true,
+      "angle": 0.001
+    },
+    {
+      "text": "12th Avenue",
+      "x": -1344.5,
+      "y": -1366.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.796
+    },
+    {
+      "text": "Hudson Street",
+      "x": -260.2,
+      "y": -3118.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.954
+    },
+    {
+      "text": "West 18th Street",
+      "x": -684.6,
+      "y": -2153.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "10th Avenue",
+      "x": -819.8,
+      "y": -2079.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.574
+    },
+    {
+      "text": "8th Avenue",
+      "x": -272.6,
+      "y": -1431.2,
+      "kind": "road",
+      "major": true,
+      "angle": 1.566
+    },
+    {
+      "text": "West 21st Street",
+      "x": -684.9,
+      "y": -1929.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "West 21st Street",
+      "x": 101.4,
+      "y": -1930.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 21st Street",
+      "x": -248.6,
+      "y": -1929.4,
+      "kind": "road",
+      "major": false,
+      "angle": 3.138
+    },
+    {
+      "text": "West 18th Street",
+      "x": -374.6,
+      "y": -2153.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "West 18th Street",
+      "x": -24.6,
+      "y": -2155.0,
+      "kind": "road",
+      "major": false,
+      "angle": -0.005
+    },
+    {
+      "text": "West 18th Street",
+      "x": 325.4,
+      "y": -2155.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.0
+    },
+    {
+      "text": "West 18th Street",
+      "x": 585.7,
+      "y": -2155.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.005
+    },
+    {
+      "text": "1st Avenue",
+      "x": 1652.3,
+      "y": -1462.1,
+      "kind": "road",
+      "major": true,
+      "angle": 1.571
+    },
+    {
+      "text": "West 34th Street",
+      "x": -136.8,
+      "y": -889.4,
+      "kind": "road",
+      "major": true,
+      "angle": 0.004
+    },
+    {
+      "text": "5th Avenue",
+      "x": 587.3,
+      "y": -2711.0,
+      "kind": "road",
+      "major": true,
+      "angle": -1.561
+    },
+    {
+      "text": "5th Avenue",
+      "x": 586.0,
+      "y": -973.1,
+      "kind": "road",
+      "major": true,
+      "angle": -1.569
+    },
+    {
+      "text": "Greenwich Avenue",
+      "x": -49.0,
+      "y": -2683.8,
+      "kind": "road",
+      "major": true,
+      "angle": 2.507
+    },
+    {
+      "text": "East 24th Street",
+      "x": 1130.0,
+      "y": -1685.3,
+      "kind": "road",
+      "major": true,
+      "angle": -0.004
+    },
+    {
+      "text": "Bethune Street",
+      "x": -482.0,
+      "y": -2943.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.638
+    },
+    {
+      "text": "East 25th Street",
+      "x": 815.8,
+      "y": -1605.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "Greenwich Street",
+      "x": -473.6,
+      "y": -2792.3,
+      "kind": "road",
+      "major": false,
+      "angle": 2.058
+    },
+    {
+      "text": "Madison Avenue",
+      "x": 740.7,
+      "y": -1409.4,
+      "kind": "road",
+      "major": true,
+      "angle": 1.573
+    },
+    {
+      "text": "Park Avenue South",
+      "x": 902.2,
+      "y": -1409.0,
+      "kind": "road",
+      "major": true,
+      "angle": 1.574
+    },
+    {
+      "text": "West 14th Street",
+      "x": 130.3,
+      "y": -2472.0,
+      "kind": "road",
+      "major": false,
+      "angle": -0.005
+    },
+    {
+      "text": "West 14th Street",
+      "x": -134.7,
+      "y": -2471.8,
+      "kind": "road",
+      "major": false,
+      "angle": -3.142
+    },
+    {
+      "text": "West 14th Street",
+      "x": -677.9,
+      "y": -2471.1,
+      "kind": "road",
+      "major": true,
+      "angle": 3.138
+    },
+    {
+      "text": "7th Avenue",
+      "x": 4.5,
+      "y": -2545.3,
+      "kind": "road",
+      "major": true,
+      "angle": -1.558
+    },
+    {
+      "text": "West 10th Street",
+      "x": -40.1,
+      "y": -3054.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.706
+    },
+    {
+      "text": "3rd Avenue",
+      "x": 1206.8,
+      "y": -1606.1,
+      "kind": "road",
+      "major": true,
+      "angle": 1.576
+    },
+    {
+      "text": "West 27th Street",
+      "x": -156.9,
+      "y": -1446.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.134
+    },
+    {
+      "text": "East 29th Street",
+      "x": 1335.8,
+      "y": -1291.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "1st Avenue",
+      "x": 1652.0,
+      "y": -1164.3,
+      "kind": "road",
+      "major": true,
+      "angle": 1.574
+    },
+    {
+      "text": "East 21st Street",
+      "x": 1316.1,
+      "y": -1932.9,
+      "kind": "road",
+      "major": false,
+      "angle": -3.141
+    },
+    {
+      "text": "East 29th Street",
+      "x": 676.0,
+      "y": -1291.3,
+      "kind": "road",
+      "major": false,
+      "angle": -3.138
+    },
+    {
+      "text": "East 29th Street",
+      "x": 1076.9,
+      "y": -1291.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "East 30th Street",
+      "x": 1758.4,
+      "y": -1214.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.0
+    },
+    {
+      "text": "East 30th Street",
+      "x": 1283.9,
+      "y": -1213.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.001
+    },
+    {
+      "text": "West 30th Street",
+      "x": 138.0,
+      "y": -1212.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.001
+    },
+    {
+      "text": "Washington Street",
+      "x": -445.8,
+      "y": -3185.3,
+      "kind": "road",
+      "major": false,
+      "angle": -1.137
+    },
+    {
+      "text": "West 34th Street",
+      "x": -913.9,
+      "y": -890.0,
+      "kind": "road",
+      "major": true,
+      "angle": 0.003
+    },
+    {
+      "text": "West 35th Street",
+      "x": -842.8,
+      "y": -805.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "Lincoln Tunnel Expressway",
+      "x": -726.3,
+      "y": -901.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.698
+    },
+    {
+      "text": "West 15th Street",
+      "x": 140.4,
+      "y": -2385.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "West 16th Street",
+      "x": -610.2,
+      "y": -2303.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.005
+    },
+    {
+      "text": "West 16th Street",
+      "x": -271.9,
+      "y": -2303.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.022
+    },
+    {
+      "text": "West 16th Street",
+      "x": 432.6,
+      "y": -2304.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "9th Avenue",
+      "x": -551.4,
+      "y": -1053.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.571
+    },
+    {
+      "text": "FDR Drive",
+      "x": 1906.7,
+      "y": -1463.6,
+      "kind": "road",
+      "major": false,
+      "angle": -1.428
+    },
+    {
+      "text": "East 36th Street",
+      "x": 1641.4,
+      "y": -730.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.006
+    },
+    {
+      "text": "West 23rd Street",
+      "x": -410.5,
+      "y": -1765.9,
+      "kind": "road",
+      "major": true,
+      "angle": 3.139
+    },
+    {
+      "text": "West 34th Street",
+      "x": 138.6,
+      "y": -889.8,
+      "kind": "road",
+      "major": true,
+      "angle": 0.003
+    },
+    {
+      "text": "East 32nd Street",
+      "x": 1313.9,
+      "y": -1055.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "3rd Avenue",
+      "x": 1205.8,
+      "y": -1195.4,
+      "kind": "road",
+      "major": true,
+      "angle": 1.572
+    },
+    {
+      "text": "10th Avenue",
+      "x": -821.3,
+      "y": -1523.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.566
+    },
+    {
+      "text": "West 24th Street",
+      "x": -393.5,
+      "y": -1719.6,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "West 24th Street",
+      "x": -51.7,
+      "y": -1683.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.007
+    },
+    {
+      "text": "West 24th Street",
+      "x": 298.3,
+      "y": -1683.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "East 25th Street",
+      "x": 1129.6,
+      "y": -1606.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.138
+    },
+    {
+      "text": "West 32nd Street",
+      "x": 455.4,
+      "y": -1055.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "Madison Avenue",
+      "x": 739.9,
+      "y": -973.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.578
+    },
+    {
+      "text": "West 34th Street",
+      "x": -411.9,
+      "y": -891.4,
+      "kind": "road",
+      "major": true,
+      "angle": -0.001
+    },
+    {
+      "text": "East 19th Street",
+      "x": 808.8,
+      "y": -2081.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "West Street",
+      "x": -812.0,
+      "y": -2751.8,
+      "kind": "road",
+      "major": true,
+      "angle": -1.503
+    },
+    {
+      "text": "West 11th Street",
+      "x": 432.8,
+      "y": -2723.3,
+      "kind": "road",
+      "major": false,
+      "angle": -3.14
+    },
+    {
+      "text": "West 23rd Street",
+      "x": -134.7,
+      "y": -1766.7,
+      "kind": "road",
+      "major": true,
+      "angle": -0.003
+    },
+    {
+      "text": "West 23rd Street",
+      "x": 139.2,
+      "y": -1767.8,
+      "kind": "road",
+      "major": true,
+      "angle": -0.001
+    },
+    {
+      "text": "East 34th Street",
+      "x": 812.3,
+      "y": -893.3,
+      "kind": "road",
+      "major": true,
+      "angle": 3.136
+    },
+    {
+      "text": "12th Avenue",
+      "x": -1390.2,
+      "y": -1014.1,
+      "kind": "road",
+      "major": true,
+      "angle": -1.568
+    },
+    {
+      "text": "East 26th Street",
+      "x": 1129.3,
+      "y": -1526.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.003
+    },
+    {
+      "text": "West 33rd Street",
+      "x": -614.8,
+      "y": -974.5,
+      "kind": "road",
+      "major": false,
+      "angle": 3.138
+    },
+    {
+      "text": "East 31st Street",
+      "x": 743.9,
+      "y": -1134.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.137
+    },
+    {
+      "text": "East 15th Street",
+      "x": 1055.1,
+      "y": -2387.3,
+      "kind": "road",
+      "major": false,
+      "angle": -3.139
+    },
+    {
+      "text": "6th Avenue",
+      "x": 278.4,
+      "y": -2802.6,
+      "kind": "road",
+      "major": true,
+      "angle": 1.581
+    },
+    {
+      "text": "East 22nd Street",
+      "x": 774.3,
+      "y": -1853.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "West 17th Street",
+      "x": -446.1,
+      "y": -2228.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "West 17th Street",
+      "x": -796.1,
+      "y": -2228.3,
+      "kind": "road",
+      "major": false,
+      "angle": -3.141
+    },
+    {
+      "text": "West 15th Street",
+      "x": -405.3,
+      "y": -2382.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "West 14th Street",
+      "x": -395.3,
+      "y": -2473.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "East 36th Street",
+      "x": 1128.0,
+      "y": -729.6,
+      "kind": "road",
+      "major": true,
+      "angle": -0.002
+    },
+    {
+      "text": "Lexington Avenue",
+      "x": 1050.7,
+      "y": -1014.2,
+      "kind": "road",
+      "major": true,
+      "angle": -1.565
+    },
+    {
+      "text": "West 31st Street",
+      "x": 100.6,
+      "y": -1132.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.138
+    },
+    {
+      "text": "West 31st Street",
+      "x": -249.4,
+      "y": -1132.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "5th Avenue",
+      "x": 586.1,
+      "y": -1291.5,
+      "kind": "road",
+      "major": true,
+      "angle": -1.573
+    },
+    {
+      "text": "East 18th Street",
+      "x": 712.5,
+      "y": -2155.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "East 17th Street",
+      "x": 831.6,
+      "y": -2232.4,
+      "kind": "road",
+      "major": false,
+      "angle": -3.14
+    },
+    {
+      "text": "West 23rd Street",
+      "x": 419.6,
+      "y": -1768.3,
+      "kind": "road",
+      "major": true,
+      "angle": -0.005
+    },
+    {
+      "text": "Flatiron Public Plaza",
+      "x": 592.4,
+      "y": -1699.5,
+      "kind": "road",
+      "major": false,
+      "angle": -1.571
+    },
+    {
+      "text": "Jane Street",
+      "x": -225.0,
+      "y": -2653.4,
+      "kind": "road",
+      "major": false,
+      "angle": -2.62
+    },
+    {
+      "text": "West 12th Street",
+      "x": -208.1,
+      "y": -2713.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.607
+    },
+    {
+      "text": "West 11th Street",
+      "x": -438.9,
+      "y": -3096.0,
+      "kind": "road",
+      "major": false,
+      "angle": -2.455
+    },
+    {
+      "text": "West 17th Street",
+      "x": 102.2,
+      "y": -2229.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 25th Street",
+      "x": 362.1,
+      "y": -1605.5,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "West 25th Street",
+      "x": 12.1,
+      "y": -1604.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "West 32nd Street",
+      "x": 168.1,
+      "y": -1054.8,
+      "kind": "road",
+      "major": false,
+      "angle": 0.004
+    },
+    {
+      "text": "Christopher Street",
+      "x": 195.0,
+      "y": -2950.5,
+      "kind": "road",
+      "major": false,
+      "angle": -2.443
+    },
+    {
+      "text": "West 33rd Street",
+      "x": 138.9,
+      "y": -975.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.135
+    },
+    {
+      "text": "West 35th Street",
+      "x": 442.5,
+      "y": -807.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "10th Avenue",
+      "x": -822.4,
+      "y": -804.9,
+      "kind": "road",
+      "major": true,
+      "angle": 1.57
+    },
+    {
+      "text": "West 16th Street",
+      "x": 140.3,
+      "y": -2304.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.003
+    },
+    {
+      "text": "West 15th Street",
+      "x": -132.7,
+      "y": -2384.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.134
+    },
+    {
+      "text": "West 11th Street",
+      "x": 141.0,
+      "y": -2722.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.136
+    },
+    {
+      "text": "West 29th Street",
+      "x": -698.9,
+      "y": -1288.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "East 35th Street",
+      "x": 1191.5,
+      "y": -807.9,
+      "kind": "road",
+      "major": false,
+      "angle": -3.14
+    },
+    {
+      "text": "East 33rd Street",
+      "x": 1246.9,
+      "y": -978.2,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 21st Street",
+      "x": 431.2,
+      "y": -1930.8,
+      "kind": "road",
+      "major": false,
+      "angle": 3.139
+    },
+    {
+      "text": "East 34th Street",
+      "x": 1127.8,
+      "y": -891.6,
+      "kind": "road",
+      "major": true,
+      "angle": -3.142
+    },
+    {
+      "text": "West 35th Street",
+      "x": -412.3,
+      "y": -806.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 26th Street",
+      "x": -920.8,
+      "y": -1522.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.0
+    },
+    {
+      "text": "West 26th Street",
+      "x": -589.7,
+      "y": -1523.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.007
+    },
+    {
+      "text": "East 18th Street",
+      "x": 1383.0,
+      "y": -2156.4,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "East 18th Street",
+      "x": 1654.9,
+      "y": -2158.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.08
+    },
+    {
+      "text": "East 25th Street",
+      "x": 1537.8,
+      "y": -1607.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 26th Street",
+      "x": -156.9,
+      "y": -1524.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.0
+    },
+    {
+      "text": "West 26th Street",
+      "x": 375.0,
+      "y": -1525.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "6th Avenue",
+      "x": 276.1,
+      "y": -1695.8,
+      "kind": "road",
+      "major": true,
+      "angle": 1.572
+    },
+    {
+      "text": "East 14th Street",
+      "x": 1131.5,
+      "y": -2473.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "West 12th Street",
+      "x": 180.7,
+      "y": -2641.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "West 12th Street",
+      "x": 530.7,
+      "y": -2642.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.003
+    },
+    {
+      "text": "Bleecker Street",
+      "x": -220.6,
+      "y": -2990.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.845
+    },
+    {
+      "text": "Peter Cooper Road",
+      "x": 1848.3,
+      "y": -1909.1,
+      "kind": "road",
+      "major": false,
+      "angle": -0.27
+    },
+    {
+      "text": "Hudson Boulevard East",
+      "x": -972.4,
+      "y": -1111.3,
+      "kind": "road",
+      "major": false,
+      "angle": 1.043
+    },
+    {
+      "text": "West 29th Street",
+      "x": -1177.4,
+      "y": -1286.7,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "East 29th Street",
+      "x": 1741.2,
+      "y": -1292.3,
+      "kind": "road",
+      "major": false,
+      "angle": 0.0
+    },
+    {
+      "text": "Hudson Boulevard West",
+      "x": -1025.9,
+      "y": -1045.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.828
+    },
+    {
+      "text": "West 10th Street",
+      "x": 425.5,
+      "y": -2799.9,
+      "kind": "road",
+      "major": false,
+      "angle": -0.0
+    },
+    {
+      "text": "West 36th Street",
+      "x": -479.6,
+      "y": -727.6,
+      "kind": "road",
+      "major": true,
+      "angle": -0.007
+    },
+    {
+      "text": "East 25th Street",
+      "x": 1794.2,
+      "y": -1609.1,
+      "kind": "road",
+      "major": false,
+      "angle": -3.138
+    },
+    {
+      "text": "West 30th Street",
+      "x": -165.4,
+      "y": -1211.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.006
+    },
+    {
+      "text": "Little West 12th Street",
+      "x": -621.0,
+      "y": -2640.0,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "Greenwich Street",
+      "x": -342.7,
+      "y": -3116.4,
+      "kind": "road",
+      "major": false,
+      "angle": 1.888
+    },
+    {
+      "text": "West 22nd Street",
+      "x": -134.7,
+      "y": -1852.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "7th Avenue",
+      "x": 2.6,
+      "y": -1917.8,
+      "kind": "road",
+      "major": true,
+      "angle": -1.572
+    },
+    {
+      "text": "West 22nd Street",
+      "x": 139.3,
+      "y": -1853.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "East 16th Street",
+      "x": 1131.1,
+      "y": -2305.0,
+      "kind": "road",
+      "major": false,
+      "angle": -0.003
+    },
+    {
+      "text": "3rd Avenue",
+      "x": 1207.8,
+      "y": -1968.1,
+      "kind": "road",
+      "major": true,
+      "angle": 1.571
+    },
+    {
+      "text": "West 22nd Street",
+      "x": 430.9,
+      "y": -1853.7,
+      "kind": "road",
+      "major": false,
+      "angle": -0.0
+    },
+    {
+      "text": "West 25th Street",
+      "x": -724.5,
+      "y": -1603.6,
+      "kind": "road",
+      "major": false,
+      "angle": -3.137
+    },
+    {
+      "text": "West 25th Street",
+      "x": -1074.5,
+      "y": -1602.6,
+      "kind": "road",
+      "major": false,
+      "angle": 3.137
+    },
+    {
+      "text": "West 25th Street",
+      "x": -411.0,
+      "y": -1604.6,
+      "kind": "road",
+      "major": false,
+      "angle": -3.14
+    },
+    {
+      "text": "East 20th Street",
+      "x": 774.2,
+      "y": -2007.3,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "East 28th Street",
+      "x": 1313.4,
+      "y": -1370.5,
+      "kind": "road",
+      "major": false,
+      "angle": -0.001
+    },
+    {
+      "text": "Gansevoort Street",
+      "x": -596.2,
+      "y": -2697.9,
+      "kind": "road",
+      "major": false,
+      "angle": -2.627
+    },
+    {
+      "text": "7th Avenue",
+      "x": 3.0,
+      "y": -2217.5,
+      "kind": "road",
+      "major": true,
+      "angle": -1.567
+    },
+    {
+      "text": "Gansevoort Plaza",
+      "x": -501.3,
+      "y": -2641.0,
+      "kind": "road",
+      "major": false,
+      "angle": -2.61
+    },
+    {
+      "text": "5th Avenue",
+      "x": 586.3,
+      "y": -2182.3,
+      "kind": "road",
+      "major": true,
+      "angle": -1.581
+    },
+    {
+      "text": "West 22nd Street",
+      "x": -411.4,
+      "y": -1851.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.005
+    },
+    {
+      "text": "West 20th Street",
+      "x": -410.8,
+      "y": -2005.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "West 27th Street",
+      "x": 138.4,
+      "y": -1448.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "6th Avenue",
+      "x": 275.6,
+      "y": -1383.8,
+      "kind": "road",
+      "major": true,
+      "angle": 1.576
+    },
+    {
+      "text": "West 29th Street",
+      "x": -174.0,
+      "y": -1289.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "East 35th Street",
+      "x": 1620.2,
+      "y": -808.9,
+      "kind": "road",
+      "major": false,
+      "angle": 3.138
+    },
+    {
+      "text": "West 29th Street",
+      "x": 137.9,
+      "y": -1290.0,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 28th Street",
+      "x": 138.3,
+      "y": -1369.6,
+      "kind": "road",
+      "major": false,
+      "angle": -0.002
+    },
+    {
+      "text": "East 27th Street",
+      "x": 1259.2,
+      "y": -1449.1,
+      "kind": "road",
+      "major": false,
+      "angle": 3.14
+    },
+    {
+      "text": "West 28th Street",
+      "x": -135.6,
+      "y": -1369.4,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    },
+    {
+      "text": "Broadway",
+      "x": 537.2,
+      "y": -1613.1,
+      "kind": "road",
+      "major": false,
+      "angle": 1.814
+    },
+    {
+      "text": "6th Avenue",
+      "x": 277.1,
+      "y": -2165.1,
+      "kind": "road",
+      "major": true,
+      "angle": 1.574
+    },
+    {
+      "text": "West 26th Street",
+      "x": -1219.9,
+      "y": -1522.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "West 12th Street",
+      "x": -507.2,
+      "y": -2882.9,
+      "kind": "road",
+      "major": false,
+      "angle": 0.502
+    },
+    {
+      "text": "East 13th Street",
+      "x": 825.4,
+      "y": -2561.3,
+      "kind": "road",
+      "major": false,
+      "angle": 3.141
+    },
+    {
+      "text": "East 32nd Street",
+      "x": 1022.2,
+      "y": -1055.8,
+      "kind": "road",
+      "major": false,
+      "angle": -0.004
+    },
+    {
+      "text": "West 28th Street",
+      "x": -1169.6,
+      "y": -1366.5,
+      "kind": "road",
+      "major": false,
+      "angle": 0.001
+    },
+    {
+      "text": "West 28th Street",
+      "x": -880.4,
+      "y": -1368.2,
+      "kind": "road",
+      "major": false,
+      "angle": -0.005
+    },
+    {
+      "text": "West 24th Street",
+      "x": -690.4,
+      "y": -1682.2,
+      "kind": "road",
+      "major": false,
+      "angle": 0.002
+    }
+  ],
+  "markers": [
+    {
+      "id": "liberty",
+      "label": "Statue of Liberty",
+      "x": -643.6,
+      "y": -9108.0,
+      "icon": "star"
+    },
+    {
+      "id": "ellis",
+      "label": "Ellis Island",
+      "x": -832.7,
+      "y": -7907.3,
+      "icon": "star"
+    },
+    {
+      "id": "onewtc",
+      "label": "One World Trade Center",
+      "x": 387,
+      "y": -5512,
+      "icon": "star"
+    },
+    {
+      "id": "battery",
+      "label": "The Battery",
+      "x": 629.0,
+      "y": -6613.4,
+      "icon": "star"
+    },
+    {
+      "id": "governors",
+      "label": "Governors Island",
+      "x": 1388.5,
+      "y": -7948.9,
+      "icon": "star"
+    },
+    {
+      "id": "exchange",
+      "label": "Exchange Place",
+      "x": -1245.2,
+      "y": -5997.7,
+      "icon": "star"
+    }
+  ]
+}

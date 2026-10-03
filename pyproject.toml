@@ -1,0 +1,22 @@
+[project]
+name = "times-square-city"
+version = "0.1.0"
+description = "Times Square 3D world: Blender pipeline, critics, web viewer"
+requires-python = ">=3.11"
+dependencies = ["shapely>=2.0", "networkx>=3.0", "pillow>=10", "numpy>=1.26"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = [".venv", "blender", "export", "renders"]
+
+[tool.ruff.lint]
+# correctness + import order + modernisation; style nits left to judgment
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E402", "E501", "E731", "E741", "B023", "B007", "UP031", "B905"]  # B905: pairwise zip(a, a[1:]) is intentional
+
+[tool.ruff.lint.isort]
+# local modules imported via sys.path in Blender / critics
+known-first-party = ["ts_common", "slots_tool", "hero_common", "import_footprints", "lookdev", "validate",
+                     "dress_billboards", "car_gen", "common", "business_critic", "engineer_critic", "nyc_critic",
+                     "ux_critic", "build_nav", "scatter_props", "export_district", "build_streets"]

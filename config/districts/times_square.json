@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "id": "times_square",
+  "prefix": "TS",
+  "name": "Times Square",
+  "placement": "geo",
+  "geo_anchor": {
+    "lat": 40.758,
+    "lon": -73.9855
+  },
+  "grid_rotation_deg": 29.0,
+  "grid_rotation_note": "CCW rotation applied to ENU coords so Manhattan avenues (bearing ~29deg) run along +Y",
+  "world_offset": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "blend_file": "blender/districts/times_square/times_square.blend",
+  "bounds_geo": {
+    "south": 40.747,
+    "west": -74.009,
+    "north": 40.772,
+    "east": -73.973
+  },
+  "tiers": {
+    "hero": {
+      "streets": [
+        41,
+        50
+      ],
+      "avenues": [
+        "6th",
+        "8th"
+      ],
+      "texel_density_px_m": 512,
+      "tri_budget": 450000
+    },
+    "mid": {
+      "avenues": [
+        "5th",
+        "9th"
+      ],
+      "texel_density_px_m": 256,
+      "tri_budget_per_chunk": 150000
+    },
+    "far": {
+      "to": "Hudson River",
+      "tri_budget": 60000
+    }
+  },
+  "chunks": [
+    "hero",
+    "mid_n",
+    "mid_s",
+    "far",
+    "water"
+  ],
+  "spawns": {
+    "player": "SPAWN_player_DuffySquare",
+    "car": "SPAWN_car_7thAve_42nd",
+    "bike": "SPAWN_bike_BroadwayPlaza",
+    "plane": "SPAWN_plane_IntrepidDeck",
+    "ship": "SPAWN_ship_Pier83"
+  },
+  "vehicle_zones": {
+    "car": "NAV_roads",
+    "bike": [
+      "NAV_roads",
+      "NAV_bike_BroadwayPlaza"
+    ],
+    "ship": "NAV_water_Hudson",
+    "plane": {
+      "runway": "NAV_runway_Intrepid",
+      "ceiling_m": 600
+    }
+  },
+  "lod_distances_m": {
+    "hero": 400,
+    "mid": 900,
+    "far": 3000
+  },
+  "outputs": {
+    "export_dir": "export/times_square",
+    "slots": "data/times_square/slots.json",
+    "footprints": "data/times_square/footprints.geojson"
+  },
+  "tier_rects_local": {
+    "_note": "local metres [xmin,ymin,xmax,ymax]; 7th Ave x=0, 8th -275, 6th 273, 9th -550, 5th 584; W41st y=-331, W50th y=394",
+    "hero": [
+      -292,
+      -345,
+      290,
+      410
+    ],
+    "mid": [
+      -567,
+      -505,
+      600,
+      570
+    ],
+    "play": [
+      -1750,
+      -720,
+      960,
+      740
+    ]
+  },
+  "landmarks_local": {
+    "7th_Ave_x": 0,
+    "8th_Ave_x": -275,
+    "6th_Ave_x": 273,
+    "9th_Ave_x": -550,
+    "5th_Ave_x": 584,
+    "W42nd_y": -249,
+    "W45th_y": -5,
+    "W47th_y": 155,
+    "W49th_y": 314,
+    "W50th_y": 394,
+    "Intrepid": [
+      -1486,
+      23
+    ],
+    "Pier83": [
+      -1494,
+      -193
+    ]
+  },
+  "hero_overrides": {
+    "1022581": "BLD_TS_OneTimesSquare",
+    "1085682": "BLD_TS_FourTimesSquare",
+    "1084667": "BLD_TS_750SeventhAve",
+    "1024777": "BLD_TS_W49thCorner",
+    "1024778": "BLD_TS_W49thCorner",
+    "1024786": "BLD_TS_W49thCorner",
+    "1085637": "BLD_TS_TKTSDuffySquare",
+    "1024706": "BLD_TS_ParamountBuilding",
+    "1088568": "BLD_TS_1551Broadway",
+    "1024741": "BLD_TS_1551Broadway",
+    "1024749": "BLD_TS_1551Broadway",
+    "1024714": "BLD_TS_OneAstorPlaza",
+    "1024686": "BLD_TS_ThreeTimesSquare",
+    "1076844": "BLD_TS_1540Broadway"
+  },
+  "street_grid_local": {
+    "avenues": [
+      [
+        -1096,
+        21
+      ],
+      [
+        -823,
+        21
+      ],
+      [
+        -550,
+        21
+      ],
+      [
+        -275,
+        21
+      ],
+      [
+        0,
+        21
+      ],
+      [
+        273,
+        21
+      ],
+      [
+        584,
+        21
+      ],
+      [
+        739,
+        21
+      ]
+    ],
+    "streets": [
+      [
+        -651,
+        10.5
+      ],
+      [
+        -572,
+        10.5
+      ],
+      [
+        -491,
+        10.5
+      ],
+      [
+        -413,
+        10.5
+      ],
+      [
+        -331,
+        10.5
+      ],
+      [
+        -249,
+        18
+      ],
+      [
+        -164,
+        10.5
+      ],
+      [
+        -85,
+        10.5
+      ],
+      [
+        -5,
+        10.5
+      ],
+      [
+        75,
+        10.5
+      ],
+      [
+        155,
+        10.5
+      ],
+      [
+        234,
+        10.5
+      ],
+      [
+        314,
+        10.5
+      ],
+      [
+        394,
+        10.5
+      ],
+      [
+        473,
+        10.5
+      ],
+      [
+        553,
+        10.5
+      ],
+      [
+        631,
+        10.5
+      ],
+      [
+        711,
+        10.5
+      ]
+    ]
+  },
+  "signage_overrides": [
+    "1024686",
+    "1024714",
+    "1024727",
+    "1076844"
+  ]
+}

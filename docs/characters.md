@@ -14,6 +14,27 @@ you (`PLAYER` in `avatar.js`, no picker); the others are NPCs (`NPC_IDS`). The f
 | `jeans_hotpants` | NPC | The jeans woman in frayed denim hot pants | `export/characters/woman_jeans_hotpants.glb` |
 | `red_dress` | NPC | Red strappy dress, tattoos, gold necklace (realistic; `~/Downloads/baddie_girl_red_dress (1).glb`) | `export/characters/woman_red_dress.glb` |
 
+### Round 2 (2026-10-03 / 04 deliveries): Mei, Daniel, accessories, riding
+
+| id | Role | Look | Game file |
+|---|---|---|---|
+| `mei` | NPC | East Asian woman, black bob, light linen A-line summer dress (tinted per person) | `export/characters/woman_mei.glb` (+ `_far`) |
+| `daniel` | NPC (weight 2: about 3 in 10 people) | Latino man, early 30s, athletic, grey tee + straight jeans; built on the women's rig at x1.10, so the same procedural gait works | `export/characters/man_daniel.glb` (+ `_far`) |
+
+- **Same pipeline:** `game_ready.py`. Their hair is already inside the budget, so it is **not** thinned like the first three
+  women's 112k-triangle strand hair (> 40k polygons: thinned as before; 15k–40k: gentle trim of the ribbons; below that: kept).
+  Mei: 31.8k tris near / 10.7k far. Daniel: 24.1k / 8.1k.
+- **Accessories** (`acc_<kind>__<id>.glb`: the rig + the accessory only, skinned to the same 19 bones, so `Avatar.wear()` rebinds
+  them to the avatar's skeleton by bone name and they follow every pose, riding included):
+  - `sunglasses_aviator` (13 KB): about 1 in 4 NPCs; a Settings switch for you.
+  - `cap_baseball` (0.4 MB): your Settings switch. The cap swaps `HAIR` for the file's `HAIR_CAP` (her hair cut just under the rim).
+  - `jacket_denim` (1.4 MB): your Settings switch. Light denim, tinted mid-blue as in the artist's renders (`Avatar.ACC_TINT`).
+  - Jacket and cap are loaded the first time they're switched on. Only `leather` has them in the game today
+    (`export/characters/acc_*__leather.glb`); copy the others from `cloud_env/deliveries/` when more people become playable.
+  - **Cosmetic only:** nothing to buy (money rule).
+- **Riding:** `ride_pose_woman.glb` / `ride_pose_man.glb` hold the rig with the `Pose_Ride` action (hips on the seat, hands on
+  the grips, feet on the pegs), authored in the bike's frame. See `vehicles.md` (Motorcycle).
+
 ## Outfit variants (`make_shorts.py`)
 
 `scripts/blender/characters/make_shorts.py <in.glb> <out.glb> <z_mid> <rise>` turns trousers into shorts and keeps the

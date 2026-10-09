@@ -35,7 +35,11 @@ Go-live is **next week**, so the plan has two speeds:
    - containers, standard Postgres and open data formats;
    - one thin adapter layer for anything cloud-specific;
    - no proprietary serverless APIs in business code.
-7. **Boring tech, few moving parts.** A team of one or two can run it. Every new service needs a written reason (an ADR, §11).
+7. **Boring tech, few moving parts, and a service budget.** Money matters, and this is a small app.
+   - **The whole production system is one API container (Cloud Run), one Postgres, one bucket + CDN.**
+   - Background jobs are the **same container image** run on a schedule, not separate services.
+   - Future AI experiments run **locally or as an on-demand job** of the same image. They are not an always-on service.
+   - A new always-on service needs a written cost and a reason (an ADR, §11).
 
 ---
 

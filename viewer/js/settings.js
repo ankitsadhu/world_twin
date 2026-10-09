@@ -26,6 +26,7 @@ const DEFAULTS = {
   traffic: 1, crowd: 1500,
   view: "third",                       // walking camera: third person (see yourself) or first person
   outfit: "leather",                   // your character's outfit (avatar.js PLAYER_OUTFITS)
+  shades: false, cap: false, jacket: false,   // accessories on your character (cosmetic only: nothing to buy)
   people: null,                        // how many characters walk the city; null = by graphics quality
 };
 
@@ -99,6 +100,7 @@ export class PauseMenu {
         <section data-tab="Controls" role="tabpanel">
         <div class="row"><label for="set-outfit">Outfit</label>
           <select id="set-outfit" data-k="outfit"><option value="leather">Leather trousers</option><option value="leather_shorts">Leather shorts</option></select></div>
+        ${sw("shades", "Sunglasses")}${sw("cap", "Baseball cap")}${sw("jacket", "Denim jacket")}
         <div class="row"><label for="set-view">Walking view<small>V switches</small></label>
           <select id="set-view" data-k="view"><option value="third">Third person (see yourself)</option><option value="first">First person</option></select></div>
         ${range("sensitivity", "Look sensitivity", 0.3, 2.5, 0.1)}${sw("invertY", "Invert vertical look")}</section>

@@ -25,3 +25,22 @@ Shortlist of free models whose licence allows **commercial use with credit** (CC
 
 Note on brands: CC-BY covers the 3D model's copyright, not car makers' trademarks. Remove logos and model
 names; keep generic proportions.
+
+
+## Motorcycle: the cruiser (2026-10-04)
+
+`export/vehicles/motorbike_cruiser.glb` (39k tris, Draco; the artist's 7k far version is not in the repo: take it from `cloud_env/deliveries/2026-10-04/` if bikes ever join the traffic), from the character agent's
+Blender build (`cloud_env/tools/build_motorcycle.py`). An original V-twin chopper, no brand marks. Facing +Z, wheelbase 1.65 m,
+wheel radius 0.335 m.
+
+- **Rig (rigid hierarchy):** `BIKE` > `FRAME_BODY` (> `BADGE`), `STEER` (the fork, on its 30-degree rake) > `FORK`, `HANDLEBARS`,
+  `HEADLIGHT`, `FRONT_FENDER`, `WHEEL_FRONT`; `WHEEL_REAR`; `KICKSTAND`; anchors `SEAT_ANCHOR`, `PILLION_ANCHOR`, `FOOT_L/R`,
+  `GRIP_L/R`; collision proxies `COL_*` (**hidden in game**: drawn they are a huge black slab).
+- **Actions:** `Parked` (8 degrees onto the kickstand), `Stand_Up` (kickstand folds away), `Steer_Sweep`. The game poses the parts
+  itself (`js/bike.js`): the stand folds as you mount, the bars turn, the bike leans into turns.
+- **In the game** (`js/bike.js` + `ride.js`): five cruisers stand at the curb (`BIKE_SPOTS`: two by the walking start on 8th Ave).
+  Walk up, **F: Hop on**. The rider is you (your avatar, `Pose_Ride`, parented to the bike so it leans with it); **F** gets off.
+  - **Handling** (`BIKE_H` vs `CAR_H`): 6 m/s2, 27 m/s top (60 mph), quicker steering, a narrower body (it fits gaps a car can't),
+    lean = steering x speed. Same collisions with buildings, people (it stops for them), parked cars and traffic.
+  - **Not saved with your progress:** bikes always respawn at their spots.
+  - **Chase camera only** (closer and lower than the car's); the cab-only features (fares, inside view) don't apply.

@@ -696,14 +696,19 @@ async function wearCharacter(id) {
   if (!a || meId !== id) return;
   if (me) scene.remove(me.object);
   me = a; me.object.visible = false; scene.add(me.object);
+  dressMe(Settings.v);
 }
-Settings.on(v => { const id = PLAYER_OUTFITS.includes(v.outfit) ? v.outfit : PLAYER; wearCharacter(id); npcs?.setPlayer(id); });
+// the accessories you chose (Settings > Controls): sunglasses, cap, jacket, fitted to your skeleton (they load when first worn)
+const ACCESSORIES = { shades: "sunglasses_aviator", cap: "cap_baseball", jacket: "jacket_denim" };
+function dressMe(v) { if (me) for (const [k, kind] of Object.entries(ACCESSORIES)) me.wear(gltf, ROOT, kind, !!v[k]); }
+Settings.on(v => { const id = PLAYER_OUTFITS.includes(v.outfit) ? v.outfit : PLAYER; wearCharacter(id); npcs?.setPlayer(id); dressMe(v); });
 addEventListener("keydown", e => {                         // V: see yourself (third person) or through your eyes
   if (e.target.tagName === "INPUT" || e.code !== "KeyV" || e.repeat) return;
   Settings.set({ view: walk.third ? "first" : "third" });
   if (mode === "walk") toast(walk.third ? "Third person · V for first person" : "First person · V to see yourself");
 });
 function drawMe(dt) {
+  if (me && ride.vehicle?.rider === me) { me.object.visible = true; return; }   // on the motorcycle: posed by the bike, drawn with it
   const show = mode === "walk" && walk.third && !!me;
   if (me) me.object.visible = show;
   if (!show) return;
@@ -756,7 +761,7 @@ const ride = new Ride({ root: ROOT, district: "times_square", scene, camera, dom
   getCollider: () => collider, setMode, getMode: () => mode, loader: gltf, registerMaterial,
   refreshTime: () => setTime(curTod), screens, audio,
   demoArt: shape => demoBrands ? [...new Set(Object.values(demoBrands).map(b => b.image))].filter(i => i.includes("_" + shape + ".")).map(i => ROOT + i) : [],
-  setWalkerAt: (pos, fwd) => stepOutAt(pos, fwd) });
+  setWalkerAt: (pos, fwd) => stepOutAt(pos, fwd), getPlayer: () => me });
 // step out of a vehicle onto the street (or a pier), facing the same way
 function stepOutAt(pos, fwd) {
   camera.position.set(pos.x, groundAt(pos.clone().setY(3)) + 1.7, pos.z);
@@ -911,7 +916,7 @@ function saveProgress() {
   const f = new THREE.Vector3(); camera.getWorldDirection(f);
   const tgt = mode === "orbit" ? orbit.target : camera.position.clone().addScaledVector(f, 20);
   Progress.save({ cam: L(camera.position), tgt: L(tgt), mode: mode === "walk" ? "walk" : "orbit",
-    parked: ride.parked.map(v => ({ type: v.type, x: v.group.position.x, y: -v.group.position.z, h: v.heading })) });
+    parked: ride.parked.filter(v => v.kind !== "bike").map(v => ({ type: v.type, x: v.group.position.x, y: -v.group.position.z, h: v.heading })) });
 }
 setInterval(saveProgress, 5000);
 addEventListener("pagehide", saveProgress);

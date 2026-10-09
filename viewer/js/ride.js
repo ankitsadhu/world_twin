@@ -5,6 +5,7 @@
 // Coordinates: road graph in Blender local metres (x, y); three.js = (x, z = -y).
 import * as THREE from "three";
 import { makeBlob } from "./shadow.js";
+import { Bikes, BIKE } from "./bike.js";
 import { ICON } from "./icons.js";
 import { Settings } from "./settings.js";
 import { prompt, onInputChange, inputDevice } from "./gamepad.js";
@@ -14,6 +15,14 @@ const V_MAX = 13;            // m/s (~29 mph): Midtown speed
 const A_LAT = 2.6, A_LON = 2.4, DECEL = 3.2;
 const CAR_R = 1.5;           // collision radius when you drive
 const MPH = 2.237;
+// the cruiser motorcycle: lighter, quicker, narrower than a car (it filters through gaps a car can't), leans into turns
+const CAR_H = { wheelbase: 2.69, accel: 4.2, brake: 9, vmax: 22, steerMax: 0.55, radius: CAR_R * 0.8, front: 1.6, box: 0.9,
+  people: 1.6, parked: 2.4, traffic: 2.4 };
+const BIKE_H = { wheelbase: BIKE.wheelbase, accel: 6.0, brake: 11, vmax: 27, steerMax: 0.62, radius: 0.55, front: 1.05, box: 0.45,
+  people: 1.3, parked: 1.5, traffic: 1.7 };
+// where the first bikes stand: on the pavement at the curb, heading along the street (found with the crowd's walkability
+// raster + the road graph; the first two are by the walking start on 8th Ave)
+const BIKE_SPOTS = [[-264, -60.5, -1.57], [-263.5, -128, -1.57], [-200.5, 1, 0], [-150, -78, 0], [-61.5, 68.5, 3.13]];
 
 // ------------------------------------------------------------------ road graph
 function inPoly(ring, x, y) {
@@ -193,7 +202,8 @@ export class Ride {
     this.view = "chase";
     this.look = { yaw: 0, pitch: -0.08, drag: null, idle: 0 };
     this.ctl = { up: 0, down: 0, left: 0, right: 0 };
-    this.vehicle = null; this.v = 0; this.steer = 0;   // vehicle: { group, parts, kind: "taxi" | "car", type }
+    this.vehicle = null; this.v = 0; this.steer = 0;   // vehicle: { group, parts, kind: "taxi" | "car" | "bike", type }
+    this.bikes = new Bikes({ loader: o.loader, root: o.root, registerMaterial: o.registerMaterial });   // the cruiser motorcycle
     this.parked = [];                                    // cars you got out of: they stay where you left them
     this.hidden = [];
     Promise.all([fetch(`${o.root}data/${o.district}/nav.json`).then(r => r.json()),
@@ -209,6 +219,7 @@ export class Ride {
   // live traffic: the cab follows its lights, gaps and one-way rules
   setTraffic(t) {
     this.traffic = t;
+    this.spawnBikes();
     this.me_ = { alive: () => !!this.car?.visible && this.state !== "idle", pose: () => this.pose() };
     t.extra.push(this.me_);
     const apply = () => {
@@ -369,7 +380,7 @@ export class Ride {
         <button class="ui-btn" data-a="show">Show me</button>${x}</div>`;
     } else if (s === "riding" || s === "driving") {
       const self = s === "riding";
-      P.innerHTML = `<h3>${this.carIcon} ${self ? `Riding to ${dest}${this.detour ? " · taking a detour" : ""}` : this.borrowed ? "Borrowed from the city fleet" : "You're driving"}</h3>
+      P.innerHTML = `<h3>${this.carIcon} ${self ? `Riding to ${dest}${this.detour ? " · taking a detour" : ""}` : this.vehicle?.kind === "bike" ? "Cruiser motorcycle" : this.borrowed ? "Borrowed from the city fleet" : "You're driving"}</h3>
         <div class="stats"><span class="big" id="ride-speed">0</span><span>mph</span><span id="ride-left"></span></div>
         ${self ? "" : `<p>${pad ? "R2 go · L2 brake · left stick steer · □ horn · ○ get out" : touch ? "Hold Go / Brake, tap ◀ ▶ to steer"
           : "W / ↑ go · S / ↓ brake · A D / ← → steer · H horn"}</p>`}
@@ -492,7 +503,7 @@ export class Ride {
     const car = this.car;
     this.door(1); setTimeout(() => this.door(0), 1200);
     // step out on the passenger side (the curb), facing the way the car points
-    const side = new THREE.Vector3(1.7, 0, 0).applyQuaternion(car.quaternion);
+    const side = new THREE.Vector3(this.vehicle?.kind === "bike" ? 1.1 : 1.7, 0, 0).applyQuaternion(car.quaternion);
     const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(car.quaternion);
     this.audio?.setCabin?.(0);
     const pos = car.position.clone().add(side);
@@ -503,9 +514,10 @@ export class Ride {
     document.getElementById("drivepad").style.display = "none";
     if (this.vehicle !== this.taxi || this.borrowed) {               // a borrowed car: park it right here, like GTA
       const v = this.vehicle; v.heading = this.heading; v.speed = 0;
+      if (v.kind === "bike") { this.bikes.dismount(v); this.bikes.pose(v, 0, 0, 0); v.stand = 0; v.pinned = true; }   // kickstand down, leaning
       this.parked.push(v);
       this.traffic?.extra.push({ temp: true, alive: () => this.parked.includes(v), pose: () => [v.group.position.x, -v.group.position.z, v.heading, 0] });
-      while (this.parked.length > 4) { const old = this.parked.shift(); this.scene.remove(old.group); }
+      while (this.parked.filter(p => !p.pinned).length > 4) { const old = this.parked.find(p => !p.pinned); this.parked = this.parked.filter(p => p !== old); this.scene.remove(old.group); }
       this.vehicle = null; this.v = 0; this.borrowed = false;
       this.state = "idle"; this.render();
       return;
@@ -591,6 +603,28 @@ export class Ride {
     this.scene.add(group);
     return { group, parts, kind: "taxi", type: "Taxi" };
   }
+  // the bike's fork, lean and kickstand follow what you do: it stands up as you mount, the bars turn, it leans into turns
+  updateBike(v, dt) {
+    const riding = this.inCar && this.vehicle === v;
+    v.standT = THREE.MathUtils.clamp((v.standT ?? 0) + (riding ? dt / 0.8 : -dt / 0.8), 0, 1);
+    const want = -this.steer * THREE.MathUtils.clamp(Math.abs(this.v) / 7, 0, 1) * 1.0;
+    v.leanNow = (v.leanNow || 0) + (want - (v.leanNow || 0)) * Math.min(1, dt * 5);
+    this.bikes.pose(v, v.standT, riding ? this.steer * 1.15 : 0, v.leanNow);
+  }
+  async makeBike() { await this.bikes.ready; return this.bikes.make(); }
+  // a few cruisers stand at the curb to start with (they're always there: bikes aren't part of your saved progress)
+  async spawnBikes() {
+    if (this.bikesSpawned) return;
+    this.bikesSpawned = true;
+    await this.bikes.ready;
+    for (const [x, y, h] of BIKE_SPOTS) {
+      const v = this.bikes.make();
+      v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h - Math.PI / 2, 0); v.heading = h; v.pinned = true; v.standT = 0;
+      this.scene.add(v.group);
+      this.parked.push(v);
+      this.traffic?.extra.push({ temp: true, alive: () => this.parked.includes(v), pose: () => [v.group.position.x, -v.group.position.z, v.heading, 0] });
+    }
+  }
   // sedans / SUVs from the traffic: the same light model as the traffic itself (outside view only)
   makeCar(t) {
     const group = new THREE.Group(); group.name = "RIDE_" + t.type;
@@ -627,6 +661,7 @@ export class Ride {
     v.group.position.set(x, 0.03, -y); this.setHeading(h);
     this.v = speed; this.steer = 0; this.dest = null; this.path = null;
     this.view = v.kind === "taxi" ? this.view : "chase";
+    if (v.kind === "bike") { v.leanNow = v.lean || 0; this.bikes.mount(v, this.getPlayer?.()); }
     this.state = "driving";
     this.setMode("ride");
     this.audio?.setCabin?.(1);
@@ -641,9 +676,11 @@ export class Ride {
       chip.style.display = "inline-flex";
       return;
     }
-    if (chip.dataset.mode === "skip") { chip.dataset.mode = ""; chip.firstElementChild.nextSibling.textContent = "Hop in"; }
+    if (chip.dataset.mode === "skip") { chip.dataset.mode = ""; chip.dataset.label = "Hop in"; chip.firstElementChild.nextSibling.textContent = "Hop in"; }
     const onFoot = !this.inCar && this.getMode() === "walk";      // only when you're actually on foot
     this.hopTarget = onFoot ? this.nearbyCar(cam.x, -cam.z, 7) : null;
+    const label = this.hopTarget?.parked?.kind === "bike" ? "Hop on" : "Hop in";
+    if (chip.dataset.mode !== "skip" && chip.dataset.label !== label) { chip.dataset.label = label; chip.firstElementChild.nextSibling.textContent = label; }
     chip.style.display = this.hopTarget && this.state !== "waiting" ? "inline-flex" : "none";
   }
 
@@ -898,7 +935,9 @@ export class Ride {
     } else if (this.state === "driving") this.drive(dt);
     else if (this.state === "waiting" || this.state === "arrived") this.v = Math.max(0, this.v - DECEL * dt);
     // wheels, steering wheel, doors
-    const spin = this.v * dt / 0.36;
+    const bike = this.vehicle?.kind === "bike" ? this.vehicle : null;
+    if (bike) this.updateBike(bike, dt);
+    const spin = this.v * dt / (bike ? BIKE.wheelR : 0.36);
     for (const w of this.parts.wheels) {
       w.spin = (w.spin || 0) - spin;
       w.o.quaternion.copy(w.base)
@@ -919,31 +958,32 @@ export class Ride {
   drive(dt) {
     const c = this.ctl, col = this.getCollider();
     const P = this.pad;                                               // controller: analog steer, pressure-sensitive pedals
+    const K = this.vehicle?.kind === "bike" ? BIKE_H : CAR_H;
     const target = P && Math.abs(P.lx) > 0 ? -P.lx : (c.left ? 1 : 0) - (c.right ? 1 : 0);
-    this.steer += THREE.MathUtils.clamp(target * 0.55 * (1 - Math.min(0.6, Math.abs(this.v) / 30)) - this.steer, -dt * 1.6, dt * 1.6);
+    this.steer += THREE.MathUtils.clamp(target * K.steerMax * (1 - Math.min(K === BIKE_H ? 0.75 : 0.6, Math.abs(this.v) / (K === BIKE_H ? 24 : 30))) - this.steer, -dt * (K === BIKE_H ? 2.4 : 1.6), dt * (K === BIKE_H ? 2.4 : 1.6));
     const gas = Math.max(c.up ? 1 : 0, P?.r2 || 0), brake = Math.max(c.down ? 1 : 0, P?.l2 || 0);
     if (this.stall > 0) this.stall -= dt;                              // shaken after a crash: no throttle for a moment
-    if (gas > 0.05 && !(this.stall > 0)) this.v += (this.v < 0 ? 9 : 4.2) * gas * dt;
-    else if (brake > 0.05) this.v -= (this.v > 0.3 ? 9 : 2.5) * brake * dt;
+    if (gas > 0.05 && !(this.stall > 0)) this.v += (this.v < 0 ? 9 : K.accel) * gas * dt;
+    else if (brake > 0.05) this.v -= (this.v > 0.3 ? K.brake : 2.5) * brake * dt;
     else this.v -= Math.sign(this.v) * Math.min(Math.abs(this.v), 1.2 * dt);
-    this.v = THREE.MathUtils.clamp(this.v, -5, 22);
-    const h = this.heading + this.v / 2.69 * Math.tan(this.steer) * dt;
+    this.v = THREE.MathUtils.clamp(this.v, K === BIKE_H ? -3 : -5, K.vmax);
+    const h = this.heading + this.v / K.wheelbase * Math.tan(this.steer) * dt;
     const x = this.car.position.x, y = -this.car.position.z;
     const nx = x + Math.cos(h) * this.v * dt, ny = y + Math.sin(h) * this.v * dt;
-    const front = [nx + Math.cos(h) * 1.6 * Math.sign(this.v || 1), ny + Math.sin(h) * 1.6 * Math.sign(this.v || 1)];
-    let hit = col && (col.blocked(front[0], front[1], 0.9, 0.3) || col.blocked(nx, ny, CAR_R * 0.8, 0.3));
+    const front = [nx + Math.cos(h) * K.front * Math.sign(this.v || 1), ny + Math.sin(h) * K.front * Math.sign(this.v || 1)];
+    let hit = col && (col.blocked(front[0], front[1], K.box, 0.3) || col.blocked(nx, ny, K.radius, 0.3));
     // the Broadway / 7th Ave plazas are car-free, ringed by bollards: a car stops at the edge, as in New York
     const plaza = !hit && this.plazas?.some(p => inPoly(p.exterior, front[0], front[1]) && !(p.holes || []).some(h => inPoly(h, front[0], front[1])));
     // people: the car stops for them (a GTA world without the crime): brake hard, no crash
-    if (!hit && Math.abs(this.v) > 0.2 && this.people?.(front[0], front[1], 1.6).length) {
+    if (!hit && Math.abs(this.v) > 0.2 && this.people?.(front[0], front[1], K.people).length) {
       this.v *= Math.max(0, 1 - dt * 8);
       return;
     }
     if (plaza) { hit = true; if (!this.plazaWarned) { this.plazaWarned = true; this.toast?.("Pedestrian plaza: cars can't drive here"); } }
-    if (!hit) for (const v of this.parked) if (Math.hypot(v.group.position.x - front[0], -v.group.position.z - front[1]) < 2.4) { hit = true; break; }
+    if (!hit) for (const v of this.parked) if (Math.hypot(v.group.position.x - front[0], -v.group.position.z - front[1]) < (v.kind === "bike" ? K.parked - 0.5 : K.parked)) { hit = true; break; }
     if (!hit && this.traffic?.ready) {
-      for (const [cx, cy] of this.traffic.obstacles()) if (Math.hypot(cx - front[0], cy - front[1]) < 2.4) { hit = true; break; }
-    } else if (!hit) for (const [, , cx, cy] of this.trafficCars()) if (Math.hypot(cx - front[0], cy - front[1]) < 2.2) {
+      for (const [cx, cy] of this.traffic.obstacles()) if (Math.hypot(cx - front[0], cy - front[1]) < K.traffic) { hit = true; break; }
+    } else if (!hit) for (const [, , cx, cy] of this.trafficCars()) if (Math.hypot(cx - front[0], cy - front[1]) < K.traffic - 0.2) {
       if (!this.hidden.some(([, , m]) => { const p = new THREE.Vector3().setFromMatrixPosition(m); return Math.hypot(p.x - cx, -p.z - cy) < 0.1; })) { hit = true; break; }
     }
     if (hit) {
@@ -976,7 +1016,8 @@ export class Ride {
       cam.position.copy(p).add(new THREE.Vector3((Math.random() - 0.5) * shake, 0, 0));
       cam.quaternion.setFromEuler(new THREE.Euler(L.pitch, car.rotation.y + L.yaw, 0, "YXZ"));
     } else {
-      const off = new THREE.Vector3(0, 2.5, 7.2).applyAxisAngle(new THREE.Vector3(0, 1, 0), car.rotation.y + L.yaw);
+      const bk = this.vehicle?.kind === "bike";                       // closer and lower behind a motorcycle
+      const off = new THREE.Vector3(0, bk ? 1.9 : 2.5, bk ? 4.6 : 7.2).applyAxisAngle(new THREE.Vector3(0, 1, 0), car.rotation.y + L.yaw);
       off.y += Math.max(0, -L.pitch - 0.08) * 8;
       const want = car.position.clone().add(off);
       if (shake) want.add(new THREE.Vector3((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake * 0.6, (Math.random() - 0.5) * shake));
@@ -985,7 +1026,7 @@ export class Ride {
       if (col) for (let k = 0; k < 8 && col.blocked(want.x, -want.z, 0.4, want.y); k++) want.lerp(car.position.clone().setY(want.y), 0.3);
       const a = this.camBlend < 1 ? (this.camBlend = Math.min(1, (this.camBlend || 0) + dt * 1.2), 1 - Math.exp(-dt * 3)) : 1 - Math.exp(-dt * 6);
       cam.position.lerp(want, a);
-      const look = car.position.clone().add(new THREE.Vector3(0, 1.1, 0)).add(new THREE.Vector3(0, 0, -4).applyQuaternion(car.quaternion));
+      const look = car.position.clone().add(new THREE.Vector3(0, bk ? 1.0 : 1.1, 0)).add(new THREE.Vector3(0, 0, -4).applyQuaternion(car.quaternion));
       cam.lookAt(look);
     }
   }

@@ -13,11 +13,15 @@ export const CHARACTERS = [
   { id: "red_dress", label: "Red dress", url: "export/characters/woman_red_dress.glb" },
   { id: "jeans_hotpants", label: "White tee & denim hot pants", url: "export/characters/woman_jeans_hotpants.glb" },
   { id: "leather_shorts", label: "Black top & leather shorts", url: "export/characters/woman_leather_shorts.glb" },
+  { id: "mei", label: "Linen summer dress", url: "export/characters/woman_mei.glb" },
+  // the first man: same rig and poses (scaled x1.10 at export), grey tee + jeans (their colours vary per person).
+  // weight: how often he is picked among the NPCs (a street is not 1 man in 7)
+  { id: "daniel", label: "Grey tee & jeans", url: "export/characters/man_daniel.glb", weight: 2 },
 ];
 export const PLAYER = "leather";                  // the best-looking one is you...
 export const PLAYER_OUTFITS = ["leather", "leather_shorts"];   // ...in her trousers or her shorts (Settings > Outfit)
 // everyone else in the city: every character and outfit except the one you're wearing (so your other outfit shows up)
-export const npcPool = playerId => CHARACTERS.map(c => c.id).filter(id => id !== playerId);
+export const npcPool = playerId => CHARACTERS.filter(c => c.id !== playerId).flatMap(c => Array(c.weight || 1).fill(c.id));
 // clothing colours people really wear, per cloth material (multiplied over the texture: white cloth takes them fully)
 const TINTS = {
   M_Dress: [0xffffff, 0x1a1a1f, 0x1f3a6e, 0x0f5a3c, 0xf2d7c9, 0x7a1630, 0xe8e2d4],                 // red, black, navy...
@@ -113,8 +117,45 @@ export class Avatar {
   setFar(far) {
     if (far === this.lodFar || !this.far.length) return;
     this.lodFar = far;
-    for (const m of this.near) m.visible = !far;
-    for (const m of this.far) m.visible = far;
+    for (const m of this.near) m.visible = !far && !m.userData.hide;
+    for (const m of this.far) m.visible = far && !m.userData.hide;
+  }
+
+  // Accessories (export/characters/acc_<kind>__<id>.glb: the rig + only the accessory, skinned to the same 19 bones):
+  // rebound to THIS skeleton by bone name, so they follow every pose (walk, run, riding). "cap" swaps the hair for HAIR_CAP,
+  // which is her hair cut just under the rim, so nothing pokes through. kind: sunglasses_aviator | cap_baseball | jacket_denim
+  static accCache = new Map();
+  static ACC_TINT = { M_Jacket: [0.30, 0.42, 0.62], M_Cap: [0.10, 0.14, 0.30] };      // the colours of the artist's renders
+  async wear(loader, root, kind, on) {
+    this.acc ||= {};
+    if (on && !this.acc[kind]) {
+      const base = { leather_shorts: "leather", jeans_hotpants: "jeans" }[this.id] || this.id;
+      const url = `${root}export/characters/acc_${kind}__${base}.glb`;
+      if (!Avatar.accCache.has(url)) Avatar.accCache.set(url, loader.loadAsync(url).catch(() => null));   // one load per file, shared
+      const g = await Avatar.accCache.get(url);
+      if (!g) return;
+      const made = [], parent = this.near[0].parent;
+      g.scene.traverse(o => {
+        if (!o.isSkinnedMesh) return;
+        const bones = o.skeleton.bones.map(b => this.bones[b.name]?.b);
+        if (bones.some(b => !b)) return;
+        const mats = [].concat(o.material).map(m => {
+          const c = m.clone(); prepMaterial(c);
+          if (/Lens/.test(c.name)) { c.transparent = true; c.depthWrite = false; }
+          const t = Avatar.ACC_TINT[c.name]; if (t) c.color.multiply(new THREE.Color().setRGB(...t));
+          return c;
+        });
+        const sm = new THREE.SkinnedMesh(o.geometry, Array.isArray(o.material) ? mats : mats[0]);
+        sm.bind(new THREE.Skeleton(bones, o.skeleton.boneInverses), o.bindMatrix);
+        sm.name = o.name; sm.raycast = noRay; sm.frustumCulled = false; sm.castShadow = true;
+        parent.add(sm); made.push(sm); this.near.push(sm);
+      });
+      this.acc[kind] = made;
+    }
+    for (const m of this.acc[kind] || []) m.userData.hide = !on;
+    if (kind === "cap_baseball") for (const m of [...this.near, ...this.far]) if (m.name === "HAIR") m.userData.hide = on;   // hair under the cap: HAIR_CAP
+    for (const m of this.near) m.visible = !this.lodFar && !m.userData.hide;
+    for (const m of this.far) m.visible = this.lodFar && !m.userData.hide;
   }
 
   // place in three.js space: feet at (x, y, z), facing heading (radians, 0 = +Z), moving at speed m/s
@@ -136,6 +177,21 @@ export class Avatar {
     B.b.quaternion.copy(q).multiply(B.base);
   }
 
+  // on a motorcycle: the rig's own "Pose_Ride" (ride_pose_woman / _man.glb), authored in the bike's frame (hips on the
+  // seat, hands on the grips, feet on the pegs): the absolute local pose of every bone it keys, sampled at its first key
+  setRide(clip) {
+    if (!clip) { this.ridePose = null; this.contact(true); return; }
+    const pose = {};
+    for (const t of clip.tracks) {
+      const [bone, prop] = t.name.split(".");
+      (pose[bone] ||= {})[prop] = Array.from(t.values.slice(0, prop === "quaternion" ? 4 : 3));
+    }
+    this.ridePose = pose;
+    this.contact(false);
+    this.pose(0);
+  }
+  contact(on) { this.shadow.visible = on; }                // the bike has its own contact shadow
+
   update(dt) {
     const v = this.speed;
     const run = sstep(2.4, 3.6, v), move = sstep(0.05, 0.7, v);
@@ -148,6 +204,15 @@ export class Avatar {
   }
 
   pose(dt, m = 0, r = 0) {
+    if (this.ridePose) {
+      for (const [name, P] of Object.entries(this.ridePose)) {
+        const B = this.bones[name];
+        if (!B) continue;
+        if (P.quaternion) B.b.quaternion.fromArray(P.quaternion);
+        if (P.position) B.b.position.fromArray(P.position);
+      }
+      return;
+    }
     const t = this.phase, s = Math.sin(t), c = Math.cos(t), L = THREE.MathUtils.lerp;
     const thigh = L(20, 36, r) * m, knee = L(52, 100, r) * m, arm = L(17, 34, r) * m;
     const idle = 1 - m, br = Math.sin(this.t * 1.7) * 0.8 * idle;              // breathing, standing still
@@ -204,6 +269,7 @@ export class Npcs {
       const a = await Avatar.create(this.loader, this.root, id, { far: true, rng: this.rng }).catch(() => null);
       if (!a || this.list.length >= this.want) break;
       this.scene.add(a.object);
+      if (this.rng() < 0.25) a.wear(this.loader, this.root, "sunglasses_aviator", true);   // a quarter of the street wears shades
       this.list.push({ a, x: p[0], y: p[1], h: this.rng() * 6.28, target: null, wait: this.rng() * 6,
         sp: 1.1 + this.rng() * 0.45, v: 0 });
     }

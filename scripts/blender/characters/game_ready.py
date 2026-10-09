@@ -138,8 +138,15 @@ if body:
     hide_covered_skin(body, [bpy.data.objects[n] for n in ("BOTTOM", "TOP", "DRESS", "SHOES05") if n in bpy.data.objects])
 
 for o in list(bpy.data.objects):
+    # the first three women ship 112k-triangle strand hair that has to be thinned; later ones (Mei, Daniel) are built
+    # inside the budget already (<= 25k), and thinning those again only ruins them: far versions get a gentle trim
     if o.name == "HAIR" and o.type == "MESH":
-        thin_hair(o, *((0.2, 0.22) if FAR else ()))
+        if len(o.data.polygons) > 40000:
+            thin_hair(o, *((0.2, 0.22) if FAR else ()))
+        elif FAR:
+            thin_hair(o, *((0.25, 0.3) if len(o.data.polygons) > 15000 else (0.6, 0.5)))
+        elif len(o.data.polygons) > 15000:
+            thin_hair(o, 0.62, 0.7)
         continue
     if o.name.startswith("Icosphere"):
         bpy.data.objects.remove(o)

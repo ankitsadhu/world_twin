@@ -356,8 +356,8 @@ export class Avatar {
 const NEAR_M = 35, DRAW_M = 300;
 export class Npcs {
   // movers(): cars as [x, y, heading, speed]; player(): your feet [x, y] or null
-  constructor({ loader, root, scene, camera, crowd, collider, groundAt, playerId, count = 24, movers = () => [], player = () => null }) {
-    Object.assign(this, { loader, root, scene, camera, crowd, collider, groundAt, playerId, movers, player });
+  constructor({ loader, root, scene, camera, crowd, collider, groundAt, playerId, count = 24, movers = () => [], player = () => null, ground = null }) {
+    Object.assign(this, { loader, root, scene, camera, crowd, collider, groundAt, playerId, movers, player, ground });
     this.list = [];
     let seed = 11; this.rng = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
     this.frustum = new THREE.Frustum(); this.m4 = new THREE.Matrix4(); this.sphere = new THREE.Sphere(new THREE.Vector3(), 1.2);
@@ -458,7 +458,7 @@ export class Npcs {
       if (!(w === 1 || w === 2) || this.collider?.blocked(x, y, 0.4, 0.5)) continue;
       this.sphere.center.set(x, 1, -y);
       if (this.frustum.intersectsSphere(this.sphere) && r < 200) continue;   // never pop in where you're looking
-      Object.assign(far, { x, y, target: null, wait: this.rng() * 4, g: null });
+      Object.assign(far, { x, y, target: null, wait: this.rng() * 4, g: null, gs: null });
       return;
     }
   }
@@ -488,9 +488,12 @@ export class Npcs {
       }
       const dist = Math.hypot(n.x - cam.x, -n.y - cam.z);
       if (dist < 120) this.avoid(n, cars, me, dt);
-      if (n.g == null || Math.hypot(n.x - n.gx, n.y - n.gy) > 4) {   // ground height: probe again every 4 m walked
+      const gm = this.ground;
+      if (gm?.built && gm.inside(n.x, n.y)) n.g = gm.h(n.x, n.y);          // Midtown: the baked height of the ground, exact, every frame
+      else if (n.g == null || Math.hypot(n.x - n.gx, n.y - n.gy) > 4) {   // elsewhere (the harbour): probe again every 4 m walked
         n.g = this.groundAt(new THREE.Vector3(n.x, 3, -n.y)); n.gx = n.x; n.gy = n.y;
       }
+      n.gs = n.gs == null ? n.g : n.gs + (n.g - n.gs) * Math.min(1, dt * 12);   // step up a kerb, don't teleport
       this.sphere.center.set(n.x, n.g + 0.9, -n.y);
       const show = dist < DRAW_M && this.frustum.intersectsSphere(this.sphere);
       n.a.object.visible = show;
@@ -498,7 +501,7 @@ export class Npcs {
       if (!show) { n.skip = (n.skip || 0) + dt; continue; }
       const farLod = dist > NEAR_M;
       n.a.setFar(farLod);
-      n.a.set(n.x, n.g, -n.y, n.h, n.v);
+      n.a.set(n.x, n.gs, -n.y, n.h, n.v);
       n.skip = (n.skip || 0) + dt;
       if (farLod && (this.frame + i) % 2) continue;              // far away: pose every other frame
       n.a.update(n.skip); n.skip = 0;

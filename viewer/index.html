@@ -124,6 +124,7 @@ import { Flight, BANNER_SLOT } from "./js/flight.js";
 import { Boat, BOAT_SLOT } from "./js/boat.js";
 import { Helm } from "./js/helm.js";
 import { Harbor } from "./js/harbor.js";
+import { GroundMap } from "./js/groundmap.js";
 import { IntrepidVisit } from "./js/intrepid.js";
 import { Trip } from "./js/trip.js";
 import { Avatar, Npcs, PLAYER, PLAYER_OUTFITS } from "./js/avatar.js";
@@ -558,12 +559,18 @@ document.getElementById("livebtn").onclick = () => { live = true; document.getEl
 setInterval(() => { if (live) { document.getElementById("tod").value = nycTod(); setTime(nycTod()); } }, 60000);
 
 const down = new THREE.Raycaster();
+// vehicles, people and their shadows are never "the ground" (a probe that hit a car roof or a bike seat lifted whoever stood
+// there: the NPCs that seemed to walk above the ground)
+const isMoving = o => { for (let n = o, d = 0; n && d < 6; n = n.parent, d++) if (n.userData.ride || n.userData.traffic || n.userData.crowd || /^RIDE_/.test(n.name)) return true; return false; };
 function groundAt(p) {
   down.set(new THREE.Vector3(p.x, p.y + 50, p.z), new THREE.Vector3(0, -1, 0));
   down.far = 120;
-  const hit = down.intersectObjects(scene.children, true).find(h => h.object !== sky && h.point.y < p.y + 0.6);
+  const hit = down.intersectObjects(scene.children, true).find(h => h.object !== sky && h.point.y < p.y + 0.6 && !isMoving(h.object));
   return hit ? hit.point.y : 0;
 }
+// the ground's height anywhere in Midtown in one lookup (js/groundmap.js): baked from the terrain meshes when the city is in
+const groundMap = new GroundMap();
+cityReady.then(() => groundMap.build(scene).then(g => console.info(`ground map: ${g.tris} triangles in ${g.ms} ms`)));
 
 // ---------------------------------------------------------------- double-click anything: fly there
 // phones: two quick taps in the same spot = double-click (touch browsers don't reliably send dblclick)
@@ -649,7 +656,7 @@ nav.onBuilding = b => plan.onBuilding(b);
 if (new URLSearchParams(location.search).has("debug"))      // developer handle, only with ?debug
   window.__views = () => screenViews;
 if (new URLSearchParams(location.search).has("debug"))
-  window.__dbg = { nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
+  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
 let traffic = null;
 const trafficCount = () => Math.round((Settings.quality === "low" ? 24 : matchMedia("(max-width: 640px)").matches ? 36 : 80) * Settings.v.traffic);   // review 2026-10: side streets felt empty
 Promise.all([fetch(ROOT + "export/times_square/collision2d.json").then(r => r.json()),
@@ -667,7 +674,7 @@ Promise.all([fetch(ROOT + "export/times_square/collision2d.json").then(r => r.js
       g.scene.traverse(o => { if (o.isMesh) for (const m of [].concat(o.material)) registerMaterial(m); });
       return g.scene;
     }).catch(() => null);                                         // the props chunk's older cars still work
-    traffic = new Traffic({ scene, camera, grid: district.street_grid_local, bounds: ground.play_area, models: trafficModels,
+    traffic = new Traffic({ ground: groundMap, scene, camera, grid: district.street_grid_local, bounds: ground.play_area, models: trafficModels,
       crowd: () => ({ near: (x, y, r) => [...(crowd?.near(x, y, r) || []), ...(npcs?.near(x, y, r) || [])] }),   // cars stop for people
       audio, count: trafficCount(), getCollider: () => collider });
     if (traffic.init()) {
@@ -681,7 +688,7 @@ Promise.all([fetch(ROOT + "export/times_square/collision2d.json").then(r => r.js
       movers: () => [...(traffic ? traffic.obstacles() : []), ...(ride.car?.visible && ride.state !== "idle" ? [ride.pose()] : [])] });
     // no stand-in crowd: only real characters walk Times Square (the crowd's walkable sidewalk map still guides them)
     crowd.setCount(0);
-    npcs = new Npcs({ loader: gltf, root: ROOT, scene, camera, crowd, collider, groundAt, playerId: meId || PLAYER,
+    npcs = new Npcs({ ground: groundMap, loader: gltf, root: ROOT, scene, camera, crowd, collider, groundAt, playerId: meId || PLAYER,
       count: peopleCount(),
       movers: () => [...(traffic ? traffic.obstacles() : []), ...(ride.car?.visible && ride.state !== "idle" ? [ride.pose()] : [])],
       player: () => mode === "walk" ? [walk.eye.x, -walk.eye.z] : null });
@@ -777,7 +784,7 @@ soundBtn.onclick = () => { const on = Settings.v.sound !== true; Settings.set({ 
 Settings.on(syncSound); syncSound();
 
 // ---------------------------------------------------------------- self-driving cab (book a ride, or take the wheel)
-const ride = new Ride({ root: ROOT, district: "times_square", scene, camera, dom: renderer.domElement, nav, walk, groundAt: p => groundAt(p),
+const ride = new Ride({ ground: groundMap, root: ROOT, district: "times_square", scene, camera, dom: renderer.domElement, nav, walk, groundAt: p => groundAt(p),
   getCollider: () => collider, setMode, getMode: () => mode, loader: gltf, registerMaterial,
   refreshTime: () => setTime(curTod), screens, audio,
   demoArt: shape => demoBrands ? [...new Set(Object.values(demoBrands).map(b => b.image))].filter(i => i.includes("_" + shape + ".")).map(i => ROOT + i) : [],

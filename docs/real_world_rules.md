@@ -61,3 +61,20 @@ Measured before/after on the avatar (ankle tracked in the body's frame, `gait()`
 - **Trunk:** the shoulders turn against the hips, the head stays level, a forward lean that grows with speed (2 to 12 degrees) and with acceleration, and a bank into turns.
 - **Speeds:** walk 1.6 m/s (was 1.9: a 0.77 m leg breaks into a run near 1.9), run 4.6 m/s (10 mph: a fast run, left as it was).
 - Idle, jumping and landing keep the old pose; moving from 0.2 to 0.6 m/s blends between the two.
+
+## Ground and gravity: everything stands on the real ground (`groundmap.js`)
+
+Reported: bike (and some car) wheels buried in the ground, and people walking above the ground. Both came from not knowing
+how high the ground is:
+
+| What was wrong | Cause | Fix |
+|---|---|---|
+| **Bike wheels buried 13 cm** (and any vehicle parked or ridden on a pavement) | Vehicles were placed at a fixed height of 0.03 m, but a pavement is 0.16 m above the road (the kerb) | Every vehicle gets its height from the ground under its wheels, and its **pitch and roll** from where the axles are (`ride.js` `settle`): nose dips as the front wheel drops off a kerb, rises as it climbs one; a car also rolls over a crown or a kerb. Verified: riding a bike off the kerb, y 0.19 -> 0.03 m, nose down ~5 degrees; a taxi driven at a kerb rises 7 cm and pitches up 3 degrees. |
+| **People walking above the ground** | Each NPC found its ground height with a ray from 3 m up, only every 4 m walked. The ray hit *anything*: a car roof (1.4 m), a bike seat (0.94 m), a signboard, and the NPC then walked on at that height for the next 4 m | The ground is now a baked **height map** (1 m cells over Midtown, built in ~0.1 s from the terrain meshes and the TKTS steps) read every frame: one array lookup, no raycast; heights ease so a kerb is a step, not a teleport. The walker's own ground ray no longer hits vehicles either. Verified: 21 of 21 visible NPCs exactly on the pavement height. |
+
+- **Heights found in the map:** roads 0, road markings 0.02, pavement and plazas 0.16 (kerb), pier deck 1.2, the red steps up to 2.9 m and beyond.
+- **Traffic cars** read the same map (they were already fine on the road: model lowest point 0).
+- **Bike model:** both wheels have the same 0.33 m radius and sit at 0; nothing wrong with the model.
+- **Still simple:** cars don't suspension-bounce; people don't fall off edges (the walker's step limit blocks anything over 1.35 m); things don't float or sink in water (boats and the harbour are separate).
+
+Cost: the bake is 47-137 ms once, 4.4 MB of memory (one byte per square metre, 2 cm steps); a lookup is negligible.

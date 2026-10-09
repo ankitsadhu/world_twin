@@ -13,8 +13,8 @@ const V_CRUISE = 11, ACC = 2.4, BRAKE = 4.5, GAP = 6.5;
 const TYPES = [["Taxi", 11], ["CarSedanBlack", 3], ["CarSedanWhite", 2], ["CarSUVSilver", 2], ["CarSedanBlue", 1], ["CarSUVRed", 1]];
 
 export class Traffic {
-  constructor({ scene, camera, grid, bounds, crowd = () => null, audio = null, count = 45, getCollider = () => null, models = null }) {
-    Object.assign(this, { scene, camera, crowd, audio, count, getCollider, models });
+  constructor({ scene, camera, grid, bounds, crowd = () => null, audio = null, count = 45, getCollider = () => null, models = null, ground = null }) {
+    Object.assign(this, { scene, camera, crowd, audio, count, getCollider, models, ground });
     this.avenues = grid.avenues.map(([x, w]) => ({ x, w, dir: NORTHBOUND.has(x) ? 1 : -1 }));
     this.streets = grid.streets.slice().sort((a, b) => a[0] - b[0]).map(([y, w], k) => {
       const no = 37 + k;                                            // 37th St at the south edge of the grid
@@ -396,7 +396,7 @@ export class Traffic {
     for (const c of this.cars) {
       if (!c.alive) continue;
       c.type.drawn.push(c);
-      d.position.set(c.x, 0.03, -c.y); d.rotation.set(0, c.h - Math.PI / 2, 0); d.updateMatrix();
+      d.position.set(c.x, (this.ground?.built ? this.ground.h(c.x, c.y) : 0) + 0.03, -c.y); d.rotation.set(0, c.h - Math.PI / 2, 0); d.updateMatrix();
       for (const m of c.type.meshes) m.setMatrixAt(m.count++, d.matrix);
       if (this.shadows) for (const im of this.shadows) im.setMatrixAt(im.count++, d.matrix);
     }

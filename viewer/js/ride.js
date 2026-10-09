@@ -26,6 +26,7 @@ const BIKE_SPOTS = [[-264, -60.5, -1.57], [-263.5, -128, -1.57], [-200.5, 1, 0],
   // 12 more through the Times Square bowtie (7th Ave / W 45th-46th St, the NE and SE corners), >= 22 m apart
   [-26, 2, 0], [-48, 2, 0], [-70, 2, 0], [56, -10, 1.97], [-92, 2, 0], [-106, -78, -0.94], [-44, 82, -0.01], [-84, 70, -3.14],
   [44, -158, 0.38], [64, 70, 1.96], [-106, 70, -3.14], [66, -158, 0]];
+const BIKE_WHEELBASE = BIKE.wheelbase;
 const BIKE_SHOW_M = 90;                           // bikes beyond this are not drawn (14 in view x 39k triangles would add up)
 
 // ------------------------------------------------------------------ road graph
@@ -584,7 +585,7 @@ export class Ride {
       let v;
       if (type === "Taxi") { await this.loadTpl(); v = this.makeTaxi(); }
       else { const t = this.traffic?.types.find(t => t.type === type); if (!t) continue; v = this.makeCar(t); }
-      v.group.visible = true; v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h - Math.PI / 2, 0); v.heading = h;
+      v.group.visible = true; v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h - Math.PI / 2, 0); v.heading = h; this.settle(v, h);
       this.parked.push(v);
       this.traffic?.extra.push({ temp: true, alive: () => this.parked.includes(v), pose: () => [v.group.position.x, -v.group.position.z, v.heading, 0] });
     }
@@ -624,7 +625,7 @@ export class Ride {
     this.bikeMarkers = [];
     for (const [x, y, h] of BIKE_SPOTS) {
       const v = this.bikes.make();
-      v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h - Math.PI / 2, 0); v.heading = h; v.pinned = true; v.standT = 0;
+      v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h - Math.PI / 2, 0); v.heading = h; v.pinned = true; v.standT = 0; this.settle(v, h);
       this.scene.add(v.group);
       // a pin on the map and the minimap that follows the bike (hidden while you ride it); shown from neighbourhood zoom
       v.marker = { id: "bike_" + this.bikeMarkers.length, icon: "bike", label: "Motorcycle", x, y, minS: 0.45 };
@@ -636,6 +637,7 @@ export class Ride {
   }
   // the bikes: drawn only near you; their map pins follow them
   tendBikes() {
+    if (this.ground?.built) for (const v of this.parked) if (!v.settled) { this.settle(v, v.heading ?? 0); v.settled = true; }   // placed before the ground map was ready
     if (!this.bikeMarkers) return;
     const c = this.camera.position;
     for (const v of this.parked) {
@@ -879,7 +881,29 @@ export class Ride {
     return P.v[i0] + (P.v[i1] - P.v[i0]) * t;
   }
   // heading h: Blender-plane angle of travel; model front is -Z in three
-  setHeading(h) { this.heading = h; this.car.rotation.set(0, h - Math.PI / 2, 0); }
+  setHeading(h) {
+    this.heading = h; this.car.rotation.set(0, h - Math.PI / 2, 0);
+    if (this.vehicle) this.settle(this.vehicle, h, this._dt ?? null);
+  }
+  // Wheels on the ground: the vehicle's height from the ground under its wheels (a pavement is 16 cm above the road: at a
+  // fixed 3 cm the wheels of anything parked or ridden on it were buried), and its pitch / roll from where the axles are
+  // (nose up over a kerb, rolling over a crown). dt: ease it (driving); null: snap (placing it).
+  settle(v, h, dt = null) {
+    const G = this.ground;
+    if (!G?.built || !v) return;
+    const g = v.group, x = g.position.x, y = -g.position.z, c = Math.cos(h), s = Math.sin(h);
+    const bike = v.kind === "bike", hl = bike ? BIKE_WHEELBASE / 2 : 1.35, hw = bike ? 0 : 0.8;
+    const H = (a, b) => G.h(x + c * a - s * b, y + s * a + c * b);       // a along the heading, b to the left
+    let gy, pitch, roll = 0;
+    if (hw) {
+      const fl = H(hl, hw), fr = H(hl, -hw), rl = H(-hl, hw), rr = H(-hl, -hw);
+      gy = (fl + fr + rl + rr) / 4; pitch = Math.atan2((fl + fr - rl - rr) / 2, 2 * hl); roll = Math.atan2((fl + rl - fr - rr) / 2, 2 * hw);
+    } else { const f = H(hl, 0), r = H(-hl, 0); gy = (f + r) / 2; pitch = Math.atan2(f - r, 2 * hl); }
+    const k = dt == null || v.gy == null ? 1 : Math.min(1, dt * 14);
+    v.gy = (v.gy ?? gy) + (gy - (v.gy ?? gy)) * k; v.gp = (v.gp ?? pitch) + (pitch - (v.gp ?? pitch)) * k; v.gr = (v.gr ?? roll) + (roll - (v.gr ?? roll)) * k;
+    g.position.y = v.gy + 0.03;
+    g.rotation.order = "YXZ"; g.rotation.set(-v.gp, h - Math.PI / 2, v.gr);
+  }
 
   // parked / traffic cars standing on the route drive off (hidden) so the cab never passes through them
   clearTraffic(path) {
@@ -981,6 +1005,7 @@ export class Ride {
     } else if (this.state === "driving") this.drive(dt);
     else if (this.state === "waiting" || this.state === "arrived") this.v = Math.max(0, this.v - DECEL * dt);
     // wheels, steering wheel, doors
+    this._dt = dt;
     const bike = this.vehicle?.kind === "bike" ? this.vehicle : null;
     if (bike) this.updateBike(bike, dt);
     const spin = this.v * dt / (bike ? BIKE.wheelR : 0.36);

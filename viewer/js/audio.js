@@ -128,11 +128,28 @@ export class CityAudio {
     setTimeout(() => p.disconnect(), 1200);
   }
 
-  step() {
+  // one footfall. surface: pave (default) | road (asphalt: softer, lower) | steps (treads: brighter, a second tick as the
+  // other foot follows); run: a harder, shorter heel strike
+  step(surface = "pave", run = false) {
+    const ctx = this.ctx, t = ctx.currentTime;
+    const P = { pave: [180, 120, 0.32], road: [130, 70, 0.22], steps: [280, 150, 0.36] }[surface] || [180, 120, 0.32];
+    const tick = (at, k) => {
+      const s = ctx.createBufferSource(); s.buffer = this.bufs.white;
+      const f = ctx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = P[0] + Math.random() * P[1]; f.Q.value = 1.2;
+      const g = ctx.createGain(); g.gain.setValueAtTime(0.0, at);
+      g.gain.linearRampToValueAtTime(P[2] * k * (run ? 1.25 : 1), at + 0.008); g.gain.exponentialRampToValueAtTime(0.001, at + (run ? 0.085 : 0.11));
+      s.connect(f).connect(g).connect(this.master); s.start(at, Math.random() * 0.8, 0.13);
+    };
+    tick(t, 1);
+    if (surface === "steps") tick(t + 0.07, 0.5);
+  }
+  // out of breath: a soft intake and release of air (strength 0..1: how winded)
+  breath(strength = 1) {
     const ctx = this.ctx, t = ctx.currentTime, s = ctx.createBufferSource(); s.buffer = this.bufs.white;
-    const f = ctx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 180 + Math.random() * 120; f.Q.value = 1.2;
-    const g = ctx.createGain(); g.gain.setValueAtTime(0.0, t); g.gain.linearRampToValueAtTime(0.32, t + 0.008); g.gain.exponentialRampToValueAtTime(0.001, t + 0.11);
-    s.connect(f).connect(g).connect(this.master); s.start(t, Math.random() * 0.8, 0.13);
+    const f = ctx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 900 + Math.random() * 200; f.Q.value = 0.7;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0, t);
+    g.gain.linearRampToValueAtTime(0.11 * strength, t + 0.22); g.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+    s.connect(f).connect(g).connect(this.master); s.start(t, Math.random() * 0.8, 0.8);
   }
 
   // the ride: an electric motor whine + tyre roar that follow the car; inside the cab the city is muffled
@@ -241,8 +258,15 @@ export class CityAudio {
     // footsteps when walking (from how far the camera actually moved)
     const moved = Math.hypot(cam.position.x - this.lastPos.x, cam.position.z - this.lastPos.z);
     this.lastPos.copy(cam.position);
+    const body = this.body?.();                              // { speed, running, winded, surface } from the walker (see index.html)
     if (this.isWalking() && dt > 0 && moved / dt > 0.6 && moved / dt < 12) {
-      this.stepT -= dt; if (this.stepT < 0) { this.step(); this.stepT = 0.52; }
+      this.stepT -= dt;
+      if (this.stepT < 0) {                                  // cadence follows the stride: a walk ~1 m a step, a run ~1.45 m
+        this.step(body?.surface, !!body?.running);
+        this.stepT = body ? THREE.MathUtils.clamp((body.running ? 1.45 : 1.0) / Math.max(body.speed, 0.8), 0.28, 0.7) : 0.52;
+      }
     } else this.stepT = 0.1;
+    this.breathT = (this.breathT ?? 0) - dt;
+    if (body?.winded && this.isWalking() && this.breathT < 0) { this.breath(body.winded); this.breathT = 1.0 - 0.45 * body.winded; }
   }
 }

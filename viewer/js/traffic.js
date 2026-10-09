@@ -91,11 +91,13 @@ export class Traffic {
   // the speed allowed by whatever is ahead: other cars, your cab, people on the road
   followLimit(x, y, h, self) {
     const fx = Math.cos(h), fy = Math.sin(h);
-    let gap = Infinity, ped = Infinity;
+    let gap = Infinity, ped = Infinity, slow = Infinity;
     const consider = (ox, oy, oh, len = 4.6, person = false) => {
       const rx = ox - x, ry = oy - y, along = rx * fx + ry * fy;
       if (along <= 0 || along > 32) return;
       const lat = Math.abs(rx * fy - ry * fx);
+      // someone in the next lane or at the edge of the street (crossing, stepping off the kerb): the car eases past slowly
+      if (person && lat >= 1.7 && lat < 4.5 && along < 16) slow = Math.min(slow, 3.5 + along * 0.35);
       if (lat > (person ? 1.7 : 2.1)) return;                   // a person: only if actually in the car's path
       if (oh !== null) { let dh = Math.abs(oh - h) % (2 * Math.PI); if (dh > Math.PI) dh = 2 * Math.PI - dh; if (dh > 2.2) return; }
       const g = along - len / 2;
@@ -109,7 +111,8 @@ export class Traffic {
     // people with bodies (the NPCs strolling Times Square, and you on foot): a car never drives over anyone in its lane
     if (this.people) for (const [px, py] of this.people(x + fx * 12, y + fy * 12, 14)) consider(px, py, null, 1.0, true);
     this.pedGap = ped;                                                // read right after by the car loop: brake harder if someone is close
-    return gap === Infinity ? Infinity : Math.max(0, gap - GAP) * 1.1;
+    const lim = gap === Infinity ? Infinity : Math.max(0, gap - GAP) * 1.1;
+    return Math.min(lim, slow);
   }
 
   // ---------------------------------------------------------------- where cars may be: on a real road, never in the river

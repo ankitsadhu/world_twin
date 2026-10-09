@@ -26,10 +26,18 @@ You are not a cursor: what you ask for is not what the body does at once.
 
 All in `walk.js` `friction()`. The numbers are constants at the top of that function.
 
+### Added in round 2
+
+| Rule | How it works | Code |
+|---|---|---|
+| **Cars ease past people crossing** | Someone in the next lane or at the edge of the street (within 4.5 m of the car's line, less than 16 m ahead) caps the car at 3.5 m/s plus a little for distance, tightening as it passes. In its own lane: it stops (above). Pavement people don't count. | `traffic.js` `followLimit` (`slow`) |
+| **A passing car's side nudges you** | If a *moving* car (> 1 m/s) overlaps you, you're pushed out and stumble: 40% speed for 0.4 s, and a dull thump. Never a crash ("GTA without crime"); once per 1.2 s. | `walk.js` `pushOut` / `bumped`, `index.html` `walk.onBump` |
+| **Running off a kerb or a step** | A drop of more than 12 cm while running (> 3.5 m/s): the knees take it, 0.18 s at 55% speed (once per 0.8 s). | `walk.js` |
+| **Footsteps follow your body** | Cadence follows your stride (a walk is about a metre a step, a run about 1.45 m: 0.53 s at a walk, 0.32 s at a run; it used to be a fixed 0.52 s). The surface changes the tread: road (softer, lower), pavement, steps (brighter, with a second tick as the other foot follows). A run is a harder heel strike. | `audio.js` `step`, `index.html` `audio.body` |
+| **Breathing** | When winded (and while the wind is under half) a soft intake and release every ~0.55-1 s, louder the more tired you are. | `audio.js` `breath` |
+
 ## Not done yet (ideas, in the same spirit)
 
-- Cars yielding at crosswalks to people *waiting* to cross (today only people in the lane).
-- A person nudged by a moving car's side mirror (a bump, never a crash: "GTA without crime").
-- Tired breathing and footstep sounds that follow the body: stamina state, surface (pavement vs steps).
-- Kerbs: a small stumble when running off a kerb; different footfalls on steps.
-- Rain and wet roads slowing cars (and you).
+- Cars yielding to people *waiting* on the pavement at a crosswalk before they step off (they only react once someone is on the road).
+- Rain and wet roads (there is no weather yet): longer braking, slipperier steps, a different tread.
+- Cars flowing around you when you stand in a lane (today they wait behind you, and honk after a few seconds).

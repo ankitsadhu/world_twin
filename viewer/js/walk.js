@@ -138,12 +138,13 @@ export class StreetWalk {
   }
   // cars are solid: slide out of any car body (a box [x, y, heading, half length, half width] in Blender local metres)
   pushOut(x, y) {
-    for (const [bx, by, h, hl, hw] of this.blockers()) {
+    for (const [bx, by, h, hl, hw, sp = 0] of this.blockers()) {
       const ox = x - bx, oy = y - by;
       if (ox * ox + oy * oy > (hl + 1.2) ** 2) continue;
       const c = Math.cos(h), s = Math.sin(h), along = ox * c + oy * s, side = -ox * s + oy * c, r = 0.35;
       const pa = hl + r - Math.abs(along), ps = hw + r - Math.abs(side);
       if (pa > 0 && ps > 0) {
+        if (Math.abs(sp) > 1) this.bumped = true;                              // a moving car brushed you
         if (pa < ps) { const m = (along < 0 ? -1 : 1) * pa; x += c * m; y += s * m; }
         else { const m = (side < 0 ? -1 : 1) * ps; x += -s * m; y += c * m; }
       }
@@ -216,6 +217,9 @@ export class StreetWalk {
       this.rise = (this.rise || 0) * f + (ground - (this.g0 ?? ground)); this.run = (this.run || 0) * f + stepLen;
       this.slope = THREE.MathUtils.clamp(this.rise / Math.max(this.run, 0.4), -1, 1);
     } else this.slope *= 1 - Math.min(1, dt * 4);
+    if (!(this.air > 0) && (this.g0 ?? ground) - ground > 0.12 && Math.hypot(this.vx, this.vz) > 3.5 && !(this.stumbleCd > 0)) {
+      this.landT = Math.max(this.landT || 0, 0.18); this.stumbleCd = 0.8;     // running off a kerb or a step: the knees take it
+    }
     this.g0 = ground;
     if (this.air > 0) {                                       // in the air: gravity, land on whatever is below
       this.vy -= 9.81 * dt;
@@ -224,6 +228,12 @@ export class StreetWalk {
       if (this.air === 0) { this.vy = 0; this.landT = 0.3; }
     } else cam.position.y += ((ground + 1.7) - cam.position.y) * Math.min(1, dt * 10);
     // what your character does: speed over the ground, and the way you're going (or facing, standing still)
+    if (this.bumped) {                                        // a car's side nudged you: a stumble, never a crash
+      this.bumped = false;
+      if (!((this.bumpCd || 0) > 0)) { this.landT = Math.max(this.landT || 0, 0.4); this.bumpCd = 1.2; this.onBump?.(); }
+    }
+    this.bumpCd = Math.max(0, (this.bumpCd || 0) - dt);
+    this.stumbleCd = Math.max(0, (this.stumbleCd || 0) - dt);
     const actual = Math.hypot(cam.position.x - x0, cam.position.z - z0);       // what you really covered (a car or a wall stops you)
     if (intended > 0.004 && actual < intended * 0.3) { this.vx *= 0.5; this.vz *= 0.5; }   // pressed against something: no momentum
     const moved = actual / Math.max(dt, 1e-3);

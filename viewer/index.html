@@ -457,7 +457,7 @@ walk.onWalk = () => nav?.doneTip("walk");
 walk.pedsNear = (x, y, r) => npcs?.near(x, y, r) || [];
 walk.blockers = () => {
   const out = [];
-  for (const [x, y, h] of traffic?.ready ? traffic.obstacles() : []) out.push([x, y, h, 2.3, 1.0]);
+  for (const [x, y, h, v] of traffic?.ready ? traffic.obstacles() : []) out.push([x, y, h, 2.3, 1.0, v]);
   for (const v of ride.parked) out.push([v.group.position.x, -v.group.position.z, v.heading ?? 0, v.kind === "bike" ? 1.0 : 2.3, v.kind === "bike" ? 0.4 : 1.0]);
   return out;
 };
@@ -738,6 +738,13 @@ const audio = new CityAudio({ camera, crowdCount: () => 600,      // the city's 
     return new THREE.Vector3(x, 1.2, -y);
   },
   isWalking: () => mode === "walk", night: () => smooth(0.45, 0.8, curTod) });
+// your body in the soundscape: footfalls follow your stride and the surface (road / pavement / steps), and you breathe when winded
+audio.body = () => {
+  const e = walk.eye, sp = walk.speed || 0;
+  const surface = Math.abs(walk.slope) > 0.12 ? "steps" : crowd?.walk.at(e.x, -e.z) === 0 ? "road" : "pave";
+  return { speed: sp, running: sp > 3.2, surface, winded: walk.exhausted ? 1 : walk.stamina < 0.5 ? 0.5 : 0 };
+};
+walk.onBump = () => audio.crash?.(new THREE.Vector3(walk.eye.x, 0.9, walk.eye.z), 0.25);   // a car's side brushes you: a dull thump
 // a clear view of any screen, worked out in the live scene (js/screenview.js)
 let screenViews = null;
 fetch(ROOT + "data/times_square/slots.json").then(r => r.json()).then(d => {

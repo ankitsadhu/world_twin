@@ -54,6 +54,7 @@ person, rig, cloth texture and skin weights:
 - **Hair:** 1,652 alpha-cut strands become 36% of the strands with a gentle collapse (112k → 13k tris). A hard decimate of every strand turns them into spikes.
 - **Seams:** welds the clothes' open panel edges only (welding everything collapses a hem's inner/outer layers into torn patches). They are shells cut into panels with duplicate vertices, which tear into see-through slits when the legs swing.
 - **Hidden skin:** deletes the skin under the clothes and shoes: a ray straight out along the skin's normal hits cloth within 6 cm, or the skin pokes through tight cloth directly beneath it (a plain nearest-point test also ate the skin beside thin dress straps, leaving black holes), keeping a band at the waistline and along the openings. Without this, skin pokes through behind the knees.
+- **Rebuild after changes:** the viewer loads the exported `.glb` files directly; rerun this pipeline for both near and far exports after changing skin or clothing cleanup. The Blender preparation script does not update already-exported assets at runtime.
 - **Detail removed:** drops the jeans' stitch threads (the normal map has them).
 - **Reductions:** the body to 47%, the shoes to 45%; textures capped at 1024 px; Draco.
 

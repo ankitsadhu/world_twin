@@ -21,6 +21,7 @@ The model is a **Cessna 172S Skyhawk at true size**, built from its real dimensi
 | `scripts/blender/vehicles/build_cessna.py` | builds it: fuselage loft from measured sections, airfoil wings and tail with real hinge gaps, gear with wheel fairings, livery texture, lights, antennas, registration N172GT |
 | `blender/vehicles/cessna172.blend` | editable scene |
 | `export/vehicles/small_plane.glb` | game model (name kept so the viewer needs no change): ~50k tris, ~330 KB, Draco + JPEG livery |
+| `export/characters/parachute.glb` | supplied canopy, lines and harness used by the rooftop skydive |
 | `renders/vehicles/cessna172_*.png` | previews; `_scale.png` sets it beside a 1.68 m person and a metre ruler |
 | `viewer/js/flight.js` | banner tow + flying |
 | `config/mobile_slots.json` | the banner's sales listing (estimates) |
@@ -71,6 +72,19 @@ The model is a **Cessna 172S Skyhawk at true size**, built from its real dimensi
 - **No crashes:** touching a tower, the street, the river or the hull fades to black and puts you back on the deck with a light message ("Too low!", "Splash!").
 - **Speeds:** take off at 30 m/s, stall at 25, cruise at 46, fast is 68.
 - **Deck position:** the deck is the collider polygon with `kind: "ship"` (18 m high). The plane parks at (−1382, 30), nose west.
+
+## Skydrop rooftop challenge
+
+While airborne, choose a rooftop and jump with **J** (or the Jump button). Build enough altitude to clear the selected roof first. The
+first part is a short freefall; Space opens the provided parachute early, otherwise it deploys automatically. A/D (or the left stick)
+steers the canopy. Fly through the three gold gates and land on the glowing pad for a perfect run.
+
+- The small-target pad is placed on a real Midtown roof with enough footprint for a safe landing; the other pads mark the Minskoff
+  Theatre and Marriott Marquis rooftops. Pads sit just above the baked roof height and are walkable after landing.
+- A safe landing elsewhere on a rooftop is still playable, but scores as a miss. Hitting a building side or landing in the river
+  fades back to the plane for another attempt.
+- The routes and pads are created from the city's building-footprint collision data, so the challenge follows the real rooftops
+  instead of treating every inaccessible roof as a valid target.
 
 ### Known gaps
 

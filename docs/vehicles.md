@@ -29,7 +29,7 @@ names; keep generic proportions.
 
 ## Motorcycle: the cruiser (2026-10-04)
 
-`export/vehicles/motorbike_cruiser.glb` (39k tris, Draco; the artist's 7k far version is not in the repo: take it from `cloud_env/deliveries/2026-10-04/` if bikes ever join the traffic), from the character agent's
+`export/vehicles/motorbike_cruiser.glb` (39k tris, Draco), from the character agent's
 Blender build (`cloud_env/tools/build_motorcycle.py`). An original V-twin chopper, no brand marks. Facing +Z, wheelbase 1.65 m,
 wheel radius 0.335 m.
 
@@ -38,14 +38,19 @@ wheel radius 0.335 m.
   `GRIP_L/R`; collision proxies `COL_*` (**hidden in game**: drawn they are a huge black slab).
 - **Actions:** `Parked` (8 degrees onto the kickstand), `Stand_Up` (kickstand folds away), `Steer_Sweep`. The game poses the parts
   itself (`js/bike.js`): the stand folds as you mount, the bars turn, the bike leans into turns.
-- **In the game** (`js/bike.js` + `ride.js`): **17 cruisers** stand at the curb (`BIKE_SPOTS`: 5 along 8th Ave / 7th Ave, 12 through
-  the Times Square bowtie, found with the crowd's walkability raster + the road graph, >= 22 m apart).
+- **In the game** (`js/bike.js` + `ride.js`): **8 cruisers** stand at the curb (`BIKE_SPOTS`), spaced between the walking start and the
+  Times Square bowtie so they are available without crowding every block.
   - **Finding one:** a motorcycle pin on the full map and the minimap (it follows the bike, hidden while you ride it; the full map
     shows them from neighbourhood zoom); tap it for **Ride it** (you walk there and get on). The welcome screen and search
     have **Ride a motorcycle** (walks you to the nearest one). A one-time hint appears within 45 m of one.
   - **Cost control:** bikes are only drawn within 90 m (`BIKE_SHOW_M`): each is 39k triangles.
   Walk up, **F: Hop on**. The rider is you (your avatar, `Pose_Ride`, parented to the bike so it leans with it); **F** gets off.
   - **Handling** (`BIKE_H` vs `CAR_H`): 6 m/s2, 27 m/s top (60 mph), quicker steering, a narrower body (it fits gaps a car can't),
-    lean = steering x speed. Same collisions with buildings, people (it stops for them), parked cars and traffic.
+    lean = steering x speed. A forward hop is available above 7 m/s (Space, R1, or the touch Hop button): gravity pulls the bike
+    back down, air steering is reduced, and the nose pitches gently through the arc. Building, water and raised-step footprints
+    block the bike; swept scene probes also catch physical street objects such as poles and bollards. The bike collides with
+    parked cars and traffic, stops for pedestrians by default, and uses different impact sounds for different materials. The
+    optional Rough contact setting enables non-graphic knock-down/recovery behavior.
   - **Not saved with your progress:** bikes always respawn at their spots.
   - **Chase camera only** (closer and lower than the car's); the cab-only features (fares, inside view) don't apply.
+- **Ambient traffic:** up to five rider-and-motorcycle pairs join the same road, signal, following and collision simulation as the cars. The bike rig leans and steers with its path; distinct pedestrian characters use their matching seated riding pose.

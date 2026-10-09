@@ -1,0 +1,168 @@
+PROMPT FOR THE CHARACTER / VEHICLE AGENT: "Round 3": cruiser motorcycle v2 + muscular men
+=======================================================================================
+
+CONTEXT
+Our web game is a real-scale Times Square (three.js). Players and NPCs (realistic women and men on ONE shared 19-bone
+rig) walk, run and ride. You delivered round 1 (characters, accessories) and round 2 (cruiser motorcycle + riding poses).
+They are in the game and work, but our side had to fix several things by hand. THIS TIME DO THOSE YOURSELF, so we can drop
+the files in without edits. Section 0 lists exactly what we had to fix. Section 4 is a checklist you must run and report.
+
+-------------------------------------------------------------------------------------------------------------------
+0. WHAT WE HAD TO CHANGE ON YOUR LAST DELIVERIES (do not make us do this again)
+-------------------------------------------------------------------------------------------------------------------
+MOTORCYCLE (round 2)
+ 1. The collision proxies COL_BODY, COL_WHEEL_FRONT, COL_WHEEL_REAR were exported as normal meshes inside the visible GLB.
+    In the game they drew as a giant black slab over the bike. We hid them by name in code.
+    -> Deliver collision proxies in a SEPARATE file (motorbike_collision.glb). The visible GLBs must contain no COL_ meshes.
+ 2. We could not read the numbers we needed, so we reverse-engineered them from your animation keys:
+    kickstand folded rotation, parked lean (8 degrees), steering axis (the STEER node's rake rotation), wheel radius,
+    wheelbase. The game does NOT play animation clips: it poses the parts itself (steer, lean, kickstand, wheel spin).
+    -> Deliver bike_info.json with every number (schema in section 1.8). Keep the clips too, but the numbers must be in the JSON.
+ 3. Weight: the near GLB was 1.9 MB, mostly three normal maps (tyre 686 KB, seat 432 KB, grips 156 KB for a tiny part).
+    -> Budget in section 1.6 (near GLB <= 1.2 MB, far GLB <= 400 KB). Textures 1024 px max, pack occlusion/roughness/metal
+       into one texture, no normal maps on tiny parts.
+ 4. The far version (motorbike_far.glb) arrived but could not be checked against the near one.
+    -> Same hierarchy, same pivots, same anchors, same material names, verified by the checklist.
+ 5. The riding poses were authored for one woman and one man. The man's rig was scaled x1.10 at export, so the two rigs
+    have different bone lengths. That is fine, but it must be DOCUMENTED (section 2.4), and the new muscular man needs his own pose.
+
+CHARACTERS (rounds 1 and 2)
+ 6. The first three women came as 160,000 triangles / 4 MB each (112,000 triangles of strand hair alone). We had to run our own
+    reduction script: thin the hair, delete the skin hidden under clothes, weld open seams, decimate the body, shrink textures,
+    and make a far LOD. -> Deliver GAME-READY directly (budgets in section 2.5), including the far LOD.
+ 7. Hair that was already within budget (Mei: 21,800 triangles) still had to be trimmed to ~9,600 to fit a 35,000 triangle
+    character. -> Hair <= 10,000 triangles near, <= 3,000 far.
+ 8. Stray objects: an "Icosphere" (Blender's bone display shape) in some files, and an extra "neutral_bone" in two files.
+    -> Exactly the 19 bones, no helper objects, no cameras, no lights.
+ 9. Clothes were open shells with duplicated vertices along panel seams: they tear into see-through slits when the legs swing.
+    -> Weld every seam (shared vertices, identical skin weights). Hems may stay as separate layers.
+10. We cut the long trousers into shorts and hot pants ourselves. -> If a character needs a variant, deliver it.
+11. Accessories: the denim jacket was 1.4 MB per character (two 2048 px textures). Light base colours were good (we tint them
+    in the game), keep that. -> Jacket <= 500 KB, cap <= 250 KB, textures 1024 px. Deliver accessories for EVERY character
+    that is new or changed.
+12. Every character must expose: bone names and orientations identical to the existing rig, A-pose at rest, facing -Y in
+    Blender (+Z in glTF), feet at z = 0, in metres. This was right; keep it exactly.
+
+-------------------------------------------------------------------------------------------------------------------
+1. TASK A: HEAVY AMERICAN V-TWIN CRUISER, VERSION 2 (same design as round 2, fixed)
+-------------------------------------------------------------------------------------------------------------------
+Keep the round-2 look (low seat, wide rear tyre, teardrop tank, chrome, big headlight, V-twin). ORIGINAL DESIGN, NO BRANDS:
+no manufacturer logos, names, tank graphics or lettering. The tank emblem is a separate decal mesh named BADGE (swappable).
+
+1.1 AXES / ORIGIN
+ - Blender metres, Z up, the bike FACES -Y (front wheel toward -Y). Left side of the bike = +X, right = -X.
+ - Origin on the ground (z = 0), x = 0, halfway between the two tyre contact points. Upright, kickstand FOLDED away in the
+   rest state (the game folds/unfolds it itself). Apply all transforms. No negative scales.
+ - Both tyres must touch z = 0 exactly (within 1 mm) in the rest state. Check it (section 4).
+
+1.2 DIMENSIONS (real cruiser, +/- 3 %; we never verified round 2 against these, so measure and REPORT every one)
+ - Overall length 2.35 m. Width at the handlebars 0.95 m (mirrors excluded). Wheelbase 1.65 m (axle to axle).
+ - Seat top 0.67 m. Grip height 1.05 m. Mirrors to 1.15 m. Ground clearance 0.12 m.
+ - Front wheel and tyre 0.66 m diameter. Rear wheel and tyre 0.67 m diameter. Steering rake 30 degrees, trail about 0.15 m.
+
+1.3 OBJECT HIERARCHY AND PIVOTS (rigid parts, no skinning). Exact names.
+ BIKE (root)
+   FRAME_BODY   frame, engine, tank, seat, fenders, exhaust, rear suspension, brake calipers on swingarm (+ child BADGE)
+   STEER        pivot ON the real steering axis (raked 30 deg). Children: FORK, HANDLEBARS, HEADLIGHT, FRONT_FENDER,
+                GRIP_L, GRIP_R, WHEEL_FRONT.   Rotating STEER about its LOCAL +Y must steer correctly (state that axis in bike_info.json).
+   WHEEL_FRONT, WHEEL_REAR   origin exactly on the axle centre, spin axis = local X, must not wobble. Brake discs stay with the wheels.
+   KICKSTAND    pivot at its mount.
+ Wheels: make each wheel ONE object (tyre, rim, spokes, disc merged by material), not 4-5 nested pieces.
+
+1.4 RIDER ANCHORS (empties, exact names, absolute positions in the BLENDER frame, facing -Y). These worked last time; keep them:
+   SEAT_ANCHOR    (  0.00, +0.20, 0.77 )   rider's hip joint
+   GRIP_L         ( +0.38, -0.22, 1.11 )   child of STEER; GRIP_R ( -0.38, -0.22, 1.11 )
+   FOOT_L         ( +0.23, -0.25, 0.30 )   FOOT_R ( -0.23, -0.25, 0.30 )   floorboards
+   PILLION_ANCHOR (  0.00, +0.50, 0.83 )
+ - Riders' knees must clear the tank, engine, air cleaner and exhaust by 0.15 m, for a MUSCULAR man too (thighs 0.64 m round).
+
+1.5 MATERIALS (Principled BSDF, image textures). Exact names; the game finds them by name:
+   M_Paint (light neutral grey base: we tint it per bike), M_Chrome, M_BlackMetal, M_Rubber, M_Leather (seat), M_Glass
+   (headlight lens, alpha blend), M_Headlight, M_Taillight, M_Brakelight (emissive, separate so we can switch them), M_Badge, M_Grip.
+   Chrome is metallic 1, roughness 0.05-0.1. Do not put an environment map in the file.
+
+1.6 BUDGET
+   motorbike_cruiser.glb: <= 45,000 triangles, <= 1.2 MB, textures <= 1024 px (rubber and leather may be 2048 only if the file stays under 1.2 MB).
+   motorbike_far.glb:     <= 8,000 triangles, <= 400 KB, textures <= 512 px, same names/pivots/anchors/materials.
+   Draco allowed (we load it). Include the clips "Parked" (BIKE leans 8 deg to the LEFT onto the stand) and "Stand_Up" (stand folds), "Steer_Sweep".
+
+1.7 COLLISION (separate file)
+   motorbike_collision.glb with COL_BODY, COL_WHEEL_FRONT, COL_WHEEL_REAR (convex, < 200 triangles each). NOT in the visible GLBs.
+
+1.8 bike_info.json (REQUIRED). All numbers in metres/degrees, in the GLB (glTF, Y-up, facing +Z) frame AS EXPORTED, plus the Blender frame:
+   { "wheelbase": 1.65, "wheel_radius_front": 0.33, "wheel_radius_rear": 0.335,
+     "steer": { "node": "STEER", "axis_local": [0,1,0], "rest_quaternion": [x,y,z,w], "rake_deg": 30, "max_deg": 38 },
+     "parked": { "lean_deg": -8, "lean_axis": "forward", "kickstand_deployed_quaternion": [..], "kickstand_folded_quaternion": [..] },
+     "anchors": { "SEAT_ANCHOR": [x,y,z], "GRIP_L": [..], "GRIP_R": [..], "FOOT_L": [..], "FOOT_R": [..], "PILLION_ANCHOR": [..] },
+     "seat_top": 0.67, "ground_clearance": 0.12, "lowest_point_y": 0.0,
+     "triangles": { "near": n, "far": n }, "textures": [ {"name":"..","px":[w,h],"kb":n} ] }
+
+-------------------------------------------------------------------------------------------------------------------
+2. TASK B: MEN ARE MUSCULAR. Re-do man_daniel and set the rule for every man from now on.
+-------------------------------------------------------------------------------------------------------------------
+2.1 THE LOOK. A gym-built, muscular man (not a cartoon bodybuilder): height 1.80 m, clearly V-shaped.
+    Chest circumference about 1.12 m, waist about 0.82 m, shoulder-to-waist ratio at least 1.45, thick neck (0.42 m round) with
+    visible trapezius, rounded deltoids, defined pectorals, lats and abdominals, upper arm 0.38-0.40 m round, forearm 0.31 m,
+    thigh 0.64 m, calf 0.41 m. Keep Daniel's face, short dark side-parted hair and light stubble.
+2.2 CLOTHES THAT SHOW IT. A fitted light-grey crew-neck tee that stretches across the chest and shoulders and grips the biceps
+    (short sleeve), straight-leg dark jeans that fit the thighs, sneakers. Baked-in muscle definition in the skin normal map.
+    Clothes must keep the same light base colours and material names (M_Top, M_Denim, M_Skin ...): the game tints them.
+2.3 SKINNING. Deltoids and shoulders must deform correctly when the arms go from the A-pose down to the riding pose (hands
+    forward on the grips) and during a run (elbows 90 degrees, arms pumping). Check: no collapsing shoulders, no tee tearing, no
+    skin poking through the sleeve.
+2.4 RIG. The SAME 19 Mixamo-named bones with the same orientations and the same A-pose (Pose_ArmsDown, Pose_HandOnHip). Bone LENGTHS
+    may differ (he is taller and broader): state them in character_info.json (thigh, shank, hip height, ankle height, height).
+    Do NOT bake a global scale into the file at export (last time Daniel was x1.10: we had to measure him separately). If a global
+    scale is unavoidable, say so in character_info.json ("export_scale": 1.0).
+2.5 BUDGET (game-ready, no further processing by us):
+    man_daniel.glb      <= 35,000 triangles, <= 1.0 MB, textures <= 1024 px, Draco, hair <= 10,000 triangles.
+    man_daniel_far.glb  <= 10,000 triangles, <= 450 KB, textures <= 512 px, hair <= 3,000. Same rig; the far one binds to the same bone names.
+    Skin hidden under clothes removed (keep a band at waist, neck and cuffs); clothes welded at seams (section 0, item 9).
+2.6 ACCESSORIES for him: sunglasses_aviator, cap_baseball (with HAIR_CAP), jacket_denim, each fitted to HIS body (jacket must
+    close over the chest and arms without clipping). <= 500 KB each.
+2.7 RIDING POSE for him: ride_pose_man.glb (armature + action "Pose_Ride" only) authored for THIS body on the cruiser from Task A:
+    hips on SEAT_ANCHOR, hands on GRIP_L/R, feet on FOOT_L/R, slight forward lean, relaxed elbows, knees clear of the tank.
+    Also ride_pose_woman.glb re-checked against the v2 bike.
+2.8 RULE FOR ALL FUTURE MEN: every man is muscular unless we say otherwise.
+
+-------------------------------------------------------------------------------------------------------------------
+3. FILES TO DELIVER (one folder, dated)
+-------------------------------------------------------------------------------------------------------------------
+ motorbike_cruiser.glb, motorbike_far.glb, motorbike_collision.glb, bike_info.json
+ ride_pose_woman.glb, ride_pose_man.glb
+ man_daniel.glb, man_daniel_far.glb, character_info.json
+ acc_sunglasses_aviator__daniel.glb, acc_cap_baseball__daniel.glb, acc_jacket_denim__daniel.glb
+ renders/: bike side, front, rear, 3/4, engine and tank close-ups; woman and man in Pose_Ride (side and front); the man standing
+           (front, side, back) in A-pose and with the accessories; the man mid-stride (a still of a walk and of a run).
+ NOTES.md: triangle counts per object, texture list with sizes, and the filled-in checklist below.
+
+-------------------------------------------------------------------------------------------------------------------
+4. CHECKLIST: RUN EVERY LINE AND REPORT THE NUMBER (we will re-run these; a failed line means we send it back)
+-------------------------------------------------------------------------------------------------------------------
+ [ ] Bike overall length, width at the bars, wheelbase, seat top, grip height: measured value vs spec, each within 3 %.
+ [ ] Lowest vertex of each tyre = 0.000 m (+/- 0.001) in the rest state. Both tyres.
+ [ ] Front and rear wheel: origin on the axle centre (+/- 1 mm), spin about local X leaves the silhouette unchanged.
+ [ ] STEER: rotating 30 degrees about the documented local axis turns the front wheel about the steering axis; the front wheel
+     contact point moves < 2 cm sideways at 0 degrees lean.
+ [ ] Anchors at the documented positions (+/- 1 cm). With Pose_Ride on the man AND the woman: palm centre within 1 cm of each grip,
+     foot centre within 1 cm of each footboard, mesh intersection of rider and bike = none (report the minimum clearance at the knees).
+ [ ] No COL_ mesh, camera, light or helper object inside any visible GLB. Exactly the named hierarchy.
+ [ ] Triangle counts and file sizes within section 1.6 / 2.5 (report each). Far files same hierarchy/pivots/anchors/materials.
+ [ ] Material names exactly as listed. Texture list with sizes (no texture above the limits).
+ [ ] Man: bone count 19, names and orientations identical to the existing rig, no Icosphere, no extra bones, export_scale 1.0.
+ [ ] Man: shoulder/waist ratio, chest, waist, upper arm, thigh measured and reported against section 2.1.
+ [ ] Man: deformation test renders (arms down, riding pose, run pose, arms overhead): no clipping, no tearing.
+ [ ] Clothes shells welded: no open duplicate-vertex seams (report the count of open boundary edges outside hems).
+ [ ] bike_info.json and character_info.json present and filled in (every number measured from the files, not copied from this prompt).
+
+-------------------------------------------------------------------------------------------------------------------
+5. WHAT THE GAME DOES WITH YOUR FILES (so you can see why the above matters)
+-------------------------------------------------------------------------------------------------------------------
+ - It loads the GLB and finds parts BY NAME (BIKE, STEER, WHEEL_FRONT, WHEEL_REAR, KICKSTAND, SEAT_ANCHOR, GRIP_*, FOOT_*, M_* materials).
+ - It poses everything procedurally (steering, lean, kickstand, wheel spin): it does NOT play your clips, so the numbers in
+   bike_info.json are the source of truth.
+ - It tints M_Paint, M_Top, M_Dress, M_Denim, M_Jacket, M_Cap per person/bike (light base colours multiply).
+ - It rebinds skinned accessories and the far LOD to the avatar skeleton by bone name.
+ - It places every vehicle by the ground under its wheels (pavements are 16 cm above the road): the model's rest-state tyre
+   bottoms at z = 0 is what makes wheels sit on the ground instead of in it.
+ - Web budget: every extra megabyte is paid by every visitor. Keep to the budgets.

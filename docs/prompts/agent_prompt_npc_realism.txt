@@ -1,0 +1,26 @@
+PROMPT: MORE REALISTIC PEOPLE AND REACTION ANIMATIONS (same shared rig, game-ready)
+
+GOAL
+Our street characters read as mannequins. Make the people look and move like real New Yorkers in a real-scale Times Square web game (three.js).
+Keep our shared 19-bone Mixamo rig exactly (names, orientations, A-pose, Blender metres Z up, faces -Y, feet at z = 0), same materials names,
+same budgets as the existing characters. Do not add bones.
+
+FACES (the biggest gap)
+- Believable faces: asymmetric, pores, eyebrows, eyelash cards, wet eyes with a visible cornea bulge, teeth/mouth interior, age variety.
+- Add BLEND SHAPES (glTF morph targets) on the head: blink, brow_down, brow_up, wince, mouth_open_small, mouth_open_wide, smile, frown, eyes_closed.
+  The game drives them (flinch on a hit, blink every few seconds). Keep the head under 6,000 triangles near, 2,000 far.
+
+BODIES AND CLOTHES
+- Real proportion variety (height 1.55-1.95 m, build, shoulder width), natural posture, no model-pose stance. Clothes with wrinkle normal maps,
+  collar/hem thickness, believable fabric materials, small asymmetry. 12 outfits per gender in light base colours (we tint).
+
+ANIMATION CLIPS (separate GLB per set, armature + actions only, same rig, 30 fps, loopable where noted)
+Idle_A/B/C (loop, weight shift, look around), Walk (loop), Walk_Brisk (loop), Run (loop), Hit_Light_Front/Back (rocked back, hand to face),
+Hit_Heavy_Front/Back (thrown off feet), Fall_Back, Fall_Face, Lie_Stunned (loop), Get_Up_Back, Get_Up_Face, Dazed (loop),
+Flee_Run (loop, glancing back), Punch_Jab_L/R, Punch_Cross_R, Guard_Idle (loop), Block, Look_At_Phone (loop), Talk_Gesture (loop).
+Root motion removed (in place). Feet must not slide and must stay at z = 0 on contact frames.
+
+DELIVERABLES / CHECKLIST (report numbers, failed lines are sent back)
+[ ] 19 bones identical to our rig. [ ] Triangle counts near/far, file sizes within the old budgets. [ ] Morph target names exact.
+[ ] Every clip listed, with frame counts and loop flags. [ ] Renders: faces front/3-4/side, 5 body types, each clip as a contact sheet.
+[ ] No foot sliding on locomotion clips (report max slide in cm). [ ] NOTES.md with texture sizes and the filled-in checklist.

@@ -1,0 +1,56 @@
+PROMPT: WOLF-HEADED MUSCULAR MAN, THE GAME MASCOT (game-ready on our shared rig)
+
+GOAL
+A mascot character for our real-scale Times Square web game (three.js): a muscular man's body with the head of a wolf.
+Friendly-confident, not horror. Stylised-realistic: photoreal materials, believable anatomy, no cartoon proportions.
+He walks, runs, rides our cruiser motorcycle and stands as a brand mascot beside billboards.
+
+BODY (same standard as our muscular man)
+- Height 1.85 m (the wolf head included). V-shaped athlete: chest ~1.12 m, waist ~0.82 m, shoulder:waist >= 1.45,
+  thick neck with trapezius, rounded deltoids, defined pecs/lats/abs, upper arm 0.38-0.40 m, forearm 0.31 m, thigh 0.64 m, calf 0.41 m.
+- Human hands and feet (hands with 5 fingers, no claws). Bare-armed: a fitted sleeveless dark-grey tank top, black straight
+  jeans, boots, a simple leather wrist band. Keep clothes in light/neutral base colours so we can tint them per variant.
+- Bare skin (arms, neck, hands) is covered in fine short grey-brown fur on a human-shaped body (see FUR); the palms are bare.
+
+HEAD (the wolf)
+- Grey-brown timber wolf: long muzzle, black nose, amber eyes, upright pointed ears, white muzzle/chin/chest-of-neck, dark saddle
+  down the back of the neck, a thick fur ruff around the neck blending into the shoulders. Mouth closed, calm confident expression.
+- The rig has NO jaw bone: model the mouth closed and static. Ears, ruff and fur are static (they follow the Head bone). No tail.
+- Head size: ~1.45x a human head (mascot read), set on a human neck. Eyes level with a human eye line (about 1.72 m).
+
+FUR (game budget!)
+- Strand/shell fur is too heavy. Use alpha-cut fur CARDS on the head, ruff and forearms, plus a fur albedo/normal in the skin
+  texture. Fur cards <= 8,000 triangles near, <= 2,000 far. Material M_Fur (alpha clip, double sided), light grey base so we can tint.
+
+RIG AND POSES (identical to our existing characters)
+- The SAME 19 Mixamo-named bones, same orientations, A-pose at rest (Pose_ArmsDown, Pose_HandOnHip). Exactly 19 bones: no extra
+  bones, no Icosphere, no cameras/lights. Blender metres, Z up, FACES -Y, feet at z = 0, origin between the feet. No global export
+  scale (export_scale 1.0). Bone lengths may differ: write them in character_info.json (thigh, shank, hip height, ankle height, height).
+- Skinning must hold up in: arms down, riding pose (hands forward on grips), run (elbows 90 deg, arms pumping), arms overhead.
+  No collapsing shoulders, no stretched neck/ruff, no fur cards poking through the collar.
+- Also deliver ride_pose_wolf.glb (armature + action "Pose_Ride" only) for our cruiser: hips on SEAT_ANCHOR (0, +0.20, 0.77),
+  GRIP_L/R (+-0.38, -0.22, 1.11), FOOT_L/R (+-0.23, -0.25, 0.30), slight forward lean, knees clear of the tank (thighs 0.64 m).
+
+MATERIALS (exact names, Principled BSDF, image textures, light base colours: the game tints them)
+M_Skin, M_Fur, M_Eye (amber, glossy), M_Nose, M_Top, M_Denim, M_Boots, M_Leather. Eyes and nose separate objects.
+
+BUDGET (game-ready, no further processing by us)
+- wolf_mascot.glb:     <= 35,000 triangles total, <= 1.0 MB, textures <= 1024 px, Draco.
+- wolf_mascot_far.glb: <= 10,000 triangles, <= 450 KB, textures <= 512 px, same rig, binds to the same bone names.
+- Clothes: seams welded (shared vertices, identical weights), no open duplicate-vertex seams (tears when legs swing).
+  Skin hidden under clothes removed (keep a band at waist, neck, cuffs).
+
+ACCESSORIES (optional, <= 300 KB each, skinned to the same 19 bones, light base colour): denim jacket fitted to his chest and arms,
+baseball cap with ear holes (static, sits between the ears).
+
+FILES
+wolf_mascot.glb, wolf_mascot_far.glb, ride_pose_wolf.glb, character_info.json, renders/ (front, side, back, 3/4; head close-up;
+Pose_Ride side and front; run pose; deformation test: arms down / riding / run / arms overhead), NOTES.md (triangle counts per object,
+texture list with sizes, filled-in checklist).
+
+CHECKLIST (run and REPORT the numbers; a failed line is sent back)
+[ ] 19 bones, names/orientations identical to our rig, no extra objects. [ ] Height, chest, waist, upper arm, thigh measured vs spec.
+[ ] Triangles and file sizes within budget (near/far, fur cards counted). [ ] Material names exact. Textures within limits.
+[ ] Both feet at z = 0. [ ] No open seams outside hems (report count). [ ] Deformation renders show no clipping or tearing.
+[ ] Pose_Ride: palms within 1 cm of the grips, feet within 1 cm of the footboards, no rider/bike intersection.
+[ ] character_info.json filled with measured values.

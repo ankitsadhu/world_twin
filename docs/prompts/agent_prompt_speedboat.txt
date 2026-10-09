@@ -1,0 +1,35 @@
+PROMPT: SPEEDBOAT FOR THE HUDSON (game-ready, three.js web game, same conventions as our motorcycle)
+
+GOAL
+A fast, small, fun speedboat for boat races and boost rings on the Hudson (Mario Kart on water, but realistic-looking): a 7.5 m
+sport boat with a windscreen, two bench seats and an outboard-style stern. It must read well from a chase camera 8 m behind and from the side.
+
+SCALE AND AXES (the same as our cars/bike: report measured values)
+- Length 7.5 m, beam 2.4 m, hull height above the waterline 0.9 m, windscreen top 1.6 m. Blender metres, Z up, FACES -Y; origin at the
+  waterline under the centre of the hull (y = 0 along the hull length centre). Glb export faces +Z (like the cruiser); export_scale 1.0.
+- Hierarchy: BOAT > HULL, WINDSCREEN, SEAT_DRIVER_MESH, SEAT_REAR_MESH, STEER (the wheel), ENGINE (outboard, with a child PROP that spins), FLAG
+  (small pennant on a pole, optional), plus anchors SEAT_DRIVER (0, 0.55, +0.2 from centre), SEAT_REAR_L/R, GRIP (wheel), BOW (bow point), WAKE_L/R
+  (hull edge, waterline, for foam), PROP_ANCHOR. Collision proxies COL_HULL (low poly box) hidden.
+
+LOOK
+- White hull with a coloured stripe (light base colours so we can tint per variant), chrome trim, dark windscreen glass (M_Glass, real
+  transmission 0 in the export: the game fakes it), wood-effect deck, leather seats. Photoreal PBR, no cartoon.
+- Water interaction is done by us: model a clean hull bottom and bow so spray planes can attach at WAKE_L/R.
+
+BUDGET
+- boat_speedboat.glb <= 25,000 triangles, <= 1.2 MB, textures <= 1024 px, Draco. Far LOD boat_speedboat_far.glb <= 4,000 triangles, <= 250 KB.
+- Materials (exact names): M_HullPaint, M_HullStripe, M_Chrome, M_Glass, M_Seat, M_Deck, M_Engine, M_Prop, M_Flag. Principled BSDF, image textures.
+
+RIDER POSE
+- Also deliver ride_pose_boat_woman.glb and ride_pose_boat_man.glb (the rig armature + the action "Pose_Drive" only): sitting at SEAT_DRIVER, both
+  hands on the wheel (GRIP), feet on the footrest, slight lean back; for our 19-bone Mixamo rig (same bone names and orientations as the other characters).
+
+FILES
+boat_speedboat.glb, boat_speedboat_far.glb, ride_pose_boat_woman.glb, ride_pose_boat_man.glb, boat_info.json (measured length, beam, anchors),
+renders/ (front, side, back, 3/4, interior from behind, with and without rider), NOTES.md (triangle counts, texture list, filled-in checklist).
+
+CHECKLIST (run and REPORT numbers; a failed line is sent back)
+[ ] Length/beam/height measured vs spec. [ ] Faces +Z in the glb, origin at the waterline. [ ] All anchors present with positions listed.
+[ ] Triangle count and file size within budget (near and far). [ ] Material names exact; textures within limits.
+[ ] Pose_Drive: palms within 1 cm of the wheel, feet within 1 cm of the footrest, no clipping with the seat or the windscreen.
+[ ] STEER rotates about the wheel axis; PROP spins about its own axis; origins of both are at the pivot.

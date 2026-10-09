@@ -11,6 +11,7 @@ const KIND_ICON = { activity: ICON.star, landmark: ICON.star, intersection: ICON
 // things to DO, found by what people type ("fly", "plane", "boat", "taxi job"): picking one starts it
 export const ACTIVITIES = [
   { act: "fly", name: "Fly a plane", sub: "Catapult off the Intrepid · over Midtown, the Hudson, the Statue of Liberty", keywords: "plane airplane aeroplane fly flying pilot cessna flight airport land intrepid sky" },
+  { act: "speedboat", name: "Speedboat race: Hudson Dash", sub: "A fast boat on the Hudson · boost pads · beat the clock", keywords: "speedboat speed boat race racing hudson dash water jet ski mario kart boost" },
   { act: "sail", name: "Take the helm of the boat", sub: "Sail the Hudson from Pier 83 · Statue of Liberty", keywords: "boat sail sailing ship helm captain river hudson cruise ferry" },
   { act: "bike", name: "Ride a motorcycle", sub: "A cruiser parked along 7th Ave: walk up, F to hop on", keywords: "motorcycle motorbike bike chopper cruiser harley scooter ride riding biker" },
   { act: "fares", name: "Drive a cab: pick up fares", sub: "Find a passenger, get them there fast · stars, not money", keywords: "taxi cab drive driving job fares passenger uber car" },
@@ -118,6 +119,10 @@ export class Navigator {
       #welcome .tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
       #welcome .tile b { font-size: var(--t-body); }
       #welcome .tile span { font-size: var(--t-caption); color: var(--ink-2); }
+      #welcome .tile.hero { grid-column: 1 / -1; min-height: 96px; text-align: center; }
+      #welcome .tile.hero b { font-size: 22px; }
+      #welcome .tile.hero span { font-size: var(--t-body); }
+      #welcome .more { grid-column: 1 / -1; margin: var(--s2) 0 0; font-size: var(--t-caption); color: var(--ink-2); text-align: center; }
       #welcome .tile.primary { background: var(--accent); color: var(--accent-ink); }
       #welcome .tile.primary span { color: var(--accent-ink); opacity: .75; }
       @media (max-width: 420px) { #welcome .tiles { grid-template-columns: 1fr; } #welcome .tile { min-height: 56px; } }
@@ -142,17 +147,19 @@ export class Navigator {
       <div id="hint" class="ui-surface" role="status"></div>
       <div id="welcome" role="dialog" aria-modal="true" aria-labelledby="wtitle"><div class="card ui-surface">
         <h2 id="wtitle">Times Square, live.</h2>
-        <p class="lead">Real streets, real screens, live New York time. What would you like to do? <small>(It stays in the menu: “What can I do?”)</small></p>
+        <p class="lead">A real city, real New York time. Jump on a bike and cause some chaos. <small>(Everything else stays in the menu: “What can I do?”)</small></p>
         <div class="tiles">
-          <button class="tile primary" data-w="fly"><b>✈ Fly a plane</b><span>Off the Intrepid · over the Hudson to Liberty</span></button>
-          <button class="tile primary" data-w="sail"><b>⚓ Sail the Hudson</b><span>Take the helm · out to the Statue of Liberty</span></button>
-          <button class="tile primary" data-w="fares"><b>🚕 Drive a cab</b><span>Pick up fares around Midtown</span></button>
-          <button class="tile primary" data-w="bike"><b>🏍 Ride a motorcycle</b><span>A cruiser at the curb · hop on and go</span></button>
-          <button class="tile primary" data-w="tours"><b>⏱ Sightseeing tours</b><span>Walk, sail or fly against the clock</span></button>
+          <button class="tile primary hero" data-w="bike"><b>▶ Play: ride a motorcycle</b><span>Ride, jump, smash, escape the police. Score a chaos chain.</span></button>
+          <p class="more">Or try something else</p>
+          <button class="tile" data-w="fares"><b>🚕 Drive a cab</b><span>Beat-the-clock fares around Midtown</span></button>
+          <button class="tile" data-w="fly"><b>✈ Fly a plane</b><span>Off the Intrepid · over the Hudson</span></button>
+          <button class="tile" data-w="speedboat"><b>🚤 Speedboat race</b><span>Hudson Dash · boost pads on the water</span></button>
+          <button class="tile" data-w="sail"><b>⚓ Sail the Hudson</b><span>Take the helm to the Statue of Liberty</span></button>
+          <button class="tile" data-w="tours"><b>⏱ Sightseeing tours</b><span>Walk, sail or fly against the clock</span></button>
           <button class="tile" data-w="walk"><b>Walk the streets</b><span>Run, jump, explore on foot</span></button>
+          <button class="tile" data-w="tour"><b>60-second tour</b><span>The highlights, hands-free</span></button>
           <button class="tile" data-w="ride"><b>Ride a self-driving cab</b><span>Book it, watch it pull up, ride</span></button>
           <button class="tile" data-w="business"><b>Buy a screen or building</b><span>Real screens, real prices</span></button>
-          <button class="tile" data-w="tour"><b>60-second tour</b><span>The highlights, hands-free</span></button>
         </div>
       </div></div>
       <div id="tourbar" class="ui-surface" role="dialog" aria-label="Tour"><div class="t" id="tourt"></div><div class="c" id="tourc"></div>
@@ -663,12 +670,34 @@ export class Navigator {
     if (tgt.y < 0) tgt.y = 0;
     if (!col) return;
     const inside = v => col.blocked(v.x, -v.z, 0.6, v.y);
-    if (!inside(cam.position)) return;
-    // walk from the target toward the camera; stop just before the first wall
-    const from = tgt.clone(), to = cam.position.clone(), p = new THREE.Vector3();
-    let lo = 0, hi = 1;
-    if (inside(from)) { cam.position.y = Math.max(cam.position.y, 8); return; }
-    for (let k = 0; k < 18; k++) { const m = (lo + hi) / 2; p.lerpVectors(from, to, m); if (inside(p)) hi = m; else lo = m; }
-    cam.position.lerpVectors(from, to, Math.max(0, lo - 0.02));
+    const to = cam.position.clone();
+    if (inside(to)) {
+      // walk from the target toward the camera; stop just before the first wall
+      const from = tgt.clone(), p = new THREE.Vector3();
+      let lo = 0, hi = 1;
+      if (inside(from)) {
+        if (this.safeCameraPosition) cam.position.copy(this.safeCameraPosition);
+        else {
+          let height = 8;
+          while (height < 600 && col.blocked(from.x, -from.z, 0.6, height)) height *= 2;
+          cam.position.y = Math.max(cam.position.y, height);
+        }
+      }
+      else {
+        for (let k = 0; k < 18; k++) { const m = (lo + hi) / 2; p.lerpVectors(from, to, m); if (inside(p)) hi = m; else lo = m; }
+        cam.position.lerpVectors(from, to, Math.max(0, lo - 0.02));
+      }
+    } else if (this.safeCameraPosition) {
+      const from = this.safeCameraPosition, distance = from.distanceTo(to);
+      if (distance > 0.05 && distance <= 250) {
+        const steps = Math.ceil(distance / 1.5), p = new THREE.Vector3();
+        for (let i = 1; i <= steps; i++) {
+          const t = i / steps;
+          p.lerpVectors(from, to, t);
+          if (inside(p)) { cam.position.lerpVectors(from, to, Math.max(0, (i - 1) / steps)); break; }
+        }
+      }
+    }
+    this.safeCameraPosition = cam.position.clone();
   }
 }

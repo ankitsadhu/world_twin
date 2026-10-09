@@ -67,6 +67,8 @@
     <button class="item" id="tourbtn" role="menuitem"><i data-icon="tour"></i>Take the 60-second tour</button>
     <button class="item" id="sightbtn" role="menuitem"><i data-icon="tour"></i>Sightseeing tours: walk, sail, fly</button>
     <button class="item" id="bizmenu" role="menuitem"><i data-icon="screen"></i>For businesses: screens & buildings</button>
+    <button class="item" id="missionsmenu" role="menuitem"><i data-icon="tour"></i>Missions <span style="margin-left:auto;color:var(--ink-3);font-size:var(--t-caption)">K</span></button>
+    <button class="item" id="recmenu" role="menuitem"><i data-icon="screen"></i>Record screen <span style="margin-left:auto;color:var(--ink-3);font-size:var(--t-caption)">F8</span></button>
     <button class="item" id="setbtn" role="menuitem"><i data-icon="settings"></i>Settings <span style="margin-left:auto;color:var(--ink-3);font-size:var(--t-caption)">Esc</span></button>
     <div class="sep"></div>
     <div class="setting"><label for="tod">Time of day <span id="todv"></span></label>
@@ -106,7 +108,7 @@ import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { Collider } from "./js/collision.js";
 import { Crowd, tktsSeats } from "./js/crowd.js";
 import { Navigator } from "./js/nav.js";
-import { CityMap, drawPlaceIcon, pinColor } from "./js/map.js";
+import { CityMap, drawPlaceIcon, drawBadge, pinColor } from "./js/map.js";
 import { StreetWalk } from "./js/walk.js";
 import { Business } from "./js/business.js";
 import { ICON } from "./js/icons.js";
@@ -115,6 +117,7 @@ import { Screens } from "./js/screens.js";
 import { CityAudio } from "./js/audio.js";
 import { Ride } from "./js/ride.js";
 import { Traffic } from "./js/traffic.js";
+import { Pursuit } from "./js/pursuit.js";
 import { Settings, Progress, PauseMenu } from "./js/settings.js";
 import { Pad, BTN, navigateFocus, prompt } from "./js/gamepad.js";
 import { caption } from "./js/captions.js";
@@ -127,7 +130,7 @@ import { Harbor } from "./js/harbor.js";
 import { GroundMap } from "./js/groundmap.js";
 import { IntrepidVisit } from "./js/intrepid.js";
 import { Trip } from "./js/trip.js";
-import { Avatar, Npcs, PLAYER, PLAYER_OUTFITS } from "./js/avatar.js";
+import { Avatar, Npcs, PLAYER, PLAYER_OUTFITS, npcPool } from "./js/avatar.js";
 import { Fares } from "./js/fares.js";
 import { applyStorefronts } from "./js/storefront4.js";
 import { Tours } from "./js/tours.js";
@@ -316,6 +319,7 @@ const slotMaterials = new Map();  // slot_id -> {material, placeholder}
 
 const HERO_VIEW = { eye: [-14.5, 137.5, 6.4], target: [16, -215, 40] };   // top of the red steps, 1 Times Sq on a third
 let resolveCity; const cityReady = new Promise(r => resolveCity = r);
+let sceneObstacleVersion = 0;
 
 function loadChunk(path) {
   return new Promise((res, rej) => gltf.load(ROOT + path, g => {
@@ -329,6 +333,7 @@ function loadChunk(path) {
       if (p) { pickables.push(o); slotMaterials.set(p.userData.slot_id, { mat: o.material, ph: o.material.emissiveMap }); screens.add(p.userData.slot_id, o.material); }
     });
     scene.add(g.scene);
+    sceneObstacleVersion++;
     adoptWater(g.scene);
     res();
   }, undefined, rej));
@@ -377,6 +382,7 @@ function groundUnderlay() {
   scene.add(m);
 }
 
+let playArea = null;
 const saved = Progress.load();                                 // where you were last time (this browser)
 function reveal() {
   resolveCity();
@@ -438,11 +444,134 @@ function applyDemo(on) {
 const ray = new THREE.Raycaster();
 // solid things in front of you (statues, kiosks, poles): a short ray at chest height against static geometry
 const aheadRay = new THREE.Raycaster();
+function dynamicObject(o) {
+  for (let p = o; p; p = p.parent)
+    if (p.userData.crowd || p.userData.traffic || p.userData.ride || p.userData.parachute || p.userData.flyPlane
+      || p === nav.beacon) return true;
+  return false;
+}
+function visibleObject(o) {
+  for (let p = o; p; p = p.parent) if (!p.visible) return false;
+  return true;
+}
+function obstacleKind(object) {
+  const names = [];
+  for (let p = object; p; p = p.parent) {
+    names.push(p.name || "");
+    for (const m of [].concat(p.material || [])) names.push(m.name || "");
+  }
+  const label = names.join(" ").toLowerCase();
+  if (/water|river|sea/.test(label)) return "water";
+  if (/glass|window|storefront/.test(label)) return "glass";
+  if (/bollard|pillar|pole|lamp|signal|sign|rail|fence|metal|steel/.test(label)) return "metal";
+  if (/building|wall|facade|bld/.test(label)) return "building";
+  return "concrete";
+}
+const obstacleCell = 20, obstacleCells = new Map(), obstacleBoxes = [];
+let indexedObstacleVersion = -1;
+const obstacleRay = new THREE.Raycaster();
+const obstacleProbeMesh = new THREE.Mesh();
+obstacleProbeMesh.matrixAutoUpdate = false;
+function indexObstacle(box, kind, name, geometry, matrix) {
+  const i = obstacleBoxes.push({ box, kind, name, geometry, matrix }) - 1;
+  for (let x = Math.floor(box.min.x / obstacleCell); x <= Math.floor(box.max.x / obstacleCell); x++)
+    for (let y = Math.floor(-box.max.z / obstacleCell); y <= Math.floor(-box.min.z / obstacleCell); y++) {
+      const key = `${x},${y}`;
+      (obstacleCells.get(key) || obstacleCells.set(key, []).get(key)).push(i);
+    }
+}
+function indexSceneObstacles() {
+  if (indexedObstacleVersion === sceneObstacleVersion) return;
+  obstacleCells.clear(); obstacleBoxes.length = 0;
+  scene.updateMatrixWorld(true);
+  const localBox = new THREE.Box3(), worldBox = new THREE.Box3(), matrix = new THREE.Matrix4(), instance = new THREE.Matrix4();
+  scene.traverse(o => {
+    if (!o.isMesh || dynamicObject(o) || !visibleObject(o) || o.name.startsWith("MERGED_")) return;
+    const geometry = o.geometry;
+    if (!geometry) return;
+    if (!geometry.boundingBox) geometry.computeBoundingBox();
+    if (!geometry.boundingBox) return;
+    if (o.isInstancedMesh) {
+      for (let i = 0; i < o.count; i++) {
+        o.getMatrixAt(i, instance);
+        matrix.multiplyMatrices(o.matrixWorld, instance);
+        worldBox.copy(geometry.boundingBox).applyMatrix4(matrix);
+        if (worldBox.max.y - worldBox.min.y < 0.18 || worldBox.max.y - worldBox.min.y > 18
+          || worldBox.max.x - worldBox.min.x > 24 || worldBox.max.z - worldBox.min.z > 24) continue;
+        indexObstacle(worldBox.clone(), obstacleKind(o), o.name, geometry, matrix.clone());
+      }
+      return;
+    }
+    localBox.copy(geometry.boundingBox);
+    worldBox.copy(localBox).applyMatrix4(o.matrixWorld);
+    if (worldBox.max.y - worldBox.min.y < 0.18 || worldBox.max.y - worldBox.min.y > 18
+      || worldBox.max.x - worldBox.min.x > 24 || worldBox.max.z - worldBox.min.z > 24) return;
+    indexObstacle(worldBox.clone(), obstacleKind(o), o.name, geometry, o.matrixWorld.clone());
+  });
+  indexedObstacleVersion = sceneObstacleVersion;
+}
+function segmentHitsBox(x, y, dx, dy, length, box, radius) {
+  let lo = 0, hi = length;
+  for (const [origin, delta, min, max] of [[x, dx, box.min.x - radius, box.max.x + radius],
+    [-y, -dy, box.min.z - radius, box.max.z + radius]]) {
+    if (Math.abs(delta) < 1e-8) { if (origin < min || origin > max) return null; continue; }
+    let a = (min - origin) / delta, b = (max - origin) / delta;
+    if (a > b) [a, b] = [b, a];
+    lo = Math.max(lo, a); hi = Math.min(hi, b);
+    if (lo > hi) return null;
+  }
+  return lo;
+}
+function obstacleAlongVehicle(x, y, nx, ny, height, radius) {
+  indexSceneObstacles();
+  const dx = nx - x, dy = ny - y, distance = Math.hypot(dx, dy);
+  if (distance < 1e-4) return null;
+  const candidates = new Set();
+  for (let cx = Math.floor((Math.min(x, nx) - radius) / obstacleCell); cx <= Math.floor((Math.max(x, nx) + radius) / obstacleCell); cx++)
+    for (let cy = Math.floor((Math.min(y, ny) - radius) / obstacleCell); cy <= Math.floor((Math.max(y, ny) + radius) / obstacleCell); cy++)
+      for (const i of obstacleCells.get(`${cx},${cy}`) || []) candidates.add(i);
+  let best = null;
+  for (const i of candidates) {
+    const entry = obstacleBoxes[i], floor = groundMap?.built ? groundMap.h(x, y) : 0;
+    if (entry.box.max.y < floor + 0.3 || entry.box.min.y > floor + height + 0.25) continue;
+    const at = segmentHitsBox(x, y, dx / distance, dy / distance, distance + 0.15, entry.box, radius);
+    if (at == null || (best && at >= best.distance)) continue;
+    const probeHeight = Math.max(floor + 0.3, Math.min(floor + height, (entry.box.min.y + entry.box.max.y) / 2));
+    obstacleRay.set(new THREE.Vector3(x, probeHeight, -y), new THREE.Vector3(dx / distance, 0, -dy / distance));
+    obstacleRay.near = 0;
+    obstacleRay.far = distance + 0.15;
+    obstacleProbeMesh.geometry = entry.geometry;
+    obstacleProbeMesh.matrixWorld.copy(entry.matrix);
+    if (!obstacleRay.intersectObject(obstacleProbeMesh, false).length) continue;
+    best = { kind: entry.kind, point: new THREE.Vector3(x + dx / distance * at, probeHeight, -(y + dy / distance * at)), distance: at };
+  }
+  return best;
+}
+function sceneObstacle(origin, direction, distance) {
+  aheadRay.set(origin, direction);
+  aheadRay.far = distance;
+  const hit = aheadRay.intersectObjects(scene.children, true).find(h => {
+    if (dynamicObject(h.object) || !visibleObject(h.object)) return false;
+    const floor = groundMap?.built ? groundMap.h(h.point.x, -h.point.z) : 0;
+    return h.point.y > floor + 0.3;
+  });
+  return hit ? { kind: obstacleKind(hit.object), point: hit.point } : null;
+}
+function vehicleObstacle({ x, y, nx, ny, halfLength, halfWidth, height }) {
+  const dx = nx - x, dy = ny - y, distance = Math.hypot(dx, dy);
+  if (distance < 1e-4) return null;
+  const fx = dx / distance, fy = dy / distance, sx = -fy, sy = fx;
+  let best = null;
+  for (const side of [-halfWidth * 0.7, 0, halfWidth * 0.7]) {
+    const px = x + fx * (halfLength - 0.12) + sx * side;
+    const py = y + fy * (halfLength - 0.12) + sy * side;
+    const hit = obstacleAlongVehicle(px, py, nx + fx * halfLength + sx * side, ny + fy * halfLength + sy * side, height, 0.16);
+    if (hit && (!best || hit.distance < best.distance)) best = hit;
+  }
+  return best;
+}
 function blockedAhead(pos, dir, dist) {
-  aheadRay.set(new THREE.Vector3(pos.x, pos.y - 0.4, pos.z), dir);
-  aheadRay.far = dist;
-  return aheadRay.intersectObjects(scene.children, true)
-    .some(h => h.object !== sky && !h.object.userData.crowd && h.object.visible && h.object.parent !== nav.beacon);
+  return !!sceneObstacle(new THREE.Vector3(pos.x, pos.y - 0.4, pos.z), dir, dist);
 }
 // Explore = Google Maps / Earth conventions: drag pans, right-drag (or Ctrl/Shift-drag) rotates, scroll zooms
 const orbit = new MapControls(camera, renderer.domElement);
@@ -488,7 +617,7 @@ function setMode(m) {
   document.getElementById("walk").setAttribute("aria-pressed", String(m === "walk"));
   orbit.enabled = m === "orbit";
   if (m === "walk") walk.enable(); else walk.disable();
-  if (m === "ride" || m === "fly" || m === "boat") { nav.setHint?.(); return; }   // the cab / plane / boat drives the camera
+  if (m === "ride" || m === "fly" || m === "parachute" || m === "boat") { nav.setHint?.(); return; }   // the cab / plane / parachutist / boat drives the camera
   if (m === "orbit") {   // come back up a little behind where you were walking
     const dir = new THREE.Vector3(); camera.getWorldDirection(dir); dir.y = 0; dir.normalize();
     orbit.target.copy(camera.position).addScaledVector(dir, 20); orbit.target.y = 2;
@@ -527,6 +656,14 @@ document.getElementById("explorebtn").onclick = () => { flight.forceOut(); helm.
 // the dock shows which mode you're in (Explore / Walk / Ride): one selected at a time
 function syncDock() {
   const m = flight?.active || helm?.active || ride.inCar || ride.approaching || ["choose", "coming", "waiting"].includes(ride.state) ? "ride" : mode === "walk" ? "walk" : "explore";
+  const travel = document.getElementById("ridebtn");
+  if (travel) {
+    const occupied = ride.inCar || flight?.active || helm?.active;
+    const label = occupied ? "Current vehicle" : "Travel options";
+    travel.setAttribute("aria-label", occupied ? "Current vehicle controls" : "Travel options: walk, cab or drive");
+    travel.querySelector("span").textContent = label;
+    travel.querySelector("em").textContent = occupied ? "Vehicle" : "Travel";
+  }
   if (syncDock.m === m && document.getElementById("walk").getAttribute("aria-pressed") === String(m === "walk")) return;
   syncDock.m = m;
   document.getElementById("explorebtn").setAttribute("aria-pressed", String(m === "explore"));
@@ -561,7 +698,7 @@ setInterval(() => { if (live) { document.getElementById("tod").value = nycTod();
 const down = new THREE.Raycaster();
 // vehicles, people and their shadows are never "the ground" (a probe that hit a car roof or a bike seat lifted whoever stood
 // there: the NPCs that seemed to walk above the ground)
-const isMoving = o => { for (let n = o, d = 0; n && d < 6; n = n.parent, d++) if (n.userData.ride || n.userData.traffic || n.userData.crowd || /^RIDE_/.test(n.name)) return true; return false; };
+const isMoving = o => { for (let n = o, d = 0; n && d < 6; n = n.parent, d++) if (n.userData.ride || n.userData.traffic || n.userData.crowd || n.userData.parachute || /^RIDE_/.test(n.name)) return true; return false; };
 function groundAt(p) {
   down.set(new THREE.Vector3(p.x, p.y + 50, p.z), new THREE.Vector3(0, -1, 0));
   down.far = 120;
@@ -656,13 +793,14 @@ nav.onBuilding = b => plan.onBuilding(b);
 if (new URLSearchParams(location.search).has("debug"))      // developer handle, only with ?debug
   window.__views = () => screenViews;
 if (new URLSearchParams(location.search).has("debug"))
-  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
+  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pursuit() { return pursuit; }, get cityMap() { return cityMap; }, get trip() { return trip; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get progress() { return progress; }, get chaos() { return chaos; }, get race() { return race; }, get heat() { return heat; }, get clip() { return clip; }, get playzone() { return playzone; }, get crashRun() { return crashRun; }, get speedboat() { return speedboat; }, get missions() { return missions; }, get wolves() { return wolves; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
 let traffic = null;
-const trafficCount = () => Math.round((Settings.quality === "low" ? 24 : matchMedia("(max-width: 640px)").matches ? 36 : 80) * Settings.v.traffic);   // review 2026-10: side streets felt empty
+let pursuit = null;
+const trafficCount = () => Math.round((Settings.quality === "low" ? 14 : matchMedia("(max-width: 640px)").matches ? 18 : 28) * Settings.v.traffic);
 Promise.all([fetch(ROOT + "export/times_square/collision2d.json").then(r => r.json()),
              fetch(ROOT + "data/times_square/ground.json").then(r => r.json()),
              fetch(ROOT + "config/districts/times_square.json").then(r => r.json())]).then(([col, ground, district]) => {
-  collider = new Collider(col); resolveCollider();
+  collider = new Collider(col); playArea = ground.play_area; resolveCollider();
   collider.walkable = (x, y) => helm.onPier(x, y);          // on foot you can walk out onto the piers (exact outlines)
   // beyond Midtown: the harbour's real land and piers are solid ground, its water is not (nothing at all past its edge)
   collider.outside = (x, y) => !(harbor.inFrame(x, y) && (harbor.isLand(x, y) || harbor.isPier(x, y)));
@@ -674,16 +812,22 @@ Promise.all([fetch(ROOT + "export/times_square/collision2d.json").then(r => r.js
       g.scene.traverse(o => { if (o.isMesh) for (const m of [].concat(o.material)) registerMaterial(m); });
       return g.scene;
     }).catch(() => null);                                         // the props chunk's older cars still work
+    ride.bounds = ground.play_area;                             // the wall at the edge of the city (ride.js drive())
     traffic = new Traffic({ ground: groundMap, scene, camera, grid: district.street_grid_local, bounds: ground.play_area, models: trafficModels,
       crowd: () => ({ near: (x, y, r) => [...(crowd?.near(x, y, r) || []), ...(npcs?.near(x, y, r) || [])] }),   // cars stop for people
-      audio, count: trafficCount(), getCollider: () => collider });
+      audio, count: trafficCount(), getCollider: () => collider, allowRiderHits: () => Settings.roughContact });
     if (traffic.init()) {
       ride.setTraffic(traffic);
+      await traffic.setMotorcycles({ bikes: ride.bikes, loader: gltf, root: ROOT, characterIds: npcPool(meId || PLAYER) });
+      pursuit = new Pursuit({ ride, traffic });
+      pursuit.onEnd = (st, stars) => { heat.onEnd(st, stars); if (st === "escaped") missions.markDone("m_heat"); };
+      ride.pursuit = pursuit;
       // real-world logic: cars brake for anyone in their lane, the NPCs and you on foot (they used to drive straight through you)
       traffic.people = (x, y, r) => npcs?.near(x, y, r) || [];
       traffic.extra.push({ len: 1.0, alive: () => mode === "walk" && !ride.inCar, pose: () => [walk.eye.x, -walk.eye.z, 0, 0] });
     } else traffic = null;
-    if (saved?.parked?.length) ride.restoreParked(saved.parked);   // the cars you left last time are still there
+    if (saved?.garage?.length || saved?.parked?.length) await ride.restoreParked(saved.garage?.length ? saved.garage : saved.parked);
+    ride.garageReady = true;
     crowd = new Crowd(scene, ground, collider, { seated: tktsSeats(), camera, traffic,
       movers: () => [...(traffic ? traffic.obstacles() : []), ...(ride.car?.visible && ride.state !== "idle" ? [ride.pose()] : [])] });
     // no stand-in crowd: only real characters walk Times Square (the crowd's walkable sidewalk map still guides them)
@@ -692,6 +836,7 @@ Promise.all([fetch(ROOT + "export/times_square/collision2d.json").then(r => r.js
       count: peopleCount(),
       movers: () => [...(traffic ? traffic.obstacles() : []), ...(ride.car?.visible && ride.state !== "idle" ? [ride.pose()] : [])],
       player: () => mode === "walk" ? [walk.eye.x, -walk.eye.z] : null });
+    if (traffic) traffic.onRiderEjected = (avatar, x, y, vx, vy, strength) => npcs.adoptHitRider(avatar, x, y, vx, vy, strength);
   });
 });
 // ---------------------------------------------------------------- people: how many real characters walk the city
@@ -729,6 +874,8 @@ addEventListener("keydown", e => {                         // V: see yourself (t
 });
 function drawMe(dt) {
   if (me && ride.vehicle?.rider === me) { me.object.visible = true; return; }   // on the motorcycle: posed by the bike, drawn with it
+  if (me && ride.ejected?.avatar === me) { me.object.visible = true; return; }
+  if (me && flight.jump?.avatar === me) { me.object.visible = true; return; }
   const show = mode === "walk" && walk.third && !!me;
   if (me) me.object.visible = show;
   if (!show) return;
@@ -785,7 +932,8 @@ Settings.on(syncSound); syncSound();
 
 // ---------------------------------------------------------------- self-driving cab (book a ride, or take the wheel)
 const ride = new Ride({ ground: groundMap, root: ROOT, district: "times_square", scene, camera, dom: renderer.domElement, nav, walk, groundAt: p => groundAt(p),
-  getCollider: () => collider, setMode, getMode: () => mode, loader: gltf, registerMaterial,
+  getCollider: () => collider, vehicleObstacle, setMode, getMode: () => mode, loader: gltf, registerMaterial,
+  toast: text => Messages.ask(text, [], { ms: 3500 }),
   refreshTime: () => setTime(curTod), screens, audio,
   demoArt: shape => demoBrands ? [...new Set(Object.values(demoBrands).map(b => b.image))].filter(i => i.includes("_" + shape + ".")).map(i => ROOT + i) : [],
   setWalkerAt: (pos, fwd) => stepOutAt(pos, fwd), getPlayer: () => me });
@@ -814,13 +962,21 @@ const flight = new Flight({ root: ROOT, scene, camera, dom: renderer.domElement,
   toast: t => Messages.ask(t, [], { ms: 3500 }),
   holdBanner: () => business.current?.slot_id === BANNER_SLOT,
   onBoard: () => { Messages.dismiss("Welcome back"); helm.forceOut(); if (ride.inCar) ride.getOut(); if (ride.active) ride.end(); nav.setWaypoint?.(null); },
+  getPlayer: () => me,
+  onParachuteLand: p => {
+    setMode("walk");
+    camera.position.set(p.x, p.z + 1.7, -p.y);
+    walk.yaw = p.yaw; walk.pitch = 0; walk.heading = p.yaw;
+    walk.vx = walk.vz = 0; walk.target = null;
+    camera.rotation.set(0, p.yaw, 0, "YXZ");
+  },
   onLeave: p => {                                               // out of the plane: on the Intrepid, or above it at an airport
     setMode("orbit");
     if (!flight.base || flight.base.r.code === "INT") return goTo(INTREPID_VIEW.eye, INTREPID_VIEW.target);
     const c = Math.cos(p.h), s = Math.sin(p.h);
     goTo([p.x - c * 70 + s * 50, p.y - s * 70 - c * 50, 45], [p.x, p.y, 2]);
   } });
-flight.forceOut = () => { if (flight.active) { flight.state = "idle"; flight.park(); flight.render(); audio.setPlane?.("you", 0, camera.position); } };
+flight.forceOut = () => { if (flight.active) { flight.cancelJump(); flight.state = "idle"; flight.park(); flight.render(); audio.setPlane?.("you", 0, camera.position); } };
 flight.onBump = () => pad?.rumble(0.8, 0.5, 260);
 // the Hudson sightseeing boat: Pier 83 -> up the river past the Intrepid -> back (js/boat.js)
 const boat = new Boat({ root: ROOT, scene, loader: gltf, registerMaterial, screens, audio, pickables,
@@ -837,19 +993,120 @@ const helm = new Helm({ root: ROOT, district: "times_square", boat, camera, dom:
 helm.onBump = s => pad?.rumble(0.5 + 0.4 * s, 0.4, 200);
 // New York Harbor: Lower Manhattan, Jersey City, Governors / Ellis / Liberty Islands and the Statue (js/harbor.js)
 const harbor = new Harbor({ root: ROOT, scene, loader: gltf, loadChunk: p => loadChunk(p), registerMaterial });
-helm.harbor = harbor; flight.harbor = harbor;
+helm.harbor = harbor; flight.harbor = harbor; ride.harbor = harbor;
 // The wider region (js/region.js: the coast out to Teterboro, LaGuardia, Newark, their runways, a city infill) is built
 // but NOT loaded: the game area is Midtown + the harbour (it's a website - keep it small). To bring it back:
 //   const region = new Region({ root: ROOT, scene, skipReady: harbor.ready, skip: (x, y) => ... }); flight.region = region;
 // with import { Region } from "./js/region.js", and region.update(camera) in the frame loop.
 const region = null;
 // Directions: walk / cab / boat / plane, mixed like a maps app (js/trip.js)
+import { Clip } from "./js/clip.js";
+const clip = new Clip({ canvas: renderer.domElement, toast: t => Messages.ask(t, [], { ms: 3000 }) });
+clip.ask = (t, a, o) => Messages.ask(t, a, o);
+document.getElementById("recmenu")?.addEventListener("click", () => clip.toggle());
+document.getElementById("missionsmenu")?.addEventListener("click", () => missions.togglePanel(true));
 const trip = new Trip({ nav, ride, helm, flight, harbor, boat, camera, getMode: () => mode, toast: t => Messages.ask(t, [], { ms: 4500 }) });
 ride.onDirections = p => trip.open(p);
 ride.toast = t => Messages.ask(t, [], { ms: 3500 });
+import { Progress as LevelProgress } from "./js/progress.js";
+import { Chaos } from "./js/chaos.js";
+import { Onboard } from "./js/onboard.js";
+import { Analytics } from "./js/analytics.js";
+import { Race } from "./js/race.js";
+import { Heat } from "./js/heat.js";
+import { PlayZone } from "./js/playzone.js";
+import { addZones } from "./js/zones.js";
+import { CrashJunction } from "./js/crash.js";
+import { SpeedBoat } from "./js/speedboat.js";
+import { Missions } from "./js/missions.js";
+import { Wolves } from "./js/wolves.js";
+let hitStop = 0;
+const progress = new LevelProgress({ nav, fares: null, getPursuit: () => pursuit, ride, toast: (t, ms) => Messages.ask(t, [], { ms: ms || 3500 }),
+  getPos: () => {
+    const m = mode;
+    if (m === "ride" && ride.car && ride.state === "driving") return { x: ride.car.position.x, y: -ride.car.position.z, z: ride.car.position.y, mode: "ride", driving: true, kind: ride.vehicle?.kind, air: ride.bikeAir > 0 };
+    if (m === "ride" || m === "orbit" || m === "parachute") return null;
+    return { x: camera.position.x, y: -camera.position.z, z: m === "fly" ? camera.position.y : 0, mode: m };
+  } });
+const chaos = new Chaos({ ride, traffic: () => traffic });
+progress.chaos = chaos;
+Analytics.init(window.__analyticsUrl || null);
+const race = new Race({ ride, traffic: () => traffic, scene, pop: t => chaos.popText(t), audio, toast: t => Messages.ask(t, [], { ms: 3500 }), onBoost: () => { progress.s.m.boosts = (progress.s.m.boosts || 0) + 1; }, onFinish: r => { progress.s.m.races = (progress.s.m.races || 0) + 1; if (r.beatGhost) progress.s.m.ghostWins = (progress.s.m.ghostWins || 0) + 1; Analytics.track("race_finish", r); const mid = { hell: "m_trial", midtown: "m_kart" }[r.id]; if (mid) missions.markDone(mid); } });
+// goals on the map: the one thing you should go to now is the waypoint (red pin + beacon + distance), unless you chose your own destination
+flight.nav = nav;
+flight.onLanding = r => { progress.s.m.landings = (progress.s.m.landings || 0) + 1; chaos.s.total += r.points; chaos.s.best = Math.max(chaos.s.best, chaos.s.total); chaos.popText(`LANDING ${r.grade}  +${r.points}`, true); Analytics.track("landing", { g: r.grade, p: r.points }); missions.markDone("m_air"); };
+flight.onJumpDone = r => { if (r.near) progress.s.m.jumpPad = (progress.s.m.jumpPad || 0) + 1; chaos.s.total += r.points; chaos.s.best = Math.max(chaos.s.best, chaos.s.total); chaos.popText(`JUMP +${r.points}`, true); Analytics.track("jump", { pad: r.landedOnPad, gates: r.gates, p: r.points }); if (r.near) missions.markDone("m_roof"); };
+const goalPlace = (id, name, x, y) => ({ id, name, x, y, kind: "goal" });
+setInterval(() => {
+  const wp = nav.waypoint?.place, mine = !!wp?.id?.startsWith?.("goal_");
+  if (wp && !mine) return;                                                  // the player's own destination wins
+  let want = null;
+  if ((race.state === "go" || race.state === "count") && race.course) { const P = race.course.pts[Math.min(race.cp, race.course.pts.length - 1)]; want = goalPlace("goal_race", `Race gate ${Math.min(race.cp, race.course.pts.length - 1)}/${race.course.pts.length - 1}`, P[0], P[1]); }
+  else if (flight.jump) want = goalPlace("goal_roof", "Landing pad: " + (flight.jump.target.label || "rooftop"), flight.jump.target.x, flight.jump.target.y);
+  else if (flight.state === "air" && flight.rooftopSites?.length) { const t = flight.rooftopSites[flight.selectedRoof || 0]; want = goalPlace("goal_roof", "Jump target: " + (t.label || "rooftop"), t.x, t.y); }
+  else if (onboard.step >= 0) want = null;
+  else if (missions.activeMission()) { const a = missions.activeMission(); want = goalPlace("goal_mission", `Mission ${a.num}: ${a.name}`, a.x, a.y); }                                   // the first minute is the guided ride: no other destination yet
+  else want = progress.nextGoalPlace();
+  if (want) { if (!mine || wp.id !== want.id || wp.x !== want.x || wp.y !== want.y) nav.setWaypoint(want); }
+  else if (mine) nav.setWaypoint(null);
+}, 500);
+const onboard = new Onboard({ ride, chaos, clip, touch: () => matchMedia("(pointer: coarse)").matches });
+chaos.onTrick = (k, p, e) => fares.trick(k, p, e);
+const playzone = new PlayZone({ scene, ground: groundMap, ride, chaos, nav });
+playzone.onSmash = () => { progress.s.m.smashed = (progress.s.m.smashed || 0) + 1; if (playzone.smashed >= 10) missions.markDone("m_park"); };
+const crashRun = new CrashJunction({ ride, traffic: () => traffic, chaos, toast: t => Messages.ask(t, [], { ms: 3500 }), onFinish: r => { progress.s.m.junctions = (progress.s.m.junctions || 0) + 1; progress.s.m.pileups = (progress.s.m.pileups || 0) + r.pileups; Analytics.track("crash_run", r); missions.markDone("m_crash"); } });
+crashRun.pop = t => chaos.popText(t);
+const speedboat = new SpeedBoat({ scene, camera, helm, audio, setMode, getMode: () => mode, nav, toast: t => Messages.ask(t, [], { ms: 3500 }), pop: t => chaos.popText(t),
+  onBoard: () => { flight.forceOut(); helm.forceOut(); if (ride.inCar) ride.getOut(); if (ride.active) ride.end(); nav.setWaypoint?.(null); },
+  onBoost: () => { progress.s.m.boosts = (progress.s.m.boosts || 0) + 1; },
+  onFinish: r => { progress.s.m.races = (progress.s.m.races || 0) + 1; progress.s.m.boatRaces = (progress.s.m.boatRaces || 0) + 1; chaos.s.total += Math.round(Math.max(0, 3000 - r.ms / 50)); Analytics.track("boat_race", r); missions.markDone("m_boat"); },
+  onLeave: ({ x, y, h }) => { setMode("orbit"); goTo([x - Math.cos(h) * 70 + Math.sin(h) * 60, y - Math.sin(h) * 70 - Math.cos(h) * 60, 45], [x, y, 4]); } });
+const hudPos = () => { if (ride.state === "driving" && ride.car) return { x: ride.car.position.x, y: -ride.car.position.z }; if (speedboat.active) return { x: speedboat.x, y: speedboat.y }; if (mode === "walk") return { x: camera.position.x, y: -camera.position.z }; return null; };
+const mapSets = () => (mapData && cityMap.data ? [mapData, cityMap.data] : []);
+const wolves = new Wolves({ harbor, scene, ground: groundMap, collider: () => collider, pos: hudPos, chaos, mapSets, pop: t => chaos.popText(t), toast: t => Messages.ask(t, [], { ms: 4500 }),
+  onFound: n => { progress.s.m.wolves = n; Analytics.track("wolf", { n }); if (n >= 50) missions.markDone("m_wolf"); } });
+const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => race.state !== "idle" || speedboat.race.state !== "idle" || crashRun.state !== "idle" || (pursuit?.active ?? false), scene, camera, traffic: () => traffic, race: () => race, pos: hudPos, mapSets, ask: (t, a, o) => Messages.ask(t, a, o), toast: t => Messages.ask(t, [], { ms: 4000 }),
+  start: {
+    bike: () => { setMode("walk"); ride.rideNearestBike(); },
+    park: () => { if (!ride.inCar) { setMode("walk"); ride.rideNearestBike(); } Messages.ask("Stunt Park: ride at the ramps, smash the barrels", [], { ms: 5000 }); },
+    taxi: () => { if (ride.state === "driving") fares.toggle(); else { setMode("walk"); ride.rideNearestBike(); Messages.ask("Get on a bike or in a car, then press J for fares", [], { ms: 5000 }); } },
+    race: id => { if (!race.startCourse(id)) Messages.ask("Get on a bike or in a car first, then start the race here (R)", [], { ms: 5000 }); },
+    crash: (x, y) => { if (ride.state === "driving") crashRun.runAt(x, y); else Messages.ask("Get on a bike or in a car first, then press X here", [], { ms: 5000 }); },
+    heat: () => { if (ride.state === "driving") pursuit?.start(2); else Messages.ask("Get on a bike or in a car first, then come back for the chase", [], { ms: 5000 }); },
+    boat: id => speedboat.board(id), fly: () => { flight.board({ home: true }); },
+    teleport: async m => {                                        // fast travel: you arrive at the flag with a bike at your side, and get on
+      goTo([m.x, m.y - 8, 1.7], [m.x, m.y, 1.2]); setMode("walk");
+      const v = await ride.bikeAt(m.x + 3, m.y - 4, 0); ride.approach({ parked: v });
+      Messages.ask(`${m.name}: ${m.pitch}`, [], { ms: 5000 });
+    },
+    wolf: () => { const w = wolves.nearest(); if (w) nav.setWaypoint({ id: "goal_wolf", name: "Nearest golden wolf", x: w.x, y: w.y, kind: "goal" }); Messages.ask(`Golden wolves: 30 hidden around the city. ${wolves.count} found so far`, [], { ms: 5000 }); },
+  } });
+// rally courses with their own gates (downtown and Central Park have no street grid of ours): each gate snaps to the nearest free land
+(async function customCourses() {
+  await harbor.ready;
+  const free = (x, y) => harbor.isLand(x, y) && harbor.topAt(x, y) < 1 && [0, 1, 2, 3, 4, 5, 6, 7].every(k => harbor.topAt(x + Math.cos(k * 0.785) * 8, y + Math.sin(k * 0.785) * 8) < 1);
+  const snap = ([x, y]) => { for (let r = 0; r <= 120; r += 10) for (let a = 0; a < 360; a += 30) { const px = x + Math.cos(a * Math.PI / 180) * r, py = y + Math.sin(a * Math.PI / 180) * r; if (free(px, py)) return [Math.round(px), Math.round(py)]; } return null; };
+  const line = (a, b, n) => Array.from({ length: n }, (_, i) => [a[0] + (b[0] - a[0]) * i / (n - 1), a[1] + (b[1] - a[1]) * i / (n - 1)]);
+  const ring = (c, r, n) => Array.from({ length: n + 1 }, (_, i) => [c[0] + Math.cos(i / n * 6.283) * r, c[1] + Math.sin(i / n * 6.283) * r]);
+  const make = (id, name, raw) => { const pts = raw.map(snap).filter(Boolean); if (pts.length >= 5) race.addCourse({ id, name, pts }); };
+  make("wall", "Wall Street Run", line([387, -5512], [629, -6613], 10));
+  make("cpark", "Central Park Loop", ring([260, 1290], 260, 8));
+})();
+missions.go = id => nav.onWelcome("mission:" + id);
+const heat = new Heat({ ride, chaos, pursuit: () => pursuit, toast: t => Messages.ask(t, [], { ms: 3500 }) });
+progress.heat = heat;
+chaos.onBigMoment = s => { Analytics.first("first_crash"); missions.markDone("m_ride"); if (s > 0.5) { hitStop = 0.1; clip.highlight("Huge crash"); } };
+chaos.onBest = n => { if (n > 1500) clip.highlight(`${n.toLocaleString()}-point chain`); };
+setInterval(() => {                                           // the Statue fly-by: low enough and close enough to Lady Liberty
+  if (flight.active && flight.state === "air" && harbor.statue && Math.hypot(flight.p.x - harbor.statue[0], flight.p.y - harbor.statue[1]) < 150 && flight.p.z < 260 && !missions.done.m_statue) { missions.markDone("m_statue"); chaos.s.total += 2500; chaos.popText("STATUE FLY-BY  +2500", true); }
+  if (ride.state === "driving") Analytics.first("first_ride", { kind: ride.vehicle?.kind }); const want = ride.state === "driving" && Settings.quality !== "low" && !document.hidden; if (want) clip.startBuffer(); else if (clip.buf) clip.stopBuffer(); }, 2000);   // record the last seconds only while you drive
 // cab fares (J in a cab you drive): the first job loop; rated in stars, no money (money is only for property / billboards)
 const fares = new Fares({ ride, nav, scene, camera, loader: gltf, root: ROOT, getCrowd: () => crowd, groundAt,
   toast: t => Messages.ask(t, [], { ms: 5000 }), playerId: () => meId || PLAYER });
+progress.fares = fares;
+fares.flash = t => chaos.popText(t);
+fares.onScore = (n, info) => { if (!info.late) { missions.markDone("m_taxi"); chaos.s.total += n; chaos.s.best = Math.max(chaos.s.best, chaos.s.total); chaos.popText(`FARE +${n.toLocaleString()}`, true); } };
+
 ride.fares = fares;
 // sightseeing tours (menu: Sightseeing tours): walk, sail or fly a landmark route against the clock
 const tours = new Tours({ scene, camera, flight, helm, boat, walk, harbor, getMode: () => mode, setMode: m => setMode(m), goTo: (e, t) => goTo(e, t),
@@ -857,6 +1114,24 @@ const tours = new Tours({ scene, camera, flight, helm, boat, walk, harbor, getMo
 ride.onFares = () => fares.toggle();
 nav.walkToPoint = (x, y) => walk.walkTo(new THREE.Vector3(x, 0, -y));
 ride.people = (x, y, r) => npcs?.near(x, y, r) || [];
+ride.hitPedestrians = (x, y, vx, vy, strength) => {
+  if (!Settings.roughContact || !npcs?.hitAt(x, y, vx, vy, strength)) return false;
+  audio.crash?.(new THREE.Vector3(x, 0.8, -y), strength, "person");
+  return true;
+};
+walk.hitNearby = (x, y, vx, vy, strength) => Settings.roughContact && npcs?.hitAt(x, y, vx, vy, strength);
+walk.onAttack = () => {
+  if (ride.inCar || mode !== "walk") return;
+  if (!me?.punch()) return;                                   // the swing plays even when Rough contact is off
+  audio.punch?.(new THREE.Vector3(walk.eye.x, 1.2, walk.eye.z), true);
+  if (!Settings.roughContact) return;
+  setTimeout(() => {                                          // the fist lands at the top of the swing (~0.17 s in)
+  const dir = [-Math.sin(walk.yaw), Math.cos(walk.yaw)], eye = walk.eye;
+  const x = eye.x + dir[0] * 0.8, y = -eye.z + dir[1] * 0.8, vx = dir[0] * 3, vy = dir[1] * 3;
+  const hit = traffic?.hitRiderAt(x, y, vx, vy, 0.45, 1.2) || npcs?.hitAt(x, y, vx, vy, 0.45, 1.1);
+  if (hit) { hitStop = 0.09; audio.grunt?.(new THREE.Vector3(x, 1.6, -y), 0.8 + Math.random() * 0.5); audio.punch?.(new THREE.Vector3(x, 1.2, -y), false); walk.kick(0.16, 0.14); pad?.rumble(0.5, 0.4, 90); }
+  }, 240);
+};
 fetch(ROOT + "data/harbor/places.json").then(r => r.json()).then(d => {      // harbour landmarks in search / the map card
   (function add() { if (!nav.places?.length) return setTimeout(add, 400); nav.places.push(...d.places); })();
 }).catch(() => {});
@@ -888,6 +1163,7 @@ document.getElementById("gearbtn").onclick = () => pause.open();
 // Esc = pause (unless something else is open and wants it: map, sheet, search, menu)
 addEventListener("keydown", e => {                           // capture: decide before the map / sheet handlers act
   if (e.key !== "Escape" || e.target.tagName === "INPUT") return;
+  if (!ride.garage.hidden) { ride.closeGarage(); e.stopPropagation(); return; }
   if (cityMap.isOpen || business.current || !menu.hidden || document.getElementById("welcome").style.display === "flex") {
     if (document.getElementById("welcome").style.display === "flex") nav.closeWelcome();
     return;
@@ -925,25 +1201,32 @@ function watchFrameRate() {
   requestAnimationFrame(count);
 }
 
-// progress: where you are + the cars you parked, every few seconds and when leaving the page
+// progress: where you are + your parked cars and bikes, every few seconds and when leaving the page
 // a spot is worth saving / restoring only if it's a sensible place to stand: not inside a building, not pressed
 // against a wall or a shop window, on the ground or clearly up in the air
 function safeSpot(p) {
   if (!collider) return false;
   const x = p.x, y = -p.z, feet = Math.max(0, p.y - 1.7);
+  const pa = playArea;                                 // a saved spot outside the play area (no colliders there) is never a place to restore
+  if (pa && (x < pa[0] || x > pa[2] || y < pa[1] || y > pa[3])) return false;
   if (collider.blocked(x, y, 1.0, p.y > 25 ? p.y : feet)) return false;
   if (p.y > 25) return true;
   for (let a = 0; a < 6.28; a += 1.57) if (blockedAhead(p, new THREE.Vector3(Math.cos(a), 0, Math.sin(a)), 1.2)) return false;
   return true;
 }
 function saveProgress() {
-  if (forgotten || document.body.classList.contains("loading") || ride.inCar || flight.active || helm.active || nav.flight) return;
-  if (!safeSpot(camera.position)) return;                    // keep the last good spot instead
+  if (forgotten || document.body.classList.contains("loading") || !ride.garageReady) return;
+  const previous = Progress.load() || {};
+  const garage = ride.garageData();
+  if (ride.inCar || flight.active || helm.active || nav.flight || !safeSpot(camera.position)) {
+    Progress.save({ ...previous, garage });
+    return;
+  }
   const L = v => [+v.x.toFixed(2), +(-v.z).toFixed(2), +v.y.toFixed(2)];   // three -> Blender local
   const f = new THREE.Vector3(); camera.getWorldDirection(f);
   const tgt = mode === "orbit" ? orbit.target : camera.position.clone().addScaledVector(f, 20);
   Progress.save({ cam: L(camera.position), tgt: L(tgt), mode: mode === "walk" ? "walk" : "orbit",
-    parked: ride.parked.filter(v => v.kind !== "bike").map(v => ({ type: v.type, x: v.group.position.x, y: -v.group.position.z, h: v.heading })) });
+    garage, parked: ride.parked.filter(v => v.kind !== "bike").map(v => ({ type: v.type, x: v.group.position.x, y: -v.group.position.z, h: v.heading })) });
 }
 setInterval(saveProgress, 5000);
 addEventListener("pagehide", saveProgress);
@@ -955,6 +1238,8 @@ nav.onWelcome = k => {
   const out = () => { flight.forceOut(); helm.forceOut(); if (ride.inCar && k !== "fares") ride.getOut(); };
   if (k === "fly") { out(); flight.board({ home: true }); }
   else if (k === "sail") { out(); helm.board(); }
+  else if (k === "speedboat") { out(); speedboat.board(); }
+  else if (k.startsWith?.("mission:")) { out(); missions.travel(k.slice(8)); }
   else if (k === "bike") { out(); setMode("walk"); ride.rideNearestBike(); }
   else if (k === "tours") tours.open();
   else if (k === "fares") {                                   // into a yellow cab, then the first fare
@@ -1028,6 +1313,7 @@ function handlePad(dt) {
   if (ride.inCar) {
     ride.pad = P;
     if (P.pressed(BTN.SQUARE)) ride.honk();
+    if (ride.vehicle?.kind === "bike" && P.pressed(BTN.R1)) ride.jumpBike();
     if (P.pressed(BTN.CIRCLE)) ride.getOut();
     if (P.pressed(BTN.R3) && ride.vehicle?.kind === "taxi") ride.action("view");
     if (P.pressed(BTN.CROSS)) ride.panel.querySelector(".ui-btn.primary:not([disabled])")?.click();
@@ -1041,7 +1327,7 @@ function handlePad(dt) {
   }
   if (P.pressed(BTN.CIRCLE) && mode === "walk") setMode("orbit");
   if (P.pressed(BTN.R3) || P.pressed(BTN.L3)) setMode(mode === "walk" ? "orbit" : "walk");
-  if (P.pressed(BTN.L1)) nav.turn(Math.PI / 6);
+  if (P.pressed(BTN.L1)) mode === "walk" && Settings.roughContact ? walk.attack() : nav.turn(Math.PI / 6);
   if (P.pressed(BTN.R1)) nav.turn(-Math.PI / 6);
   if (P.pressed(BTN.UP)) zoomBy(1);
   if (P.pressed(BTN.DOWN)) zoomBy(-1);
@@ -1079,19 +1365,36 @@ const cityMap = new CityMap({ root: ROOT, district: "times_square", camera, nav,
   onGo: p => nav.go(p),                                      // in a car this re-routes it (nav.beforeGo)
   onWalk: p => { if (ride.inCar) ride.getOut(); nav.walkTo(p); },
   canLand: () => flight.state === "air",
-  onRide: p => (p?.id?.startsWith("bike_") ? (setMode("walk"), ride.rideBike(p.id)) : p?.id?.startsWith("apt_") ? flight.startLanding(p.id.slice(4)) : p?.id === "intrepid" ? flight.board({ home: true }) : p?.id === "pier83" ? helm.board()
-    : ride.inCar || ride.state === "coming" || ride.state === "waiting" ? ride.setDestination(p) : ride.book(p)),
-  inCar: () => ride.inCar, route: () => tours.mapInfo() || fares.mapInfo() || trip.mapInfo() || ride.mapInfo(), onDirections: p => trip.open(p),
+  onRide: p => {
+    if (ride.inCar) return;
+    if (p?.id?.startsWith("bike_")) return ride.rideBike(p.id);
+    if (p?.id?.startsWith("vehicle_")) return ride.rideParked(p.id);
+    if (p?.id?.startsWith("apt_")) return flight.startLanding(p.id.slice(4));
+    if (p?.id === "intrepid") return flight.board({ home: true });
+    if (p?.id === "pier83") return helm.board();
+    if (ride.state === "coming" || ride.state === "waiting") return ride.setDestination(p);
+    return ride.book(p);
+  },
+  inCar: () => ride.inCar, route: () => tours.mapInfo() || fares.mapInfo() || trip.mapInfo() || ride.mapInfo() || flight.mapInfo(), onDirections: p => trip.open(p),
   getSlot: id => business.sales?.get(id), onScreen: id => business.open(id), region,
   whereAmI: () => {                                          // the blue dot: you, not the camera behind you
     const o = flight.active ? flight.plane.position : helm.active && boat.group ? boat.group.position : mode === "walk" ? walk.eye : null;
     return o ? [o.x, -o.z] : null;
   } });
 const toggleMap = () => cityMap.toggle();
+ride.onGarageMap = marker => cityMap.focusMarker(marker);
 // the parked motorcycles: a live pin on the full map and the minimap (they follow the bike, hide while you ride it)
+(function zonesWhenReady() { if (!nav.places?.length || !mapData || !cityMap.data) return setTimeout(zonesWhenReady, 500); addZones(nav, [mapData, cityMap.data]); missions.register(nav); })();
 ride.onBikes = list => (function add() {
   if (!mapData || !cityMap.data) return setTimeout(add, 400);
   mapData.markers.push(...list); cityMap.data.markers.push(...list);
+})();
+ride.onVehicles = list => (function update() {
+  if (!mapData || !cityMap.data) return setTimeout(update, 400);
+  for (const data of [mapData, cityMap.data]) {
+    data.markers = data.markers.filter(m => !m.id?.startsWith("vehicle_"));
+    data.markers.push(...list);
+  }
 })();
 let mmHits = [];                                             // screen dots drawn on the minimap (canvas px)
 mm.addEventListener("click", e => {                          // tap a yellow screen = preview it; anywhere else = full map
@@ -1137,7 +1440,7 @@ function drawMinimap() {
   }
   mx.drawImage(mapImg, -(px - x0) * k, -(y1 - py) * k);
   const P = (x, y) => [(x - px) * k, -(y - py) * k];
-  const rideInfo = tours?.mapInfo() || fares?.mapInfo() || trip?.mapInfo() || ride.mapInfo();
+  const rideInfo = tours?.mapInfo() || fares?.mapInfo() || trip?.mapInfo() || ride.mapInfo() || flight?.mapInfo();
   if (rideInfo?.route?.length > 1) {                                  // the route still to drive (Google blue)
     mx.beginPath(); rideInfo.route.forEach(([x, y], i) => { const [u, v] = P(x, y); i ? mx.lineTo(u, v) : mx.moveTo(u, v); });
     mx.lineWidth = 9 / zoom; mx.strokeStyle = "#0a84ff"; mx.lineJoin = mx.lineCap = "round"; mx.stroke();
@@ -1187,7 +1490,7 @@ function drawMinimap() {
     mx.beginPath(); mx.arc(u, v, 10, 0, 7);
     mx.fillStyle = pinColor(m.icon); mx.fill();
     mx.lineWidth = 2.5; mx.strokeStyle = "#fff"; mx.stroke();
-    drawPlaceIcon(mx, m.icon, u, v, 10);
+    drawPlaceIcon(mx, m.icon, u, v, 10); drawBadge(mx, u, v, 10, m);
   }
   // business view: every sellable screen, tappable (yellow = the business colour everywhere)
   if (nav.showAds) {
@@ -1237,7 +1540,8 @@ function drawMinimap() {
 const clock = new THREE.Clock();
 let paused = false;
 function tick() {
-  const dt = Math.min(clock.getDelta(), 0.05);
+  let dt = Math.min(clock.getDelta(), 0.05);
+  if (hitStop > 0) { hitStop -= dt; dt *= 0.06; }               // impact freeze: the world nearly stops for a beat when a punch lands
   handlePad(dt);
   if (paused) { composer.render(); requestAnimationFrame(tick); return; }   // the world holds still behind the menu
   if (mode === "walk") walk.update(dt, document.activeElement?.tagName === "INPUT" ? {} : keys);
@@ -1250,8 +1554,11 @@ function tick() {
   intrepid.update();
   trip.update();
   fares.update(dt);
+  playzone.update(dt);
+  speedboat.update(dt);
   tours.update(dt);
   traffic?.update(dt);
+  pursuit?.update(dt);
   nav.update(dt, keys);
   if (crowd) crowd.update(dt);
   npcs?.update(dt);

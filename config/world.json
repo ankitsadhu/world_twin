@@ -45,8 +45,8 @@
   ],
   "note": "0 = noon, 1 = midnight"
  },
- "sales_contact": "sales@example.com",
- "_sales_contact_note": "PLACEHOLDER: replace with the real sales inbox before deploy (predeploy_check.py enforces this)",
+ "sales_contact": "support@neonblox.com",
+ "_sales_contact_note": "Set 2026-10: support@neonblox.com (the user gave this address as the inbox; change if a separate sales inbox is created)",
  "checkout": {
   "payment_link": null,
   "note": "Optional hosted payment page (e.g. a Stripe Payment Link). Without one, checkout sends the order to sales_contact for an invoice. Orders carry client_reference_id = the order number."

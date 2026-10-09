@@ -32,6 +32,8 @@ export class Flight {
     this.ctl = { left: 0, right: 0, up: 0, down: 0, fast: 0, slow: 0 };
     this.look = { yaw: 0, drag: null, idle: 0 };
     this.p = { x: DECK.x, y: DECK.y, z: DECK.z, h: DECK.h, pitch: 0, roll: 0, v: 0 };
+    this.jump = null;
+    this.rooftopSites = null;
     this.bannerS = 0;
     this.buildDOM();
     this.bindInput();
@@ -43,9 +45,14 @@ export class Flight {
 
   // ---------------------------------------------------------------- models
   async load() {
-    const g = await new Promise((res, rej) => this.loader.load(`${this.root}export/vehicles/small_plane.glb`, res, undefined, rej));
+    const [g, canopy] = await Promise.all([
+      this.loader.loadAsync(`${this.root}export/vehicles/small_plane.glb`),
+      this.loader.loadAsync(`${this.root}export/characters/parachute.glb`),
+    ]);
     g.scene.traverse(o => { if (o.isMesh) [].concat(o.material).forEach(m => this.registerMaterial?.(m)); });
     this.tpl = g.scene;
+    this.canopyTpl = canopy.scene;
+    this.canopyTpl.traverse(o => { if (o.isMesh) { o.castShadow = true; o.raycast = () => {}; } });
     const make = name => {
       const grp = new THREE.Group(); grp.name = name;
       const m = this.tpl.clone(true); grp.add(m);
@@ -181,31 +188,306 @@ export class Flight {
     P.style.display = "flex";
     const at = this.base?.r.code && this.base.r.code !== "INT" ? this.base.r.name : "the Intrepid deck";
     const title = s === "ready" ? `On ${at.startsWith("the") ? at : "the runway at " + at}` : s === "roll" ? (this.landing ? "Landed" : "Taking off")
+      : s === "jumpFree" || s === "jumpCanopy" ? `Skydrop · ${this.jump?.target?.label || "Rooftop challenge"}`
       : this.auto ? "Landing: autopilot" : this.approachOn ? "Approach: follow the rings" : "Flying";
     const act = s === "ready" ? `<button class="ui-btn primary" data-a="go">Take off</button><button class="ui-btn" data-a="out">Get out</button>`
+      : s === "jumpFree" ? `<button class="ui-btn primary" data-a="deploy">Deploy parachute · Space</button><button class="ui-btn" data-a="abort">Restart</button>`
+      : s === "jumpCanopy" ? `<span class="ui-btn">Gate ${Math.min(this.jump?.gate || 0, 3)}/3 · land on the pad</span><button class="ui-btn" data-a="abort">Restart</button>`
       : s === "air" ? (this.auto ? `<button class="ui-btn" data-a="manual">Take over</button>`
         : this.chooser ? this.airports().map(r => `<button class="ui-btn primary" data-land="${r.code}">${r.name.replace(/ (Liberty )?(International )?Airport$/, "")} · ${this.distTo(r)}</button>`).join("") + `<button class="ui-btn" data-a="nochoose">✕</button>`
-        : `<button class="ui-btn primary" data-a="land">${this.airports().length ? "Land at…" : "Land on the Intrepid"}</button><button class="ui-btn" data-a="home" title="Skip the landing: back where you took off">Skip</button>`)
+        : `<select class="ui-btn" id="fly-roof" aria-label="Rooftop landing target"></select><button class="ui-btn primary" data-a="jump" ${this.jumpReady() ? "" : "disabled"}>Jump · J</button><button class="ui-btn" data-a="land">${this.airports().length ? "Land at…" : "Land on the Intrepid"}</button><button class="ui-btn" data-a="home" title="Skip the landing: back where you took off">Skip</button>`)
       : `<button class="ui-btn" data-a="out" ${this.p.v > 2 ? "disabled" : ""}>Get out</button>`;
     const help = inputDevice() === "pad" ? "Left stick: turn and climb · R2 faster · L2 slower · ✕ take off · ○ get out"
       : "W / ↑ climb · S / ↓ descend · A D turn · Shift faster · Space slower";
-    const landHelp = this.auto ? "The autopilot flies the approach and lands · any flight key takes over"
+    const landHelp = s === "jumpFree" ? "Freefall · steer with A/D · Space opens the canopy early (automatic in 2.2 seconds)"
+      : s === "jumpCanopy" ? `Steer with A/D · ${Math.max(0, Math.round((this.jump?.z || 0) - (this.jump?.target?.z || 0)))} m above the target`
+      : s === "air" ? "Build altitude above the chosen rooftop, then jump. Fly through all three gates before landing."
+      : this.auto ? "The autopilot flies the approach and lands · any flight key takes over"
       : this.approachOn ? "Fly through the gold rings down to the runway: slow (Space), wings level, gentle descent" : help;
     P.innerHTML = `<h3>✈ ${title}</h3><div class="stats"><span><span class="big" id="fly-spd">0</span> mph</span>
       <span><span class="big" id="fly-alt">0</span> ft</span>${s === "air" ? `<span id="fly-home" style="color:var(--ink-2)"></span>` : ""}</div>
       <div class="acts" style="display:flex;gap:var(--s2)">${act}</div>
-      ${s !== "air" || this.helpT > 0 || this.auto || this.approachOn ? `<p class="help">${landHelp}</p>` : ""}`;
+      ${s !== "air" || this.helpT > 0 || this.auto || this.approachOn || this.rooftopSites?.length ? `<p class="help">${landHelp}</p>` : ""}`;
     P.querySelectorAll("[data-a]").forEach(b => b.onclick = () => this.action(b.dataset.a));
     P.querySelectorAll("[data-land]").forEach(b => b.onclick = () => this.startLanding(b.dataset.land));
+    const roof = P.querySelector("#fly-roof");
+    if (roof) {
+      for (const [i, site] of (this.rooftopSites || []).entries()) roof.add(new Option(site.label, String(i)));
+      roof.value = String(this.selectedRoof || 0);
+      roof.onchange = () => { this.selectedRoof = Number(roof.value); this.render(); };
+    }
+    const helpEl = P.querySelector(".help");
+    if (s === "air" && helpEl) helpEl.textContent = landHelp;
   }
 
   action(a) {
     if (a === "go") this.takeOff();
     if (a === "out") this.getOut();
+    if (a === "jump") this.startJump();
+    if (a === "deploy") this.deployCanopy();
+    if (a === "abort") this.abortJump();
     if (a === "home") this.reset("Skipped");
     if (a === "land") { if (this.airports().length) { this.chooser = true; this.render(); } else this.startLanding("INT"); }
     if (a === "nochoose") { this.chooser = false; this.render(); }
     if (a === "manual") { this.auto = null; this.approachOn = true; this.render(); this.toast?.("You have control: follow the gold rings down to the runway."); }
+  }
+
+  // the map line while flying: you -> the destination you set (a straight line: planes don't use roads)
+  mapInfo() {
+    const wp = this.nav?.waypoint;
+    if (!this.active || !wp) return null;
+    const x = this.jump ? this.jump.x : this.p.x, y = this.jump ? this.jump.y : this.p.y;
+    return { car: [x, y], route: [[x, y], [wp.x, wp.y]] };
+  }
+
+  jumpReady() {
+    const site = this.rooftopSites?.[this.selectedRoof || 0];
+    return this.state === "air" && !!site && this.p.z > Math.max(80, site.z + 25);
+  }
+
+  buildRooftopSites() {
+    const col = this.getCollider();
+    if (!col) return;
+    const inside = (pts, x, y) => {
+      let hit = false;
+      for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+        const [xi, yi] = pts[i], [xj, yj] = pts[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) hit = !hit;
+      }
+      return hit;
+    };
+    const clearance = (pts, x, y) => Math.min(...pts.map((q, i) => {
+      const r = pts[(i + 1) % pts.length], dx = r[0] - q[0], dy = r[1] - q[1];
+      const t = THREE.MathUtils.clamp(((x - q[0]) * dx + (y - q[1]) * dy) / (dx * dx + dy * dy || 1), 0, 1);
+      return Math.hypot(x - q[0] - t * dx, y - q[1] - t * dy);
+    }));
+    const candidates = col.polys.filter(p => p.kind === "building").map(p => {
+      const [x0, y0, x1, y1] = p.box, x = (x0 + x1) / 2, y = (y0 + y1) / 2;
+      const edge = clearance(p.pts, x, y);
+      return { poly: p, x, y, edge, area: (x1 - x0) * (y1 - y0) };
+    }).filter(c => c.poly.h > 20 && c.poly.h < 300 && c.x > -450 && c.x < 450 && c.y > -360 && c.y < 460
+      && c.edge >= 6.5 && inside(c.poly.pts, c.x, c.y));
+    if (!candidates.length) { this.rooftopSites = []; return; }
+    const small = candidates.filter(c => c.poly.h < 140).sort((a, b) => a.area - b.area)[0];
+    const named = name => candidates.find(c => c.poly.name === name);
+    const chosen = [
+      small && { ...small, label: "Small rooftop · tight target" },
+      named("Minskoff Theatre") && { ...named("Minskoff Theatre"), label: "Minskoff Theatre" },
+      named("New York Marriott Marquis Hotel") && { ...named("New York Marriott Marquis Hotel"), label: "Marriott Marquis" },
+    ].filter(Boolean);
+    this.rooftopSites = chosen.map((c, i) => {
+      const radius = i === 0 ? 3.6 : Math.min(7.5, c.edge * 0.72);
+      const group = new THREE.Group();
+      group.name = `SKY_rooftop_${i}`;
+      group.position.set(c.x, c.poly.h + 0.14, -c.y);
+      const disk = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, 0.22, 32),
+        new THREE.MeshStandardMaterial({ color: 0x18a98b, emissive: 0x075c48, emissiveIntensity: 1.4, roughness: 0.5 }));
+      disk.position.y = 0; disk.castShadow = true; disk.receiveShadow = true;
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(radius, 0.24, 8, 40),
+        new THREE.MeshBasicMaterial({ color: 0x77ffe1, toneMapped: false }));
+      ring.rotation.x = Math.PI / 2; ring.position.y = 0.16; ring.raycast = () => {};
+      group.add(disk, ring); this.scene.add(group);
+      return { x: c.x, y: c.y, z: c.poly.h + 0.25, radius, label: c.label, group };
+    });
+    if (this.rooftopSites.length) this.render();
+  }
+
+  // an unsteered jump from `alt`: free fall (gravity, ~12 m/s forward) for 2.2 s, then the canopy (7.2 m/s down, 11 m/s forward) to the roof height
+  jumpProfile(alt, roofZ) {
+    const pts = []; let z = alt, fall = 0, t = 0, d = 0;
+    while (z > roofZ + 1.2 && t < 200) {
+      const dt = 0.05; t += dt;
+      if (t < 2.2) fall = Math.min(45, fall + 9.81 * dt); else fall += (7.2 - fall) * Math.min(1, dt * 2.2);
+      z -= fall * dt; d += (t < 2.2 ? 12 : 11) * dt; pts.push({ t, z, d });
+    }
+    return { T: t, D: d, pts };
+  }
+
+  startJump() {
+    if (!this.jumpReady()) {
+      this.toast?.("Climb higher than the rooftop before jumping");
+      return;
+    }
+    const avatar = this.getPlayer?.();
+    if (!avatar) {
+      this.toast?.("Your skydiver is still getting ready · try again in a moment");
+      return;
+    }
+    const target = this.rooftopSites[this.selectedRoof || 0];
+    // You exit over the target's approach, not wherever the plane happens to be (often over the Hudson, miles away and outside the
+    // challenge area): a canopy glides ~11 m/s forward for 7.2 m/s down, so the drop point is placed where that glide reaches the pad
+    // with ~25 % to spare, at the plane's bearing from the pad, high enough to be fun (at least 190 m above the roof).
+    const from = Math.atan2(this.p.y - target.y, this.p.x - target.x), alt = Math.max(this.p.z, target.z + 190);
+    const glide = this.jumpProfile(alt, target.z).D * 0.92;                         // a little short: you can hold on with Shift (+4 m/s)
+    const start = { x: target.x + Math.cos(from) * glide, y: target.y + Math.sin(from) * glide, z: alt };
+    const heading = from + Math.PI;                                                   // facing the pad
+    const rig = new THREE.Group();
+    rig.name = "SKY_parachute"; rig.userData.parachute = true;
+    rig.scale.setScalar(0.72);
+    rig.add(this.canopyTpl.clone(true));
+    this.scene.add(rig);
+    this.jumpRig = rig;
+    this.jump = { avatar, target, x: start.x, y: start.y, z: start.z, heading,
+      yaw: heading + Math.PI / 2, elapsed: 0, fall: 0, speed: 12, gate: 0, gates: [] };
+    this.addJumpGates(start, target);
+    this.state = "jumpFree";
+    this.camSnap = true;
+    this.ctl = { left: 0, right: 0, up: 0, down: 0, fast: 0, slow: 0 };
+    avatar.contact(false);
+    avatar.object.userData.parachute = true;
+    this.setMode("parachute");
+    this.render();
+    this.toast?.(`Jump! Aim for the ${target.label} pad and fly through all three gates.`);
+  }
+
+  addJumpGates(start, target) {
+    this.clearJumpGates();
+    const j = this.jump, prof = this.jumpProfile(start.z, target.z);
+    const mat = new THREE.MeshBasicMaterial({ color: 0xffd60a, toneMapped: false, transparent: true, opacity: 0.9, depthWrite: false });
+    const fwd = new THREE.Vector3();
+    for (const u of [0.3, 0.55, 0.8]) {                                           // gates on the path an unsteered glide takes to the pad
+      const k = Math.min(prof.pts.length - 2, Math.floor(prof.pts.length * u)), P = prof.pts[k], Q = prof.pts[k + 1];
+      const hx = start.x + (target.x - start.x) * (P.d / prof.D), hy = start.y + (target.y - start.y) * (P.d / prof.D);
+      const gate = new THREE.Mesh(new THREE.TorusGeometry(9, 0.45, 8, 32), mat);
+      gate.position.set(hx, P.z, -hy);
+      fwd.set(target.x - start.x, Q.z - P.z, -(target.y - start.y)).normalize();
+      gate.lookAt(gate.position.clone().add(fwd));
+      gate.raycast = () => {}; this.scene.add(gate); j.gates.push(gate);
+    }
+  }
+
+  clearJumpGates() {
+    for (const gate of this.jump?.gates || []) {
+      this.scene.remove(gate); gate.geometry.dispose(); gate.material.dispose();
+    }
+    if (this.jump) this.jump.gates = [];
+  }
+
+  cancelJump() {
+    this.clearJumpGates();
+    if (this.jumpRig) { this.scene.remove(this.jumpRig); this.jumpRig = null; }
+    if (this.jump?.avatar) {
+      this.jump.avatar.contact(true);
+      delete this.jump.avatar.object.userData.parachute;
+    }
+    this.jump = null;
+  }
+
+  deployCanopy() {
+    if (this.state !== "jumpFree" || !this.jump) return;
+    this.state = "jumpCanopy";                                       // the opening shock: the fall rate eases down (updateJump), no jolt
+    this.jumpRig.visible = true;
+    this.render();
+    this.toast?.("Canopy open · steer toward the glowing rooftop");
+  }
+
+  updateJump(dt) {
+    const j = this.jump;
+    if (!j) return;
+    const I = this.input();
+    j.elapsed += dt;
+    if (this.state === "jumpFree") {
+      j.fall = Math.min(45, j.fall + 9.81 * dt);
+      if (j.elapsed > 2.2 || j.z < j.target.z + 24 || I.slow > 0.1) this.deployCanopy();
+    }
+    if (this.state === "jumpCanopy") {
+      j.heading += I.turn * 0.72 * dt;
+      j.speed += THREE.MathUtils.clamp((11 + I.fast * 4 - j.speed), -2 * dt, 2 * dt);
+      j.fall += (7.2 - I.climb * 1.8 - j.fall) * Math.min(1, dt * 2.2);
+    }
+    j.x += Math.cos(j.heading) * j.speed * dt;
+    j.y += Math.sin(j.heading) * j.speed * dt;
+    j.z -= j.fall * dt;
+    j.yaw = j.heading + Math.PI / 2;
+    const wx = j.x, wz = -j.y;
+    j.avatar.set(wx, j.z, wz, j.yaw, j.speed, Math.max(0, j.z - j.target.z));
+    j.avatar.update(dt);
+    if (this.state === "jumpFree") {
+      j.avatar.rot("LeftArm", ["z", -38]); j.avatar.rot("RightArm", ["z", 38]);
+      j.avatar.rot("LeftUpLeg", ["x", -18]); j.avatar.rot("RightUpLeg", ["x", -18]);
+    } else {
+      j.avatar.rot("LeftArm", ["z", -18]); j.avatar.rot("RightArm", ["z", 18]);
+    }
+    if (this.jumpRig?.visible) {
+      this.jumpRig.position.set(wx, j.z, wz); this.jumpRig.rotation.y = j.yaw;
+    }
+    const gate = j.gates[j.gate];
+    if (gate && gate.position.distanceTo(new THREE.Vector3(wx, j.z + 2, wz)) < 11) {
+      gate.material = new THREE.MeshBasicMaterial({ color: 0x42ffb0, toneMapped: false });
+      j.gate++;
+      if (j.gate === 3) this.toast?.("All three aerial gates · line up the rooftop landing");
+    }
+    if (!this.jumpUiT || j.elapsed - this.jumpUiT > 0.25) { this.jumpUiT = j.elapsed; this.render(); }
+    if (this.state === "jumpFree" && j.elapsed > 2.2) this.deployCanopy();
+
+    const col = this.getCollider(), roof = col?.buildingAt(j.x, j.y, 0.5);
+    let surface = roof ? roof.h + 0.25 : -1.8;
+    if (!roof && j.z < 125) {
+      const ground = this.groundAt?.(new THREE.Vector3(j.x, Math.max(50, j.z + 20), -j.y));
+      if (Number.isFinite(ground)) surface = ground;
+    }
+    if (j.z <= surface + 1.15) {
+      if (surface < -0.5) { this.failJump("Splash! The river is not a landing zone"); return; }
+      this.finishJump(surface);
+      return;
+    }
+    if (!roof && col?.blocked(j.x, j.y, 0.45, j.z - 0.8)) {
+      this.failJump("Too close to a building · try the rooftop route again");
+      return;
+    }
+    if (j.x < -1750 || j.x > 960 || j.y < -720 || j.y > 740) {
+      this.failJump("Outside the rooftop challenge area");
+      return;
+    }
+    this.followJump(dt);
+    const alt = document.getElementById("fly-alt");
+    if (alt) alt.textContent = Math.max(0, Math.round((j.z - surface) * FT / 10) * 10);
+    const sp = document.getElementById("fly-spd");
+    if (sp) sp.textContent = Math.round(j.speed * MPH);
+  }
+
+  followJump(dt) {
+    const j = this.jump;
+    if (!j) return;
+    const behind = new THREE.Vector3(-Math.cos(j.heading) * 15, 6, Math.sin(j.heading) * 15);
+    const want = new THREE.Vector3(j.x, j.z, -j.y).add(behind);
+    const a = this.camSnap ? 1 : 1 - Math.exp(-dt * 4);
+    this.camSnap = false;
+    this.camera.position.lerp(want, a);
+    this.camera.lookAt(j.x, j.z + 1, -j.y);
+  }
+
+  finishJump(surface) {
+    const j = this.jump, target = j.target, d = Math.hypot(j.x - target.x, j.y - target.y);
+    const landedOnPad = d <= target.radius;
+    const success = landedOnPad && j.gate === 3;
+    const message = success ? `Perfect rooftop landing · all 3 gates · ${Math.round(j.elapsed)} seconds · ${Math.round(d)} m from the centre`
+      : landedOnPad ? `Rooftop landing · ${j.gate}/3 gates · try for a cleaner run`
+        : `Safe rooftop touchdown · ${j.gate}/3 gates · target was ${target.label}`;
+    j.avatar.set(j.x, surface, -j.y, j.yaw, 0, 0);
+    j.avatar.contact(true);
+    delete j.avatar.object.userData.parachute;
+    this.clearJumpGates();
+    if (this.jumpRig) { this.scene.remove(this.jumpRig); this.jumpRig = null; }
+    this.jump = null;
+    this.state = "idle";
+    this.audio?.setPlane?.("you", 0, this.plane.position);
+    this.render();
+    const jp = (landedOnPad ? 800 : 150) + j.gate * 300 + (success ? 500 : 0) - Math.round(Math.min(400, d * 6));
+    this.onJumpDone?.({ success, landedOnPad, near: d <= Math.max(10, target.radius), gates: j.gate, d, points: Math.max(0, jp) });
+    this.onParachuteLand?.({ x: j.x, y: j.y, z: surface, yaw: j.yaw });
+    this.toast?.(message);
+  }
+
+  failJump(message) {
+    this.cancelJump();
+    this.state = "ready";
+    this.setMode("fly");
+    this.reset(message);
+  }
+
+  abortJump() {
+    this.failJump("Challenge restarted");
   }
 
   bindInput() {
@@ -213,6 +495,8 @@ export class Flight {
       ShiftLeft: "fast", ShiftRight: "fast", Space: "slow" };
     addEventListener("keydown", e => {
       if (e.target.tagName === "INPUT") return;
+      if (e.code === "KeyJ" && !e.repeat && this.state === "air") { this.startJump(); return; }
+      if (e.code === "Space" && this.state === "jumpFree") { this.deployCanopy(); e.preventDefault(); return; }
       if (this.active && keys[e.code]) {
         this.ctl[keys[e.code]] = 1; e.preventDefault();
         if (this.auto && !e.repeat && ["up", "down", "left", "right"].includes(keys[e.code])) this.action("manual");
@@ -424,6 +708,7 @@ export class Flight {
   update(dt) {
     if (!this.tpl) return;
     this.updateBanner(dt);
+    if (!this.rooftopSites) this.buildRooftopSites();
     // walking near the parked plane (or looking down on it from close by): offer to fly it
     if (!this.active) {
       const c = this.camera.position, d = Math.hypot(c.x - this.plane.position.x, c.z - this.plane.position.z);
@@ -435,6 +720,10 @@ export class Flight {
       return;
     }
     this.chip.style.display = "none";
+    if (this.state === "jumpFree" || this.state === "jumpCanopy") {
+      this.updateJump(dt);
+      return;
+    }
     if (this.helpT > 0 && this.state === "air") { this.helpT -= dt; if (this.helpT <= 0) this.render(); }
     if (!this.resetting) this.fly(dt);
     this.place(this.plane, this.p);
@@ -450,6 +739,8 @@ export class Flight {
       const t = this.target?.r || this.airports()[0] || this.runways()[0];
       if (t) home.textContent = `✈ ${t.code === "INT" ? "Intrepid" : t.code} ${this.distTo(t)}`;
     }
+    const jumpButton = this.panel.querySelector('[data-a="jump"]');
+    if (jumpButton) jumpButton.disabled = !this.jumpReady();
     this.follow(dt);
   }
 
@@ -521,6 +812,7 @@ export class Flight {
     if (this.climbOut > 0) { this.climbOut -= dt; pt = Math.max(pt, 0.2); }   // just off the deck: climb away first
     if (p.v < STALL) pt = Math.min(pt, -0.12);                       // too slow: the nose drops by itself
     if (p.z >= CEILING && pt > 0) pt = 0;
+    this.lastPitch = p.pitch;                                           // the pitch you arrived with (for the touchdown's sink rate)
     p.pitch += (pt - p.pitch) * Math.min(1, dt * 2);
     p.h += 9.8 * Math.tan(p.roll) / Math.max(p.v, 20) * dt;
     const hv = p.v * Math.cos(p.pitch);
@@ -534,7 +826,13 @@ export class Flight {
       if (p.v < 44 && p.pitch > -0.22 && Math.abs(p.roll) < 0.35) {   // a landing
         p.z = z0; p.pitch = 0; this.state = "roll"; this.landing = true;
         this.base = { r: rw, fromA: Math.cos(p.h) * (rw.b[0] - rw.a[0]) + Math.sin(p.h) * (rw.b[1] - rw.a[1]) > 0 };
-        const was = this.auto ? `The autopilot landed you at ${rw.name}` : `Nice landing at ${rw.name}`;
+        let was = this.auto ? `The autopilot landed you at ${rw.name}` : `Nice landing at ${rw.name}`;
+        if (rw.code === "INT") {                                       // Pilotwings: graded on the centreline, the touchdown spot, the sink rate and the bank
+          const R0 = this.runway(), lat = Math.abs(p.y - R0.yc), long = Math.abs(p.x - R0.tx), sink = Math.max(0, -p.v * Math.sin(this.lastPitch ?? p.pitch)), bank = Math.abs(p.roll);
+          const raw = Math.max(0, Math.round(1000 - lat * 55 - long * 7 - sink * 110 - bank * 300)), pts = this.auto ? Math.min(raw, 250) : raw, grade = this.auto ? "Auto" : raw >= 850 ? "A" : raw >= 650 ? "B" : raw >= 450 ? "C" : "D";   // the autopilot gets you down, but the points are for flying it yourself
+          was = `Landing grade ${grade} · ${pts} pts · ${lat.toFixed(1)} m off the line, ${long.toFixed(0)} m from the wire`;
+          this.onLanding?.({ grade, points: pts, lat, long, sink });
+        }
         this.auto = null; this.approachOn = false; this.target = null; this.showApproach(false); this.render();
         this.toast?.(rw.code === "INT" ? was : `${was}. ${rw.fact}`);
         return;

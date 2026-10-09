@@ -7,7 +7,7 @@ import { ICON } from "./icons.js";
 import { fmt, money } from "./business.js";
 
 // pin colours by what a place is (the symbol says what, the colour says which kind). Blue is only ever you; yellow is business.
-export const PIN_COLOR = { star: "#d93025", plane: "#8e44ad", ship: "#00838f", bike: "#e8710a" };   // landmark red, fly purple, sail teal, motorcycle orange
+export const PIN_COLOR = { star: "#d93025", plane: "#8e44ad", ship: "#00838f", bike: "#e8710a", car: "#388e3c", flag: "#f59e0b", flagdone: "#2e9e4f", wolf: "#c79a12", race: "#f59e0b", trial: "#f59e0b", bolt: "#f59e0b", taxi: "#2e9e4f", burst: "#ef4a2f", siren: "#ef4a2f", ramp: "#ef4a2f", sboat: "#00838f", chute: "#8e44ad", firstride: "#ef4a2f" };   // landmark red, fly purple, sail teal, motorcycle orange, parked car green
 export const pinColor = icon => PIN_COLOR[icon] || PIN_COLOR.star;
 // the selected place's big pin takes its kind's colour too
 const selColor = p => pinColor(p?.kind === "bike" ? "bike" : p?.kind === "airport" || p?.id === "intrepid" ? "plane" : p?.id === "pier83" ? "ship" : "star");
@@ -46,6 +46,47 @@ export function drawPlaceIcon(c, kind, u, v, r) {
     c.lineTo(s * 0.52, -s * 0.34); c.lineTo(s * 0.66, s * 0.38);                                         // bars, fork to the front axle
     c.moveTo(-s * 0.5, -s * 0.12); c.lineTo(s * 0.2, -s * 0.12);                                          // seat
     c.stroke();
+  } else if (kind === "flag" || kind === "flagdone") {      // a mission: a chequered pennant on a pole (a tick when done)
+    c.lineWidth = Math.max(1.5, r * 0.15);
+    c.beginPath(); c.moveTo(-s * 0.55, s * 0.95); c.lineTo(-s * 0.55, -s * 0.95); c.stroke();
+    c.beginPath(); c.moveTo(-s * 0.55, -s * 0.9); c.lineTo(s * 0.9, -s * 0.45); c.lineTo(-s * 0.55, s * 0.05); c.closePath(); c.fill();
+    if (kind === "flagdone") { c.strokeStyle = "#2e9e4f"; c.lineWidth = Math.max(1.2, r * 0.12); c.beginPath(); c.moveTo(-s * 0.2, -s * 0.45); c.lineTo(s * 0.1, -s * 0.28); c.lineTo(s * 0.5, -s * 0.62); c.stroke(); }
+  } else if (kind === "race") {                           // chequered flag
+    c.lineWidth = Math.max(1.5, r * 0.15); c.beginPath(); c.moveTo(-s * 0.7, s * 0.95); c.lineTo(-s * 0.7, -s * 0.9); c.stroke();
+    const n = 4, w = s * 1.5 / n; for (let i = 0; i < n; i++) for (let j = 0; j < 3; j++) { if ((i + j) % 2 === 0) c.fillRect(-s * 0.7 + i * w, -s * 0.9 + j * w, w, w); }
+  } else if (kind === "trial") {                          // stopwatch
+    c.lineWidth = Math.max(1.5, r * 0.15); c.beginPath(); c.arc(0, s * 0.12, s * 0.7, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.moveTo(0, s * 0.12); c.lineTo(s * 0.32, -s * 0.2); c.moveTo(0, s * 0.12); c.lineTo(0, -s * 0.38); c.stroke(); c.fillRect(-s * 0.16, -s * 0.95, s * 0.32, s * 0.2);
+  } else if (kind === "bolt") {                           // boost: a lightning bolt
+    c.beginPath(); c.moveTo(s * 0.15, -s); c.lineTo(-s * 0.55, s * 0.12); c.lineTo(-s * 0.05, s * 0.12); c.lineTo(-s * 0.2, s); c.lineTo(s * 0.6, -s * 0.15); c.lineTo(s * 0.05, -s * 0.15); c.closePath(); c.fill();
+  } else if (kind === "taxi") {                           // taxi: car with a roof sign
+    c.beginPath(); c.roundRect(-s * 0.85, -s * 0.1, s * 1.7, s * 0.7, s * 0.2); c.fill(); c.beginPath(); c.roundRect(-s * 0.45, -s * 0.5, s * 0.9, s * 0.45, s * 0.12); c.fill(); c.fillRect(-s * 0.2, -s * 0.8, s * 0.4, s * 0.22);
+    for (const sx of [-1, 1]) { c.beginPath(); c.arc(sx * s * 0.5, s * 0.62, s * 0.2, 0, 7); c.fill(); }
+  } else if (kind === "burst") {                          // crash: an impact star
+    c.beginPath(); for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8, rr = i % 2 ? s * 0.5 : s; c[i ? "lineTo" : "moveTo"](Math.cos(a) * rr, Math.sin(a) * rr); } c.closePath(); c.fill();
+  } else if (kind === "siren") {                          // heat: a police light
+    c.beginPath(); c.arc(0, -s * 0.05, s * 0.55, Math.PI, 0); c.lineTo(s * 0.55, s * 0.4); c.lineTo(-s * 0.55, s * 0.4); c.closePath(); c.fill(); c.fillRect(-s * 0.8, s * 0.5, s * 1.6, s * 0.3);
+    c.lineWidth = Math.max(1.2, r * 0.12); for (const a of [-2.2, -1.57, -0.94]) { c.beginPath(); c.moveTo(Math.cos(a) * s * 0.7, Math.sin(a) * s * 0.7 - s * 0.05); c.lineTo(Math.cos(a) * s * 1.0, Math.sin(a) * s * 1.0 - s * 0.05); c.stroke(); }
+  } else if (kind === "ramp") {                           // stunt ramp
+    c.beginPath(); c.moveTo(-s, s * 0.7); c.lineTo(s, s * 0.7); c.lineTo(s, -s * 0.6); c.closePath(); c.fill(); c.beginPath(); c.arc(-s * 0.2, -s * 0.8, s * 0.2, 0, 7); c.fill();
+  } else if (kind === "sboat") {                          // speedboat, side view
+    c.beginPath(); c.moveTo(-s, s * 0.1); c.lineTo(s * 0.95, s * 0.1); c.lineTo(s * 0.5, s * 0.6); c.lineTo(-s * 0.8, s * 0.6); c.closePath(); c.fill();
+    c.beginPath(); c.moveTo(-s * 0.2, s * 0.1); c.lineTo(s * 0.1, -s * 0.45); c.lineTo(s * 0.5, s * 0.1); c.closePath(); c.fill();
+  } else if (kind === "chute") {                          // parachute
+    c.beginPath(); c.arc(0, -s * 0.15, s * 0.9, Math.PI, 0); c.closePath(); c.fill(); c.lineWidth = Math.max(1.1, r * 0.1);
+    for (const x of [-0.8, 0, 0.8]) { c.beginPath(); c.moveTo(x * s * 0.9, -s * 0.15); c.lineTo(0, s * 0.8); c.stroke(); } c.fillRect(-s * 0.13, s * 0.75, s * 0.26, s * 0.22);
+  } else if (kind === "wolf") {                           // a paw print
+    c.beginPath(); c.ellipse(0, s * 0.35, s * 0.55, s * 0.45, 0, 0, 7); c.fill();
+    for (const [x, y] of [[-0.75, -0.1], [-0.28, -0.6], [0.28, -0.6], [0.75, -0.1]]) { c.beginPath(); c.ellipse(x * s * 0.85, y * s, s * 0.2, s * 0.28, 0, 0, 7); c.fill(); }
+  } else if (kind === "firstride") {                      // first ride: a chevron up
+    c.lineWidth = Math.max(2, r * 0.22); c.beginPath(); c.moveTo(-s * 0.7, s * 0.35); c.lineTo(0, -s * 0.45); c.lineTo(s * 0.7, s * 0.35); c.stroke(); c.beginPath(); c.moveTo(-s * 0.7, s * 0.95); c.lineTo(0, s * 0.15); c.lineTo(s * 0.7, s * 0.95); c.stroke();
+  } else if (kind === "car") {                            // top-down car: body, roof and wheels
+    c.lineWidth = Math.max(1.4, r * 0.13);
+    c.beginPath(); c.roundRect(-s * 0.42, -s * 0.82, s * 0.84, s * 1.64, s * 0.18); c.fill();
+    c.fillStyle = "#388e3c";
+    c.fillRect(-s * 0.28, -s * 0.35, s * 0.56, s * 0.7);
+    c.fillStyle = "#fff";
+    for (const sx of [-1, 1]) for (const sy of [-1, 1]) c.fillRect(sx * s * 0.37 - s * 0.07, sy * s * 0.48 - s * 0.12, s * 0.14, s * 0.24);
   } else {                                                 // five-point star
     c.beginPath();
     for (let i = 0; i < 10; i++) {
@@ -55,6 +96,15 @@ export function drawPlaceIcon(c, kind, u, v, r) {
     c.closePath(); c.fill();
   }
   c.restore();
+}
+
+// the small number on a mission pin (its place in the suggested order), a green tick when done, and a pulsing ring on the one you are tracking
+export function drawBadge(c, u, v, r, m) {
+  if (m.num == null) return;
+  if (m.active) { const t = performance.now() / 500, k = 1 + 0.18 * Math.sin(t); c.beginPath(); c.arc(u, v, (r + 6) * k, 0, 7); c.strokeStyle = "#ffffff"; c.lineWidth = 3; c.stroke(); c.beginPath(); c.arc(u, v, (r + 6) * k, 0, 7); c.strokeStyle = "rgba(255,200,40,.9)"; c.lineWidth = 1.5; c.stroke(); }
+  const bx = u + r * 0.78, by = v - r * 0.78, br = Math.max(6.5, r * 0.55);
+  c.beginPath(); c.arc(bx, by, br, 0, 7); c.fillStyle = m.done ? "#2e9e4f" : "#111317"; c.fill(); c.lineWidth = 1.5; c.strokeStyle = "#fff"; c.stroke();
+  c.fillStyle = "#fff"; c.font = `700 ${Math.round(br * 1.25)}px -apple-system, sans-serif`; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(m.done ? "✓" : String(m.num), bx, by + 0.5);
 }
 
 export class CityMap {
@@ -134,7 +184,7 @@ export class CityMap {
     document.body.insertAdjacentHTML("beforeend", `
       <div id="citymap"><canvas></canvas>
         <button class="close ui-btn ui-surface" aria-label="Close map (Esc)">${ICON.close}Close</button>
-        <div class="note ui-surface">Tap a place to see it</div>
+        <div class="note ui-surface">Select a place to explore it or plan how to get there</div>
         <div class="zoom ui-surface"><button class="dockbtn" data-z="in" aria-label="Zoom in">${ICON.plus}</button>
           <button class="dockbtn" data-z="out" aria-label="Zoom out">${ICON.minus}</button>
           <button class="dockbtn" data-z="me" aria-label="Show my location">${ICON.locate}</button></div>
@@ -160,7 +210,8 @@ export class CityMap {
       { passive: false });
     this.cv.addEventListener("dblclick", e => { clearTimeout(this.tapTimer); this.zoomAt(2, e.offsetX, e.offsetY); });
     this.cv.addEventListener("pointerdown", e => this.onDown(e));
-    this.cv.addEventListener("pointermove", e => this.onMove(e));
+    this.cv.addEventListener("pointermove", e => { this.onMove(e); this.hover(e); });
+    this.cv.addEventListener("pointerleave", () => this.hideTip());
     this.cv.addEventListener("pointerup", e => this.onUp(e));
     this.cv.addEventListener("pointercancel", e => this.pointers.delete(e.pointerId));
     addEventListener("resize", () => this.isOpen && this.resize());
@@ -185,6 +236,7 @@ export class CityMap {
     this.clamp(); this.draw();
   }
   close() {
+    this.hideTip();
     this.isOpen = false;
     this.el.style.display = "none";
     document.getElementById("wpchip")?.style.removeProperty("visibility");
@@ -229,6 +281,28 @@ export class CityMap {
     this.moved = 0;
     if (this.pointers.size === 2) { const [a, b] = [...this.pointers.values()]; this.pinch = Math.hypot(a.x - b.x, a.y - b.y); }
   }
+  // hovering a pin (mouse): a tooltip with what it is; missions show their number, kind, level, place, pitch and state
+  hover(e) {
+    if (e.pointerType !== "mouse" || e.buttons) return this.hideTip();
+    let best = null, bd = 16;
+    for (const h of this.hits || []) { const d = Math.hypot(h.u - e.offsetX, h.v - e.offsetY); if (d < bd) { bd = d; best = h; } }
+    this.cv.style.cursor = best ? "pointer" : "";
+    if (!best) return this.hideTip();
+    const m = best.m, esc = t => String(t ?? "").replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+    const html = m.mission
+      ? `<b>${m.num}. ${esc(m.name)}</b><br><span>${esc(m.cat)} · level ${m.level} · ${esc(m.zone)}</span><br>${esc(m.pitch)}<br><em>${m.done ? "Done ✓" : m.active ? "Tracking" : "Tap for options"}</em>`
+      : `<b>${esc(m.label)}</b>`;
+    if (!this.tip) {
+      this.tip = document.createElement("div");
+      this.tip.style.cssText = "position:absolute;z-index:5;pointer-events:none;max-width:260px;padding:8px 10px;border-radius:10px;background:rgba(14,15,18,.94);color:#fff;font:500 12px/1.35 system-ui,sans-serif;border:1px solid rgba(255,255,255,.2);box-shadow:0 6px 20px rgba(0,0,0,.4);display:none";
+      this.cv.parentElement.appendChild(this.tip);
+    }
+    const t = this.tip; t.innerHTML = html; t.style.display = "block";
+    const W = this.cv.clientWidth, x = Math.min(e.offsetX + 16, W - t.offsetWidth - 8), y = Math.max(8, e.offsetY - t.offsetHeight - 14);
+    t.style.left = Math.max(8, x) + "px"; t.style.top = y + "px";
+  }
+  hideTip() { if (this.tip) this.tip.style.display = "none"; if (this.cv) this.cv.style.cursor = ""; }
+
   onMove(e) {
     const p = this.pointers.get(e.pointerId);
     if (!p) return;
@@ -286,7 +360,17 @@ export class CityMap {
   }
   placeFor(m) {
     const byName = (this.nav.places || []).find(p => p.kind === "landmark" && (p.id === m.id || p.name === m.label));
-    return byName || { id: m.id, name: m.label, kind: m.id?.startsWith("apt_") ? "airport" : m.id?.startsWith("bike_") ? "bike" : "point", x: m.x, y: m.y, eye: [m.x + 20, m.y - 90, 55], target: [m.x, m.y, 8] };
+    return byName || { id: m.id, name: m.label, kind: m.id?.startsWith("apt_") ? "airport" : m.id?.startsWith("bike_") ? "bike"
+      : m.id?.startsWith("vehicle_") ? "vehicle" : "point", x: m.x, y: m.y, eye: [m.x + 20, m.y - 90, 55], target: [m.x, m.y, 8] };
+  }
+  focusMarker(marker) {
+    if (!this.data || !marker) return;
+    this.open();
+    this.cx = marker.x; this.cy = marker.y;
+    this.s = Math.max(this.minScale(), 0.9);
+    this.clamp();
+    this.select(this.placeFor(marker));
+    this.draw();
   }
   // outside Times Square: the two nearest named harbour streets ("West St & Chambers St"), or the area it's in
   nearestStreets(x, y) {
@@ -353,20 +437,23 @@ export class CityMap {
     chips.style.display = p?.chips ? "flex" : "none";
     if (!p) { this.card.style.display = "none"; this.draw(); return; }
     const ad = p.kind === "ad" || p.kind === "group", car = this.inCar();
-    this.card.querySelector(".go").textContent = ad ? "View screen" : car ? "Drive here" : "Go";   // in a car: this car goes there
+    this.card.querySelector(".go").textContent = ad ? "View screen" : car ? "Drive here" : "Explore here";
     const harbour = !(p.x > -1750 && p.x < 960 && p.y > -720 && p.y < 740);   // beyond Midtown's roads: by boat or plane
     this.card.querySelector(".walk").style.display = ad || harbour ? "none" : "";
     this.card.querySelector(".dirs").style.display = ad || !this.onDirections || p.id?.startsWith("apt_") || p.id?.startsWith("bike_") ? "none" : "";
     const bike = p.id?.startsWith("bike_");                          // a parked motorcycle: walk to it and get on
     const land = p.id?.startsWith("apt_") && this.canLand?.();      // an airport, while you're flying: land there
-    const fly = p.id === "intrepid" || p.id === "pier83" || land || bike;    // the carrier: fly a plane; Pier 83: take the boat's helm
+    const parkedCar = p.id?.startsWith("vehicle_");
+    const parkedVehicleAvailable = !car && (bike || parkedCar);
+    const fly = p.id === "intrepid" || p.id === "pier83" || land || parkedVehicleAvailable;    // aircraft, boat, and nearby parked vehicles
     this.card.querySelector(".ride").style.display = fly ? "" : ad || harbour || !this.onRide || car ? "none" : "";
-    this.card.querySelector(".ride").textContent = bike ? "Ride it" : land ? "✈ Land here" : p.id === "intrepid" ? "✈ Fly a plane" : p.id === "pier83" ? "⚓ Take the helm" : "Ride";
+    this.card.querySelector(".ride").textContent = bike ? "Ride it" : parkedCar ? "Get in" : land ? "✈ Land here" : p.id === "intrepid" ? "✈ Fly a plane" : p.id === "pier83" ? "⚓ Take the helm" : "Book a cab";
     this.card.querySelector(".go").style.display = land || bike ? "none" : "";
     if (bike) this.card.querySelector(".walk").style.display = "none";
     const [x, y] = this.me(), d = Math.hypot(p.x - x, p.y - y);
     const dist = d < 1000 ? `${Math.round(d / 10) * 10} m away` : `${(d / 1000).toFixed(1)} km away`;
-    const kind = { landmark: "Landmark", intersection: "Intersection", building: "Building", point: "Location", airport: "Airport", bike: "Parked cruiser", ad: "Screen", group: "Screens" }[p.kind] || "";
+    const kind = { landmark: "Landmark", intersection: "Intersection", building: "Building", point: "Location", airport: "Airport",
+      bike: "Parked cruiser", vehicle: "Parked vehicle", ad: "Screen", group: "Screens" }[p.kind] || "";
     this.card.querySelector("h3").textContent = p.name;
     this.card.querySelector("p").textContent = [kind, p.sub, dist].filter(Boolean).join(" · ");
     this.card.querySelector(".walk").textContent = (this.inCar() ? "Get out & walk" : "Walk here") + (d < 1500 ? ` · ${Math.max(1, Math.round(d / 80))} min` : "");
@@ -523,7 +610,7 @@ export class CityMap {
       const col = pinColor(m.icon);                      // coloured by kind (its symbol says what); blue = only you
       c.beginPath(); c.arc(u, v, 11, 0, 7); c.fillStyle = col; c.fill();
       c.lineWidth = 2; c.strokeStyle = "#fff"; c.stroke();
-      drawPlaceIcon(c, m.icon, u, v, 11);
+      drawPlaceIcon(c, m.icon, u, v, 11); drawBadge(c, u, v, 11, m);
       this.taken.push([u, v, 24, 24]);
       this.hits.push({ u, v, m });
     }

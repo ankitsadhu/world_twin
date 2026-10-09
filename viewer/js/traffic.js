@@ -54,6 +54,22 @@ export class Traffic {
     return out;
   }
 
+  // is (x, y) on the pavement within ~2 m of a crosswalk (someone waiting to cross)? Lazy 20 m cell index of the rects.
+  atCrosswalk(x, y) {
+    if (!this.cwCells) {
+      this.cwCells = new Map();
+      for (const r of this.crosswalks()) {
+        for (let cx = Math.floor((r.x0 - 2.2) / 20); cx <= Math.floor((r.x1 + 2.2) / 20); cx++)
+          for (let cy = Math.floor((r.y0 - 2.2) / 20); cy <= Math.floor((r.y1 + 2.2) / 20); cy++) {
+            const k = cx + "," + cy; (this.cwCells.get(k) || this.cwCells.set(k, []).get(k)).push(r);
+          }
+      }
+    }
+    for (const r of this.cwCells.get(Math.floor(x / 20) + "," + Math.floor(y / 20)) || [])
+      if (x > r.x0 - 2.2 && x < r.x1 + 2.2 && y > r.y0 - 2.2 && y < r.y1 + 2.2) return true;
+    return false;
+  }
+
   // the speed allowed by the next stop bar for a vehicle at (x, y) heading h (radians, Blender plane)
   lightLimit(x, y, h) {
     const cx = Math.cos(h), cy = Math.sin(h);
@@ -98,6 +114,8 @@ export class Traffic {
       const lat = Math.abs(rx * fy - ry * fx);
       // someone in the next lane or at the edge of the street (crossing, stepping off the kerb): the car eases past slowly
       if (person && lat >= 1.7 && lat < 4.5 && along < 16) slow = Math.min(slow, 3.5 + along * 0.35);
+      // someone waiting at a crosswalk, still on the pavement: the car is ready to stop, as a driver is (about 13 mph)
+      else if (person && lat >= 4.5 && lat < 16 && along < 24 && this.atCrosswalk(ox, oy)) slow = Math.min(slow, 6);
       if (lat > (person ? 1.7 : 2.1)) return;                   // a person: only if actually in the car's path
       if (oh !== null) { let dh = Math.abs(oh - h) % (2 * Math.PI); if (dh > Math.PI) dh = 2 * Math.PI - dh; if (dh > 2.2) return; }
       const g = along - len / 2;

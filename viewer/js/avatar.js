@@ -33,6 +33,12 @@ const X = new THREE.Vector3(1, 0, 0), Y = new THREE.Vector3(0, 1, 0), Z = new TH
 const noRay = () => {};                                   // never in the way of ground probes / clicks (like the crowd)
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
+// ---- the gait. A person's stride (metres per full cycle = two steps) grows with speed: ~1.3 m at 1.0 m/s, 1.55 at a 1.6 m/s
+// walk, 2.2 at a 3 m/s jog, 3.0 at a 4.6 m/s run (cadence 124 -> 186 steps/min, as people really move). The feet are
+// PLANTED: each stance foot stays put on the ground while the body passes over it (two-bone IK per leg), which the old
+// fixed-swing walk didn't do (measured: the planted foot slid at 1.4 m/s: it skated).
+const strideOf = v => 0.75 + 0.5 * Math.min(v, 6);
+const dutyOf = v => v < 2.0 ? 0.62 : THREE.MathUtils.lerp(0.62, 0.34, Math.min(1, (v - 2.0) / 2.6));   // share of the cycle a foot is down
 const cache = new Map();
 function loadModel(loader, root, id, far = false) {
   const c = CHARACTERS.find(c => c.id === id) || CHARACTERS[0];
@@ -106,6 +112,7 @@ export class Avatar {
       this.near[0].parent.add(sm);
       this.far.push(sm);
     });
+    this.measureLegs();
     this.lodFar = false;
     this.shadow = makeBlob(0.75, 0.6);                      // contact shadow: stays on the ground when you jump
     this.object.add(this.shadow);
@@ -161,6 +168,9 @@ export class Avatar {
   // place in three.js space: feet at (x, y, z), facing heading (radians, 0 = +Z), moving at speed m/s
   set(x, y, z, heading, speed, air = 0) {
     this.object.position.set(x, y, z);
+    const dh = ((heading - (this.heading ?? heading) + Math.PI * 3) % (Math.PI * 2)) - Math.PI;      // how fast you're turning, how fast you're speeding up
+    this.turn = (this.turn || 0) * 0.85 + dh * 0.15 * 60;        // rad/s, smoothed (called once per frame: ~60 Hz)
+    this.accel = (this.accel || 0) * 0.9 + (speed - (this.speed || 0)) * 0.1 * 60;
     this.heading = heading; this.object.rotation.y = heading;
     this.speed = speed;
     if (this.air > 0.05 && air === 0) this.landT = 0.25;   // touch-down: knees give for a moment
@@ -195,7 +205,7 @@ export class Avatar {
   update(dt) {
     const v = this.speed;
     const run = sstep(2.4, 3.6, v), move = sstep(0.05, 0.7, v);
-    const stride = THREE.MathUtils.lerp(1.45, 2.6, run);   // metres per full cycle (two steps)
+    const stride = this.ik ? strideOf(v) : THREE.MathUtils.lerp(1.45, 2.6, run);   // metres per full cycle (two steps)
     this.phase = (this.phase + (v > 0.05 ? v / stride : 0) * Math.PI * 2 * dt) % (Math.PI * 200);
     this.t += dt;
     this.jb = (this.jb || 0) + ((this.air > 0.02 ? 1 : 0) - (this.jb || 0)) * Math.min(1, dt * 14);
@@ -213,6 +223,107 @@ export class Avatar {
       }
       return;
     }
+    // walking / running on planted feet; idle, jumping and landing keep the old pose below (blended in from 0.2 to 0.6 m/s)
+    const v = this.speed || 0, w = sstep(0.2, 0.6, v) * (1 - (this.jb || 0) * 4 > 0 ? 1 : 0);
+    if (this.ik && w > 0 && (this.jb || 0) < 0.04 && !((this.landT || 0) > 0.02)) {
+      if (w < 1) { this.poseOld(dt, m, r); this.keep(); }
+      this.gait(dt, v);
+      if (w < 1) this.blendBack(w);
+      return;
+    }
+    this.poseOld(dt, m, r);
+  }
+
+  // ---- legs: measured once from the rig (segment lengths, the pitch they rest at, the ankle's height and offset)
+  measureLegs() {
+    const o = this.object; o.updateMatrixWorld(true);
+    const P = n => { const v = new THREE.Vector3(); this.bones[n]?.b.getWorldPosition(v); return o.worldToLocal(v); };
+    const leg = {};
+    for (const side of ["Left", "Right"]) {
+      const h = P(side + "UpLeg"), k = P(side + "Leg"), f = P(side + "Foot");
+      leg[side] = { l1: h.distanceTo(k), l2: k.distanceTo(f), p1: Math.atan2(k.z - h.z, -(k.y - h.y)), p2: Math.atan2(f.z - k.z, -(f.y - k.y)),
+        fz0: f.z - h.z, ay: f.y, hy: h.y };
+    }
+    this.leg = leg;
+    this.ik = !!(leg.Left.l1 > 0.1 && leg.Right.l1 > 0.1 && this.bones.Hips && this.bones.LeftUpLeg && this.bones.RightFoot);
+    this.dy = 0;
+    this.snap = {};
+  }
+  // two-bone leg IK in the sagittal plane: foot at (z, y) from the hip joint -> thigh pitch alpha (forward +) and knee flexion beta
+  solveLeg(l1, l2, z, y) {
+    const C = THREE.MathUtils.clamp;
+    const d = C(Math.hypot(z, y), Math.abs(l1 - l2) + 0.02, (l1 + l2) * 0.9995);
+    const beta = Math.PI - Math.acos(C((l1 * l1 + l2 * l2 - d * d) / (2 * l1 * l2), -1, 1));
+    const delta = Math.acos(C((l1 * l1 + d * d - l2 * l2) / (2 * l1 * d), -1, 1));
+    return { alpha: Math.atan2(z, -y) + delta, beta };
+  }
+  keep() { for (const [n, B] of Object.entries(this.bones)) (this.snap[n] ||= new THREE.Quaternion()).copy(B.b.quaternion); this.snapHips = this.bones.Hips.b.position.clone(); }
+  blendBack(w) {                                            // slide from the old pose (kept) to the gait by w
+    for (const [n, B] of Object.entries(this.bones)) if (this.snap[n]) B.b.quaternion.copy(this.snap[n]).slerp(B.b.quaternion.clone(), w);
+    this.bones.Hips.b.position.copy(this.snapHips).lerp(this.bones.Hips.b.position.clone(), w);
+  }
+
+  gait(dt, v) {
+    const C = THREE.MathUtils.clamp, deg = THREE.MathUtils.radToDeg, run = sstep(2.4, 3.6, v), TAU = Math.PI * 2;
+    const S = dutyOf(v), L = strideOf(v), R = THREE.MathUtils.lerp(0.32, 0.28, run);   // R: how far the ankle rolls forward over a planted foot
+    const A = Math.max(0.04, (S * L - R) / 2);                                        // half the ankle's travel under the body in stance
+    const lift = THREE.MathUtils.lerp(0.07, 0.2, run);                                 // how high the swinging foot rises
+    const ph = this.phase / TAU;
+    const out = {};
+    let dyNeed = Infinity, anyStance = false;
+    for (const side of ["Left", "Right"]) {
+      const g = this.leg[side], f = ((ph + (side === "Right" ? 0.5 : 0)) % 1 + 1) % 1;
+      let z, ay;
+      if (f < S) {                                          // stance: the foot stays where it is while the body passes over it
+        const u = f / S;
+        z = A - 2 * A * u; ay = g.ay + THREE.MathUtils.lerp(0.07, 0.13, run) * sstep(0.7, 1, u);   // the heel lifts before toe-off
+        anyStance = true;
+      } else {                                              // swing: heel lifts, the leg comes through, reaches for the next step
+        const u = (f - S) / (1 - S), e = u - Math.sin(TAU * u) / TAU;
+        z = -A + 2 * A * e; ay = g.ay + 0.05 * (1 - u) * (1 - u) + lift * Math.sin(Math.PI * u);
+      }
+      const zr = g.fz0 + z + 0.02;
+      if (f < S) dyNeed = Math.min(dyNeed, ay + Math.sqrt(Math.max(0, ((g.l1 + g.l2) * 0.985) ** 2 - zr * zr)) - g.hy);   // the pelvis height this leg can reach
+      out[side] = { zr, ay, f };
+    }
+    // the pelvis: as low as the legs need (the bob a person has), up and floating in a run's flight phase
+    const dyT = anyStance ? C(dyNeed, -0.11, 0.01) : 0.02 + 0.01 * run;
+    this.dy += (dyT - this.dy) * Math.min(1, dt * 28);
+    const sway = THREE.MathUtils.lerp(0.02, 0.008, run) * Math.cos(TAU * (ph - S / 2));        // over the standing foot
+    for (const side of ["Left", "Right"]) {
+      const g = this.leg[side], { zr, ay, f } = out[side];
+      const sol = this.solveLeg(g.l1, g.l2, zr, ay - (g.hy + this.dy));
+      const sigma = sol.alpha - sol.beta;                                                   // the shank's pitch
+      let toes = 0;                                                                         // + = toes down
+      if (f < S) toes = 14 * sstep(0.82, 1, f / S) - 8 * (1 - sstep(0, 0.1, f / S));        // toe-off / heel strike (the foot is flat between)
+      else toes = THREE.MathUtils.lerp(10, -6, (f - S) / (1 - S));                          // toes come up through the swing
+      this.rot(side + "UpLeg", ["x", -deg(sol.alpha - g.p1)]);
+      this.rot(side + "Leg", ["x", deg(sol.beta + g.p2 - g.p1)]);
+      this.rot(side + "Foot", ["x", deg(sigma - g.p2) + toes]);
+    }
+    // arms swing against the legs: each arm goes back as its own side's leg goes forward
+    const armA = C(5 + 7 * v, 6, 38), c = Math.cos(TAU * ph);
+    for (const [side, sg] of [["Left", 1], ["Right", -1]]) {
+      const fwd = -sg * c;                                // -1 (back) .. +1 (forward)
+      const elbow = THREE.MathUtils.lerp(14, 88, run) + THREE.MathUtils.lerp(8, 12, run) * fwd + 6;     // bent more as the arm comes forward
+      this.rot(side + "Arm", ["x", -armA * fwd - 4 * run], ["z", sg * (3 + 4 * run)]);
+      this.rot(side + "ForeArm", ["x", -elbow]);
+      this.rot(side + "Hand", ["x", -6 - 10 * run - 6 * fwd * run]);
+    }
+    // the trunk: shoulders turn against the hips, the head stays level, a lean that grows with speed, a bank into turns
+    const twist = THREE.MathUtils.lerp(4, 8, run) * c;
+    const lean = THREE.MathUtils.lerp(2, 12, run) + C((this.accel || 0) * 1.6, -5, 8);
+    const bank = -C(0.5 * deg(Math.atan(v * (this.turn || 0) / 9.81)), -22, 22);                       // lean into the turn (left = negative z)
+    this.rot("Hips", ["y", -twist], ["z", 0.5 * bank]);
+    this.rot("Spine", ["x", lean * 0.45], ["y", twist * 1.1], ["z", 0.3 * bank]);
+    this.rot("Spine1", ["x", lean * 0.55], ["y", twist * 1.1], ["z", 0.2 * bank]);
+    this.rot("Neck", ["x", -lean * 0.4], ["y", -twist * 0.7], ["z", -0.2 * bank]);
+    this.rot("Head", ["x", -lean * 0.35 + 2], ["y", -twist * 0.6], ["z", -0.2 * bank]);
+    const H = this.bones.Hips;
+    if (H.up) H.b.position.copy(H.pos).addScaledVector(H.up, this.dy).addScaledVector(H.x, sway);
+  }
+
+  poseOld(dt, m = 0, r = 0) {
     const t = this.phase, s = Math.sin(t), c = Math.cos(t), L = THREE.MathUtils.lerp;
     const thigh = L(20, 36, r) * m, knee = L(52, 100, r) * m, arm = L(17, 34, r) * m;
     const idle = 1 - m, br = Math.sin(this.t * 1.7) * 0.8 * idle;              // breathing, standing still

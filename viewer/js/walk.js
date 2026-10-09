@@ -108,15 +108,15 @@ export class StreetWalk {
 
   // You are not a cursor: what you ask for (a direction and a speed) is not what the body does at once.
   //   momentum: you speed up in ~0.3 s (a run: ~1.3 s) and stop in ~0.2 s, and turning at speed carries you wide
-  //   wind: a run lasts ~12 s, then you can only walk until you've got half your breath back (~5 s of walking)
+  //   wind: a run lasts ~30 s (~140 m, two blocks), then you can only walk until you've got half your breath back (~7 s of walking)
   //   ground: uphill and stairs slow you (a 30-degree stair: about a third slower); landing from a jump costs a step
   //   people: someone in the way ahead slows you to a shuffle (they step aside; you don't barge through)
   friction(dt, dx, dz, vw) {
-    const cam = this.camera, k = vw / 1.9, C = THREE.MathUtils.clamp;      // (the first-person test speeds scale the same way)
+    const cam = this.camera, k = vw / 1.6, C = THREE.MathUtils.clamp;      // (the first-person test speeds scale the same way)
     let vx = dx / dt, vz = dz / dt, want = Math.hypot(vx, vz);
     if (want > vw * 1.5 && this.exhausted) { vx *= vw / want; vz *= vw / want; want = vw; }   // out of breath: walk
     const running = want > vw * 1.5;
-    this.stamina = C(this.stamina + (running ? -1 / 12 : want > 0.1 ? 1 / 9 : 1 / 5) * dt, 0, 1);
+    this.stamina = C(this.stamina + (running ? -1 / 30 : want > 0.1 ? 1 / 14 : 1 / 7) * dt, 0, 1);
     if (this.stamina <= 0) this.exhausted = true; else if (this.exhausted && this.stamina > 0.5) this.exhausted = false;
     let m = 1 - C(this.slope, 0, 0.6) * 0.8;                                // uphill / stairs
     if (want > 0.1 && this.pedsNear && this.pedsNear(cam.position.x + vx / want * 0.9, -(cam.position.z + vz / want * 0.9), 0.85).length) m *= 0.6;
@@ -172,7 +172,7 @@ export class StreetWalk {
     if (keys.KeyW || keys.ArrowUp) mv += 1;
     if (keys.KeyS || keys.ArrowDown) mv -= 1;
     let dx = 0, dz = 0;
-    const [vw, vr] = this.third ? [1.9, 4.6] : [5, 14];       // you can see yourself: a person's walk and run
+    const [vw, vr] = this.third ? [1.6, 4.6] : [5, 14];       // you can see yourself: a brisk walk (1.6 m/s: a 0.77 m leg breaks into a run near 1.9) and a fast run
     if (mv) { this.target = null; const sp = (run ? vr : vw) * dt * mv; dx = fx * sp; dz = fz * sp; }
     else if (P && (P.lx || P.ly)) {                          // analog walk: push further = walk faster
       this.target = null;

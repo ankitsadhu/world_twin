@@ -12,7 +12,7 @@ const fmtT = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2
 
 export const TOURS = [
   {
-    id: "walk", mode: "walk", title: "Times Square on foot", sub: "Six landmarks of the bowtie · about 1 km", speed: 1.9,
+    id: "walk", mode: "walk", title: "Times Square on foot", sub: "Six landmarks of the bowtie · about 1 km", speed: 1.6,
     start: [-20.6, 150], gates: [
       { x: -18, y: 128, r: 9, name: "TKTS red steps",
         fact: "27 red glass steps over the TKTS booth (2008): same-day Broadway tickets below, the best seat in the square above." },

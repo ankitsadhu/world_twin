@@ -19,7 +19,7 @@ You are not a cursor: what you ask for is not what the body does at once.
 | Rule | Numbers |
 |---|---|
 | **Momentum** | You pick up speed in ~0.3 s (a run builds over ~1.3 s) and stop in ~0.2 s. Turning at speed carries you wide. |
-| **Wind (stamina)** | A run (Shift) lasts ~12 s; then you can only walk until you've got half your breath back (~5 s of walking). A thin bar at the bottom of the screen shows it only while you're out of breath (amber when you're winded). |
+| **Wind (stamina)** | A run (Shift) lasts ~30 s (about 140 m: two blocks); then you can only walk until you've got half your breath back (~7 s of walking). A thin bar at the bottom of the screen shows it only while you're out of breath (amber when you're winded). |
 | **Uphill and stairs** | Slower by up to ~25-30%: measured on the TKTS red steps, 1.9 m/s on the flat, 1.4-1.5 m/s on the steps. The slope is measured over the last metre of travel (stairs are treads, not a ramp). |
 | **Crowds** | Someone in the way ahead slows you to 60% (they step aside; you don't barge through). |
 | **Landing from a jump** | The legs absorb it: 55% speed for 0.3 s. |
@@ -41,3 +41,23 @@ All in `walk.js` `friction()`. The numbers are constants at the top of that func
 
 - Rain and wet roads (there is no weather yet): longer braking, slipperier steps, a different tread.
 - Cars flowing around you when you stand in a lane (today they wait behind you, and honk after a few seconds).
+
+## Gait (legs and arms): `avatar.js` `gait()`
+
+Measured before/after on the avatar (ankle tracked in the body's frame, `gait()` test harness):
+
+| | Before | After |
+|---|---|---|
+| Planted foot sliding along the ground (walk) | 1.4 m/s (skating) | 0.5 m/s: only the heel-to-toe roll of the ankle |
+| Planted foot sliding (run, 4.6 m/s) | 2.8 m/s | ~1.3 m/s: the ankle rolling over the ball of the foot |
+| Cadence at a 1.6 m/s walk | ~157 steps/min (hurried) | 124 steps/min |
+| Cadence at a 4.6 m/s run | 212 steps/min | 181 steps/min |
+| Pelvis bob | none (a fixed wobble) | 3-5 cm walking, 8 cm running |
+
+- **Stride follows speed:** `strideOf(v) = 0.75 + 0.5 v` metres per cycle (two steps); a foot is down 62% of the cycle walking, 34% running.
+- **Feet are planted:** each leg is solved with two-bone IK (`solveLeg`) so the stance foot stays where it lands while the body passes over it; the heel lifts before toe-off; the swinging foot rises 7 cm walking and 20 cm running.
+- **The pelvis** drops as low as the legs need (the bob) and floats up in a run's flight phase; it sways over the standing foot.
+- **Arms** swing against the legs (each arm goes back as its own side's leg goes forward); the elbows bend from ~14 degrees walking to ~88 running; the hands relax.
+- **Trunk:** the shoulders turn against the hips, the head stays level, a forward lean that grows with speed (2 to 12 degrees) and with acceleration, and a bank into turns.
+- **Speeds:** walk 1.6 m/s (was 1.9: a 0.77 m leg breaks into a run near 1.9), run 4.6 m/s (10 mph: a fast run, left as it was).
+- Idle, jumping and landing keep the old pose; moving from 0.2 to 0.6 m/s blends between the two.

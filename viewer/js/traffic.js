@@ -22,7 +22,8 @@ export class Traffic {
     });
     this.bounds = bounds;
     this.cars = [];
-    this.extra = [];                                                // other movers to respect: your cab
+    this.extra = [];                                                // other movers to respect: your cab, you on foot
+    this.people = null;                                             // (x, y, r) => [[x, y]]: pedestrians with bodies (set by the viewer)
     this.t = 0;
     this.ready = false;
   }
@@ -90,19 +91,24 @@ export class Traffic {
   // the speed allowed by whatever is ahead: other cars, your cab, people on the road
   followLimit(x, y, h, self) {
     const fx = Math.cos(h), fy = Math.sin(h);
-    let gap = Infinity;
-    const consider = (ox, oy, oh, len = 4.6) => {
+    let gap = Infinity, ped = Infinity;
+    const consider = (ox, oy, oh, len = 4.6, person = false) => {
       const rx = ox - x, ry = oy - y, along = rx * fx + ry * fy;
       if (along <= 0 || along > 32) return;
       const lat = Math.abs(rx * fy - ry * fx);
-      if (lat > 2.1) return;
+      if (lat > (person ? 1.7 : 2.1)) return;                   // a person: only if actually in the car's path
       if (oh !== null) { let dh = Math.abs(oh - h) % (2 * Math.PI); if (dh > Math.PI) dh = 2 * Math.PI - dh; if (dh > 2.2) return; }
-      gap = Math.min(gap, along - len / 2);
+      const g = along - len / 2;
+      if (person) { ped = Math.min(ped, g); gap = Math.min(gap, g + 3.0); }   // people: it stops about 3 m closer than behind a car
+      else gap = Math.min(gap, g);
     };
     for (const c of this.cars) if (c !== self && c.alive) consider(c.x, c.y, c.h);
-    for (const e of this.extra) if (e !== self && e.alive?.()) { const [ex, ey, eh] = e.pose(); consider(ex, ey, null); }
+    for (const e of this.extra) if (e !== self && e.alive?.()) { const [ex, ey] = e.pose(); consider(ex, ey, null, e.len, !!e.len); }   // e.len: a person is not 4.6 m long
     const crowd = this.crowd();
-    if (crowd) for (const [px, py] of crowd.near(x + fx * 8, y + fy * 8, 10)) consider(px, py, null, 1.2);
+    if (crowd) for (const [px, py] of crowd.near(x + fx * 8, y + fy * 8, 10)) consider(px, py, null, 1.2, true);
+    // people with bodies (the NPCs strolling Times Square, and you on foot): a car never drives over anyone in its lane
+    if (this.people) for (const [px, py] of this.people(x + fx * 12, y + fy * 12, 14)) consider(px, py, null, 1.0, true);
+    this.pedGap = ped;                                                // read right after by the car loop: brake harder if someone is close
     return gap === Infinity ? Infinity : Math.max(0, gap - GAP) * 1.1;
   }
 
@@ -298,7 +304,8 @@ export class Traffic {
       // drive
       const limit = c.hailed ? 0                                     // someone is walking over to get in: wait
         : Math.min(V_CRUISE, this.lightLimit(c.x, c.y, c.h), this.followLimit(c.x, c.y, c.h, c), c.turn ? 6 : Infinity);
-      c.v += THREE.MathUtils.clamp(limit - c.v, -BRAKE * 1.6 * dt, ACC * dt);
+      const brake = BRAKE * (this.pedGap < 5.5 ? 3.5 : 1.6);        // someone suddenly close in front: emergency braking (~1.6 g)
+      c.v += THREE.MathUtils.clamp(limit - c.v, -brake * dt, ACC * dt);
       c.v = Math.max(0, c.v);
       if (c.turn) this.stepTurn(c, dt);
       else {

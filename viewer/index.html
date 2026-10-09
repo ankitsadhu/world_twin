@@ -453,6 +453,14 @@ orbit.minDistance = 2; orbit.maxDistance = 2500;
 const walk = new StreetWalk({ camera, dom: renderer.domElement, getCollider: () => collider,
   groundAt: p => groundAt(p), onExit: () => setMode("orbit"), blockedAhead: (p, d, l) => blockedAhead(p, d, l) });
 walk.onWalk = () => nav?.doneTip("walk");
+// real-world logic for the walker: people in the way slow you, and cars (moving or parked) are solid
+walk.pedsNear = (x, y, r) => npcs?.near(x, y, r) || [];
+walk.blockers = () => {
+  const out = [];
+  for (const [x, y, h] of traffic?.ready ? traffic.obstacles() : []) out.push([x, y, h, 2.3, 1.0]);
+  for (const v of ride.parked) out.push([v.group.position.x, -v.group.position.z, v.heading ?? 0, v.kind === "bike" ? 1.0 : 2.3, v.kind === "bike" ? 0.4 : 1.0]);
+  return out;
+};
 let mode = "orbit";
 const keys = {};
 addEventListener("keydown", e => keys[e.code] = true);
@@ -662,7 +670,12 @@ Promise.all([fetch(ROOT + "export/times_square/collision2d.json").then(r => r.js
     traffic = new Traffic({ scene, camera, grid: district.street_grid_local, bounds: ground.play_area, models: trafficModels,
       crowd: () => ({ near: (x, y, r) => [...(crowd?.near(x, y, r) || []), ...(npcs?.near(x, y, r) || [])] }),   // cars stop for people
       audio, count: trafficCount(), getCollider: () => collider });
-    if (traffic.init()) ride.setTraffic(traffic); else traffic = null;
+    if (traffic.init()) {
+      ride.setTraffic(traffic);
+      // real-world logic: cars brake for anyone in their lane, the NPCs and you on foot (they used to drive straight through you)
+      traffic.people = (x, y, r) => npcs?.near(x, y, r) || [];
+      traffic.extra.push({ len: 1.0, alive: () => mode === "walk" && !ride.inCar, pose: () => [walk.eye.x, -walk.eye.z, 0, 0] });
+    } else traffic = null;
     if (saved?.parked?.length) ride.restoreParked(saved.parked);   // the cars you left last time are still there
     crowd = new Crowd(scene, ground, collider, { seated: tktsSeats(), camera, traffic,
       movers: () => [...(traffic ? traffic.obstacles() : []), ...(ride.car?.visible && ride.state !== "idle" ? [ride.pose()] : [])] });

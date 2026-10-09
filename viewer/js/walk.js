@@ -14,6 +14,12 @@ export class StreetWalk {
     this.yaw = 0; this.pitch = 0;
     this.target = null;                       // auto-walk destination [x, y] (Blender local)
     this.drag = null;
+    this.stamina = 1; this.slope = 0; this.vx = 0; this.vz = 0;     // body: wind left (0..1), the ground's slope under you, your velocity
+    this.bar = document.createElement("div");                        // a thin wind bar: only there while you're out of breath
+    this.bar.setAttribute("aria-hidden", "true");
+    this.bar.style.cssText = "position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:120px;height:4px;border-radius:2px;background:rgba(255,255,255,.18);opacity:0;transition:opacity .3s;z-index:7;pointer-events:none";
+    this.bar.innerHTML = '<i style="display:block;height:100%;width:100%;border-radius:2px;background:#fff"></i>';
+    document.body.appendChild(this.bar);
     dom.addEventListener("pointerdown", e => {
       if (!this.active || e.button !== 0) return;
       this.drag = [e.clientX, e.clientY];
@@ -51,7 +57,7 @@ export class StreetWalk {
     this.active = true; this.target = null;
     this.dom.style.cursor = "grab";
   }
-  disable() { this.restoreEye(); this.active = false; this.target = null; this.dom.style.cursor = ""; }
+  disable() { this.restoreEye(); this.active = false; this.target = null; this.dom.style.cursor = ""; this.vx = this.vz = 0; this.bar.style.opacity = 0; }
 
   walkTo(point) {                              // three.js point -> auto-walk there
     this.target = [point.x, -point.z];
@@ -100,6 +106,51 @@ export class StreetWalk {
     this.viewed = true;
   }
 
+  // You are not a cursor: what you ask for (a direction and a speed) is not what the body does at once.
+  //   momentum: you speed up in ~0.3 s (a run: ~1.3 s) and stop in ~0.2 s, and turning at speed carries you wide
+  //   wind: a run lasts ~12 s, then you can only walk until you've got half your breath back (~5 s of walking)
+  //   ground: uphill and stairs slow you (a 30-degree stair: about a third slower); landing from a jump costs a step
+  //   people: someone in the way ahead slows you to a shuffle (they step aside; you don't barge through)
+  friction(dt, dx, dz, vw) {
+    const cam = this.camera, k = vw / 1.9, C = THREE.MathUtils.clamp;      // (the first-person test speeds scale the same way)
+    let vx = dx / dt, vz = dz / dt, want = Math.hypot(vx, vz);
+    if (want > vw * 1.5 && this.exhausted) { vx *= vw / want; vz *= vw / want; want = vw; }   // out of breath: walk
+    const running = want > vw * 1.5;
+    this.stamina = C(this.stamina + (running ? -1 / 12 : want > 0.1 ? 1 / 9 : 1 / 5) * dt, 0, 1);
+    if (this.stamina <= 0) this.exhausted = true; else if (this.exhausted && this.stamina > 0.5) this.exhausted = false;
+    let m = 1 - C(this.slope, 0, 0.6) * 0.8;                                // uphill / stairs
+    if (want > 0.1 && this.pedsNear && this.pedsNear(cam.position.x + vx / want * 0.9, -(cam.position.z + vz / want * 0.9), 0.85).length) m *= 0.6;
+    if ((this.landT || 0) > 0) { m *= 0.55; this.landT -= dt; }             // the legs absorb a landing
+    vx *= m; vz *= m;
+    const cur = Math.hypot(this.vx, this.vz), tgt = Math.hypot(vx, vz);
+    const step = (tgt > cur ? (running ? 3.5 : 7) : 9) * k * dt;           // m/s^2: a person's pick-up, a run's slower build, braking
+    let ex = vx - this.vx, ez = vz - this.vz;
+    const e = Math.hypot(ex, ez);
+    if (e > step) { ex = ex / e * step; ez = ez / e * step; }
+    this.vx += ex; this.vz += ez;
+    if (tgt === 0 && Math.hypot(this.vx, this.vz) < 0.03) this.vx = this.vz = 0;
+    // the wind bar
+    const low = this.stamina < 0.98;
+    this.bar.style.opacity = low ? 1 : 0;
+    this.bar.firstChild.style.width = `${Math.round(this.stamina * 100)}%`;
+    this.bar.firstChild.style.background = this.exhausted ? "#ff9f0a" : "#fff";
+    return [this.vx * dt, this.vz * dt];
+  }
+  // cars are solid: slide out of any car body (a box [x, y, heading, half length, half width] in Blender local metres)
+  pushOut(x, y) {
+    for (const [bx, by, h, hl, hw] of this.blockers()) {
+      const ox = x - bx, oy = y - by;
+      if (ox * ox + oy * oy > (hl + 1.2) ** 2) continue;
+      const c = Math.cos(h), s = Math.sin(h), along = ox * c + oy * s, side = -ox * s + oy * c, r = 0.35;
+      const pa = hl + r - Math.abs(along), ps = hw + r - Math.abs(side);
+      if (pa > 0 && ps > 0) {
+        if (pa < ps) { const m = (along < 0 ? -1 : 1) * pa; x += c * m; y += s * m; }
+        else { const m = (side < 0 ? -1 : 1) * ps; x += -s * m; y += c * m; }
+      }
+    }
+    return [x, y];
+  }
+
   update(dt, keys) {
     if (!this.active) return;
     this.restoreEye();
@@ -139,15 +190,18 @@ export class StreetWalk {
         this.yaw += diff * Math.min(1, dt * 4);
       }
     }
+    [dx, dz] = this.friction(dt, dx, dz, vw);
     if ((dx || dz) && this.blockedAhead) {          // statues, poles, kiosks are not in the footprint map
       const len = Math.hypot(dx, dz), dir = new THREE.Vector3(dx / len, 0, dz / len);
-      if (this.blockedAhead(cam.position, dir, len + 0.5)) { dx = 0; dz = 0; this.target = null; }
+      if (this.blockedAhead(cam.position, dir, len + 0.5)) { dx = 0; dz = 0; this.vx = this.vz = 0; this.target = null; }
     }
+    const x0 = cam.position.x, z0 = cam.position.z, intended = Math.hypot(dx, dz);
     if (dx || dz) {
       const col = this.getCollider();
       if (col) {
         const feet = cam.position.y - 1.7;
-        const [nx, ny] = col.move(cam.position.x, -cam.position.z, dx, -dz, 0.35, feet + 0.4, true);   // on foot: piers walkable
+        let [nx, ny] = col.move(cam.position.x, -cam.position.z, dx, -dz, 0.35, feet + 0.4, true);   // on foot: piers walkable
+        if (this.blockers) [nx, ny] = this.pushOut(nx, ny);                                          // cars are solid
         if (this.target && Math.hypot(nx - cam.position.x, -ny - cam.position.z) < 1e-4) this.target = null; // blocked
         // a person steps up a kerb or onto a pier deck (1.2 m), not onto a parked aircraft's wing or a ledge
         const ox = cam.position.x, oz = cam.position.z;
@@ -156,14 +210,23 @@ export class StreetWalk {
       } else { cam.position.x += dx; cam.position.z += dz; }
     }
     const ground = this.groundAt(cam.position);
+    const stepLen = Math.hypot(dx, dz);                       // the slope under you, smoothed: what slows a climb
+    if (stepLen > 0.004 && !(this.air > 0)) {                 // rise over run across the last ~metre (stairs are treads, not a ramp)
+      const f = Math.exp(-stepLen / 1.0);
+      this.rise = (this.rise || 0) * f + (ground - (this.g0 ?? ground)); this.run = (this.run || 0) * f + stepLen;
+      this.slope = THREE.MathUtils.clamp(this.rise / Math.max(this.run, 0.4), -1, 1);
+    } else this.slope *= 1 - Math.min(1, dt * 4);
+    this.g0 = ground;
     if (this.air > 0) {                                       // in the air: gravity, land on whatever is below
       this.vy -= 9.81 * dt;
       this.air = Math.max(0, cam.position.y - 1.7 + this.vy * dt - ground);
       cam.position.y = ground + 1.7 + this.air;
-      if (this.air === 0) this.vy = 0;
+      if (this.air === 0) { this.vy = 0; this.landT = 0.3; }
     } else cam.position.y += ((ground + 1.7) - cam.position.y) * Math.min(1, dt * 10);
     // what your character does: speed over the ground, and the way you're going (or facing, standing still)
-    const moved = Math.hypot(dx, dz) / Math.max(dt, 1e-3);
+    const actual = Math.hypot(cam.position.x - x0, cam.position.z - z0);       // what you really covered (a car or a wall stops you)
+    if (intended > 0.004 && actual < intended * 0.3) { this.vx *= 0.5; this.vz *= 0.5; }   // pressed against something: no momentum
+    const moved = actual / Math.max(dt, 1e-3);
     this.speed = (this.speed || 0) + (moved - (this.speed || 0)) * Math.min(1, dt * 8);
     const want = moved > 0.1 ? Math.atan2(dx, dz) : this.heading ?? this.yaw + Math.PI;
     let diff = ((want - (this.heading ?? want) + Math.PI * 3) % (Math.PI * 2)) - Math.PI;

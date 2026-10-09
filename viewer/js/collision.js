@@ -19,21 +19,28 @@ export class Collider {
     return out;
   }
 
-  // true if a circle (x, y, r) at height z overlaps a polygon taller than z. onFoot: piers over the river are walkable
-  // (this.walkable(x, y) says where), the river around them is not
-  blocked(x, y, r = 0.35, z = 0, onFoot = false) {
-    if (this.outside && !(x > -1750 && x < 960 && y > -720 && y < 740)) return this.outside(x, y, z);   // beyond Midtown: the harbour
-    if (onFoot && z > 10 && this.deck && this.deck(x, y) === false && this.deck(x, y, true)) return true;   // a ship's deck edge
+  // Return the real obstacle under a point so movement and impact sounds share the same collision decision.
+  // onFoot: piers over the river are walkable; vehicles treat raised stairs as solid.
+  obstacleAt(x, y, r = 0.35, z = 0, onFoot = false, blockRaised = false) {
+    if (this.outside && !(x > -1750 && x < 960 && y > -720 && y < 740))
+      return this.outside(x, y, z) ? { kind: "water" } : null;
+    if (onFoot && z > 10 && this.deck && this.deck(x, y) === false && this.deck(x, y, true))
+      return { kind: "metal" };
     const pier = onFoot && p_kindWater(this, x, y, r) && this.walkable?.(x, y);
     for (const i of this.near(x, y, r)) {
       const p = this.polys[i];
-      if (z >= p.h || p.kind === "raised") continue;            // raised = walkable (the red steps)
+      if (z >= p.h || (p.kind === "raised" && !blockRaised)) continue;
       if (pier && p.kind === "water") continue;
       const [x0, y0, x1, y1] = p.box;
       if (x < x0 - r || x > x1 + r || y < y0 - r || y > y1 + r) continue;
-      if (inside(p.pts, x, y) || edgeDist(p.pts, x, y) < r) return true;
+      if (inside(p.pts, x, y) || edgeDist(p.pts, x, y) < r)
+        return { kind: p.kind === "raised" ? "stone" : p.kind, polygon: p };
     }
-    return false;
+    return null;
+  }
+
+  blocked(x, y, r = 0.35, z = 0, onFoot = false, blockRaised = false) {
+    return !!this.obstacleAt(x, y, r, z, onFoot, blockRaised);
   }
 
   // the building whose footprint contains (x, y), or the closest one within r metres (taps land on walls)

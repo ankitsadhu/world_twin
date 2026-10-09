@@ -11,6 +11,12 @@ const PARKED_LEAN = -0.14;                                          // the "Park
 const STAND_DOWN = new THREE.Quaternion(0, 0, 0, 1);
 const STAND_UP = new THREE.Quaternion(0.143, 0.553, -0.763, 0.301);   // the end of the "Stand_Up" action: folded away
 const Y = new THREE.Vector3(0, 1, 0), Z = new THREE.Vector3(0, 0, 1);
+// the paints a cruiser comes in (the tank and the front fender; chrome, leather and rubber stay as they are)
+export const PAINTS = [                                      // best-looking first: the street takes colours from the top of this list
+  { name: "Candy red", hex: 0xc9142b }, { name: "Midnight black", hex: 0x16171c }, { name: "Racing blue", hex: 0x1668d6 }, { name: "Pearl white", hex: 0xf2f3f5 },
+  { name: "Sunset orange", hex: 0xf06a14 }, { name: "British green", hex: 0x1d5a3a }, { name: "Teal", hex: 0x0f9d9a }, { name: "Lemon yellow", hex: 0xf2c80f },
+  { name: "Violet", hex: 0x6c3bd1 }, { name: "Gunmetal", hex: 0x4a505c }, { name: "Hot pink", hex: 0xe8398f }, { name: "Army green", hex: 0x5c6b3c },
+];
 export const BIKE = { wheelbase: WHEELBASE, wheelR: WHEEL_R, type: "Cruiser" };
 
 export class Bikes {
@@ -48,16 +54,57 @@ export class Bikes {
       if (n === "KICKSTAND") parts.stand = { o };
     });
     group.add(makeBlob(0.7, 2.2));                                    // contact shadow
-    const v = { group, model, parts, kind: "bike", type: BIKE.type, lean: PARKED_LEAN, stand: 0, rider: null };
+    const v = { group, model, parts, kind: "bike", type: BIKE.type, lean: PARKED_LEAN, stand: 0, rider: null, paint: 0 };
+    (this.all ||= []).push(v);
+    this.autoPaint(v);                                                          // the best colour nobody nearby is wearing
     this.pose(v, 0, 0, 0);
     return v;
+  }
+
+  // a bike that comes into view takes the best-looking colour that no other visible bike (parked or in traffic) is wearing,
+  // so you never see two the same on one street. A bike you repainted yourself keeps your colour.
+  autoPaint(v) {
+    if (v.userPaint) return;
+    const used = new Set();
+    for (const o of this.all || []) if (o !== v && o.group.visible && o.group.parent) used.add(o.paint);
+    const idx = PAINTS.findIndex((_, i) => !used.has(i));
+    if (idx >= 0 && idx !== v.paint) this.repaint(v, idx);
+  }
+
+  // every few seconds: where two visible bikes wear the same colour, the farther one (if it is over 25 m away, so nobody sees it change) takes another
+  dedupe(cam) {
+    if (performance.now() < (this.nextDedupe || 0)) return;
+    this.nextDedupe = performance.now() + 1500;
+    const vis = (this.all || []).filter(o => o.group.visible && o.group.parent && !o.userPaint).map(o => [o, Math.hypot(o.group.position.x - cam.x, o.group.position.z - cam.z)]).sort((a, b) => a[1] - b[1]);
+    const seen = new Set();
+    for (const [o, d] of vis) {
+      if (!seen.has(o.paint)) { seen.add(o.paint); continue; }
+      if (d < 25) continue;
+      const idx = PAINTS.findIndex((_, i) => !seen.has(i));
+      if (idx >= 0) { this.repaint(o, idx); seen.add(idx); }
+    }
+  }
+
+  // paint the tank and fender (M_Paint is its own copy per bike, so the others don't change)
+  repaint(v, idx) {
+    idx = ((idx % PAINTS.length) + PAINTS.length) % PAINTS.length; v.paint = idx;
+    v.model.traverse(o => {
+      if (!o.isMesh) return;
+      const own = [].concat(o.material).map(m => {
+        if (m.name !== "M_Paint") return m;
+        if (!m.userData.own) { const c = m.clone(); c.userData.own = true; c.name = "M_Paint"; this.registerMaterial?.(c); m = c; }
+        m.color.setHex(PAINTS[idx].hex); return m;
+      });
+      o.material = Array.isArray(o.material) ? own : own[0];
+    });
+    return PAINTS[idx];
   }
 
   // stand: 0 = on the kickstand (parked, leaning), 1 = folded away and upright (ridden); steer: bar angle; lean: roll (rad)
   pose(v, stand, steer, lean) {
     v.stand = stand;
     const { fork, stand: ks } = v.parts;
-    if (fork) fork.o.quaternion.copy(fork.base).multiply(new THREE.Quaternion().setFromAxisAngle(Y, steer));
+    if (fork) fork.o.quaternion.copy(fork.base).multiply(new THREE.Quaternion().setFromAxisAngle(Y, -steer));
     if (ks) ks.o.quaternion.copy(STAND_DOWN).slerp(STAND_UP, stand);
     v.model.quaternion.setFromAxisAngle(Z, THREE.MathUtils.lerp(PARKED_LEAN, lean, stand));
   }

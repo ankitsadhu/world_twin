@@ -22,6 +22,7 @@ const DEFAULTS = {
   sensitivity: 1, invertY: false,
   textScale: 1, reduceMotion: null,    // null = follow the system setting
   captions: true, contrast: false,
+  roughContact: undefined,   // undefined = the default above (on at localhost, off public)
   quality: "auto",                     // auto | low | balanced | high
   traffic: 1, crowd: 1500,
   view: "third",                       // walking camera: third person (see yourself) or first person
@@ -31,12 +32,18 @@ const DEFAULTS = {
 };
 
 export const Settings = {
+  _m: (() => { if (!store.get("ts.roughMig")) { const o = store.get(KEY); if (o && o.roughContact === false) { delete o.roughContact; store.set(KEY, o); } store.set("ts.roughMig", 1); } })(),
   v: { ...DEFAULTS, ...(store.get(KEY) || {}) },
   subs: [],
   on(fn) { this.subs.push(fn); fn(this.v); },
   set(patch) { Object.assign(this.v, patch); store.set(KEY, this.v); for (const f of this.subs) f(this.v, patch); },
   reset() { this.v = { ...DEFAULTS, sound: this.v.sound }; store.set(KEY, this.v); for (const f of this.subs) f(this.v, this.v); },
   get reduceMotion() { return this.v.reduceMotion ?? prefersReduced(); },
+  get roughContact() {
+    const debug = new URLSearchParams(location.search).get("rough");
+    if (debug !== null) return debug !== "0";
+    return this.v.roughContact ?? /^(localhost|127\.0\.0\.1)$/.test(location.hostname);   // on while developing here, off on the public site until you switch it on
+  },
   get quality() { return this.v.quality === "auto" ? autoQuality() : this.v.quality; },
   lookScale() { return { k: this.v.sensitivity, inv: this.v.invertY ? -1 : 1 }; },
 };
@@ -111,6 +118,7 @@ export class PauseMenu {
         ${range("textScale", "Text size", 0.85, 1.5, 0.05)}${sw("contrast", "High-contrast markers", "Bigger, outlined map markers")}
         ${sw("reduceMotion", "Reduce motion", "No fly-ins, camera swoops or shakes")}</section>
         <section data-tab="City" role="tabpanel">${range("traffic", "Traffic", 0, 1.5, 0.25)}
+          ${sw("roughContact", "Rough contact", "Non-graphic hits; press G or tap Shove on foot · on while testing at localhost, off on the public site")}
           <div class="acts" style="margin-top:var(--s4)"><button class="ui-btn danger" id="pause-reset">Reset settings</button>
           <button class="ui-btn danger" id="pause-forget">Forget my place &amp; parked cars</button></div>
           <p class="fine">Settings and your progress are saved in this browser only.</p></section>
@@ -139,14 +147,16 @@ export class PauseMenu {
     el.querySelectorAll(".seg [data-tab]").forEach(b => b.onclick = () => this.tab(b.dataset.tab));
     this.tab(store.get("ts.settingsTab") || "Sound");
     el.querySelectorAll(".sw").forEach(b => b.onclick = () => {
-      const k = b.dataset.k, cur = k === "reduceMotion" ? Settings.reduceMotion : !!Settings.v[k];
+      const k = b.dataset.k, cur = k === "reduceMotion" ? Settings.reduceMotion : k === "roughContact" ? Settings.roughContact : !!Settings.v[k];
       Settings.set({ [k]: !cur }); this.sync();
     });
     el.querySelectorAll("input[type=range]").forEach(r => r.oninput = () => Settings.set({ [r.dataset.k]: +r.value }));
     el.querySelectorAll("select").forEach(sel => sel.onchange = () => Settings.set({ [sel.dataset.k]: sel.value }));
   }
   sync() {
-    for (const b of this.el.querySelectorAll(".sw")) b.setAttribute("aria-checked", String(b.dataset.k === "reduceMotion" ? Settings.reduceMotion : !!Settings.v[b.dataset.k]));
+    for (const b of this.el.querySelectorAll(".sw")) b.setAttribute("aria-checked", String(
+      b.dataset.k === "reduceMotion" ? Settings.reduceMotion
+        : b.dataset.k === "roughContact" ? Settings.roughContact : !!Settings.v[b.dataset.k]));
     for (const r of this.el.querySelectorAll("input[type=range]")) r.value = Settings.v[r.dataset.k];
     for (const sel of this.el.querySelectorAll("select")) sel.value = Settings.v[sel.dataset.k];
   }

@@ -16,7 +16,7 @@ export const CHARACTERS = [
   { id: "mei", label: "Linen summer dress", url: "export/characters/woman_mei.glb" },
   // the first man: same rig and poses (scaled x1.10 at export), grey tee + jeans (their colours vary per person).
   // weight: how often he is picked among the NPCs (a street is not 1 man in 7)
-  { id: "daniel", label: "Grey tee & jeans", url: "export/characters/man_daniel.glb", weight: 2 },
+  { id: "daniel", label: "Grey tee & jeans", url: "export/characters/man_daniel.glb", weight: 5 },
 ];
 export const PLAYER = "leather";                  // the best-looking one is you...
 export const PLAYER_OUTFITS = ["leather", "leather_shorts"];   // ...in her trousers or her shorts (Settings > Outfit)
@@ -53,6 +53,7 @@ function prepMaterial(m) {
   m.side = THREE.DoubleSide;       // the body under clothes is cut away (MakeHuman): a fold must show cloth, not the street
 }
 
+const PUNCH_T = 0.5, PUNCH_FWD = -1, FIST_SQUEEZE = 0.5;
 export class Avatar {
   // opts.far: also load the far version (~12k tris) and swap to it beyond ~35 m; opts.rng: pick clothing colours
   static async create(loader, root, id, opts = {}) {
@@ -65,17 +66,18 @@ export class Avatar {
     this.object = new THREE.Group();
     const model = cloneSkinned(gltf.scene);
     this.object.add(model);
-    const tinted = new Map();                               // this person's own clothing colours
+    const materials = new Map();
     const dress = m => {
-      prepMaterial(m);
+      if (materials.has(m)) return materials.get(m);
+      const c = m.clone();
+      prepMaterial(c);
       const pal = rng && TINTS[m.name];
-      if (!pal) return m;
-      if (!tinted.has(m.name)) {
-        const c = m.clone(); c.userData.prepped = true;
-        c.color.multiply(new THREE.Color(pal[Math.floor(rng() * pal.length)]));
-        tinted.set(m.name, c);
-      }
-      return tinted.get(m.name);
+      if (pal) c.color.multiply(new THREE.Color(pal[Math.floor(rng() * pal.length)]));
+      c.userData.fadeOpacity = c.opacity;
+      c.userData.fadeTransparent = c.transparent;
+      c.userData.fadeDepthWrite = c.depthWrite;
+      materials.set(m, c);
+      return c;
     };
     this.near = []; this.far = [];
     model.traverse(o => {
@@ -126,6 +128,19 @@ export class Avatar {
     this.lodFar = far;
     for (const m of this.near) m.visible = !far && !m.userData.hide;
     for (const m of this.far) m.visible = far && !m.userData.hide;
+  }
+
+  setOpacity(opacity) {
+    for (const m of [...this.near, ...this.far].flatMap(o => [].concat(o.material))) {
+      const alpha = THREE.MathUtils.clamp(opacity, 0, 1);
+      m.userData.fadeOpacity ??= m.opacity;
+      m.userData.fadeTransparent ??= m.transparent;
+      m.userData.fadeDepthWrite ??= m.depthWrite;
+      m.opacity = m.userData.fadeOpacity * alpha;
+      m.transparent = alpha < 1 || m.userData.fadeTransparent;
+      m.depthWrite = alpha < 1 ? false : m.userData.fadeDepthWrite;
+      m.needsUpdate = true;
+    }
   }
 
   // Accessories (export/characters/acc_<kind>__<id>.glb: the rig + only the accessory, skinned to the same 19 bones):
@@ -208,12 +223,157 @@ export class Avatar {
     const stride = this.ik ? strideOf(v) : THREE.MathUtils.lerp(1.45, 2.6, run);   // metres per full cycle (two steps)
     this.phase = (this.phase + (v > 0.05 ? v / stride : 0) * Math.PI * 2 * dt) % (Math.PI * 200);
     this.t += dt;
+    if (this.punchT > 0) this.punchT = Math.max(0, this.punchT - dt);
     this.jb = (this.jb || 0) + ((this.air > 0.02 ? 1 : 0) - (this.jb || 0)) * Math.min(1, dt * 14);
     this.landT = Math.max(0, (this.landT || 0) - dt);
     this.pose(dt, move * (1 - this.jb), run);
   }
 
+  // a punch (G / Shove): guard up, wind back, a straight strike with the torso twisting into it, then recover; hands alternate
+  punch() { if ((this.punchT || 0) > 0.12 || this.ridePose) return false; this.punchT = PUNCH_T; this.punchSide = this.punchSide === "Right" ? "Left" : "Right"; return true; }
+  // the rig has no finger bones, so a fist is a small skin-coloured knuckled block fitted over each hand while punching
+  handColour() {
+    try {
+      for (const sm of this.near) {
+        if (!sm.isSkinnedMesh) continue;
+        const mats = [].concat(sm.material), g = sm.geometry, si = g.attributes.skinIndex, sw = g.attributes.skinWeight, uv = g.attributes.uv;
+        const hi = sm.skeleton.bones.findIndex(b => b === this.bones.RightHand?.b);
+        if (hi < 0 || !si || !uv) continue;
+        const map = (mats.find(m => /skin/i.test(m.name)) || mats[0]).map, img = map?.image;
+        if (!img) continue;
+        const cv = document.createElement("canvas"), W = cv.width = Math.min(256, img.width), H = cv.height = Math.min(256, img.height);
+        const c = cv.getContext("2d", { willReadFrequently: true }); c.drawImage(img, 0, 0, W, H);
+        let r = 0, gr = 0, b = 0, n = 0;
+        for (let i = 0; i < si.count && n < 40; i++) for (let k = 0; k < 4; k++) if (si.getComponent(i, k) === hi && sw.getComponent(i, k) > 0.9) {
+          const u = uv.getX(i), v = map.flipY ? 1 - uv.getY(i) : uv.getY(i), d = c.getImageData(Math.floor((u % 1) * W), Math.floor((v % 1) * H), 1, 1).data;
+          r += d[0]; gr += d[1]; b += d[2]; n++;
+        }
+        if (n) return new THREE.Color().setRGB(r / n / 255, gr / n / 255, b / n / 255, THREE.SRGBColorSpace);
+      }
+    } catch { /* texture not readable: fall back */ }
+    return null;
+  }
+  // the hand's own axes in its bone frame, from its mesh: the longest direction runs to the fingertips, the thinnest is the palm's
+  // normal (signed to face the body at rest), and its width. Returns { f, n, w, width } or null.
+  handAxes(side) {
+    try {
+      const hb = this.bones[side + "Hand"]?.b;
+      for (const sm of this.near) {
+        if (!sm.isSkinnedMesh) continue;
+        const hi = sm.skeleton.bones.indexOf(hb); if (hi < 0) continue;
+        const g = sm.geometry, si = g.attributes.skinIndex, sw = g.attributes.skinWeight, pos = g.attributes.position;
+        const inv = sm.skeleton.boneInverses[hi], pts = [], P = new THREE.Vector3(), M = new THREE.Vector3();
+        let mx = 0;
+        for (let i = 0; i < si.count; i++) for (let k = 0; k < 4; k++) if (si.getComponent(i, k) === hi && sw.getComponent(i, k) > 0.7) {
+          P.fromBufferAttribute(pos, i); mx += P.x; pts.push(P.clone().applyMatrix4(inv)); break;
+        }
+        if (pts.length < 30) continue;
+        mx /= pts.length;
+        const c = pts.reduce((a, p) => a.add(p), new THREE.Vector3()).multiplyScalar(1 / pts.length);
+        // power iteration for the covariance's axes
+        const cov = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+        for (const p of pts) { const d = [p.x - c.x, p.y - c.y, p.z - c.z]; for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) cov[i][j] += d[i] * d[j]; }
+        const mul = (m, v) => new THREE.Vector3(m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z, m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z, m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z);
+        let f = new THREE.Vector3(0.3, 1, 0.2); for (let i = 0; i < 40; i++) f = mul(cov, f).normalize();
+        let w = new THREE.Vector3(1, 0, 0).sub(f.clone().multiplyScalar(f.x)).normalize(); for (let i = 0; i < 40; i++) w = mul(cov, w).sub(f.clone().multiplyScalar(f.dot(mul(cov, w)))).normalize();
+        const n = f.clone().cross(w).normalize();
+        // f must point away from the wrist: the mesh's centre is further along the bone than its origin
+        if (f.dot(c) < 0) f.negate();
+        // inward at rest: the normal, taken back to the model frame, points toward the body's centre line
+        const toModel = new THREE.Matrix4().copy(inv).invert();
+        if (M.copy(n).transformDirection(toModel).x * mx > 0) n.negate();
+        const wv = f.clone().cross(n).normalize();
+        let wd = 0; for (const p of pts) wd = Math.max(wd, Math.abs(p.clone().sub(c).dot(wv)));
+        return { f, n, w: wv, width: wd * 2, centre: c };
+      }
+    } catch (e) { console.warn("hand axes", e); }
+    return null;
+  }
+
+  // the rig has no finger bones, so a fist is built from a few skin-coloured pieces fitted to each hand while punching:
+  // a rounded block, four knuckles on the striking face, the curled fingers on the palm side and the thumb across them
+  makeFists() {
+    this.fists = {};
+    const col = this.handColour() || new THREE.Color(0xc79a80);
+    const mat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.62, metalness: 0 });
+    for (const side of ["Left", "Right"]) {
+      const hand = this.bones[side + "Hand"]?.b; if (!hand) continue;
+      const ax = this.handAxes(side) || { f: new THREE.Vector3(0, 1, 0), n: new THREE.Vector3(0, 0, 1), w: new THREE.Vector3(1, 0, 0), width: 0.085, centre: new THREE.Vector3(0, 0.07, 0) };
+      const k = 0.88, grp = new THREE.Group();     // local frame: X = width, Y = to the knuckles, Z = palm side
+      const add = (geo, x, y, z, rx = 0, ry = 0, rz = 0, sx = 1, sy = 1, sz = 1) => {
+        const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.rotation.set(rx, ry, rz); m.scale.set(sx, sy, sz); m.castShadow = true; m.raycast = () => {}; grp.add(m); return m;
+      };
+      const sph = new THREE.SphereGeometry(1, 16, 12), cap = new THREE.CapsuleGeometry(1, 1, 4, 10);
+      add(sph, 0, 0.040, 0.004, 0, 0, 0, 0.031, 0.045, 0.026);                                  // the block of the hand
+      for (let i = 0; i < 4; i++) {
+        const x = (i - 1.5) * 0.0205;
+        add(sph, x, 0.087, -0.006, 0, 0, 0, 0.0118, 0.0125, 0.0118);                            // knuckles on the striking face
+        add(cap, x, 0.062, 0.026, 0, 0, 0, 0.0112, 0.024, 0.0112);                              // the curled fingers, palm side
+        add(sph, x, 0.0885, 0.024, 0, 0, 0, 0.0108, 0.0085, 0.0108);                            // their tips folded in
+      }
+      add(cap, 0, 0.075, 0.040, 0, 0, Math.PI / 2, 0.0125, 0.034, 0.0125);                      // the thumb across the front of the fingers
+      grp.scale.setScalar(k);
+      const basis = new THREE.Matrix4().makeBasis(ax.w, ax.f, ax.n);
+      grp.userData.q = new THREE.Quaternion().setFromRotationMatrix(basis);
+      grp.userData.off = ax.centre.clone().sub(ax.f.clone().multiplyScalar(ax.centre.dot(ax.f))).addScaledVector(ax.f, -0.02);   // along the finger axis from the wrist
+      grp.visible = false; grp.frustumCulled = false;
+      (this.bones[side + "ForeArm"]?.b || hand).add(grp); this.fists[side] = grp;
+    }
+  }
+  punchPose() {
+    const u = 1 - this.punchT / PUNCH_T;
+    const e = u < 0.3 ? -0.3 * (u / 0.3) : u < 0.5 ? -0.3 + 1.3 * ((u - 0.3) / 0.2) : 1 - ((u - 0.5) / 0.5) ** 0.8;   // -0.3 wind-up .. 1 full reach
+    const g = Math.sin(Math.min(1, u * 1.6) * Math.PI) * 0.0 + (u < 0.9 ? 1 : (1 - u) * 10);                           // guard held until the end
+    const hit = this.punchSide, off = hit === "Right" ? "Left" : "Right", sg = hit === "Right" ? 1 : -1;
+    this.rot(hit + "Arm", ["x", PUNCH_FWD * (70 + 25 * e)], ["z", -sg * (6 - 8 * e)]);
+    this.rot(hit + "ForeArm", ["x", -105 * (1 - Math.min(1, Math.max(0, e) * 1.15))]);
+    this.rot(off + "Arm", ["x", PUNCH_FWD * 55 * g], ["z", sg * 8]);
+    this.rot(off + "ForeArm", ["x", -115 * g]);
+    this.rot("Spine", ["x", 12 + 8 * e], ["y", sg * (-3 + 14 * e)]);                  // weight forward into the blow
+    this.rot("Spine1", ["y", sg * (-2 + 8 * e)]);
+    this.rot("Hips", ["y", sg * (-2 + 6 * e)]);
+    this.rot("Head", ["x", -6], ["y", -sg * (-2 + 18 * e)]);
+    // the stance: the foot opposite the punching hand steps in and takes the weight, the back leg pushes, the hips sink and turn
+    const st = Math.min(1, this.punchT > PUNCH_T * 0.85 ? (1 - this.punchT / PUNCH_T) / 0.15 : 1) * (u < 0.55 ? 1 : 1 - (u - 0.55) / 0.45 * 0.6), lead = off, back = hit;
+    this.rot(lead + "UpLeg", ["x", PUNCH_FWD * 24 * st + 4 * e], ["z", sg * 3]); this.rot(lead + "Leg", ["x", 26 * st]); this.rot(lead + "Foot", ["x", -6 * st]);
+    this.rot(back + "UpLeg", ["x", -PUNCH_FWD * 14 * st - 6 * e], ["z", -sg * 5]); this.rot(back + "Leg", ["x", 22 * st + 8 * e]); this.rot(back + "Foot", ["x", -10 * st]);
+    const H = this.bones.Hips;
+    if (H?.up) H.b.position.copy(H.pos).addScaledVector(H.up, -0.07 * st - 0.015 * e);
+    this.object.userData.punchStep = 0;         // metres the body steps into the blow (see set())
+  }
+  // seated (a passenger in the back of a car): thighs forward, shins down, hands on the lap, a relaxed lean; the caller puts the hips on the seat
+  sit(on) { this.sitting = on; this.contact(!on); if (!on) this.pose(0); }
+  poseSit() {
+    const t = this.t, br = Math.sin(t * 1.7) * 0.6;
+    for (const side of ["Left", "Right"]) {
+      this.rot(side + "UpLeg", ["x", -86], ["z", side === "Left" ? -4 : 4]); this.rot(side + "Leg", ["x", 88]); this.rot(side + "Foot", ["x", -4]);
+      this.rot(side + "Arm", ["x", -22], ["z", side === "Left" ? 10 : -10]); this.rot(side + "ForeArm", ["x", -62]);
+    }
+    this.rot("Spine", ["x", -4 + br]); this.rot("Spine1", ["x", -2]); this.rot("Head", ["x", 2], ["y", Math.sin(t * 0.3) * 14]);
+  }
+  // a passenger on a motorcycle: the rider's ride pose, but the arms reach forward to hold the rider's waist instead of the grips
+  pillionArms() {
+    if (!this.ridePose) return;
+    const set = (name, ...turns) => { this.rot(name, ...turns); (this.ridePose[name] ||= {}).quaternion = this.bones[name].b.quaternion.toArray(); };
+    set("LeftArm", ["x", -52], ["z", 16]); set("RightArm", ["x", -52], ["z", -16]);
+    set("LeftForeArm", ["x", -50]); set("RightForeArm", ["x", -50]);
+  }
   pose(dt, m = 0, r = 0) {
+    if (this.sitting) { this.poseSit(); return; }
+    this.poseBase(dt, m, r);
+    if (this.fists || this.punchT > 0) { if (!this.fists) this.makeFists(); const on = this.punchT > 0;
+      for (const side of Object.keys(this.fists)) {                          // clench: the open hand is squeezed short and fat under the fist
+        const f = this.fists[side], hb = this.bones[side + "Hand"]?.b; f.visible = on;
+        if (hb) { hb.scale.setScalar(on ? 0.001 : 1); f.position.copy(hb.position); f.quaternion.copy(hb.quaternion).multiply(f.userData.q); f.position.addScaledVector(f.userData.off.clone().applyQuaternion(hb.quaternion), 1); }
+      }
+    }
+    if (this.punchT > 0) {
+      this.punchPose();
+      const k = this.object.userData.punchStep || 0;
+      this.object.position.x += Math.sin(this.heading) * k; this.object.position.z += Math.cos(this.heading) * k;
+    }
+  }
+  poseBase(dt, m = 0, r = 0) {
     if (this.ridePose) {
       for (const [name, P] of Object.entries(this.ridePose)) {
         const B = this.bones[name];
@@ -371,18 +531,36 @@ export class Npcs {
     while (this.list.length > this.want) this.scene.remove(this.list.pop().a.object);
     if (this.spawning) return;
     this.spawning = true;
-    const pool = npcPool(this.playerId);
+    const pool = npcPool(this.playerId), isMan = id => id === "daniel";
+    const OFFS = {                                                              // where each member walks relative to the leader: [side, back] in metres
+      couple: [[0.75, 0]], friends: [[0.8, 0.1], [-0.8, 0.2], [1.6, 0.4]], family: [[0.8, 0.2], [-0.7, 0.9], [0.1, 1.4]],
+    };
     while (this.list.length < this.want) {
-      // three in four on the bowtie (Broadway / 7th Ave, 42nd-47th St: where the crowds really are), the rest nearby
-      const p = this.rng() < 0.75 ? this.sampleRect(-80, -250, 60, 155) : this.sample(-10, -40, 320);
+      if (!this.grp?.left) {                                                    // a new party: alone, a couple, friends or a family
+        const r = this.rng();
+        const kind = r < 0.38 ? "solo" : r < 0.62 ? "couple" : r < 0.85 ? "friends" : "family";
+        this.grp = { kind, left: kind === "solo" ? 0 : kind === "couple" ? 1 : 2 + Math.floor(this.rng() * 2), i: 0, leader: null };
+      }
+      const G = this.grp, member = G.left > 0 && G.leader;
+      let p;
+      if (member) { const o = OFFS[G.kind][Math.min(G.i, OFFS[G.kind].length - 1)]; p = [G.leader.x + o[0], G.leader.y + o[1]]; }
+      else p = this.rng() < 0.75 ? this.sampleRect(-80, -250, 60, 155) : this.sample(-10, -40, 320);
       if (!p) break;
-      const id = pool[Math.floor(this.rng() * pool.length)];
+      let id = pool[Math.floor(this.rng() * pool.length)];
+      if (member) {                                                              // couples are mostly a woman and a man; friends and families mix
+        const lm = isMan(G.leader.a.id), pref = G.kind === "couple" ? (this.rng() < 0.85 ? !lm : lm) : this.rng() < 0.5;
+        for (let k = 0; k < 8 && isMan(id) !== pref; k++) id = pool[Math.floor(this.rng() * pool.length)];
+      }
       const a = await Avatar.create(this.loader, this.root, id, { far: true, rng: this.rng }).catch(() => null);
       if (!a || this.list.length >= this.want) break;
       this.scene.add(a.object);
       if (this.rng() < 0.25) a.wear(this.loader, this.root, "sunglasses_aviator", true);   // a quarter of the street wears shades
-      this.list.push({ a, x: p[0], y: p[1], h: this.rng() * 6.28, target: null, wait: this.rng() * 6,
-        sp: 1.1 + this.rng() * 0.45, v: 0 });
+      const n = { a, x: p[0], y: p[1], h: this.rng() * 6.28, target: null, wait: this.rng() * 6,
+        sp: 1.1 + this.rng() * 0.45, v: 0, state: "walking", hitCount: 0, air: 0 };
+      if (member) { n.leader = G.leader; n.off = OFFS[G.kind][Math.min(G.i, OFFS[G.kind].length - 1)]; n.sp = G.leader.sp; n.h = G.leader.h; G.i++; G.left--; }
+      else if (G.kind !== "solo") { G.leader = n; G.i = 0; n.sp = 1.0 + this.rng() * 0.3; }     // a party walks slower than a loner
+      if (!member && G.kind === "solo") { n.sp = 1.25 + this.rng() * 0.35; }
+      this.list.push(n);
     }
     this.spawning = false;
     if (this.list.length !== this.want) this.setCount(this.want);
@@ -396,10 +574,21 @@ export class Npcs {
     this.setCount(this.want);
   }
 
+  clearPosition(x, y, radius = 0.55) {
+    return !this.collider?.blocked(x, y, radius, 1);
+  }
+
+  stepAside(n, dx, dy) {
+    const x = n.x + dx, y = n.y + dy;
+    if (!this.clearPath(n.x, n.y, x, y)) return false;
+    n.x = x; n.y = y;
+    return true;
+  }
+
   sampleRect(x0, y0, x1, y1) {
     for (let k = 0; k < 60; k++) {
       const x = x0 + this.rng() * (x1 - x0), y = y0 + this.rng() * (y1 - y0), w = this.crowd?.walk.at(x, y);
-      if ((w === 1 || w === 2) && !this.collider?.blocked(x, y, 0.4, 0.5)) return [x, y];
+      if ((w === 1 || w === 2) && this.clearPosition(x, y)) return [x, y];
     }
     return null;
   }
@@ -408,7 +597,7 @@ export class Npcs {
     for (let k = 0; k < 40; k++) {
       const x = cx + (this.rng() - 0.5) * 2 * r, y = cy + (this.rng() - 0.5) * 2 * r;
       const w = this.crowd?.walk.at(x, y);
-      if ((w === 1 || w === 2) && !this.collider?.blocked(x, y, 0.4, 0.5)) return [x, y];
+      if ((w === 1 || w === 2) && this.clearPosition(x, y)) return [x, y];
     }
     return null;
   }
@@ -417,50 +606,273 @@ export class Npcs {
     const n = Math.ceil(Math.hypot(x1 - x0, y1 - y0));
     for (let i = 1; i <= n; i++) {
       const x = x0 + (x1 - x0) * i / n, y = y0 + (y1 - y0) * i / n, w = this.crowd.walk.at(x, y);
-      if (!(w === 1 || w === 2) || this.collider?.blocked(x, y, 0.35, 0.5)) return false;
+      if (!(w === 1 || w === 2) || !this.clearPosition(x, y, 0.5)) return false;
     }
     return true;
   }
 
   // people near a point, for the traffic AI (cars stop for them)
-  near(x, y, r) { return this.list.filter(n => Math.abs(n.x - x) < r && Math.abs(n.y - y) < r).map(n => [n.x, n.y]); }
+  near(x, y, r) { return this.list.filter(n => n.state !== "out" && Math.abs(n.x - x) < r && Math.abs(n.y - y) < r).map(n => [n.x, n.y]); }
 
-  // nobody walks through a car or through you: step out of a car's path, never stand inside one, make room for you
+  hitAt(x, y, vx, vy, strength = 0.3, radius = 2.2) {
+    const n = this.list.filter(p => p.state !== "out")
+      .map(p => [p, Math.hypot(p.x - x, p.y - y)])
+      .filter(([, d]) => d < radius).sort((a, b) => a[1] - b[1])[0]?.[0];
+    if (!n) return false;
+    if ((n.hitLock || 0) > 0) return false;
+    n.hitLock = 0.8;
+    const speed = Math.hypot(vx, vy), hard = speed >= 5 || strength >= 0.7;     // a car or bike at speed is hard; a punch or a bump is not
+    const now = performance.now();
+    if (now - (n.lastHit || 0) > 10000) n.hitCount = 0;                       // a minute's calm and they've shaken it off
+    n.lastHit = now;
+    if (n.state === "down" || n.state === "gettingUp" || (n.state === "dazed" && hard)) {
+      // hit again while down or dazed: they scramble up and run for it (no vanishing): gone once they're far or out of sight
+      n.state = "down"; n.stateT = 0.5; n.escape = true; n.target = null; n.vx = vx / (speed || 1) * 1.5; n.vy = vy / (speed || 1) * 1.5;
+      n.fallT = 0; n.airV = 0; n.air = 0; n.fallDir = (Math.sin(n.h) * vx + Math.cos(n.h) * vy) > 0 ? 1 : -1;
+      return true;
+    }
+    if (hard || n.hitCount >= 2) return this.startHit(n, vx, vy, strength);        // knocked off their feet: a car, or the third blow
+    return this.startStagger(n, vx, vy, strength);
+  }
+
+  // a punch or a bump: rocked back a step or two, a hand to the face, then they hurry away from you. Others nearby back off.
+  startStagger(n, vx, vy, strength) {
+    n.hitCount++; n.leader = null;
+    n.state = "stagger"; n.stateT = 0.85; n.escape = false;
+    const sp = Math.hypot(vx, vy) || 1;
+    n.vx = vx / sp * (2.4 + strength * 2.2); n.vy = vy / sp * (2.4 + strength * 2.2);
+    n.h = Math.atan2(-vx, -vy);                                            // they turn to look at who hit them
+    n.fromX = n.x - vx / sp; n.fromY = n.y - vy / sp;
+    n.target = null; n.wait = 2;
+    for (const other of this.list) {
+      if (other === n || Math.hypot(other.x - n.x, other.y - n.y) > 12 || other.state !== "walking") continue;
+      const dx = other.x - n.x, dy = other.y - n.y, d = Math.hypot(dx, dy) || 1;
+      const p = this.sample(other.x + dx / d * 10, other.y + dy / d * 10, 8);      // they step back and give the scene room
+      if (p) { other.target = p; other.wait = 0; other.sp = Math.max(other.sp, 2.2); }
+    }
+    return true;
+  }
+
+  adoptHitRider(avatar, x, y, vx, vy, strength = 0.3) {
+    avatar.object.position.set(x, this.groundAt(new THREE.Vector3(x, 3, -y)), -y);
+    avatar.object.visible = true;
+    avatar.contact(true);
+    this.scene.add(avatar.object);
+    const n = { a: avatar, x, y, h: Math.atan2(vx, vy), target: null, wait: 0, sp: 1.25, v: 0,
+      state: "walking", hitCount: 0, air: 0, vx: 0, vy: 0, stateT: 0, hitLock: 0 };
+    this.list.push(n);
+    return this.startHit(n, vx, vy, strength);
+  }
+
+  startHit(n, vx, vy, strength) {
+    n.hitCount++; n.leader = null;
+    n.hitLock = 0.8;
+    n.state = "hit"; n.stateT = 0.14; n.fallT = 0;
+    const speed = Math.hypot(vx, vy) || 1;
+    n.fallDir = (Math.sin(n.h) * vx + Math.cos(n.h) * vy) > 0 ? 1 : -1;      // pushed the way they face: face down; else onto their back
+    n.vx = vx / speed * (1.8 + strength * 2.2);
+    n.vy = vy / speed * (1.8 + strength * 2.2);
+    n.air = 0.08 + strength * 0.4;
+    n.airV = 1.4 + strength * 2;
+    n.target = null; n.wait = 2;
+    for (const other of this.list) {
+      if (other === n || Math.hypot(other.x - n.x, other.y - n.y) > 15 || other.state !== "walking") continue;
+      other.fleeT = 3.5;
+      const dx = other.x - n.x, dy = other.y - n.y, d = Math.hypot(dx, dy) || 1;
+      const p = this.sample(other.x + dx / d * 18, other.y + dy / d * 18, 10);
+      if (p) { other.target = p; other.wait = 0; }
+    }
+    return true;
+  }
+
+  updateImpact(n, dt) {
+    if (n.leaving > 0) {                                                     // running away after a second hit
+      n.leaving -= dt;
+      const far = Math.hypot(n.x - this.camera.position.x, n.y + this.camera.position.z) > 70;
+      if (n.leaving <= 0 && !far) n.leaving = 1;                             // not yet out of sight: keep running
+      else if (n.leaving <= 0 || (far && n.leaving < 14)) {
+        const p = this.sample(this.camera.position.x, -this.camera.position.z, 180);
+        if (p) { Object.assign(n, { x: p[0], y: p[1], state: "walking", hitCount: 0, air: 0, vx: 0, vy: 0, target: null, wait: 2 + this.rng(), sp: 1.1 + this.rng() * 0.45, leaving: 0, escape: false, g: null, gs: null }); }
+      }
+    }
+    if (n.state === "walking") return;
+    if (n.state === "out") {
+      n.stateT -= dt;
+      n.a.setOpacity(Math.max(0, n.stateT / 1.1));
+      if (n.stateT <= 0) {
+        const p = this.sample(this.camera.position.x, -this.camera.position.z, 180);
+        if (p) {
+          Object.assign(n, { x: p[0], y: p[1], state: "walking", stateT: 0, hitCount: 0, air: 0,
+            vx: 0, vy: 0, target: null, wait: 2 + this.rng(), g: null, gs: null });
+          n.a.setOpacity(1); n.a.contact(true);
+        } else n.stateT = 0.2;
+      }
+      return;
+    }
+    if (n.state === "stagger") {
+      n.stateT -= dt;
+      const x = n.x + n.vx * dt, y = n.y + n.vy * dt;
+      if (this.clearPath(n.x, n.y, x, y)) { n.x = x; n.y = y; }
+      const drag = Math.exp(-dt * 3.4); n.vx *= drag; n.vy *= drag;
+      if (n.stateT <= 0) {                                                  // then off, away from whoever did it
+        const dx = n.x - n.fromX, dy = n.y - n.fromY, d = Math.hypot(dx, dy) || 1;
+        n.state = "walking"; n.leaving = 10; n.sp = 3.4; n.wait = 0;
+        n.target = this.sample(n.x + dx / d * 60, n.y + dy / d * 60, 40) || this.sample(n.x, n.y, 60);
+      }
+      return;
+    }
+    n.stateT -= dt;
+    if (n.state === "hit" || n.state === "down") n.fallT = (n.fallT || 0) + dt;
+    if (n.state === "hit" && n.stateT <= 0) { n.state = "down"; n.stateT = 1.25; }
+    if (n.state === "down") {
+      const x = n.x + (n.vx || 0) * dt, y = n.y + (n.vy || 0) * dt;
+      if (this.clearPath(n.x, n.y, x, y)) { n.x = x; n.y = y; } else n.vx = n.vy = 0;
+      const drag = Math.exp(-dt * 3.2);
+      n.vx *= drag; n.vy *= drag;
+      n.airV -= 9.81 * dt; n.air = Math.max(0, n.air + n.airV * dt);
+      if (n.air === 0) n.airV = 0;
+      if (n.stateT <= 0 && n.air === 0) { n.state = "gettingUp"; n.stateT = 1.2; }
+    } else if (n.state === "gettingUp" && n.stateT <= 0 && n.escape) {
+      const cx = this.camera.position.x, cy = -this.camera.position.z, dx = n.x - cx, dy = n.y - cy, d = Math.hypot(dx, dy) || 1;
+      n.state = "walking"; n.a.contact(true); n.leaving = 16; n.sp = 3.9; n.wait = 0;
+      n.target = this.sample(n.x + dx / d * 70, n.y + dy / d * 70, 40) || this.sample(n.x, n.y, 80);
+    } else if (n.state === "gettingUp" && n.stateT <= 0) {
+      n.state = "dazed"; n.stateT = 7; n.a.contact(true);
+    } else if (n.state === "dazed" && n.stateT <= 0) {
+      n.state = "walking"; n.hitCount = 0; n.wait = 1 + this.rng();
+    }
+  }
+
+  // hit by a vehicle or a shove: thrown off their feet (arms flung out), land on their back (hit from the front) or face
+  // down (hit from behind), lie stunned, push themselves up, then stand dazed with a hand to the head before walking off
+  poseImpact(n) {
+    if (n.state === "walking") return;
+    const p = n.a, ss = x => x * x * (3 - 2 * x), cl = x => Math.max(0, Math.min(1, x));
+    if (n.state === "stagger") {                                             // rocked back: head snaps, a hand to the face, the other arm out for balance
+      const u = 1 - cl(n.stateT / 0.85), k = Math.sin(Math.min(1, u * 2.2) * Math.PI * 0.5) * (1 - 0.35 * u);
+      p.rot("Hips", ["x", -8 * k], ["z", 5 * k]); p.rot("Spine", ["x", -14 * k], ["y", 8 * k]); p.rot("Spine1", ["x", -8 * k]);
+      p.rot("Neck", ["x", -12 * k]); p.rot("Head", ["x", -10 * k], ["y", 30 * k * (n.hitCount % 2 ? 1 : -1)]);
+      p.rot("RightArm", ["x", -100 * k], ["z", -18]); p.rot("RightForeArm", ["x", -125 * k]);
+      p.rot("LeftArm", ["x", -15 * k], ["z", 38 * k]); p.rot("LeftForeArm", ["x", -30 * k]);
+      p.rot("LeftUpLeg", ["x", 12 * k]); p.rot("LeftLeg", ["x", 18 * k]); p.rot("RightUpLeg", ["x", -16 * k]); p.rot("RightLeg", ["x", 10 * k]);
+      return;
+    }
+    const fd = n.fallDir || 1;
+    let lie = 0, air = 0, push = 0, daze = 0;
+    if (n.state === "hit" || n.state === "down" || n.state === "out") { n.fallT = (n.fallT || 0); lie = ss(cl(n.fallT / 0.5)); air = n.air > 0.03 ? 1 : 0; }
+    else if (n.state === "gettingUp") { const u = 1 - n.stateT / 1.2; lie = 1 - ss(cl((u - 0.25) / 0.75)); push = Math.sin(cl(u / 0.6) * Math.PI) ; }
+    else if (n.state === "dazed") daze = cl(n.stateT / 1.5) * 1;
+    const H = p.bones.Hips;
+    if (lie > 0.001) {
+      let alpha = 0, rise = 0;                                                  // lie along the ground: head end vs feet end (slopes, kerbs)
+      const G = this.ground;
+      if (G?.built) {
+        const hx = Math.sin(n.h) * fd * 0.85, hy = Math.cos(n.h) * fd * 0.85;
+        const hh = G.h(n.x + hx, n.y + hy), hf = G.h(n.x - hx, n.y - hy);
+        alpha = Math.max(-35, Math.min(35, Math.atan2(hh - hf, 1.7) * 57.3));
+        rise = ((hh + hf) / 2 - (n.gs ?? G.h(n.x, n.y))) * lie;
+      }
+      p.rot("Hips", ["x", fd * (88 - alpha * lie)], ["y", 12 * lie * fd]);
+      p.rot("Spine", ["x", fd * -6 * lie], ["y", -8 * lie]);
+      p.rot("Head", ["x", fd * 10 * lie], ["z", 12 * lie]);
+      const flail = air ? 1 : 0.35;                                           // flung: arms out and wide; on the ground: loose
+      p.rot("LeftArm", ["x", -40 * flail * lie + 30 * push], ["z", 55 * flail * lie]);
+      p.rot("RightArm", ["x", -25 * flail * lie - 20 * push], ["z", -62 * flail * lie]);
+      p.rot("LeftForeArm", ["x", -35 * lie - 40 * push]); p.rot("RightForeArm", ["x", -20 * lie - 40 * push]);
+      p.rot("LeftUpLeg", ["x", -26 * lie * (air ? 1.4 : 1)], ["z", -9 * lie]); p.rot("LeftLeg", ["x", 38 * lie]);
+      p.rot("RightUpLeg", ["x", 14 * lie], ["z", 12 * lie]); p.rot("RightLeg", ["x", 52 * lie]);
+      if (H?.up) H.b.position.copy(H.pos).addScaledVector(H.up, -0.83 * lie * (1 - push * 0.15) + rise);   // the pelvis comes down to the ground
+    } else if (daze > 0.001 || n.state === "dazed") {
+      const w = Math.sin(n.stateT * 2.4);
+      p.rot("Hips", ["z", 6 * w], ["x", 6]); p.rot("Spine", ["x", 12], ["z", -8 * w]);
+      p.rot("Neck", ["z", 8 * w]); p.rot("Head", ["x", 10], ["z", 6 * w]);
+      p.rot("RightArm", ["x", -95], ["z", -20]); p.rot("RightForeArm", ["x", -120]);        // a hand to the head
+      p.rot("LeftUpLeg", ["x", -4]); p.rot("LeftLeg", ["x", 10]);
+    }
+  }
+
+  // Decide once per encounter: wait for a moving car, or choose a stable sidestep around a stopped one.
   avoid(n, cars, me, dt) {
+    if (n.carDetour) {
+      const d = Math.hypot(n.carDetour[0] - n.x, n.carDetour[1] - n.y);
+      if (d > 0.45) { n.target = n.carDetour; return true; }
+      n.carIgnore = { x: n.carDetourCar[0], y: n.carDetourCar[1], t: 2.5 };
+      n.carDetour = n.carDetourCar = null;
+      n.target = null; n.wait = 0.5;
+      return true;
+    }
+    if (n.carIgnore) {
+      n.carIgnore.t -= dt;
+      if (n.carIgnore.t <= 0 || !cars.some(([x, y]) => Math.hypot(x - n.carIgnore.x, y - n.carIgnore.y) < 5))
+        n.carIgnore = null;
+    }
+    let risk = null;
     for (const [cx, cy, ch, cv] of cars) {
       const dx = n.x - cx, dy = n.y - cy;
+      if (n.carIgnore && Math.hypot(cx - n.carIgnore.x, cy - n.carIgnore.y) < 5) continue;
       if (dx * dx + dy * dy > 144) continue;
       const fx = Math.cos(ch), fy = Math.sin(ch), along = dx * fx + dy * fy, side = dx * -fy + dy * fx;
-      const s = side >= 0 ? 1 : -1;
-      if (Math.abs(along) < 2.6 && Math.abs(side) < 1.25) {            // inside the car's body: out to the nearest side
-        n.x += -fy * s * (1.3 - Math.abs(side)); n.y += fx * s * (1.3 - Math.abs(side));
-      } else if (Math.abs(cv) > 0.5 && along > 0 && along < 4 + Math.abs(cv) * 1.5 && Math.abs(side) < 1.8) {
-        const st = Math.min(1, dt * 3.2);                              // in its path: hurry aside, facing away
-        n.x += -fy * s * st; n.y += fx * s * st;
-        n.target = null; n.wait = 1 + this.rng(); n.dodge = 0.6;
+      const inBody = Math.abs(along) < 3.2 && Math.abs(side) < 1.7;
+      const approaching = Math.abs(cv) > 0.8 && along * Math.sign(cv) > -1.5
+        && along * Math.sign(cv) < 4 + Math.abs(cv) * 1.5 && Math.abs(side) < 2.2;
+      if (inBody || approaching) { risk = { cx, cy, fx, fy, moving: Math.abs(cv) > 0.8 }; break; }
+    }
+    if (risk?.moving) {
+      n.target = null; n.wait = Math.max(n.wait, 0.65);
+      return true;
+    }
+    if (risk) {
+      const sx = -risk.fy, sy = risk.fx, currentSide = (n.x - risk.cx) * sx + (n.y - risk.cy) * sy;
+      const first = currentSide === 0 ? (this.rng() < 0.5 ? -1 : 1) : -Math.sign(currentSide);
+      for (const sign of [first, -first]) {
+        const goal = [n.x + sx * sign * 3.6, n.y + sy * sign * 3.6];
+        if (!this.clearPath(n.x, n.y, goal[0], goal[1])) continue;
+        const along = (goal[0] - risk.cx) * risk.fx + (goal[1] - risk.cy) * risk.fy;
+        const side = (goal[0] - risk.cx) * sx + (goal[1] - risk.cy) * sy;
+        if (Math.abs(along) < 3.1 && Math.abs(side) < 1.8) continue;
+        n.carDetour = goal; n.carDetourCar = [risk.cx, risk.cy]; n.target = goal; n.wait = 0;
+        return true;
       }
+      n.target = null; n.wait = Math.max(n.wait, 0.5);
+      return true;
     }
     if (me) {
       const dx = n.x - me[0], dy = n.y - me[1], d = Math.hypot(dx, dy);
-      if (d < 0.75 && d > 1e-3) { n.x = me[0] + dx / d * 0.75; n.y = me[1] + dy / d * 0.75; }
+      if (d < 0.75 && d > 1e-3) this.stepAside(n, dx / d * (0.75 - d), dy / d * (0.75 - d));
     }
+    return false;
   }
 
   // people follow you around the city (as in open-world games): someone far away and out of sight reappears out of
   // sight on a sidewalk near you, so every street you walk down has people on it, not just the bowtie
   recycle() {
     const cam = this.camera.position, cx = cam.x, cy = -cam.z;
-    const far = this.list.find(n => !n.a.object.visible && Math.hypot(n.x - cx, n.y - cy) > 260);
+    const far = this.list.find(n => n.state === "walking" && !n.leader && !n.a.object.visible && Math.hypot(n.x - cx, n.y - cy) > 260);
     if (!far) return;
     for (let k = 0; k < 12; k++) {
       const a = this.rng() * 6.283, r = 45 + this.rng() * 150, x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
       const w = this.crowd?.walk.at(x, y);
-      if (!(w === 1 || w === 2) || this.collider?.blocked(x, y, 0.4, 0.5)) continue;
+      if (!(w === 1 || w === 2) || !this.clearPosition(x, y)) continue;
       this.sphere.center.set(x, 1, -y);
       if (this.frustum.intersectsSphere(this.sphere) && r < 200) continue;   // never pop in where you're looking
       Object.assign(far, { x, y, target: null, wait: this.rng() * 4, g: null, gs: null });
+      for (const m of this.list) if (m.leader === far) Object.assign(m, { x: x + m.off[0], y: y + m.off[1], target: null, g: null, gs: null });   // the whole party moves
       return;
     }
+  }
+
+  // a member of a party keeps their place beside / behind the leader and matches the leader's pace (stops when the leader stops)
+  follow(n, dt) {
+    const L = n.leader;
+    if (!this.list.includes(L) || L.state === "out") { n.leader = null; return; }
+    if (n.state !== "walking") return;
+    const fx = Math.sin(L.h), fy = -Math.cos(L.h), rx = -fy, ry = fx;           // the leader's forward and right (local metres)
+    const tx = L.x + rx * n.off[0] - fx * n.off[1], ty = L.y + ry * n.off[0] - fy * n.off[1], d = Math.hypot(tx - n.x, ty - n.y);
+    if (L.state !== "walking" && L.state !== "dazed") { n.target = null; return; }
+    n.lost = d > 6 ? (n.lost || 0) + dt : 0;                                      // cut off (a wall, a kerb): rejoin if the slot is free, else go solo
+    if (n.lost > 3) { n.lost = 0; if (this.clearPosition(tx, ty) && !n.a.object.visible) Object.assign(n, { x: tx, y: ty, g: null, gs: null }); else if (n.lost === 0 && d > 12) n.leader = null; }
+    if (d > 0.35) { n.target = [tx, ty]; n.sp = L.sp * (1 + Math.min(0.7, Math.max(0, (d - 0.7) * 0.5))); }
+    else { n.target = L.target ? [tx, ty] : null; n.sp = L.sp; if (!L.target) n.h += (L.h - n.h) * Math.min(1, dt * 2); }
   }
 
   update(dt) {
@@ -472,22 +884,27 @@ export class Npcs {
     this.frame++;
     for (let i = 0; i < this.list.length; i++) {
       const n = this.list[i];
-      if (n.target) {
+      n.hitLock = Math.max(0, (n.hitLock || 0) - dt);
+      this.updateImpact(n, dt);
+      if (n.leader) this.follow(n, dt);
+      const yielding = (n.state === "walking" || n.state === "dazed") && this.avoid(n, cars, me, dt);
+      if ((!yielding || n.carDetour) && (n.state === "walking" || n.state === "dazed") && n.target) {
         const dx = n.target[0] - n.x, dy = n.target[1] - n.y, d = Math.hypot(dx, dy);
         if (d < 0.4) { n.target = null; n.wait = 3 + this.rng() * 9; }
         else {
           const want = Math.atan2(dx, -dy);                       // heading in three.js (+Z = local -y)
           let diff = ((want - n.h + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
           n.h += diff * Math.min(1, dt * 3);
-          const st = Math.min(d, n.sp * dt * (Math.abs(diff) > 1 ? 0.3 : 1));
-          n.x += dx / d * st; n.y += dy / d * st;
+          const st = Math.min(d, n.sp * (n.state === "dazed" ? 0.38 : 1) * dt * (Math.abs(diff) > 1 ? 0.3 : 1));
+          const nx = n.x + dx / d * st, ny = n.y + dy / d * st;
+          if (this.clearPath(n.x, n.y, nx, ny)) { n.x = nx; n.y = ny; }
+          else { n.target = null; n.wait = 0.5; }
         }
-      } else if ((n.wait -= dt) <= 0) {
+      } else if (!yielding && !n.leader && (n.wait -= dt) <= 0) {
         const p = this.sample(n.x, n.y, 45);
         if (p && this.clearPath(n.x, n.y, p[0], p[1])) n.target = p; else n.wait = 0.5 + this.rng();
       }
       const dist = Math.hypot(n.x - cam.x, -n.y - cam.z);
-      if (dist < 120) this.avoid(n, cars, me, dt);
       const gm = this.ground;
       if (gm?.built && gm.inside(n.x, n.y)) n.g = gm.h(n.x, n.y);          // Midtown: the baked height of the ground, exact, every frame
       else if (n.g == null || Math.hypot(n.x - n.gx, n.y - n.gy) > 4) {   // elsewhere (the harbour): probe again every 4 m walked
@@ -497,14 +914,14 @@ export class Npcs {
       this.sphere.center.set(n.x, n.g + 0.9, -n.y);
       const show = dist < DRAW_M && this.frustum.intersectsSphere(this.sphere);
       n.a.object.visible = show;
-      n.v += ((n.target ? n.sp : 0) - n.v) * Math.min(1, dt * 4);
+      n.v += ((n.target && (n.state === "walking" || n.state === "dazed") ? n.sp * (n.state === "dazed" ? 0.38 : 1) : 0) - n.v) * Math.min(1, dt * 4);
       if (!show) { n.skip = (n.skip || 0) + dt; continue; }
       const farLod = dist > NEAR_M;
       n.a.setFar(farLod);
-      n.a.set(n.x, n.gs, -n.y, n.h, n.v);
+      n.a.set(n.x, n.gs + (n.air || 0), -n.y, n.h, n.v, n.air || 0);
       n.skip = (n.skip || 0) + dt;
       if (farLod && (this.frame + i) % 2) continue;              // far away: pose every other frame
-      n.a.update(n.skip); n.skip = 0;
+      n.a.update(n.skip); this.poseImpact(n); n.skip = 0;
     }
   }
 }

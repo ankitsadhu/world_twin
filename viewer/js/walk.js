@@ -20,6 +20,16 @@ export class StreetWalk {
     this.bar.style.cssText = "position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:120px;height:4px;border-radius:2px;background:rgba(255,255,255,.18);opacity:0;transition:opacity .3s;z-index:7;pointer-events:none";
     this.bar.innerHTML = '<i style="display:block;height:100%;width:100%;border-radius:2px;background:#fff"></i>';
     document.body.appendChild(this.bar);
+    this.hitButton = document.createElement("button");
+    this.hitButton.type = "button";
+    this.hitButton.className = "ui-btn ui-surface walk-hit";
+    this.hitButton.textContent = "Shove";
+    this.hitButton.setAttribute("aria-label", "Shove a person");
+    this.hitButton.hidden = true;
+    this.hitButton.style.cssText = "position:fixed;right:calc(var(--s4) + 76px);bottom:var(--s4);z-index:14;min-height:var(--hit);box-shadow:var(--shadow)";
+    document.body.appendChild(this.hitButton);
+    this.hitButton.addEventListener("pointerdown", e => e.stopPropagation());
+    this.hitButton.addEventListener("click", () => this.attack());
     dom.addEventListener("pointerdown", e => {
       if (!this.active || e.button !== 0) return;
       this.drag = [e.clientX, e.clientY];
@@ -40,6 +50,7 @@ export class StreetWalk {
     addEventListener("keydown", e => {
       if (!this.active || e.target.tagName === "INPUT") return;
       if (e.code === "Space") { e.preventDefault(); if (!e.repeat) this.jump(); return; }
+      if (e.code === "KeyG") { e.preventDefault(); if (!e.repeat) this.attack(); return; }
       if (!e.repeat && /^(ArrowUp|ArrowDown|KeyW|KeyS)$/.test(e.code)) this.pressAt = performance.now();
     });
     addEventListener("keyup", e => {     // a quick tap = one Street View step (~8 m); holding = walk
@@ -55,9 +66,23 @@ export class StreetWalk {
     const e = new THREE.Euler().setFromQuaternion(this.camera.quaternion, "YXZ");
     this.yaw = e.y; this.pitch = THREE.MathUtils.clamp(e.x, -0.5, 0.5);
     this.active = true; this.target = null;
+    this.hitButton.hidden = !Settings.roughContact;
+    this.hitButton.style.display = this.hitButton.hidden ? "none" : "inline-flex";
     this.dom.style.cursor = "grab";
   }
-  disable() { this.restoreEye(); this.active = false; this.target = null; this.dom.style.cursor = ""; this.vx = this.vz = 0; this.bar.style.opacity = 0; }
+  disable() {
+    this.restoreEye(); this.active = false; this.target = null; this.dom.style.cursor = "";
+    this.vx = this.vz = 0; this.bar.style.opacity = 0; this.hitButton.hidden = true; this.hitButton.style.display = "none";
+  }
+
+  kick(p = 0.2, t = 0.14) { this.kickT = t; this.kickP = p; }              // a camera jolt (an impact)
+
+  attack() {
+    if (this.active && !(this.attackCd > 0)) {
+      this.onAttack?.();
+      this.attackCd = 0.35;
+    }
+  }
 
   walkTo(point) {                              // three.js point -> auto-walk there
     this.target = [point.x, -point.z];
@@ -88,7 +113,7 @@ export class StreetWalk {
     if (!this.active || !this.third || this.viewed) return;
     const cam = this.camera, eye = cam.position;
     this.saved = (this.saved || new THREE.Vector3()).copy(eye);
-    const p = Math.min(this.pitch, 0.9), cp = Math.cos(p);
+    const p = THREE.MathUtils.clamp(this.pitch, -0.35, 0.25), cp = Math.cos(p);
     const f = new THREE.Vector3(-Math.sin(this.yaw) * cp, Math.sin(p), -Math.cos(this.yaw) * cp);
     const head = eye.clone(); head.y += 0.15;
     let dist = 3.6;
@@ -98,7 +123,10 @@ export class StreetWalk {
       if (col.blocked(q.x, -q.z, 0.25, feet + 0.6, true)) { dist = Math.max(0.6, d - 0.3); break; }
     }
     this.dist = this.dist == null ? dist : Math.min(dist, this.dist + (dt || 0.016) * 4);   // in fast, out slowly
+    // over the right shoulder, so what is in front of you is not hidden behind your own head
+    head.x += Math.cos(this.yaw) * 0.5; head.z -= Math.sin(this.yaw) * 0.5;
     const pos = head.addScaledVector(f, -this.dist);
+    if (this.kickT > 0) { this.kickT = Math.max(0, this.kickT - (dt || 0.016)); const k = this.kickT * this.kickP; pos.x += (Math.random() - 0.5) * k; pos.y += (Math.random() - 0.5) * k * 0.7; pos.z += (Math.random() - 0.5) * k; }
     pos.y = Math.max(pos.y, this.groundAt(pos) + 0.35);
     cam.position.copy(pos);
     cam.rotation.set(this.pitch - 0.12, this.yaw, 0, "YXZ");                  // your head a little below the centre
@@ -154,12 +182,17 @@ export class StreetWalk {
 
   update(dt, keys) {
     if (!this.active) return;
+    this.hitButton.hidden = !Settings.roughContact;
+    this.hitButton.style.display = this.hitButton.hidden ? "none" : "inline-flex";
+    this.attackCd = Math.max(0, (this.attackCd || 0) - dt);
     this.restoreEye();
     const cam = this.camera;
-    const run = keys.ShiftLeft || keys.ShiftRight || this.pad?.run;
+    this.stunT = Math.max(0, (this.stunT || 0) - dt);
+    if (this.stunT > 0) keys = {};
+    const run = this.stunT > 0 ? false : keys.ShiftLeft || keys.ShiftRight || this.pad?.run;
     if (keys.KeyA || keys.ArrowLeft) this.yaw += dt * 1.6;
     if (keys.KeyD || keys.ArrowRight) this.yaw -= dt * 1.6;
-    const P = this.pad;                                     // controller: left stick walks / strafes, right stick looks
+    const P = this.stunT > 0 ? null : this.pad;              // controller: left stick walks / strafes, right stick looks
     if (P) {
       this.yaw -= P.rx * dt * 2.4;
       this.pitch = THREE.MathUtils.clamp(this.pitch - P.ry * dt * 1.8, -1.2, 1.2);
@@ -176,8 +209,8 @@ export class StreetWalk {
     if (mv) { this.target = null; const sp = (run ? vr : vw) * dt * mv; dx = fx * sp; dz = fz * sp; }
     else if (P && (P.lx || P.ly)) {                          // analog walk: push further = walk faster
       this.target = null;
-      const sp = (run ? vr : vw) * dt;
-      dx = (fx * -P.ly + -fz * P.lx) * sp; dz = (fz * -P.ly + fx * P.lx) * sp;
+      const input = Math.hypot(P.lx, P.ly), sp = (run ? vr : vw) * dt * Math.min(1, input);
+      dx = (fx * -P.ly + -fz * P.lx) * sp / input; dz = (fz * -P.ly + fx * P.lx) * sp / input;
     }
     else if (this.target) {
       const tx = this.target[0] - cam.position.x, tz = -this.target[1] - cam.position.z;
@@ -238,6 +271,12 @@ export class StreetWalk {
     if (intended > 0.004 && actual < intended * 0.3) { this.vx *= 0.5; this.vz *= 0.5; }   // pressed against something: no momentum
     const moved = actual / Math.max(dt, 1e-3);
     this.speed = (this.speed || 0) + (moved - (this.speed || 0)) * Math.min(1, dt * 8);
+    if (Settings.roughContact && moved > 2 && this.hitNearby && !(this.hitCd > 0)) {
+      const x = cam.position.x + dx / Math.max(intended, 1e-3) * 0.6;
+      const y = -cam.position.z - dz / Math.max(intended, 1e-3) * 0.6;
+      if (this.hitNearby(x, y, this.vx, -this.vz, Math.min(1, moved / 5))) this.hitCd = 0.8;
+    }
+    this.hitCd = Math.max(0, (this.hitCd || 0) - dt);
     const want = moved > 0.1 ? Math.atan2(dx, dz) : this.heading ?? this.yaw + Math.PI;
     let diff = ((want - (this.heading ?? want) + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
     this.heading = (this.heading ?? want) + diff * Math.min(1, dt * 10);

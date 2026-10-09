@@ -79,6 +79,19 @@ export class GroundMap {
     }
   }
 
+  // a ramp stamped into the height map: a wedge rising from the ground to `rise` m over `len` m (along heading h), `wid` m wide, centred at (cx, cy)
+  addRamp(cx, cy, h, len, wid, rise) {
+    const c = Math.cos(h), s = Math.sin(h), [x0, y0] = this.rect, r = Math.hypot(len, wid) / 2 + 1;
+    for (let gx = Math.floor(cx - r - x0); gx <= Math.ceil(cx + r - x0); gx++) for (let gy = Math.floor(cy - r - y0); gy <= Math.ceil(cy + r - y0); gy++) {
+      if (gx < 0 || gy < 0 || gx >= this.nx || gy >= this.ny) continue;
+      const x = x0 + (gx + 0.5) * CELL - cx, y = y0 + (gy + 0.5) * CELL - cy;
+      const u = x * c + y * s, w = -x * s + y * c;                                   // along the ramp, across it
+      if (Math.abs(w) > wid / 2 || u < -len / 2 || u > len / 2) continue;
+      const base = this.grid[gy * this.nx + gx] * Q, hh = base + rise * (u + len / 2) / len;
+      this.grid[gy * this.nx + gx] = Math.min(254, Math.max(this.grid[gy * this.nx + gx], Math.round(hh / Q)));
+    }
+  }
+
   inside(x, y) { return x >= this.rect[0] && x < this.rect[2] && y >= this.rect[1] && y < this.rect[3]; }
   // the ground at (x, y), metres; 0 where there is none
   h(x, y) {

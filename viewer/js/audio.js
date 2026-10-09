@@ -112,20 +112,84 @@ export class CityAudio {
     setTimeout(() => p.disconnect(), (dur + 0.5) * 1000);
   }
 
-  // a crash: a low body thump, a crunch of plastic and glass, scaled by how hard you hit
-  crash(pos, strength = 1) {
+  sirenAt(pos) {
+    if (!this.ctx || !this.enabled) return;
+    const ctx = this.ctx, t = ctx.currentTime, p = this.panner(pos, 45);
+    caption("Police siren", { camera: this.camera, pos, key: "police-siren", minGap: 5 });
+    const g = ctx.createGain(); g.gain.value = 0; g.connect(p);
+    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1500; lp.connect(g);
+    const o = ctx.createOscillator(); o.type = "triangle"; o.connect(lp);
+    for (let s = 0; s < 2.6; s += 1.3) {
+      o.frequency.setValueAtTime(680, t + s);
+      o.frequency.linearRampToValueAtTime(1180, t + s + 0.65);
+      o.frequency.linearRampToValueAtTime(680, t + s + 1.3);
+    }
+    g.gain.setValueAtTime(0.22, t);
+    g.gain.setValueAtTime(0.22, t + 2.45);
+    g.gain.linearRampToValueAtTime(0, t + 2.6);
+    o.start(t); o.stop(t + 2.7);
+    setTimeout(() => p.disconnect(), 3000);
+  }
+
+  // Impacts use the struck material: a body thump, masonry thud, metal ring, glass rattle or water splash.
+  // a punch: swing = just the whoosh of the arm; otherwise the meaty thwack of a fist on a body (low thump + a short slap of noise)
+  punch(pos, swing = false) {
+    if (!this.ctx || !this.enabled) return;
+    const ctx = this.ctx, t = ctx.currentTime, p = this.panner(pos, 6);
+    const n = ctx.createBufferSource(); n.buffer = this.bufs.white;
+    const f = ctx.createBiquadFilter(), g = ctx.createGain();
+    if (swing) { f.type = "bandpass"; f.Q.value = 1.2; f.frequency.setValueAtTime(500, t); f.frequency.exponentialRampToValueAtTime(2200, t + 0.16);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.28, t + 0.07); g.gain.exponentialRampToValueAtTime(0.001, t + 0.2); }
+    else { f.type = "bandpass"; f.Q.value = 0.8; f.frequency.value = 1100; g.gain.setValueAtTime(0.9, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.12); }
+    n.connect(f).connect(g).connect(p); n.start(t, Math.random(), 0.3);
+    if (!swing) {
+      const o = ctx.createOscillator(), og = ctx.createGain();
+      o.type = "sine"; o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(48, t + 0.16);
+      og.gain.setValueAtTime(0.85, t); og.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+      o.connect(og).connect(p); o.start(t); o.stop(t + 0.22);
+    }
+    setTimeout(() => p.disconnect(), 800);
+  }
+
+  // an "oof / ow": a voiced burst (buzzy source through two vowel formants), pitch falling; pitch ~0.8 low voice .. 1.4 high
+  grunt(pos, pitch = 1) {
+    if (!this.ctx || !this.enabled) return;
+    const ctx = this.ctx, t = ctx.currentTime + 0.05, p = this.panner(pos, 6);
+    const o = ctx.createOscillator(); o.type = "sawtooth";
+    o.frequency.setValueAtTime(190 * pitch, t); o.frequency.exponentialRampToValueAtTime(120 * pitch, t + 0.28);
+    const out = ctx.createGain(); out.gain.setValueAtTime(0.0001, t); out.gain.exponentialRampToValueAtTime(0.5, t + 0.04); out.gain.exponentialRampToValueAtTime(0.001, t + 0.32);
+    for (const [f, q, g] of [[620, 6, 1], [1150, 8, 0.6]]) {                 // an "o/aw" vowel
+      const b = ctx.createBiquadFilter(); b.type = "bandpass"; b.frequency.value = f; b.Q.value = q;
+      const gg = ctx.createGain(); gg.gain.value = g; o.connect(b).connect(gg).connect(out);
+    }
+    out.connect(p); o.start(t); o.stop(t + 0.35);
+    setTimeout(() => p.disconnect(), 900);
+  }
+
+  crash(pos, strength = 1, kind = "vehicle") {
     if (!this.ctx || !this.enabled) return;
     const ctx = this.ctx, t = ctx.currentTime, p = this.panner(pos, 8);
-    caption(strength > 0.5 ? "Crash" : "Bump", { camera: this.camera, pos, key: "crash", minGap: 1 });
+    const names = { vehicle: "Vehicle impact", building: "Concrete impact", concrete: "Hard-object impact",
+      stone: "Stone impact", metal: "Metal impact", glass: "Glass impact", water: "Splash", person: "Soft bump" };
+    caption(names[kind] || names.concrete, { camera: this.camera, pos, key: "crash", minGap: 0.5 });
+    const soft = kind === "person" || kind === "water";
+    const base = kind === "metal" ? 740 : kind === "glass" ? 1250 : kind === "water" ? 65 : kind === "person" ? 72 : 95;
     const o = ctx.createOscillator(), og = ctx.createGain();
-    o.type = "sine"; o.frequency.setValueAtTime(95, t); o.frequency.exponentialRampToValueAtTime(38, t + 0.35);
-    og.gain.setValueAtTime(0.9 * strength, t); og.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
-    o.connect(og).connect(p); o.start(t); o.stop(t + 0.5);
+    o.type = kind === "metal" ? "triangle" : "sine";
+    o.frequency.setValueAtTime(base, t);
+    o.frequency.exponentialRampToValueAtTime(kind === "metal" ? 260 : kind === "glass" ? 420 : 38, t + (kind === "metal" ? 0.7 : 0.35));
+    og.gain.setValueAtTime((soft ? 0.35 : 0.9) * strength, t);
+    og.gain.exponentialRampToValueAtTime(0.001, t + (kind === "metal" ? 0.8 : 0.45));
+    o.connect(og).connect(p); o.start(t); o.stop(t + (kind === "metal" ? 0.85 : 0.5));
     const n = ctx.createBufferSource(); n.buffer = this.bufs.white;
-    const f = ctx.createBiquadFilter(); f.type = "highpass"; f.frequency.value = 1200;
-    const ng = ctx.createGain(); ng.gain.setValueAtTime(0.5 * strength, t); ng.gain.exponentialRampToValueAtTime(0.001, t + 0.18 + 0.25 * strength);
+    const f = ctx.createBiquadFilter();
+    f.type = kind === "water" ? "lowpass" : "highpass";
+    f.frequency.value = kind === "water" ? 800 : kind === "glass" ? 3200 : kind === "metal" ? 2500 : kind === "person" ? 520 : 1200;
+    const ng = ctx.createGain();
+    ng.gain.setValueAtTime((kind === "glass" ? 0.7 : kind === "water" ? 0.45 : kind === "person" ? 0.16 : 0.5) * strength, t);
+    ng.gain.exponentialRampToValueAtTime(0.001, t + (kind === "metal" ? 0.55 : kind === "water" ? 0.55 : 0.18 + 0.25 * strength));
     n.connect(f).connect(ng).connect(p); n.start(t, Math.random(), 0.6);
-    setTimeout(() => p.disconnect(), 1200);
+    setTimeout(() => p.disconnect(), 1500);
   }
 
   // one footfall. surface: pave (default) | road (asphalt: softer, lower) | steps (treads: brighter, a second tick as the

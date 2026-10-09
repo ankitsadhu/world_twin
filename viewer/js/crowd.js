@@ -276,21 +276,55 @@ export class Crowd {
     // spatial index (10 m cells) for "who is near" queries: cars yielding to people, people dodging cars
     const cell = 10, grid = this.index = new Map();
     for (const a of this.agents) { const k = Math.floor(a.x / cell) + "," + Math.floor(a.y / cell); (grid.get(k) || grid.set(k, []).get(k)).push(a); }
-    // people step out of the way of anything driving at them (no one gets hurt in this city)
-    if (dt > 0) for (const [mx, my, mh, mv] of this.movers()) {
-      if (Math.abs(mv) < 0.8) continue;
-      const fx = Math.cos(mh) * Math.sign(mv), fy = Math.sin(mh) * Math.sign(mv);
-      for (const a of this.nearAgents(mx + fx * 4, my + fy * 4, 7)) {
-        const rx = a.x - mx, ry = a.y - my, along = rx * fx + ry * fy, lat = rx * fy - ry * fx;
-        if (along < -1 || along > 4 + Math.abs(mv) * 0.8 || Math.abs(lat) > 2.2) continue;
-        const side = lat >= 0 ? 1 : -1, step = 4.5 * dt;             // quick sidestep, then carry on
-        const nx = a.x + fy * side * step, ny = a.y - fx * side * step;
-        if (!this.collider.blocked(nx, ny, 0.3, 0)) { a.x = nx; a.y = ny; a.startled = 1.2; }
-      }
-    }
+    const movers = this.movers();
     for (const a of this.agents) {
       a.waiting = false;
       if (a.startled) a.startled = Math.max(0, a.startled - dt);
+      if (dt > 0 && a.dodgeTarget) {
+        const dx = a.dodgeTarget[0] - a.x, dy = a.dodgeTarget[1] - a.y, d = Math.hypot(dx, dy);
+        if (d > 0.3) {
+          const step = Math.min(d, 3.2 * dt);
+          a.x += dx / d * step;
+          a.y += dy / d * step;
+          continue;
+        }
+        a.yieldCar = { ...a.dodgeCar, t: 2 };
+        a.dodgeTarget = a.dodgeCar = null;
+      }
+      if (dt > 0) {
+        let risk = null;
+        for (const [mx, my, mh, mv] of movers) {
+          if (a.yieldCar && Math.hypot(mx - a.yieldCar.x, my - a.yieldCar.y) < 5) continue;
+          const rx = a.x - mx, ry = a.y - my, fx = Math.cos(mh), fy = Math.sin(mh);
+          const along = rx * fx + ry * fy, side = -rx * fy + ry * fx;
+          const inBody = Math.abs(along) < 3.2 && Math.abs(side) < 1.7;
+          const approaching = Math.abs(mv) > 0.8 && along * Math.sign(mv) > -1.5
+            && along * Math.sign(mv) < 4 + Math.abs(mv) * 1.2 && Math.abs(side) < 2.2;
+          if (inBody || approaching) { risk = { mx, my, fx, fy, side, moving: Math.abs(mv) > 0.8 }; break; }
+        }
+        if (risk?.moving) { a.waiting = true; continue; }
+        if (risk) {
+          const sx = -risk.fy, sy = risk.fx;
+          const currentSide = (a.x - risk.mx) * sx + (a.y - risk.my) * sy;
+          const sign = currentSide === 0 ? (a.phase < Math.PI ? -1 : 1) : -Math.sign(currentSide);
+          for (const side of [sign, -sign]) {
+            const tx = a.x + sx * side * 3.8, ty = a.y + sy * side * 3.8;
+            const along = (tx - risk.mx) * risk.fx + (ty - risk.my) * risk.fy;
+            const across = (tx - risk.mx) * sx + (ty - risk.my) * sy, w = this.walk.at(tx, ty);
+            if (!(w === 1 || w === 2) || this.collider.blocked(tx, ty, 0.35, 0)
+              || (Math.abs(along) < 3.1 && Math.abs(across) < 1.8)) continue;
+            a.dodgeTarget = [tx, ty]; a.dodgeCar = { x: risk.mx, y: risk.my };
+            break;
+          }
+          a.waiting = true;
+          continue;
+        }
+      }
+      if (a.yieldCar) {
+        a.yieldCar.t -= dt;
+        if (a.yieldCar.t <= 0 || !movers.some(([x, y]) => Math.hypot(x - a.yieldCar.x, y - a.yieldCar.y) < 5))
+          a.yieldCar = null;
+      }
       if (a.speed > 0 && dt > 0) {
         a.turnT -= dt;
         const sp = a.speed * (a.startled ? 1.8 : 1);

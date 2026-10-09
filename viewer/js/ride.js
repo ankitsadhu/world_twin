@@ -5,10 +5,11 @@
 // Coordinates: road graph in Blender local metres (x, y); three.js = (x, z = -y).
 import * as THREE from "three";
 import { makeBlob } from "./shadow.js";
-import { Bikes, BIKE } from "./bike.js";
+import { Bikes, BIKE, PAINTS } from "./bike.js";
 import { ICON } from "./icons.js";
 import { Settings } from "./settings.js";
 import { prompt, onInputChange, inputDevice } from "./gamepad.js";
+import { obbContact, resolveImpact, boxInertia } from "./collide.js";
 
 const LANE = 3.2;            // metres right of the street centreline
 const V_MAX = 13;            // m/s (~29 mph): Midtown speed
@@ -20,14 +21,11 @@ const CAR_H = { wheelbase: 2.69, accel: 4.2, brake: 9, vmax: 22, steerMax: 0.55,
   people: 1.6, parked: 2.4, traffic: 2.4 };
 const BIKE_H = { wheelbase: BIKE.wheelbase, accel: 6.0, brake: 11, vmax: 27, steerMax: 0.62, radius: 0.55, front: 1.05, box: 0.45,
   people: 1.3, parked: 1.5, traffic: 1.7 };
-// where the first bikes stand: on the pavement at the curb, heading along the street (found with the crowd's walkability
-// raster + the road graph; the first two are by the walking start on 8th Ave)
-const BIKE_SPOTS = [[-264, -60.5, -1.57], [-263.5, -128, -1.57], [-200.5, 1, 0], [-150, -78, 0], [-61.5, 68.5, 3.13],
-  // 12 more through the Times Square bowtie (7th Ave / W 45th-46th St, the NE and SE corners), >= 22 m apart
-  [-26, 2, 0], [-48, 2, 0], [-70, 2, 0], [56, -10, 1.97], [-92, 2, 0], [-106, -78, -0.94], [-44, 82, -0.01], [-84, 70, -3.14],
-  [44, -158, 0.38], [64, 70, 1.96], [-106, 70, -3.14], [66, -158, 0]];
+// A small number of bikes stand on the pavement at the curb, spread across the walking start and the bowtie.
+// spread over Midtown (one per ~100-150 m of the street grid, on the sidewalk), not clustered: found by farthest-point sampling of the sidewalk corners
+const BIKE_SPOTS = [[-563, -406, 0], [-563, 480, 1.5708], [286, -420, 3.1416], [286, 480, -1.5708], [-537, 68, 0], [-262, -171, 1.5708], [286, -78, 3.1416], [-262, 321, -1.5708], [-13, -406, 0], [13, 401, 1.5708], [286, 227, 3.1416], [13, -157, -1.5708], [-262, -420, 0], [-288, 82, 1.5708], [-537, -171, 3.1416], [-200.5, 1, -1.5708], [-26, 2, 0], [56, -10, 1.5708]];
 const BIKE_WHEELBASE = BIKE.wheelbase;
-const BIKE_SHOW_M = 90;                           // bikes beyond this are not drawn (14 in view x 39k triangles would add up)
+const BIKE_SHOW_M = 60;                           // bikes beyond this are not drawn
 
 // ------------------------------------------------------------------ road graph
 function inPoly(ring, x, y) {
@@ -208,14 +206,18 @@ export class Ride {
     this.look = { yaw: 0, pitch: -0.08, drag: null, idle: 0 };
     this.ctl = { up: 0, down: 0, left: 0, right: 0 };
     this.vehicle = null; this.v = 0; this.steer = 0;   // vehicle: { group, parts, kind: "taxi" | "car" | "bike", type }
+    this.damage = 0; this.slideX = 0; this.slideY = 0; this.yawRate = 0;
+    this.bikeAir = 0; this.bikeVy = 0;
     this.bikes = new Bikes({ loader: o.loader, root: o.root, registerMaterial: o.registerMaterial });   // the cruiser motorcycle
     this.parked = [];                                    // cars you got out of: they stay where you left them
+    this.nextGarageVehicle = BIKE_SPOTS.length;
+    this.garageReady = false;
+    this.towing = [];
     this.hidden = [];
     Promise.all([fetch(`${o.root}data/${o.district}/nav.json`).then(r => r.json()),
                  fetch(`${o.root}data/${o.district}/ground.json`).then(r => r.json())])
       .then(([d, g]) => {
         this.roads = new Roads(d.paths.NAV_roads.lines, g.plazas || []);
-        this.plazas = g.plazas || [];                       // car-free (bollards): you can't drive onto them either
       });
     this.buildDOM();
     this.bindInput();
@@ -224,7 +226,7 @@ export class Ride {
   // live traffic: the cab follows its lights, gaps and one-way rules
   setTraffic(t) {
     this.traffic = t;
-    this.spawnBikes();
+    this.bikeSpawnPromise = this.spawnBikes();
     this.me_ = { alive: () => !!this.car?.visible && this.state !== "idle", pose: () => this.pose() };
     t.extra.push(this.me_);
     const apply = () => {
@@ -317,12 +319,35 @@ export class Ride {
         <button data-c="down" style="right:100px;bottom:calc(var(--drivepad-b) + 0px)">Brake</button>
         <button data-c="up" style="right:16px;bottom:calc(var(--drivepad-b) + 24px)">Go</button>
         <button data-c="horn" style="left:58px;bottom:calc(var(--drivepad-b) + 84px);width:56px;height:56px">Horn</button>
+      </div>
+      <div id="garage" class="ui-surface" role="dialog" aria-modal="true" aria-labelledby="garage-title" hidden>
+        <section><header><h2 id="garage-title">My Garage</h2><button class="ui-btn garage-close" aria-label="Close garage">${ICON.close}</button></header>
+          <p>Your cars and motorcycles stay where you park them. Find one on the map to walk back and get in.</p>
+          <div class="garage-list"></div>
+        </section>
       </div>`);
     const dock = document.getElementById("dock");
     dock?.querySelector("#walk")?.insertAdjacentHTML("afterend",
-      `<button id="ridebtn" class="dockbtn" aria-pressed="false" aria-label="Ride or drive">${carIcon}<span>Ride a cab or drive</span><em>Ride</em></button>`);
+      `<button id="ridebtn" class="dockbtn" aria-pressed="false" aria-label="Ride or drive">${carIcon}<span>Ride a cab or drive</span><em>Ride</em></button>
+       <button id="garagebtn" class="dockbtn" aria-label="My Garage" aria-haspopup="dialog">${carIcon}<span>My Garage</span><em>Garage</em></button>`);
     this.panel = document.getElementById("ridepanel");
     this.hopChip = document.getElementById("hopin");
+    this.garage = document.getElementById("garage");
+    const garageCss = document.createElement("style");
+    garageCss.textContent = `
+      #garage { position: fixed; inset: 0; z-index: 65; display: grid; place-items: center; padding: var(--s4); box-sizing: border-box; background: rgba(0,0,0,.42); }
+      #garage[hidden] { display: none; }
+      #garage section { width: min(480px, 100%); max-height: min(620px, 100%); overflow: auto; box-sizing: border-box; padding: var(--s5); }
+      #garage header { display: flex; justify-content: space-between; align-items: center; gap: var(--s3); }
+      #garage h2 { margin: 0; font-size: var(--t-title); }
+      #garage p { color: var(--ink-2); font-size: var(--t-caption); line-height: 1.5; margin: var(--s2) 0 var(--s4); }
+      #garage .garage-list { display: grid; gap: var(--s2); }
+      #garage .garage-empty { padding: var(--s4); border-radius: var(--r-control); background: var(--fill); color: var(--ink-2); font-size: var(--t-body); }
+      #garage .garage-row { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: var(--s3); border-radius: var(--r-control); background: var(--fill); }
+      #garage .garage-row strong, #garage .garage-row small { display: block; }
+      #garage .garage-row small { margin-top: 3px; color: var(--ink-3); font-size: var(--t-caption); }
+      @media (max-width: 640px) { #garage section { padding: var(--s4); } }`;
+    document.head.appendChild(garageCss);
     this.hopChip.onclick = () => (this.approaching ? this.enter(this.approaching.t) : this.approach(this.hopTarget));
     onInputChange(() => { this.hopChip.querySelector("kbd").textContent = prompt("interact"); if (this.active) this.render(); });
     addEventListener("keydown", e => {
@@ -332,12 +357,25 @@ export class Ride {
         else if (this.inCar && this.borrowed) this.getOut();        // F again: get out (like GTA)
       }
     });
+    addEventListener("keydown", e => {
+      if (e.code === "Space" && !e.repeat && e.target.tagName !== "INPUT" && this.inCar && this.vehicle?.kind === "bike") {
+        e.preventDefault();
+        this.jumpBike();
+      }
+    });
     document.getElementById("ridefab").onclick = () => this.open();
     document.getElementById("ridebtn").onclick = () => (this.active ? this.render() : this.open());
+    document.getElementById("garagebtn").onclick = () => this.openGarage();
+    this.garage.querySelector(".garage-close").onclick = () => this.closeGarage();
+    this.garage.addEventListener("click", e => { if (e.target === this.garage) this.closeGarage(); });
     const pad = document.getElementById("drivepad");
     pad.style.setProperty("--drivepad-b", "calc(76px + env(safe-area-inset-bottom))");
     pad.querySelectorAll("button").forEach(b => {
-      const k = b.dataset.c, on = v => e => { e.preventDefault(); if (k === "horn") { if (v) this.honk(); return; } this.ctl[k] = v; b.classList.toggle("on", !!v); };
+      const k = b.dataset.c, on = v => e => {
+        e.preventDefault();
+        if (k === "horn") { if (v) this.vehicle?.kind === "bike" ? this.jumpBike() : this.honk(); return; }
+        this.ctl[k] = v; b.classList.toggle("on", !!v);
+      };
       b.addEventListener("pointerdown", on(1)); b.addEventListener("pointerup", on(0));
       b.addEventListener("pointercancel", on(0)); b.addEventListener("pointerleave", on(0));
     });
@@ -351,8 +389,16 @@ export class Ride {
     document.getElementById("drivepad").style.display = s === "driving" && touch ? "block" : "none";
     document.body.classList.toggle("drivetouch", s === "driving" && touch);
     document.body.classList.toggle("ridestrip", (s === "riding" || s === "driving") && !(s === "driving" && touch));
-    if (s === "driving" && !touch) this.nav.tip?.(pad ? "drivepad" : "drivekeys", pad ? "R2 go · L2 brake · left stick steer · □ horn · ○ get out"
-      : "W go · S brake · A/D steer · H horn · F get out");
+    const bike = this.vehicle?.kind === "bike";
+    const touchAction = document.querySelector('#drivepad [data-c="horn"]');
+    if (touchAction) {
+      touchAction.textContent = bike ? "Hop" : "Horn";
+      touchAction.setAttribute("aria-label", bike ? "Hop on motorcycle" : "Honk");
+    }
+
+    if (s === "driving" && !touch) this.nav.tip?.(pad ? "drivepad" : "drivekeys", pad
+      ? bike ? "R2 go · L2 brake · left stick steer · R1 hop · ○ get off" : "R2 go · L2 brake · left stick steer · □ horn · ○ get out"
+      : bike ? "W go · S brake · A/D steer · Space hop · F get off" : "W go · S brake · A/D steer · H horn · F get out");
     if (s === "idle") { P.style.display = "none"; return; }
     P.style.display = "block";
     const x = `<button class="ui-btn x" data-a="cancel" aria-label="Cancel ride">${ICON.close}</button>`;
@@ -385,16 +431,25 @@ export class Ride {
         <button class="ui-btn" data-a="show">Show me</button>${x}</div>`;
     } else if (s === "riding" || s === "driving") {
       const self = s === "riding";
-      P.innerHTML = `<h3>${this.carIcon} ${self ? `Riding to ${dest}${this.detour ? " · taking a detour" : ""}` : this.vehicle?.kind === "bike" ? "Cruiser motorcycle" : this.borrowed ? "Borrowed from the city fleet" : "You're driving"}</h3>
+      const chaseReady = s === "driving" && !bike && this.pursuit;
+      const chaseLabel = this.pursuit?.active ? "End 2-star chase"
+        : this.pursuit?.state === "escaped" || this.pursuit?.state === "caught" ? "Replay 2-star chase" : "Start 2-star chase";
+      P.innerHTML = `<h3>${this.carIcon} ${self ? `Riding to ${dest}${this.detour ? " · taking a detour" : ""}` : this.vehicle?.kind === "bike" ? "Cruiser motorcycle" : this.borrowed ? "Your car" : "You're driving"}</h3>
         <div class="stats"><span class="big" id="ride-speed">0</span><span>mph</span><span id="ride-left"></span></div>
-        ${self ? "" : `<p>${pad ? "R2 go · L2 brake · left stick steer · □ horn · ○ get out" : touch ? "Hold Go / Brake, tap ◀ ▶ to steer"
-          : "W / ↑ go · S / ↓ brake · A D / ← → steer · H horn"}</p>`}
+        ${self ? "" : `<p>${bike
+          ? pad ? "R2 go · L2 brake · left stick steer · R1 hop · ○ get off" : touch ? "Hold Go / Brake, tap ◀ ▶ to steer · Hop"
+            : "W / ↑ go · S / ↓ brake · A D / ← → steer · Space hop"
+          : pad ? "R2 go · L2 brake · left stick steer · □ horn · ○ get out" : touch ? "Hold Go / Brake, tap ◀ ▶ to steer"
+            : "W / ↑ go · S / ↓ brake · A D / ← → steer · H horn"}</p>`}
         <div class="acts">
           ${self ? `<button class="ui-btn primary" data-a="wheel">Take the wheel</button>`
                  : `<button class="ui-btn primary" data-a="auto"${this.dest ? "" : " disabled"}>Self-drive</button>`}
+          ${this.vehicle?.kind === "bike" ? `<button class="ui-btn" data-a="paint">Repaint: ${PAINTS[this.vehicle.paint ?? 0]?.name || ""}</button>` : ""}
           ${this.vehicle?.kind === "taxi" ? `<button class="ui-btn" data-a="view">${this.view === "chase" ? "Inside view" : "Outside view"}</button>` : ""}
           ${!self && this.vehicle?.type === "Taxi" ? `<button class="ui-btn" data-a="fares">${this.fares?.active ? "Off duty" : "Take fares"}${touch ? "" : " · J"}</button>` : ""}
+          ${chaseReady ? `<button class="ui-btn${this.pursuit.active ? " danger" : ""}" data-a="pursuit">${chaseLabel}</button>` : ""}
           <button class="ui-btn" data-a="out">${self ? "Stop & get out" : "Park & get out"}${this.borrowed && !touch ? " · " + prompt(pad ? "back" : "interact") : ""}</button></div>`;
+      if (chaseReady) P.insertAdjacentHTML("beforeend", `<p id="pursuit-status" role="status" style="margin:var(--s2) 0 0;color:var(--ink-2);font-size:var(--t-caption)">${this.pursuit.status}</p>`);
     } else if (s === "arrived") {
       P.innerHTML = `<h3>${this.carIcon} You've arrived</h3><p>${dest}</p>
         <div class="acts"><button class="ui-btn primary" data-a="out">Get out</button><button class="ui-btn" data-a="wheel">Keep driving</button></div>`;
@@ -404,6 +459,77 @@ export class Ride {
     P.querySelectorAll("[data-dirs]").forEach(b => b.onclick = () => { const p = (this.nav.places || []).find(q => q.id === b.dataset.dirs); this.end(); this.onDirections?.(p); });
   }
 
+  assignGarageId(v) {
+    if (!v.garageId) v.garageId = v.kind === "bike"
+      ? v.marker?.id || `bike_${++this.nextGarageVehicle}`
+      : `car_${++this.nextGarageVehicle}`;
+    const n = Number(v.garageId.match?.(/_(\d+)$/)?.[1]);
+    if (Number.isFinite(n)) this.nextGarageVehicle = Math.max(this.nextGarageVehicle, n);
+    return v.garageId;
+  }
+
+  garageVehicles() {
+    const vehicles = this.parked.filter(v => v !== this.taxi || v.garageId);
+    if (this.inCar && this.vehicle && (this.vehicle !== this.taxi || this.borrowed)) vehicles.push(this.vehicle);
+    return vehicles.filter(v => (v.pinned || this.parked.includes(v) || v === this.vehicle))
+      .filter(v => v.garageId || v === this.vehicle || !v.pinned)
+      .map(v => { this.assignGarageId(v); return v; });
+  }
+
+  openGarage() {
+    this.renderGarage();
+    this.garage.hidden = false;
+  }
+
+  closeGarage() {
+    this.garage.hidden = true;
+  }
+
+  renderGarage() {
+    const list = this.garage.querySelector(".garage-list");
+    const vehicles = this.garageVehicles();
+    list.replaceChildren();
+    if (!vehicles.length) {
+      const empty = document.createElement("div");
+      empty.className = "garage-empty";
+      empty.textContent = "No personal vehicles yet. Drive a car or ride a motorcycle to add it to your garage.";
+      list.append(empty);
+      return;
+    }
+    for (const v of vehicles) {
+      const row = document.createElement("div");
+      row.className = "garage-row";
+      const details = document.createElement("div");
+      const title = document.createElement("strong");
+      const type = String(v.type || "Car").replace(/^Car/, "");
+      title.textContent = v.kind === "bike" ? "Cruiser motorcycle" : v.type === "Taxi" ? "Taxi"
+        : type.startsWith("SUV") ? `${type.slice(3)} SUV` : type.startsWith("Sedan") ? `${type.slice(5)} Sedan`
+          : type.replace(/([a-z])([A-Z])/g, "$1 $2").trim() || "Car";
+      const status = document.createElement("small");
+      status.textContent = v === this.vehicle && this.inCar ? "Currently driving" : "Parked · find on map";
+      details.append(title, status);
+      const button = document.createElement("button");
+      button.className = "ui-btn";
+      button.type = "button";
+      button.textContent = v === this.vehicle && this.inCar ? "In use" : "Find";
+      button.disabled = v === this.vehicle && this.inCar;
+      button.onclick = () => {
+        if (!v.marker) this.syncVehicleMarkers();
+        if (v.marker) { this.closeGarage(); this.onGarageMap?.(v.marker); }
+      };
+      row.append(details, button);
+      list.append(row);
+    }
+  }
+
+  garageData() {
+    return this.garageVehicles().map(v => {
+      const id = this.assignGarageId(v);
+      return { id, type: v.type, kind: v.kind, markerId: v.marker?.id || null,
+        x: +v.group.position.x.toFixed(2), y: +(-v.group.position.z).toFixed(2), h: +(v.heading || 0).toFixed(4) };
+    });
+  }
+
   action(a) {
     if (a === "cancel") return this.end();
     if (a === "free") return this.book(null);
@@ -411,8 +537,14 @@ export class Ride {
     if (a === "show") return this.showCar(true);
     if (a === "wheel") { this.state = "driving"; this.look.yaw = 0; return this.render(); }
     if (a === "auto") return this.autopilot();
+    if (a === "paint") { const v = this.vehicle; v.userPaint = true; const p = this.bikes.repaint(v, (v.paint ?? 0) + 1); this.toast?.(p.name); return this.render(); }
     if (a === "view") { this.view = this.view === "chase" ? "inside" : "chase"; this.look.yaw = 0; return this.render(); }
     if (a === "out") return this.getOut();
+    if (a === "pursuit") {
+      if (this.pursuit?.active) this.pursuit.finish("ended", "Challenge ended by you.");
+      else if (!this.pursuit?.start()) this.toast?.("Cruisers need a nearby street to start the challenge.");
+      return this.render();
+    }
     if (a === "fares") { this.onFares?.(); return this.render(); }
   }
 
@@ -505,11 +637,13 @@ export class Ride {
   }
 
   getOut() {
+    if (this.bikeAir > 0) { this.toast?.("Wait for the motorcycle to land before getting off"); return; }
     const car = this.car;
+    this.bikeAir = 0; this.bikeVy = 0;
     this.door(1); setTimeout(() => this.door(0), 1200);
     // step out on the passenger side (the curb), facing the way the car points
     const side = new THREE.Vector3(this.vehicle?.kind === "bike" ? 1.1 : 1.7, 0, 0).applyQuaternion(car.quaternion);
-    const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(car.quaternion);
+    const fwd = new THREE.Vector3(0, 0, this.vehicle?.kind === "bike" ? 1 : -1).applyQuaternion(car.quaternion);
     this.audio?.setCabin?.(0);
     const pos = car.position.clone().add(side);
     this.setWalkerAt(pos, fwd);
@@ -517,12 +651,28 @@ export class Ride {
     document.body.classList.remove("incar", "riding", "drivetouch", "ridestrip");
     this.panel.style.display = "none";
     document.getElementById("drivepad").style.display = "none";
-    if (this.vehicle !== this.taxi || this.borrowed) {               // a borrowed car: park it right here, like GTA
+    if (this.wrecked) {
+      const wreck = this.vehicle;
+      if (wreck.kind === "bike") { this.bikes.dismount(wreck); this.bikes.pose(wreck, 0, 0, 0); }
+      if (!this.parked.includes(wreck)) this.parked.push(wreck);
+      this.startTow(wreck);
+      this.vehicle = null; this.v = 0; this.borrowed = false; this.damage = 0; this.wrecked = false;
+      this.state = "idle"; this.render();
+      return;
+    }
+    if (this.vehicle !== this.taxi || this.borrowed) {               // personal vehicle: keep it where you parked it
       const v = this.vehicle; v.heading = this.heading; v.speed = 0;
+      this.assignGarageId(v);
       if (v.kind === "bike") { this.bikes.dismount(v); this.bikes.pose(v, 0, 0, 0); v.stand = 0; v.pinned = true; }   // kickstand down, leaning
       this.parked.push(v);
+      if (v.kind === "bike" && !v.marker) {
+        v.marker = { id: this.assignGarageId(v), icon: "bike", label: "Your motorcycle", x: car.position.x, y: -car.position.z, minS: 0.45 };
+        this.onBikes?.([v.marker]);
+      }
+      this.syncVehicleMarkers();
       this.traffic?.extra.push({ temp: true, alive: () => this.parked.includes(v), pose: () => [v.group.position.x, -v.group.position.z, v.heading, 0] });
       while (this.parked.filter(p => !p.pinned).length > 4) { const old = this.parked.find(p => !p.pinned); this.parked = this.parked.filter(p => p !== old); this.scene.remove(old.group); }
+      this.syncVehicleMarkers();
       this.vehicle = null; this.v = 0; this.borrowed = false;
       this.state = "idle"; this.render();
       return;
@@ -581,14 +731,45 @@ export class Ride {
   }
   // cars you parked last visit (saved progress) are where you left them
   async restoreParked(list) {
-    for (const { type, x, y, h } of list.slice(-4)) {
+    await (this.bikeSpawnPromise || this.bikes.ready);
+    const bikes = list.filter(v => v.kind === "bike");
+    const cars = list.filter(v => v.kind !== "bike").slice(-4);
+    for (const { id, markerId, type, x, y, h } of bikes) {
+      const bike = this.parked.find(v => v.kind === "bike" && v.marker?.id === (markerId || id));
+      if (!bike) continue;
+      bike.garageId = id || bike.marker.id;
+      bike.group.position.set(x, 0.03, -y);
+      bike.group.rotation.set(0, h + Math.PI / 2, 0);
+      bike.heading = h;
+      bike.marker.label = "Your motorcycle";
+      this.settle(bike, h);
+    }
+    for (const { id, type, x, y, h } of cars) {
       let v;
       if (type === "Taxi") { await this.loadTpl(); v = this.makeTaxi(); }
       else { const t = this.traffic?.types.find(t => t.type === type); if (!t) continue; v = this.makeCar(t); }
+      v.garageId = id || null;
       v.group.visible = true; v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h - Math.PI / 2, 0); v.heading = h; this.settle(v, h);
       this.parked.push(v);
       this.traffic?.extra.push({ temp: true, alive: () => this.parked.includes(v), pose: () => [v.group.position.x, -v.group.position.z, v.heading, 0] });
     }
+    this.syncVehicleMarkers();
+    this.garageReady = true;
+  }
+  syncVehicleMarkers() {
+    const parked = this.parked.filter(v => v.kind !== "bike");
+    for (const v of parked) {
+      const garageId = this.assignGarageId(v);
+      if (!v.marker) v.marker = { id: `vehicle_${garageId}`, icon: "car", label: "Your car", x: 0, y: 0 };
+      v.marker.x = v.group.position.x;
+      v.marker.y = -v.group.position.z;
+      v.marker.hidden = false;
+    }
+    this.onVehicles?.(parked.map(v => v.marker));
+  }
+  rideParked(id) {
+    const v = this.parked.find(car => car.marker?.id === id);
+    if (v) this.approach({ parked: v });
   }
   makeTaxi() {
     const group = new THREE.Group(); group.name = "RIDE_car";
@@ -612,9 +793,28 @@ export class Ride {
   updateBike(v, dt) {
     const riding = this.inCar && this.vehicle === v;
     v.standT = THREE.MathUtils.clamp((v.standT ?? 0) + (riding ? dt / 0.8 : -dt / 0.8), 0, 1);
-    const want = -this.steer * THREE.MathUtils.clamp(Math.abs(this.v) / 7, 0, 1) * 1.0;
+    const grip = this.bikeAir > 0 ? 0.3 : 1;
+    const want = this.steer * THREE.MathUtils.clamp(Math.abs(this.v) / 7, 0, 1) * grip;
     v.leanNow = (v.leanNow || 0) + (want - (v.leanNow || 0)) * Math.min(1, dt * 5);
-    this.bikes.pose(v, v.standT, riding ? this.steer * 1.15 : 0, v.leanNow);
+    this.bikes.pose(v, v.standT, riding ? this.steer * 1.15 * grip : 0, v.leanNow);
+  }
+  jumpBike() {
+    if (this.state !== "driving" || this.vehicle?.kind !== "bike" || this.v < 7 || this.bikeAir > 0) return;
+    this.bikeVy = 3.8 + Math.min(1.1, this.v * 0.045);
+    this.bikeAir = 0.001;
+  }
+  stepBikeAir(dt) {
+    const v = this.vehicle;
+    if (this.state !== "driving" || !v || this.bikeAir <= 0) return;                       // bikes hop; any vehicle can fly off a ramp
+    this.bikeVy -= 9.81 * dt;
+    this.bikeAir = Math.max(0, this.bikeAir + this.bikeVy * dt);
+    if (!this.bikeAir) {
+      this.bikeVy = 0;
+      this.settle(v, this.heading);
+      return;
+    }
+    v.group.position.y = (v.gy ?? v.group.position.y - 0.03) + 0.03 + this.bikeAir;
+    v.group.rotation.x = THREE.MathUtils.clamp(-Math.atan2(this.bikeVy, Math.max(8, this.v)) * 0.55, -0.16, 0.16);
   }
   async makeBike() { await this.bikes.ready; return this.bikes.make(); }
   // a few cruisers stand at the curb to start with (they're always there: bikes aren't part of your saved progress)
@@ -625,7 +825,8 @@ export class Ride {
     this.bikeMarkers = [];
     for (const [x, y, h] of BIKE_SPOTS) {
       const v = this.bikes.make();
-      v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h - Math.PI / 2, 0); v.heading = h; v.pinned = true; v.standT = 0; this.settle(v, h);
+      // bike faces +Z so parked rotation uses h + PI/2 (not h - PI/2 like cars)
+      v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h + Math.PI / 2, 0); v.heading = h; v.pinned = true; v.standT = 0; this.settle(v, h);
       this.scene.add(v.group);
       // a pin on the map and the minimap that follows the bike (hidden while you ride it); shown from neighbourhood zoom
       v.marker = { id: "bike_" + this.bikeMarkers.length, icon: "bike", label: "Motorcycle", x, y, minS: 0.45 };
@@ -635,23 +836,39 @@ export class Ride {
     }
     this.onBikes?.(this.bikeMarkers);
   }
+  // a fresh bike standing at (x, y): used when you fast-travel to a mission far from any bike
+  async bikeAt(x, y, h = 0) {
+    await this.bikes.ready;
+    const v = this.bikes.make();
+    v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h + Math.PI / 2, 0); v.heading = h; v.standT = 0; v.temp = true; this.settle(v, h);
+    this.scene.add(v.group); this.parked.push(v);
+    return v;
+  }
+
   // the bikes: drawn only near you; their map pins follow them
   tendBikes() {
     if (this.ground?.built) for (const v of this.parked) if (!v.settled) { this.settle(v, v.heading ?? 0); v.settled = true; }   // placed before the ground map was ready
+    for (const v of this.parked) if (v.kind !== "bike" && v.marker) {
+      v.marker.x = v.group.position.x;
+      v.marker.y = -v.group.position.z;
+    }
     if (!this.bikeMarkers) return;
     const c = this.camera.position;
     for (const v of this.parked) {
       if (v.kind !== "bike") continue;
       const p = v.group.position;
-      v.group.visible = Math.hypot(p.x - c.x, p.z - c.z) < BIKE_SHOW_M;
+      const show = Math.hypot(p.x - c.x, p.z - c.z) < BIKE_SHOW_M;
+      if (show && !v.group.visible && v !== this.vehicle) { v.group.visible = true; this.bikes.autoPaint(v); }   // newly in view: pick a colour nobody nearby wears
+      v.group.visible = show;
       if (v.marker) { v.marker.x = p.x; v.marker.y = -p.z; v.marker.hidden = false; }
     }
+    this.bikes.dedupe(c);
     if (this.vehicle?.kind === "bike" && this.vehicle.marker) this.vehicle.marker.hidden = true;     // you're on it
   }
   // walk to a bike (by its map pin) and get on
   rideBike(id) {
     const v = this.parked.find(b => b.marker?.id === id);
-    if (v) this.approach({ parked: v });
+    if (v) { this.assignGarageId(v); this.approach({ parked: v }); }
   }
   // the nearest free bike to where you are: the welcome screen's "Ride a motorcycle"
   rideNearestBike() {
@@ -680,7 +897,11 @@ export class Ride {
   nearbyCar(x, y, r) {
     let best = null, bd = r;
     for (const v of this.parked) { const d = Math.hypot(v.group.position.x - x, -v.group.position.z - y); if (d < bd) { bd = d; best = { parked: v }; } }
-    for (const c of this.traffic?.ready ? this.traffic.cars : []) { const d = Math.hypot(c.x - x, c.y - y); if (c.alive && d < bd) { bd = d; best = { car: c }; } }
+    for (const c of this.traffic?.ready ? this.traffic.cars : []) {
+      const canTakeBike = c.motorcycle && c.riderEjected && c.mode === "abandoned";
+      const d = Math.hypot(c.x - x, c.y - y);
+      if (c.alive && (!c.motorcycle || canTakeBike) && d < bd) { bd = d; best = { car: c }; }
+    }
     return best;
   }
   async hopIn(target) {
@@ -689,14 +910,23 @@ export class Ride {
     let v, x, y, h, speed = 0;
     if (target.parked) {
       v = target.parked; this.parked = this.parked.filter(p => p !== v);
+      if (v.marker) v.marker.hidden = true;
       x = v.group.position.x; y = -v.group.position.z; h = v.heading ?? 0;
     } else {
-      const c = this.traffic.take(target.car);
-      ({ x, y, h } = c); speed = c.v;
-      if (c.type.type === "Taxi") { await this.ensureCar(); v = this.makeTaxi(); } else v = this.makeCar(c.type);
+      if (target.car.motorcycle) {
+        const acquired = this.traffic.takeMotorcycle(target.car);
+        if (!acquired) return;
+        ({ x, y, h, speed } = acquired); v = acquired.bike;
+      } else {
+        const c = this.traffic.take(target.car);
+        ({ x, y, h } = c); speed = c.v;
+        if (c.type.type === "Taxi") { await this.ensureCar(); v = this.makeTaxi(); } else v = this.makeCar(c.type);
+      }
     }
+    this.assignGarageId(v);
     this.borrowed = true;
     this.vehicle = v;
+    this.damage = v.damage || 0; this.wrecked = this.damage >= 1;
     v.group.visible = true;
     v.group.position.set(x, 0.03, -y); this.setHeading(h);
     this.v = speed; this.steer = 0; this.dest = null; this.path = null;
@@ -712,7 +942,7 @@ export class Ride {
   checkHopIn() {
     const chip = this.hopChip, cam = this.camera.position;
     if (this.approaching) {                                       // on the way to a car: offer to skip the walk
-      const bike = this.approaching.t.parked?.kind === "bike";
+      const bike = this.approaching.t.parked?.kind === "bike" || this.approaching.t.car?.motorcycle;
       const text = bike ? "Walking to the motorcycle · Get on now" : "Walking to the car · Get in now";
       if (chip.dataset.mode !== "skip" || chip.dataset.label !== text) { chip.dataset.mode = "skip"; chip.dataset.label = text; chip.firstElementChild.nextSibling.textContent = text; }
       chip.style.display = "inline-flex";
@@ -725,7 +955,7 @@ export class Ride {
       const near = this.parked.some(v => v.kind === "bike" && Math.hypot(v.group.position.x - cam.x, v.group.position.z - cam.z) < 45);
       if (near) this.nav.tip?.("bike", "A motorcycle: walk up and hop on", 9000);
     }
-    const label = this.hopTarget?.parked?.kind === "bike" ? "Hop on" : "Hop in";
+    const label = this.hopTarget?.parked?.kind === "bike" || this.hopTarget?.car?.motorcycle ? "Hop on" : "Hop in";
     if (chip.dataset.mode !== "skip" && chip.dataset.label !== label) { chip.dataset.label = label; chip.firstElementChild.nextSibling.textContent = label; }
     chip.style.display = this.hopTarget && this.state !== "waiting" ? "inline-flex" : "none";
   }
@@ -880,9 +1110,11 @@ export class Ride {
     this.steer += (THREE.MathUtils.clamp(dh * 1.6, -0.55, 0.55) - this.steer) * 0.2;
     return P.v[i0] + (P.v[i1] - P.v[i0]) * t;
   }
-  // heading h: Blender-plane angle of travel; model front is -Z in three
+  // heading h: Blender-plane angle of travel; car front is -Z in three (uses h-PI/2); bike front is +Z (uses h+PI/2)
   setHeading(h) {
-    this.heading = h; this.car.rotation.set(0, h - Math.PI / 2, 0);
+    this.heading = h;
+    const bikeMode = this.vehicle?.kind === "bike";
+    this.car.rotation.set(0, bikeMode ? h + Math.PI / 2 : h - Math.PI / 2, 0);
     if (this.vehicle) this.settle(this.vehicle, h, this._dt ?? null);
   }
   // Wheels on the ground: the vehicle's height from the ground under its wheels (a pavement is 16 cm above the road: at a
@@ -902,7 +1134,7 @@ export class Ride {
     const k = dt == null || v.gy == null ? 1 : Math.min(1, dt * 14);
     v.gy = (v.gy ?? gy) + (gy - (v.gy ?? gy)) * k; v.gp = (v.gp ?? pitch) + (pitch - (v.gp ?? pitch)) * k; v.gr = (v.gr ?? roll) + (roll - (v.gr ?? roll)) * k;
     g.position.y = v.gy + 0.03;
-    g.rotation.order = "YXZ"; g.rotation.set(-v.gp, h - Math.PI / 2, v.gr);
+    g.rotation.order = "YXZ"; g.rotation.set(-v.gp, (v.kind === "bike" ? h + Math.PI / 2 : h - Math.PI / 2), v.gr);
   }
 
   // parked / traffic cars standing on the route drive off (hidden) so the cab never passes through them
@@ -952,7 +1184,7 @@ export class Ride {
       if (!this.look.drag) return;
       const { k, inv } = Settings.lookScale();
       this.look.yaw -= (e.clientX - this.look.drag[0]) * 0.005 * k;
-      this.look.pitch = THREE.MathUtils.clamp(this.look.pitch - (e.clientY - this.look.drag[1]) * 0.004 * k * inv, -0.9, 0.6);
+      this.look.pitch = THREE.MathUtils.clamp(this.look.pitch + (e.clientY - this.look.drag[1]) * 0.004 * k * inv, -0.9, 0.6);
       this.look.drag = [e.clientX, e.clientY]; this.look.idle = 0;
     });
     addEventListener("pointerup", () => { this.look.drag = null; });
@@ -966,12 +1198,172 @@ export class Ride {
   // what pedestrians and traffic should treat as a mover: your cab
   pose() { return [this.car.position.x, -this.car.position.z, this.heading, this.honkT > 0 ? Math.max(6, this.v) : this.v]; }
 
+  startTow(v) {
+    if (this.towing.some(t => t.v === v)) return;
+    const materials = new Set();
+    v.group.traverse(o => {
+      if (!o.isMesh) return;
+      const clone = m => {
+        const c = m.clone();
+        c.userData.towOpacity = c.opacity; c.userData.towTransparent = c.transparent; c.userData.towDepthWrite = c.depthWrite;
+        materials.add(c);
+        return c;
+      };
+      o.material = Array.isArray(o.material) ? o.material.map(clone) : clone(o.material);
+    });
+    this.towing.push({ v, materials: [...materials], t: 1.8 });
+  }
+
+  updateTowing(dt) {
+    for (let i = this.towing.length - 1; i >= 0; i--) {
+      const t = this.towing[i]; t.t -= dt;
+      const alpha = THREE.MathUtils.clamp(t.t / 1.8, 0, 1);
+      for (const m of t.materials) {
+        m.opacity = m.userData.towOpacity * alpha;
+        m.transparent = alpha < 1 || m.userData.towTransparent;
+        m.depthWrite = alpha < 1 ? false : m.userData.towDepthWrite;
+        m.needsUpdate = true;
+      }
+      if (t.t <= 0) {
+        t.v.group.visible = false;
+        this.parked = this.parked.filter(v => v !== t.v);
+        if (this.taxi === t.v) this.taxi = null;
+        this.towing.splice(i, 1);
+      }
+    }
+  }
+
+  updateParked(dt) {
+    for (const v of this.parked) {
+      const m = v.motion;
+      if (!m || Math.hypot(m.vx, m.vy) < 0.05 && Math.abs(m.omega) < 0.02) continue;
+      const x = v.group.position.x + m.vx * dt, y = -v.group.position.z + m.vy * dt;
+      if (this.getCollider()?.blocked(x, y, v.kind === "bike" ? 0.45 : 1, 0.5)) {
+        m.vx = m.vy = m.omega = 0;
+        continue;
+      }
+      v.group.position.x = x; v.group.position.z = -y; v.heading += m.omega * dt;
+      const drag = Math.exp(-dt * 1.1);
+      m.vx *= drag; m.vy *= drag; m.omega *= Math.exp(-dt * 2);
+      this.settle(v, v.heading, dt);
+    }
+  }
+
+  impactBody(x, y, h, K) {
+    const bike = this.vehicle?.kind === "bike", mass = bike ? 330 : 1400;
+    const halfLength = bike ? 1.15 : 2.3, halfWidth = bike ? 0.45 : 1;
+    const fx = Math.cos(h), fy = Math.sin(h);
+    return { x, y, h, vx: fx * this.v + this.slideX, vy: fy * this.v + this.slideY, omega: this.yawRate,
+      mass, inertia: boxInertia(mass, halfLength, halfWidth), halfLength, halfWidth, K };
+  }
+
+  applyImpact(body, result) {
+    if (!result) return;
+    this.car.position.x = body.x; this.car.position.z = -body.y;
+    const fx = Math.cos(body.h), fy = Math.sin(body.h);
+    this.heading = body.h;
+    this.v = body.vx * fx + body.vy * fy;
+    this.slideX = body.vx - fx * this.v; this.slideY = body.vy - fy * this.v;
+    this.yawRate = body.omega;
+    this.setHeading(this.heading);
+    if (result.closingSpeed < 0.5) return;
+    if (!this.invincible) this.damage = THREE.MathUtils.clamp(this.damage + result.strength * (this.vehicle?.kind === "bike" ? 0.72 : 0.58), 0, 1);   // (a crash run is not about your own repair bill)
+    this.vehicle.damage = this.damage;
+    this.onBump?.(result.strength);
+    this.fares?.bump(result.strength);
+    this.audio?.crash?.(new THREE.Vector3(result.point[0], 0.6, -result.point[1]), result.strength);
+    this.bump = Settings.reduceMotion ? 0 : 0.25 + 0.55 * result.strength;
+    this.bumpS = result.strength;
+    this.stall = 0.15 + 0.45 * result.strength;
+    if (this.damage >= 1) { this.wrecked = true; this.v = 0; this.toast?.("Wrecked · get out to call a tow"); }
+    if (this.vehicle?.kind === "bike" && result.closingSpeed > 6) this.ejectRider();
+  }
+
+  ejectRider() {
+    const bike = this.vehicle, rider = bike?.rider;
+    if (!rider || this.ejected) return;
+    this.bikes.dismount(bike);
+    rider.object.position.copy(bike.group.position);
+    rider.object.position.y += 0.8;
+    bike.group.position.y = (bike.gy ?? bike.group.position.y - 0.03) + 0.03;
+    this.bikes.pose(bike, 0, 0, 0);
+    bike.model.quaternion.setFromAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI / 2);
+    bike.motion = { vx: Math.cos(this.heading) * this.v + this.slideX,
+      vy: Math.sin(this.heading) * this.v + this.slideY, omega: this.yawRate };
+    if (!this.parked.includes(bike)) this.parked.push(bike);
+    this.traffic?.extra.push({ temp: true, alive: () => this.parked.includes(bike), pose: () => [bike.group.position.x, -bike.group.position.z, bike.heading, 0] });
+    const p = bike.group.position.clone().add(new THREE.Vector3(0.4, 0, 0));
+    this.setWalkerAt(p, new THREE.Vector3(Math.cos(this.heading), 0, -Math.sin(this.heading)));
+    this.ejected = { avatar: rider, t: 1.65, air: 0.8, originY: bike.group.position.y, vy: 4.5,
+      vx: Math.cos(this.heading) * Math.max(2, Math.abs(this.v) * 0.45), vz: -Math.sin(this.heading) * Math.max(2, Math.abs(this.v) * 0.45) };
+    if (this.walk) this.walk.stunT = 1.5;
+    this.vehicle = null; this.v = 0; this.state = "idle"; this.borrowed = false;
+    if (this.damage >= 1) this.startTow(bike);
+    this.setMode("walk"); this.render();
+  }
+
+  updateEjected(dt) {
+    const e = this.ejected;
+    if (!e) return;
+    e.t -= dt; e.vy -= 9.81 * dt;
+    e.air = Math.max(0, e.air + e.vy * dt);
+    const p = e.avatar.object.position;
+    p.x += e.vx * dt; p.z += e.vz * dt; p.y = e.originY + e.air;
+    e.vx *= Math.exp(-dt * 1.8); e.vz *= Math.exp(-dt * 1.8);
+    e.avatar.set(p.x, p.y, p.z, this.heading, 0, e.air);
+    e.avatar.update(dt);
+    if (e.air < 0.06) {
+      e.air = 0;
+      e.avatar.rot("Hips", ["x", 25], ["z", 52]);
+      e.avatar.rot("Spine", ["x", 18], ["z", -24]);
+      e.avatar.rot("LeftUpLeg", ["x", -28]); e.avatar.rot("LeftLeg", ["x", 55]);
+      e.avatar.rot("RightUpLeg", ["x", 18]); e.avatar.rot("RightLeg", ["x", 62]);
+      e.avatar.rot("LeftArm", ["x", -38]); e.avatar.rot("RightArm", ["x", -45]);
+    }
+    if (e.t <= 0) {
+      const p = e.avatar.object.position, ground = this.groundAt(new THREE.Vector3(p.x, p.y + 2, p.z));
+      this.camera.position.set(p.x, ground + 1.7, p.z);
+      this.walk.yaw = Math.atan2(-Math.cos(this.heading), Math.sin(this.heading));
+      this.walk.pitch = 0; this.camera.rotation.set(0, this.walk.yaw, 0, "YXZ");
+      e.avatar.object.visible = false; this.ejected = null;
+    }
+  }
+
+  updateSmoke(dt) {
+    const v = this.vehicle;
+    if (!v) return;
+    if (this.damage <= 0.6) {
+      if (v.smoke) v.smoke.visible = false;
+      return;
+    }
+    if (!v.smoke) {
+      const count = 14, geometry = new THREE.BufferGeometry(), positions = new Float32Array(count * 3);
+      geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      const material = new THREE.PointsMaterial({ color: 0x62666a, size: 0.24, transparent: true, opacity: 0.28, depthWrite: false });
+      v.smoke = new THREE.Points(geometry, material);
+      v.smoke.frustumCulled = false; v.smoke.raycast = () => {};
+      v.smokeAges = Float32Array.from({ length: count }, (_, i) => i / count);
+      v.group.add(v.smoke);
+    }
+    v.smoke.visible = true;
+    v.smoke.material.opacity = 0.14 + this.damage * 0.18;
+    const a = v.smoke.geometry.attributes.position, bike = v.kind === "bike";
+    for (let i = 0; i < v.smokeAges.length; i++) {
+      const age = v.smokeAges[i] = (v.smokeAges[i] + dt * (0.45 + this.damage * 0.25)) % 1;
+      a.setXYZ(i, Math.sin(age * 8 + i) * (0.08 + age * 0.24), 0.75 + age * 1.45, (bike ? 0 : -0.25) + Math.cos(age * 7 + i) * 0.12);
+    }
+    a.needsUpdate = true;
+  }
+
   // ---------------------------------------------------------------- per frame
   update(dt) {
     if (this.honkT) this.honkT = Math.max(0, this.honkT - dt);
     this.stepApproach(dt);
     this.checkHopIn();
     this.tendBikes();
+    this.updateParked(dt);
+    this.updateTowing(dt);
+    this.updateEjected(dt);
     if (!this.car || this.state === "idle") return;
     const P = this.path;
     if (this.state === "coming" || this.state === "riding" || this.state === "leaving") {
@@ -1002,12 +1394,13 @@ export class Ride {
         this.leaveT -= dt;
         if (this.leaveT < 0 || !P || P.len - this.s < 1) { this.state = "idle"; this.car.visible = false; this.restoreTraffic(); this.path = null; this.render(); }
       }
-    } else if (this.state === "driving") this.drive(dt);
+    } else if (this.state === "driving") { this.drive(dt); this.stepBikeAir(dt); }
     else if (this.state === "waiting" || this.state === "arrived") this.v = Math.max(0, this.v - DECEL * dt);
     // wheels, steering wheel, doors
     this._dt = dt;
     const bike = this.vehicle?.kind === "bike" ? this.vehicle : null;
     if (bike) this.updateBike(bike, dt);
+    this.updateSmoke(dt);
     const spin = this.v * dt / (bike ? BIKE.wheelR : 0.36);
     for (const w of this.parts.wheels) {
       w.spin = (w.spin || 0) - spin;
@@ -1030,46 +1423,165 @@ export class Ride {
     const c = this.ctl, col = this.getCollider();
     const P = this.pad;                                               // controller: analog steer, pressure-sensitive pedals
     const K = this.vehicle?.kind === "bike" ? BIKE_H : CAR_H;
+    this.heading += this.yawRate * dt;
+    this.yawRate *= Math.exp(-dt * 2.2);
+    this.slideX *= Math.exp(-dt * 1.4); this.slideY *= Math.exp(-dt * 1.4);
     const target = P && Math.abs(P.lx) > 0 ? -P.lx : (c.left ? 1 : 0) - (c.right ? 1 : 0);
-    this.steer += THREE.MathUtils.clamp(target * K.steerMax * (1 - Math.min(K === BIKE_H ? 0.75 : 0.6, Math.abs(this.v) / (K === BIKE_H ? 24 : 30))) - this.steer, -dt * (K === BIKE_H ? 2.4 : 1.6), dt * (K === BIKE_H ? 2.4 : 1.6));
+    const pull = this.damage > 0.4 ? (this.damage - 0.4) * 0.16 : 0;
+    this.steer += THREE.MathUtils.clamp(target * K.steerMax * (1 - Math.min(K === BIKE_H ? 0.75 : 0.6, Math.abs(this.v) / (K === BIKE_H ? 24 : 30))) + pull - this.steer, -dt * (K === BIKE_H ? 2.4 : 1.6), dt * (K === BIKE_H ? 2.4 : 1.6));
     const gas = Math.max(c.up ? 1 : 0, P?.r2 || 0), brake = Math.max(c.down ? 1 : 0, P?.l2 || 0);
     if (this.stall > 0) this.stall -= dt;                              // shaken after a crash: no throttle for a moment
-    if (gas > 0.05 && !(this.stall > 0)) this.v += (this.v < 0 ? 9 : K.accel) * gas * dt;
-    else if (brake > 0.05) this.v -= (this.v > 0.3 ? K.brake : 2.5) * brake * dt;
+    if (gas > 0.05 && !(this.stall > 0) && !this.wrecked) this.v += (this.v < 0 ? 9 : K.accel) * gas * dt;
+    else if (brake > 0.05) this.v -= (this.v > 0.3 ? K.brake : (K === BIKE_H ? 4.5 : 3.5)) * brake * dt;
     else this.v -= Math.sign(this.v) * Math.min(Math.abs(this.v), 1.2 * dt);
-    this.v = THREE.MathUtils.clamp(this.v, K === BIKE_H ? -3 : -5, K.vmax);
-    const h = this.heading + this.v / K.wheelbase * Math.tan(this.steer) * dt;
+    if (this.wrecked) this.v = 0;
+    if (this.boostT > 0) { this.boostT -= dt; if (gas > 0.05) this.v += 9 * dt; }                       // a boost pad: extra push and a higher ceiling
+    this.v = THREE.MathUtils.clamp(this.v, K === BIKE_H ? -5 : -7, K.vmax * (1 - this.damage * 0.65) * (this.boostT > 0 ? 1.4 : 1));
+    const inAir = this.bikeAir > 0;
+    const h = this.heading + this.v / K.wheelbase * Math.tan(this.steer) * dt * (inAir ? 0.3 : 1);
     const x = this.car.position.x, y = -this.car.position.z;
-    const nx = x + Math.cos(h) * this.v * dt, ny = y + Math.sin(h) * this.v * dt;
+    const nx = x + (Math.cos(h) * this.v + this.slideX) * dt, ny = y + (Math.sin(h) * this.v + this.slideY) * dt;
     const front = [nx + Math.cos(h) * K.front * Math.sign(this.v || 1), ny + Math.sin(h) * K.front * Math.sign(this.v || 1)];
-    let hit = col && (col.blocked(front[0], front[1], K.box, 0.3) || col.blocked(nx, ny, K.radius, 0.3));
-    // the Broadway / 7th Ave plazas are car-free, ringed by bollards: a car stops at the edge, as in New York
-    const plaza = !hit && this.plazas?.some(p => inPoly(p.exterior, front[0], front[1]) && !(p.holes || []).some(h => inPoly(h, front[0], front[1])));
+    const lift = this.bikeAir;
+    const halfLength = K === BIKE_H ? 1.15 : 2.3, halfWidth = K === BIKE_H ? 0.45 : 1;
+    let hitObstacle = null;
+    if (col) {
+      const c = Math.cos(h), s = Math.sin(h);
+      const alongN = Math.ceil(halfLength / 0.65), acrossN = Math.max(1, Math.ceil(halfWidth / 0.45));
+      for (let i = -alongN; i <= alongN && !hitObstacle; i++) {
+        const along = halfLength * i / alongN;
+        for (let j = -acrossN; j <= acrossN; j++) {
+          const across = halfWidth * j / acrossN;
+          hitObstacle = col.obstacleAt(nx + c * along - s * across, ny + s * along + c * across,
+            0.2, 0.3 + lift, false, true);
+          if (hitObstacle) break;
+        }
+      }
+    }
+    if (Math.hypot(nx - x, ny - y) > 1e-4) {
+      const meshObstacle = this.vehicleObstacle?.({ x, y, nx, ny, halfLength, halfWidth, height: 0.65 + lift }) || null;
+      if (meshObstacle && (!hitObstacle || meshObstacle.kind === "metal" || meshObstacle.kind === "glass"))
+        hitObstacle = meshObstacle;
+    }
+    // Midtown has its own colliders. Past it (downtown, the harbour islands, Central Park's side) the harbour's data answers: only land and piers are
+    // ground, towers are walls, and beyond the harbour's frame there is a wall (nothing is modelled there).
+    if (!hitObstacle && this.bounds) {
+      const [bx0, by0, bx1, by1] = this.bounds, H = this.harbor;
+      const inMid = nx > bx0 + 12 && nx < bx1 - 12 && ny > by0 + 12 && ny < by1 - 12;
+      if (!inMid) {
+        let why = null;
+        if (!H?.frame || !H.inFrame(nx, ny)) why = "That's the edge of the city: turn around";
+        else if (!(nx > bx0 && nx < bx1 && ny > by0 && ny < by1)) {                       // outside Midtown proper: the harbour's world
+          if (!H.isLand(nx, ny) && !H.isPier(nx, ny)) why = "Water ahead";
+          else if (H.topAt(nx, ny) > 2.5) why = "";
+        }
+        if (why != null) {
+          hitObstacle = { kind: "concrete", point: new THREE.Vector3(nx, 0.6, -ny) };
+          if (why && !(this.edgeT > performance.now())) { this.edgeT = performance.now() + 8000; this.toast?.(why); }
+        }
+      }
+    }
+    let hit = !!hitObstacle;
     // people: the car stops for them (a GTA world without the crime): brake hard, no crash
     if (!hit && Math.abs(this.v) > 0.2 && this.people?.(front[0], front[1], K.people).length) {
-      this.v *= Math.max(0, 1 - dt * 8);
-      return;
+      if (Settings.roughContact && Math.abs(this.v) > 2) this.hitPedestrians?.(front[0], front[1], Math.cos(h) * this.v, Math.sin(h) * this.v, Math.min(1, Math.abs(this.v) / 14));
+      else {
+        if (!Settings.roughContact && Math.abs(this.v) > 2 && !(this.hintT > performance.now())) { this.hintT = performance.now() + 30000; this.toast?.("Cars stop for people. Turn on Rough contact in Settings to hit them"); }
+        this.v *= Math.max(0, 1 - dt * 8); return;
+      }
     }
-    if (plaza) { hit = true; if (!this.plazaWarned) { this.plazaWarned = true; this.toast?.("Pedestrian plaza: cars can't drive here"); } }
-    if (!hit) for (const v of this.parked) if (Math.hypot(v.group.position.x - front[0], -v.group.position.z - front[1]) < (v.kind === "bike" ? K.parked - 0.5 : K.parked)) { hit = true; break; }
-    if (!hit && this.traffic?.ready) {
-      for (const [cx, cy] of this.traffic.obstacles()) if (Math.hypot(cx - front[0], cy - front[1]) < K.traffic) { hit = true; break; }
+    let impact = null;
+    if (!hit) {
+      const own = this.impactBody(nx, ny, h, K);
+      for (const v of this.parked) {
+        if (v === this.vehicle || this.towing.some(t => t.v === v)) continue;
+        const bike = v.kind === "bike", hl = bike ? 1.15 : 2.3, hw = bike ? 0.45 : 1;
+        const motion = v.motion ||= { vx: 0, vy: 0, omega: 0 };
+        const mass = bike ? (v.rider ? 330 : 250) : 1400;
+        const other = { x: v.group.position.x, y: -v.group.position.z, h: v.heading || 0, ...motion,
+          mass, inertia: boxInertia(mass, hl, hw), halfLength: hl, halfWidth: hw };
+        const contact = obbContact(own, other);
+        if (!contact) continue;
+        const result = resolveImpact(own, other, contact);
+        Object.assign(v.motion, { vx: other.vx, vy: other.vy, omega: other.omega });
+        v.heading = other.h; v.group.position.x = other.x; v.group.position.z = -other.y;
+          this.applyImpact(own, result); impact = { own, result }; break;
+      }
+    }
+    if (!hit && !impact && this.traffic?.ready) {
+      for (const car of this.traffic.cars) {
+        if (!car.alive) continue;
+        const own = this.impactBody(nx, ny, h, K);
+        const other = { x: car.x, y: car.y, h: car.h, halfLength: car.motorcycle ? 0.95 : 2.3,
+          halfWidth: car.motorcycle ? 0.43 : 1 };
+        const contact = obbContact(own, other);
+        if (!contact) continue;
+        if (car.pursuit) {
+          hit = true;
+          hitObstacle = { kind: "vehicle", point: new THREE.Vector3(car.x, 0.7, -car.y) };
+          break;
+        }
+        const result = this.traffic.hitCar(car, { player: own, contact });
+        if (result) { this.applyImpact(own, result); impact = { own, result }; break; }
+      }
     } else if (!hit) for (const [, , cx, cy] of this.trafficCars()) if (Math.hypot(cx - front[0], cy - front[1]) < K.traffic - 0.2) {
       if (!this.hidden.some(([, , m]) => { const p = new THREE.Vector3().setFromMatrixPosition(m); return Math.hypot(p.x - cx, -p.z - cy) < 0.1; })) { hit = true; break; }
     }
+    if (impact) return;
     if (hit) {
       // a crash you feel: a kick of the camera and a thump that scale with speed, the car bounces back and stalls a moment
       const s = Math.min(1, Math.abs(this.v) / 14);
       if (Math.abs(this.v) > 1) {
         this.onBump?.(s);
         this.fares?.bump(s);
-        this.audio?.crash?.(new THREE.Vector3(front[0], 0.6, -front[1]), s);
+        this.audio?.crash?.(hitObstacle?.point || new THREE.Vector3(front[0], 0.6, -front[1]), s, hitObstacle?.kind || "concrete");
         this.bump = Settings.reduceMotion ? 0 : 0.25 + 0.55 * s; this.bumpS = s;
         this.stall = 0.35 + 0.6 * s;
       }
       this.v *= -0.3;
     }
-    else { this.car.position.set(nx, 0.03, -ny); this.setHeading(h); }
+    else {
+      this.car.position.set(nx, 0.03, -ny); this.setHeading(h);
+      // ramps: climbing a slope and leaving its lip at speed throws the vehicle into the air (a bike's hop uses the same flight)
+      if (this.ground?.built && !(this.bikeAir > 0)) {
+        const gNow = this.ground.h(nx, ny), lg = this.lastG ?? gNow, stepD = Math.hypot(nx - x, ny - y);
+        const cs = Math.cos(h), sn = Math.sin(h), sl = (this.ground.h(nx + cs * 1.5, ny + sn * 1.5) - this.ground.h(nx - cs * 1.5, ny - sn * 1.5)) / 3;   // the slope under you, smoothed over 3 m
+        if (sl > 0.08) this.rampSlope = sl;
+        if (lg > 0.5 && gNow < lg - 0.1 && this.v > 6 && (this.rampSlope || 0) > 0.1) {
+          this.bikeVy = Math.min(10, this.v * this.rampSlope * 2.2); this.bikeAir = 0.001; this.rampSlope = 0;
+          this.onLaunch?.(this.bikeVy);
+        }
+        this.lastG = gNow;
+      }
+    }
+  }
+
+  // ---- a passenger (taxi fares): on the back of a bike, in the back seat of a car; hips on the seat
+  seatPassenger(av) {
+    const v = this.vehicle; if (!v || !av) return;
+    av.object.updateMatrixWorld(true);
+    const hp = new THREE.Vector3(); av.bones.Hips.b.getWorldPosition(hp);
+    const hipH = Math.max(0.7, hp.y - av.object.position.y);                       // standing hip height above the feet
+    this.passenger = av; av.object.visible = true; av.object.removeFromParent();
+    if (v.kind === "bike") {
+      v.model.add(av.object); av.object.position.set(0, 0.0, -0.5); av.object.rotation.set(0, 0, 0);
+      av.setRide(this.bikes.clips[av.id === "daniel" ? "man" : "woman"]); av.pillionArms(); av.pose(0);
+    } else {
+      const S = v.parts.seat.SEAT_rear_left || new THREE.Vector3(-0.45, 0.67, 0.85);
+      v.group.add(av.object); av.object.position.set(S.x, S.y - hipH + 0.04, S.z); av.object.rotation.set(0, Math.PI, 0);   // the car faces -Z: look ahead
+      av.sit(true); av.pose(0);
+    }
+  }
+  // gets out beside the vehicle; returns the avatar (the caller walks them off / removes them)
+  unseatPassenger() {
+    const av = this.passenger; if (!av) return null;
+    this.passenger = null;
+    const wp = new THREE.Vector3(); av.object.getWorldPosition(wp);
+    av.setRide(null); av.sit(false); av.object.removeFromParent(); av.object.rotation.set(0, 0, 0);
+    const side = new THREE.Vector3(Math.cos(this.heading + Math.PI / 2) * 1.8, 0, -Math.sin(this.heading + Math.PI / 2) * 1.8);
+    av.object.position.set(this.car.position.x + side.x, this.car.position.y, this.car.position.z + side.z);
+    this.scene.add(av.object); av.object.visible = true; av.contact(true);
+    return av;
   }
 
   cameraFollow(dt) {
@@ -1087,9 +1599,10 @@ export class Ride {
       cam.position.copy(p).add(new THREE.Vector3((Math.random() - 0.5) * shake, 0, 0));
       cam.quaternion.setFromEuler(new THREE.Euler(L.pitch, car.rotation.y + L.yaw, 0, "YXZ"));
     } else {
-      const bk = this.vehicle?.kind === "bike";                       // closer and lower behind a motorcycle
-      const off = new THREE.Vector3(0, bk ? 1.9 : 2.5, bk ? 4.6 : 7.2).applyAxisAngle(new THREE.Vector3(0, 1, 0), car.rotation.y + L.yaw);
-      off.y += Math.max(0, -L.pitch - 0.08) * 8;
+      const bk = this.vehicle?.kind === "bike";
+      // Forward camera offsets use bike-local -Z with h+PI/2 and car-local +Z with h-PI/2; both rotate behind the vehicle.
+      const off = new THREE.Vector3(0, bk ? 1.9 : 2.5, bk ? -4.6 : 7.2).applyAxisAngle(new THREE.Vector3(0, 1, 0), car.rotation.y + L.yaw);
+      off.y += Math.max(0, L.pitch - 0.08) * 8;
       const want = car.position.clone().add(off);
       if (shake) want.add(new THREE.Vector3((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake * 0.6, (Math.random() - 0.5) * shake));
       // never through a wall: pull the camera in toward the car
@@ -1097,7 +1610,8 @@ export class Ride {
       if (col) for (let k = 0; k < 8 && col.blocked(want.x, -want.z, 0.4, want.y); k++) want.lerp(car.position.clone().setY(want.y), 0.3);
       const a = this.camBlend < 1 ? (this.camBlend = Math.min(1, (this.camBlend || 0) + dt * 1.2), 1 - Math.exp(-dt * 3)) : 1 - Math.exp(-dt * 6);
       cam.position.lerp(want, a);
-      const look = car.position.clone().add(new THREE.Vector3(0, bk ? 1.0 : 1.1, 0)).add(new THREE.Vector3(0, 0, -4).applyQuaternion(car.quaternion));
+      // bike faces +Z so look ahead is +Z; car faces -Z so look ahead is -Z
+      const look = car.position.clone().add(new THREE.Vector3(0, bk ? 1.0 : 1.1, 0)).add(new THREE.Vector3(0, 0, bk ? 4 : -4).applyQuaternion(car.quaternion));
       cam.lookAt(look);
     }
   }
@@ -1107,6 +1621,15 @@ export class Ride {
     if (!this.car?.visible || this.state === "idle") return null;
     const P = this.path, i0 = P ? Math.floor(this.s / P.step) : 0;
     const routed = P && (this.state === "coming" || this.state === "riding");
+    const wp = this.nav.waypoint;
+    if (!routed && this.state === "driving" && wp && this.roads) {          // driving yourself to a destination: the road route is on the map too
+      const now = performance.now(), x = this.car.position.x, y = -this.car.position.z;
+      if (!this.wpRoute || now - this.wpRoute.t > 2000 || this.wpRoute.key !== wp.x + "," + wp.y) {
+        const a = this.roads.projectAll(x, y, 1)?.[0], b = this.roads.projectAll(wp.x, wp.y, 1)?.[0];
+        this.wpRoute = { t: now, key: wp.x + "," + wp.y, route: (a && b && this.roads.route(a, b)) || [[x, y], [wp.x, wp.y]] };
+      }
+      return { car: [x, y], route: this.wpRoute.route };
+    }
     return { car: [this.car.position.x, -this.car.position.z], route: routed ? P.pts.slice(i0) : null };
   }
 }

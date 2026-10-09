@@ -6,7 +6,7 @@
 // Coordinates: Blender local metres.
 
 const KN = 0.5144;
-const SPEED = { walk: 1.4, cab: 7.0, boat: 9.5 * KN, plane: 46 };          // average door-to-door speeds (m/s)
+const SPEED = { walk: 1.4, cab: 7.0, car: 7.0, boat: 9.5 * KN, plane: 46 }; // average door-to-door speeds (m/s)
 const MIDTOWN = [-1750, -720, 960, 740];
 const PIER83 = { id: "pier83", name: "Pier 83", x: -1494, y: -193, berth: [-1560, -208.8] };
 const INTREPID = { id: "intrepid", name: "the Intrepid", x: -1486, y: 23, lift: [-1424.3, 54.0] };
@@ -22,7 +22,7 @@ const REAL = {
   pier25: "In New York: subway 1 to Franklin St, then walk to the river.",
   centralpark: "In New York: a 15-minute walk up 7th Ave from Times Square, or subway N/Q/R/W to 5th Ave-59th St.",
 };
-const ICON = { walk: "🚶", cab: "🚕", boat: "⛴", plane: "✈" };
+const ICON = { walk: "🚶", cab: "🚕", car: "🚗", boat: "⛴", plane: "✈" };
 
 const inRect = (x, y, r = MIDTOWN) => x > r[0] && x < r[2] && y > r[1] && y < r[3];
 const fmtD = d => d < 1000 ? `${Math.max(10, Math.round(d / 10) * 10)} m` : `${(d / 1000).toFixed(1)} km`;
@@ -36,7 +36,10 @@ export class Trip {
     this.buildDOM();
   }
 
-  me() { const c = this.camera.position; return [c.x, -c.z]; }
+  me() {
+    const p = this.ride.inCar ? this.ride.car.position : this.camera.position;
+    return [p.x, -p.z];
+  }
 
   // ---------------------------------------------------------------- planning
   // a landing for the boat at a harbour place: the nearest pier with a long straight face, approached from the water
@@ -82,12 +85,15 @@ export class Trip {
     const crow = Math.hypot(dest.x - x, dest.y - y);
     const midtown = inRect(dest.x, dest.y) && inRect(x, y);
     const leg = (mode, text, dist, extra = 0) => ({ mode, text, dist, time: dist / SPEED[mode] + extra });
-    const toHub = hub => {                                          // getting to a hub: walk if close, else a cab
+    const toHub = hub => {                                          // use the current vehicle if occupied; otherwise walk nearby or book a cab
       const d = Math.hypot(hub.x - x, hub.y - y) * 1.25;
-      return d < 600 ? leg("walk", `Walk to ${hub.name}`, d) : leg("cab", `Self-driving cab to ${hub.name}`, d * 1.15, 120);
+      if (this.ride.inCar) return leg("car", `Drive to ${hub.name}`, d * 1.15);
+      if (d < 600) return leg("walk", `Walk to ${hub.name}`, d);
+      return leg("cab", `Book a cab to ${hub.name}`, d * 1.15, 120);
     };
     if (midtown) {
-      out.push({ id: "cab", title: "Self-driving cab", legs: [leg("cab", `Cab to ${dest.name}`, crow * 1.35, 120)] });
+      if (this.ride.inCar) out.push({ id: "car", title: "Your current vehicle", legs: [leg("car", `Drive to ${dest.name}`, crow * 1.35)] });
+      else out.push({ id: "cab", title: "Book a cab", legs: [leg("cab", `Cab to ${dest.name}`, crow * 1.35, 120)] });
       out.push({ id: "walk", title: "Walk", legs: [leg("walk", `Walk to ${dest.name}`, crow * 1.25)] });
     }
     if (!inRect(dest.x, dest.y)) {                                  // the harbour: on foot if it's on our island, by water or by air
@@ -95,20 +101,23 @@ export class Trip {
       let onFoot = crow < 5000 && !!H?.frame;
       for (let i = 1; onFoot && i <= n; i++) {                       // a straight walk that stays on land (no river in between)
         const px = x + (dest.x - x) * i / n, py = y + (dest.y - y) * i / n;
-        if (!inRect(px, py) && H.inFrame(px, py) && !H.isLand(px, py)) onFoot = false;
+        const land = H.isLand(px, py) || H.isPier(px, py);
+        if (!land && (!inRect(px, py) || H.inFrame(px, py))) onFoot = false;
       }
       if (onFoot) out.push({ id: "walk", title: "Walk", legs: [leg("walk", `Walk to ${dest.name}`, crow * 1.3)] });
       const land = this.landingFor(dest);
       if (land && Math.hypot(dest.x - land.x, dest.y - land.y) < 900) {   // a landing within a short walk of the place
         const route = this.waterRoute(land);
         const ashore = Math.hypot(dest.x - land.x, dest.y - land.y) * 1.2;
-        out.push({ id: "boat", title: "Cab + boat", route, land, legs: [toHub(PIER83),
+        const hub = toHub(PIER83), firstMode = hub.mode === "car" ? "Your vehicle" : hub.mode === "walk" ? "Walk" : "Cab";
+        out.push({ id: "boat", title: `${firstMode} + boat`, route, land, legs: [hub,
           leg("walk", "Walk onto Pier 83 and board the Hudson Sightseer", 120),
           leg("boat", `Take the helm: follow the blue line down the Hudson to ${dest.name}`, this.lengthOf(route)),
           leg("walk", `Tie up, go ashore and walk to ${dest.name}`, ashore + 30)] });
       }
       const fly = Math.hypot(dest.x - INTREPID.x, dest.y - INTREPID.y);
-      out.push({ id: "plane", title: "Cab + plane (sightseeing)", legs: [toHub(INTREPID),
+      const hub = toHub(INTREPID), firstMode = hub.mode === "car" ? "Your vehicle" : hub.mode === "walk" ? "Walk" : "Cab";
+      out.push({ id: "plane", title: `${firstMode} + plane (sightseeing)`, legs: [hub,
         leg("walk", "Walk out on Pier 86, elevator to the flight deck", 160, 30),
         leg("plane", `Fly over ${dest.name}`, fly), leg("plane", "Fly back and land on the Intrepid", fly, 60)] });
     }
@@ -198,12 +207,19 @@ export class Trip {
     this.say(L);
     const [x, y] = this.me();
     if (opt.id === "cab") return this.ride.book(d);
-    if (opt.id === "walk") { this.nav.walkTo?.(d); return; }
+    if (opt.id === "car") return this.ride.setDestination(d);
+    if (opt.id === "walk") {
+      if (this.ride.inCar) this.ride.getOut();
+      this.nav.walkTo?.(d);
+      return;
+    }
     const hub = opt.id === "boat" ? PIER83 : INTREPID;
     if (A.step === 0) {                                              // to the hub
       if (L.mode === "cab") this.ride.book({ ...hub, kind: "landmark" });
+      else if (L.mode === "car") this.ride.setDestination({ ...hub, kind: "landmark" });
       else { this.nav.setWaypoint?.({ ...hub, kind: "point" }); }
     } else if (A.step === 1) {
+      if (this.ride.inCar) this.ride.getOut();
       this.nav.setWaypoint?.(opt.id === "boat" ? { id: "board", name: "Board the Hudson Sightseer", kind: "point", x: -1555, y: -197 }
         : { id: "lift", name: "Intrepid visitor elevator", kind: "point", x: INTREPID.lift[0], y: INTREPID.lift[1] });
     } else if (opt.id === "boat" && A.step === 2) {
@@ -241,13 +257,19 @@ export class Trip {
     if (!A) return;
     const [x, y] = this.me(), d = A.dest, opt = A.opt, mode = this.getMode();
     const near = (p, r) => Math.hypot(p.x - x, p.y - y) < r;
+    if (opt.id === "car") {
+      if (this.ride.state === "arrived") this.end(`You've arrived at ${d.name}.`);
+      return;
+    }
     if (opt.id === "cab" || opt.id === "walk") {
       if (mode === "walk" && near(d, 60)) this.end(`You've arrived at ${d.name}.`);
       return;
     }
     const hub = opt.id === "boat" ? PIER83 : INTREPID;
     if (A.step === 0) {
-      if ((mode === "walk" && near(hub, opt.id === "boat" ? 180 : 140)) || (opt.id === "plane" && this.flight.active) || (opt.id === "boat" && this.helm.active)) this.next();
+      if ((mode === "walk" && near(hub, opt.id === "boat" ? 180 : 140))
+        || ((opt.id === "boat" || opt.id === "plane") && this.ride.state === "arrived")
+        || (opt.id === "plane" && this.flight.active) || (opt.id === "boat" && this.helm.active)) this.next();
     } else if (A.step === 1) {
       if (opt.id === "boat" ? this.helm.active : this.flight.active) this.next();
     } else if (opt.id === "boat" && A.step === 2) {

@@ -38,7 +38,12 @@ wheel radius 0.335 m.
   `GRIP_L/R`; collision proxies `COL_*` (**hidden in game**: drawn they are a huge black slab).
 - **Actions:** `Parked` (8 degrees onto the kickstand), `Stand_Up` (kickstand folds away), `Steer_Sweep`. The game poses the parts
   itself (`js/bike.js`): the stand folds as you mount, the bars turn, the bike leans into turns.
-- **In the game** (`js/bike.js` + `ride.js`): five cruisers stand at the curb (`BIKE_SPOTS`: two by the walking start on 8th Ave).
+- **In the game** (`js/bike.js` + `ride.js`): **17 cruisers** stand at the curb (`BIKE_SPOTS`: 5 along 8th Ave / 7th Ave, 12 through
+  the Times Square bowtie, found with the crowd's walkability raster + the road graph, >= 22 m apart).
+  - **Finding one:** a motorcycle pin on the full map and the minimap (it follows the bike, hidden while you ride it; the full map
+    shows them from neighbourhood zoom); tap it for **Ride it** (you walk there and get on). The welcome screen and search
+    have **Ride a motorcycle** (walks you to the nearest one). A one-time hint appears within 45 m of one.
+  - **Cost control:** bikes are only drawn within 90 m (`BIKE_SHOW_M`): each is 39k triangles.
   Walk up, **F: Hop on**. The rider is you (your avatar, `Pose_Ride`, parented to the bike so it leans with it); **F** gets off.
   - **Handling** (`BIKE_H` vs `CAR_H`): 6 m/s2, 27 m/s top (60 mph), quicker steering, a narrower body (it fits gaps a car can't),
     lean = steering x speed. Same collisions with buildings, people (it stops for them), parked cars and traffic.

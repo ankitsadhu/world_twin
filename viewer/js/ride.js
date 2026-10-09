@@ -22,7 +22,11 @@ const BIKE_H = { wheelbase: BIKE.wheelbase, accel: 6.0, brake: 11, vmax: 27, ste
   people: 1.3, parked: 1.5, traffic: 1.7 };
 // where the first bikes stand: on the pavement at the curb, heading along the street (found with the crowd's walkability
 // raster + the road graph; the first two are by the walking start on 8th Ave)
-const BIKE_SPOTS = [[-264, -60.5, -1.57], [-263.5, -128, -1.57], [-200.5, 1, 0], [-150, -78, 0], [-61.5, 68.5, 3.13]];
+const BIKE_SPOTS = [[-264, -60.5, -1.57], [-263.5, -128, -1.57], [-200.5, 1, 0], [-150, -78, 0], [-61.5, 68.5, 3.13],
+  // 12 more through the Times Square bowtie (7th Ave / W 45th-46th St, the NE and SE corners), >= 22 m apart
+  [-26, 2, 0], [-48, 2, 0], [-70, 2, 0], [56, -10, 1.97], [-92, 2, 0], [-106, -78, -0.94], [-44, 82, -0.01], [-84, 70, -3.14],
+  [44, -158, 0.38], [64, 70, 1.96], [-106, 70, -3.14], [66, -158, 0]];
+const BIKE_SHOW_M = 90;                           // bikes beyond this are not drawn (14 in view x 39k triangles would add up)
 
 // ------------------------------------------------------------------ road graph
 function inPoly(ring, x, y) {
@@ -617,13 +621,47 @@ export class Ride {
     if (this.bikesSpawned) return;
     this.bikesSpawned = true;
     await this.bikes.ready;
+    this.bikeMarkers = [];
     for (const [x, y, h] of BIKE_SPOTS) {
       const v = this.bikes.make();
       v.group.position.set(x, 0.03, -y); v.group.rotation.set(0, h - Math.PI / 2, 0); v.heading = h; v.pinned = true; v.standT = 0;
       this.scene.add(v.group);
+      // a pin on the map and the minimap that follows the bike (hidden while you ride it); shown from neighbourhood zoom
+      v.marker = { id: "bike_" + this.bikeMarkers.length, icon: "bike", label: "Motorcycle", x, y, minS: 0.45 };
+      this.bikeMarkers.push(v.marker);
       this.parked.push(v);
       this.traffic?.extra.push({ temp: true, alive: () => this.parked.includes(v), pose: () => [v.group.position.x, -v.group.position.z, v.heading, 0] });
     }
+    this.onBikes?.(this.bikeMarkers);
+  }
+  // the bikes: drawn only near you; their map pins follow them
+  tendBikes() {
+    if (!this.bikeMarkers) return;
+    const c = this.camera.position;
+    for (const v of this.parked) {
+      if (v.kind !== "bike") continue;
+      const p = v.group.position;
+      v.group.visible = Math.hypot(p.x - c.x, p.z - c.z) < BIKE_SHOW_M;
+      if (v.marker) { v.marker.x = p.x; v.marker.y = -p.z; v.marker.hidden = false; }
+    }
+    if (this.vehicle?.kind === "bike" && this.vehicle.marker) this.vehicle.marker.hidden = true;     // you're on it
+  }
+  // walk to a bike (by its map pin) and get on
+  rideBike(id) {
+    const v = this.parked.find(b => b.marker?.id === id);
+    if (v) this.approach({ parked: v });
+  }
+  // the nearest free bike to where you are: the welcome screen's "Ride a motorcycle"
+  rideNearestBike() {
+    const c = this.camera.position;
+    let best = null, bd = Infinity;
+    for (const v of this.parked) {
+      if (v.kind !== "bike") continue;
+      const d = Math.hypot(v.group.position.x - c.x, v.group.position.z - c.z);
+      if (d < bd) { bd = d; best = v; }
+    }
+    if (best) this.approach({ parked: best });
+    else this.toast?.("The motorcycles are still being brought out: try again in a moment");
   }
   // sedans / SUVs from the traffic: the same light model as the traffic itself (outside view only)
   makeCar(t) {
@@ -672,13 +710,19 @@ export class Ride {
   checkHopIn() {
     const chip = this.hopChip, cam = this.camera.position;
     if (this.approaching) {                                       // on the way to a car: offer to skip the walk
-      if (chip.dataset.mode !== "skip") { chip.dataset.mode = "skip"; chip.firstElementChild.nextSibling.textContent = "Walking to the car · Get in now"; }
+      const bike = this.approaching.t.parked?.kind === "bike";
+      const text = bike ? "Walking to the motorcycle · Get on now" : "Walking to the car · Get in now";
+      if (chip.dataset.mode !== "skip" || chip.dataset.label !== text) { chip.dataset.mode = "skip"; chip.dataset.label = text; chip.firstElementChild.nextSibling.textContent = text; }
       chip.style.display = "inline-flex";
       return;
     }
     if (chip.dataset.mode === "skip") { chip.dataset.mode = ""; chip.dataset.label = "Hop in"; chip.firstElementChild.nextSibling.textContent = "Hop in"; }
     const onFoot = !this.inCar && this.getMode() === "walk";      // only when you're actually on foot
     this.hopTarget = onFoot ? this.nearbyCar(cam.x, -cam.z, 7) : null;
+    if (onFoot && this.bikeMarkers && !this.hopTarget) {            // first time near a motorcycle: say what it is
+      const near = this.parked.some(v => v.kind === "bike" && Math.hypot(v.group.position.x - cam.x, v.group.position.z - cam.z) < 45);
+      if (near) this.nav.tip?.("bike", "A motorcycle: walk up and hop on", 9000);
+    }
     const label = this.hopTarget?.parked?.kind === "bike" ? "Hop on" : "Hop in";
     if (chip.dataset.mode !== "skip" && chip.dataset.label !== label) { chip.dataset.label = label; chip.firstElementChild.nextSibling.textContent = label; }
     chip.style.display = this.hopTarget && this.state !== "waiting" ? "inline-flex" : "none";
@@ -692,7 +736,8 @@ export class Ride {
     if (t.car) ({ x, y, h } = t.car);
     else if (t.parked) { x = t.parked.group.position.x; y = -t.parked.group.position.z; h = t.parked.heading ?? 0; }
     else { x = this.car.position.x; y = -this.car.position.z; h = this.heading; }
-    return { x: x + Math.sin(h) * 2.3, y: y - Math.cos(h) * 2.3 };   // 2.3 m out from the right-hand (curb) side
+    const side = t.parked?.kind === "bike" ? 1.3 : 2.3;
+    return { x: x + Math.sin(h) * side, y: y - Math.cos(h) * side };   // 2.3 m out from the right-hand (curb) side (a bike: 1.3 m)
   }
   approach(t) {
     if (!t || this.inCar) return;
@@ -902,6 +947,7 @@ export class Ride {
     if (this.honkT) this.honkT = Math.max(0, this.honkT - dt);
     this.stepApproach(dt);
     this.checkHopIn();
+    this.tendBikes();
     if (!this.car || this.state === "idle") return;
     const P = this.path;
     if (this.state === "coming" || this.state === "riding" || this.state === "leaving") {

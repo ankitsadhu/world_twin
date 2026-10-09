@@ -12,6 +12,7 @@ const KIND_ICON = { activity: ICON.star, landmark: ICON.star, intersection: ICON
 export const ACTIVITIES = [
   { act: "fly", name: "Fly a plane", sub: "Catapult off the Intrepid · over Midtown, the Hudson, the Statue of Liberty", keywords: "plane airplane aeroplane fly flying pilot cessna flight airport land intrepid sky" },
   { act: "sail", name: "Take the helm of the boat", sub: "Sail the Hudson from Pier 83 · Statue of Liberty", keywords: "boat sail sailing ship helm captain river hudson cruise ferry" },
+  { act: "bike", name: "Ride a motorcycle", sub: "A cruiser parked along 7th Ave: walk up, F to hop on", keywords: "motorcycle motorbike bike chopper cruiser harley scooter ride riding biker" },
   { act: "fares", name: "Drive a cab: pick up fares", sub: "Find a passenger, get them there fast · stars, not money", keywords: "taxi cab drive driving job fares passenger uber car" },
   { act: "tours", name: "Sightseeing tours", sub: "Walk, sail or fly a landmark route against the clock", keywords: "tour tours sightseeing race challenge time landmarks game" },
   { act: "drive", name: "Drive any car", sub: "Walk up to a car and hop in", keywords: "car drive driving steal hop vehicle" },
@@ -114,6 +115,7 @@ export class Navigator {
       #welcome .tile { min-height: 72px; padding: var(--s3); border: none; border-radius: var(--r-control); background: var(--fill); color: var(--ink);
         cursor: pointer; font-family: var(--font); display: flex; flex-direction: column; gap: 2px; justify-content: center; }
       #welcome .tile:hover, #welcome .tile:focus-visible { background: var(--fill-hover); outline: 2px solid var(--accent); outline-offset: 1px; }
+      #welcome .tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
       #welcome .tile b { font-size: var(--t-body); }
       #welcome .tile span { font-size: var(--t-caption); color: var(--ink-2); }
       #welcome .tile.primary { background: var(--accent); color: var(--accent-ink); }
@@ -145,6 +147,7 @@ export class Navigator {
           <button class="tile primary" data-w="fly"><b>✈ Fly a plane</b><span>Off the Intrepid · over the Hudson to Liberty</span></button>
           <button class="tile primary" data-w="sail"><b>⚓ Sail the Hudson</b><span>Take the helm · out to the Statue of Liberty</span></button>
           <button class="tile primary" data-w="fares"><b>🚕 Drive a cab</b><span>Pick up fares around Midtown</span></button>
+          <button class="tile primary" data-w="bike"><b>🏍 Ride a motorcycle</b><span>A cruiser at the curb · hop on and go</span></button>
           <button class="tile primary" data-w="tours"><b>⏱ Sightseeing tours</b><span>Walk, sail or fly against the clock</span></button>
           <button class="tile" data-w="walk"><b>Walk the streets</b><span>Run, jump, explore on foot</span></button>
           <button class="tile" data-w="ride"><b>Ride a self-driving cab</b><span>Book it, watch it pull up, ride</span></button>

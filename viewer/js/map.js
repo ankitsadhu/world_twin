@@ -32,6 +32,14 @@ export function drawPlaceIcon(c, kind, u, v, r) {
       c.beginPath(); c.moveTo(x - sx * s * 0.02, y - s * 0.3); c.lineTo(x + sx * s * 0.14, y + s * 0.02); c.lineTo(x - sx * s * 0.24, y + s * 0.02);
       c.closePath(); c.fill();
     }
+  } else if (kind === "bike") {                            // motorcycle, side view: two wheels, frame, seat, bars
+    c.lineWidth = Math.max(1.4, r * 0.14);
+    for (const sx of [-1, 1]) { c.beginPath(); c.arc(sx * s * 0.66, s * 0.38, s * 0.32, 0, Math.PI * 2); c.stroke(); }
+    c.beginPath();
+    c.moveTo(-s * 0.66, s * 0.38); c.lineTo(-s * 0.12, s * 0.38); c.lineTo(s * 0.26, -s * 0.18);        // rear axle, engine, tank
+    c.lineTo(s * 0.52, -s * 0.34); c.lineTo(s * 0.66, s * 0.38);                                         // bars, fork to the front axle
+    c.moveTo(-s * 0.5, -s * 0.12); c.lineTo(s * 0.2, -s * 0.12);                                          // seat
+    c.stroke();
   } else {                                                 // five-point star
     c.beginPath();
     for (let i = 0; i < 10; i++) {
@@ -272,7 +280,7 @@ export class CityMap {
   }
   placeFor(m) {
     const byName = (this.nav.places || []).find(p => p.kind === "landmark" && (p.id === m.id || p.name === m.label));
-    return byName || { id: m.id, name: m.label, kind: m.id?.startsWith("apt_") ? "airport" : "point", x: m.x, y: m.y, eye: [m.x + 20, m.y - 90, 55], target: [m.x, m.y, 8] };
+    return byName || { id: m.id, name: m.label, kind: m.id?.startsWith("apt_") ? "airport" : m.id?.startsWith("bike_") ? "bike" : "point", x: m.x, y: m.y, eye: [m.x + 20, m.y - 90, 55], target: [m.x, m.y, 8] };
   }
   // outside Times Square: the two nearest named harbour streets ("West St & Chambers St"), or the area it's in
   nearestStreets(x, y) {
@@ -342,15 +350,17 @@ export class CityMap {
     this.card.querySelector(".go").textContent = ad ? "View screen" : car ? "Drive here" : "Go";   // in a car: this car goes there
     const harbour = !(p.x > -1750 && p.x < 960 && p.y > -720 && p.y < 740);   // beyond Midtown's roads: by boat or plane
     this.card.querySelector(".walk").style.display = ad || harbour ? "none" : "";
-    this.card.querySelector(".dirs").style.display = ad || !this.onDirections || p.id?.startsWith("apt_") ? "none" : "";
+    this.card.querySelector(".dirs").style.display = ad || !this.onDirections || p.id?.startsWith("apt_") || p.id?.startsWith("bike_") ? "none" : "";
+    const bike = p.id?.startsWith("bike_");                          // a parked motorcycle: walk to it and get on
     const land = p.id?.startsWith("apt_") && this.canLand?.();      // an airport, while you're flying: land there
-    const fly = p.id === "intrepid" || p.id === "pier83" || land;    // the carrier: fly a plane; Pier 83: take the boat's helm
+    const fly = p.id === "intrepid" || p.id === "pier83" || land || bike;    // the carrier: fly a plane; Pier 83: take the boat's helm
     this.card.querySelector(".ride").style.display = fly ? "" : ad || harbour || !this.onRide || car ? "none" : "";
-    this.card.querySelector(".ride").textContent = land ? "✈ Land here" : p.id === "intrepid" ? "✈ Fly a plane" : p.id === "pier83" ? "⚓ Take the helm" : "Ride";
-    this.card.querySelector(".go").style.display = land ? "none" : "";
+    this.card.querySelector(".ride").textContent = bike ? "Ride it" : land ? "✈ Land here" : p.id === "intrepid" ? "✈ Fly a plane" : p.id === "pier83" ? "⚓ Take the helm" : "Ride";
+    this.card.querySelector(".go").style.display = land || bike ? "none" : "";
+    if (bike) this.card.querySelector(".walk").style.display = "none";
     const [x, y] = this.me(), d = Math.hypot(p.x - x, p.y - y);
     const dist = d < 1000 ? `${Math.round(d / 10) * 10} m away` : `${(d / 1000).toFixed(1)} km away`;
-    const kind = { landmark: "Landmark", intersection: "Intersection", building: "Building", point: "Location", airport: "Airport", ad: "Screen", group: "Screens" }[p.kind] || "";
+    const kind = { landmark: "Landmark", intersection: "Intersection", building: "Building", point: "Location", airport: "Airport", bike: "Parked cruiser", ad: "Screen", group: "Screens" }[p.kind] || "";
     this.card.querySelector("h3").textContent = p.name;
     this.card.querySelector("p").textContent = [kind, p.sub, dist].filter(Boolean).join(" · ");
     this.card.querySelector(".walk").textContent = (this.inCar() ? "Get out & walk" : "Walk here") + (d < 1500 ? ` · ${Math.max(1, Math.round(d / 80))} min` : "");
@@ -501,6 +511,7 @@ export class CityMap {
     const pins = this.data.markers.filter(m => m.icon !== "slot");
     for (const m of pins) {
       const [u, v] = this.toScreen(m.x, m.y);
+      if (m.hidden || (m.minS && this.s < m.minS)) continue;          // a ridden bike; bike pins only at neighbourhood zoom
       if (u < -20 || v < -20 || u > this.W + 20 || v > this.H + 20) continue;
       if (this.selUV && Math.hypot(u - this.selUV[0], v - this.selUV[1]) < 6) continue;   // it's under the big pin
       const col = "#d93025";                             // every place is a red pin (its symbol says what); blue = only you

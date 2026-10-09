@@ -928,6 +928,7 @@ nav.onWelcome = k => {
   const out = () => { flight.forceOut(); helm.forceOut(); if (ride.inCar && k !== "fares") ride.getOut(); };
   if (k === "fly") { out(); flight.board({ home: true }); }
   else if (k === "sail") { out(); helm.board(); }
+  else if (k === "bike") { out(); setMode("walk"); ride.rideNearestBike(); }
   else if (k === "tours") tours.open();
   else if (k === "fares") {                                   // into a yellow cab, then the first fare
     out();
@@ -1051,7 +1052,7 @@ const cityMap = new CityMap({ root: ROOT, district: "times_square", camera, nav,
   onGo: p => nav.go(p),                                      // in a car this re-routes it (nav.beforeGo)
   onWalk: p => { if (ride.inCar) ride.getOut(); nav.walkTo(p); },
   canLand: () => flight.state === "air",
-  onRide: p => (p?.id?.startsWith("apt_") ? flight.startLanding(p.id.slice(4)) : p?.id === "intrepid" ? flight.board({ home: true }) : p?.id === "pier83" ? helm.board()
+  onRide: p => (p?.id?.startsWith("bike_") ? (setMode("walk"), ride.rideBike(p.id)) : p?.id?.startsWith("apt_") ? flight.startLanding(p.id.slice(4)) : p?.id === "intrepid" ? flight.board({ home: true }) : p?.id === "pier83" ? helm.board()
     : ride.inCar || ride.state === "coming" || ride.state === "waiting" ? ride.setDestination(p) : ride.book(p)),
   inCar: () => ride.inCar, route: () => tours.mapInfo() || fares.mapInfo() || trip.mapInfo() || ride.mapInfo(), onDirections: p => trip.open(p),
   getSlot: id => business.sales?.get(id), onScreen: id => business.open(id), region,
@@ -1060,6 +1061,11 @@ const cityMap = new CityMap({ root: ROOT, district: "times_square", camera, nav,
     return o ? [o.x, -o.z] : null;
   } });
 const toggleMap = () => cityMap.toggle();
+// the parked motorcycles: a live pin on the full map and the minimap (they follow the bike, hide while you ride it)
+ride.onBikes = list => (function add() {
+  if (!mapData || !cityMap.data) return setTimeout(add, 400);
+  mapData.markers.push(...list); cityMap.data.markers.push(...list);
+})();
 let mmHits = [];                                             // screen dots drawn on the minimap (canvas px)
 mm.addEventListener("click", e => {                          // tap a yellow screen = preview it; anywhere else = full map
   const r = mm.getBoundingClientRect(), k = mm.width / r.width;
@@ -1148,7 +1154,7 @@ function drawMinimap() {
   }
   // places: the same red pin as the full map, with its symbol (✈ plane, ⚓ boat, ★ landmark). Blue is only ever you.
   for (const m of mapData.markers) {
-    if (m.icon === "slot") continue;
+    if (m.icon === "slot" || m.hidden) continue;
     const [u, v] = place(m.x, m.y);
     if (Math.hypot(u - S / 2, v - S / 2) > R) continue;
     mx.beginPath(); mx.arc(u, v, 10, 0, 7);

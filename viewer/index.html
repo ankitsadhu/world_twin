@@ -106,7 +106,7 @@ import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { Collider } from "./js/collision.js";
 import { Crowd, tktsSeats } from "./js/crowd.js";
 import { Navigator } from "./js/nav.js";
-import { CityMap, drawPlaceIcon } from "./js/map.js";
+import { CityMap, drawPlaceIcon, pinColor } from "./js/map.js";
 import { StreetWalk } from "./js/walk.js";
 import { Business } from "./js/business.js";
 import { ICON } from "./js/icons.js";
@@ -1158,7 +1158,7 @@ function drawMinimap() {
     const [u, v] = place(m.x, m.y);
     if (Math.hypot(u - S / 2, v - S / 2) > R) continue;
     mx.beginPath(); mx.arc(u, v, 10, 0, 7);
-    mx.fillStyle = "#d93025"; mx.fill();
+    mx.fillStyle = pinColor(m.icon); mx.fill();
     mx.lineWidth = 2.5; mx.strokeStyle = "#fff"; mx.stroke();
     drawPlaceIcon(mx, m.icon, u, v, 10);
   }

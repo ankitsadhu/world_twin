@@ -6,6 +6,12 @@
 import { ICON } from "./icons.js";
 import { fmt, money } from "./business.js";
 
+// pin colours by what a place is (the symbol says what, the colour says which kind). Blue is only ever you; yellow is business.
+export const PIN_COLOR = { star: "#d93025", plane: "#8e44ad", ship: "#00838f", bike: "#e8710a" };   // landmark red, fly purple, sail teal, motorcycle orange
+export const pinColor = icon => PIN_COLOR[icon] || PIN_COLOR.star;
+// the selected place's big pin takes its kind's colour too
+const selColor = p => pinColor(p?.kind === "bike" ? "bike" : p?.kind === "airport" || p?.id === "intrepid" ? "plane" : p?.id === "pier83" ? "ship" : "star");
+
 // place icons drawn as vector paths, centred exactly on the pin (text glyphs sit off-centre and vary by font)
 export function drawPlaceIcon(c, kind, u, v, r) {
   const s = r * 0.62;
@@ -399,8 +405,8 @@ export class CityMap {
     this.drawMarkers();            // place names claim space first (as in Google Maps), streets fill around them
     this.drawStreetLabels();
     this.drawMe();
-    if (this.pin) this.drawPin(this.pin.x, this.pin.y, "#ea4335");
-    else if (this.nav.waypoint) this.drawPin(this.nav.waypoint.x, this.nav.waypoint.y, "#ea4335");
+    if (this.pin) this.drawPin(this.pin.x, this.pin.y, selColor(this.pin));
+    else if (this.nav.waypoint) this.drawPin(this.nav.waypoint.x, this.nav.waypoint.y, selColor(this.nav.waypoint.place));
   }
 
   // the region's detail tiles in view (each loaded the first time it's needed)
@@ -514,7 +520,7 @@ export class CityMap {
       if (m.hidden || (m.minS && this.s < m.minS)) continue;          // a ridden bike; bike pins only at neighbourhood zoom
       if (u < -20 || v < -20 || u > this.W + 20 || v > this.H + 20) continue;
       if (this.selUV && Math.hypot(u - this.selUV[0], v - this.selUV[1]) < 6) continue;   // it's under the big pin
-      const col = "#d93025";                             // every place is a red pin (its symbol says what); blue = only you
+      const col = pinColor(m.icon);                      // coloured by kind (its symbol says what); blue = only you
       c.beginPath(); c.arc(u, v, 11, 0, 7); c.fillStyle = col; c.fill();
       c.lineWidth = 2; c.strokeStyle = "#fff"; c.stroke();
       drawPlaceIcon(c, m.icon, u, v, 11);

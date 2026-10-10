@@ -1,0 +1,19 @@
+{
+  "_doc": "Everything the website says about the business lives here, once. Fields set to \"TODO\" show in red on the page and make `python3 build.py --release` fail, so nothing unfinished can be published or sent to a payment reviewer.",
+  "brand": "Neonblox",
+  "product": "Times Square, live",
+  "domain": "neonblox.com",
+  "support_email": "support@neonblox.com",
+  "legal_name": "TODO",
+  "entity_type": "TODO",
+  "registered_address": "TODO",
+  "phone": "TODO",
+  "country_of_registration": "India",
+  "governing_law": "TODO",
+  "delivery_days": "TODO",
+  "artwork_review_days": "TODO",
+  "tax_note": "TODO",
+  "effective_date": "2026-10-10",
+  "checkout_mode": "inquiry",
+  "currency": "USD"
+}

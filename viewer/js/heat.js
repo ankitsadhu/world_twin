@@ -60,7 +60,7 @@ export class Heat {
   }
 
   build() {
-    this.el = document.createElement("div");
+    this.el = document.createElement("div"); this.el.className = "heathud";
     this.el.style.cssText = "position:fixed;right:70px;top:calc(70px + env(safe-area-inset-top));z-index:27;pointer-events:none;font:800 22px system-ui,sans-serif;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.7);display:none;text-align:right";
     document.body.appendChild(this.el);
   }

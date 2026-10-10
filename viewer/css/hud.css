@@ -1,0 +1,63 @@
+/* One HUD, one language. Zones: top-left status stack, top-centre objective / score, top-right heat, bottom-centre vehicle bar with the tutorial prompt above it.
+   These rules sit on top of the per-module styles (they use !important only for position and size) so every overlay shares spacing, type scale and safe areas. */
+:root { --hud-glass: rgba(14, 15, 19, .74); --hud-line: rgba(255, 255, 255, .14); --hud-gold: #ffc83d; --hud-gap: 8px; --hud-r: 14px; }
+body { --panel-h: 110px; }
+
+/* top-left: the district menu, then ONE stack of chips (level, wolves, tracked mission) */
+#hud-stack { position: fixed; left: max(12px, env(safe-area-inset-left)); top: calc(env(safe-area-inset-top) + 64px); z-index: 25; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; pointer-events: none; max-width: min(300px, 62vw); }
+#hud-stack > * { position: static !important; pointer-events: auto; display: flex !important; align-items: center; gap: 8px; margin: 0 !important; width: fit-content; max-width: 100%;
+  padding: 6px 12px !important; border-radius: var(--hud-r) !important; background: var(--hud-glass) !important; border: 1px solid var(--hud-line) !important; color: #fff !important;
+  font: 700 12px/1.2 system-ui, -apple-system, sans-serif !important; letter-spacing: .01em; backdrop-filter: blur(10px); box-shadow: 0 4px 14px rgba(0,0,0,.28); text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+#hud-stack > #mchip { background: rgba(245, 158, 11, .94) !important; color: #141414 !important; border-color: rgba(255, 255, 255, .4) !important; cursor: pointer; }
+#hud-stack > #wolfchip { color: var(--hud-gold) !important; }
+#hud-stack #prog .lv, #hud-stack > #prog .lv { font-weight: 800; }
+
+/* top-centre: score and objective numerals are big and bold, like a game */
+#chaos { top: calc(env(safe-area-inset-top) + 124px) !important; font: 900 34px/1 system-ui, -apple-system, sans-serif !important; letter-spacing: -.01em; }
+#chaos .m { font-size: 13px !important; letter-spacing: .12em !important; margin-top: 4px; }
+#chaospop { top: calc(env(safe-area-inset-top) + 190px) !important; font: 800 22px system-ui, sans-serif !important; }
+#farehud, #crashhud { top: calc(env(safe-area-inset-top) + 70px) !important; }
+
+/* top-right: heat (police stars) clear of the map and the dock */
+.heathud { top: calc(env(safe-area-inset-top) + 64px) !important; right: max(72px, calc(env(safe-area-inset-right) + 72px)) !important; }
+
+/* search is for exploring: while you play it shrinks to a quiet pill (full width on hover / focus) */
+body.playing #where { width: min(220px, 46vw) !important; opacity: .55; transition: width .2s, opacity .2s; }
+body.playing #where:hover, body.playing #where:focus-within { width: min(520px, calc(100% - 140px)) !important; opacity: 1; }
+
+/* bottom: the vehicle bar is the anchor; the tutorial prompt floats above it (its height is measured into --panel-h), the controls hint hides while a prompt is up */
+#onboard { bottom: calc(var(--panel-h) + 24px) !important; font-size: 17px !important; max-width: min(420px, calc(100% - 24px)) !important; }
+#ridepanel .acts { gap: 6px !important; }
+#ridepanel .acts .ui-btn, #ridepanel .acts button { flex: 1 1 auto !important; min-width: 0 !important; white-space: normal !important; text-align: center; line-height: 1.15; padding: 8px 10px !important; }
+#ridepanel .big { font-size: 30px !important; font-weight: 900 !important; font-variant-numeric: tabular-nums; }
+body.onboarding #ridepanel p { display: none !important; }
+
+/* notices: one lane under the search bar, never over the score */
+#notice { top: calc(env(safe-area-inset-top) + 64px) !important; }
+
+@media (max-width: 640px) {
+  #hud-stack { top: calc(env(safe-area-inset-top) + 66px); max-width: 52vw; }
+  #hud-stack > * { font-size: 11px !important; padding: 5px 9px !important; }
+  #chaos { top: calc(env(safe-area-inset-top) + 150px) !important; font-size: 28px !important; }
+  #chaospop { top: calc(env(safe-area-inset-top) + 206px) !important; font-size: 18px !important; }
+  #notice { top: calc(env(safe-area-inset-top) + 64px) !important; }
+  .heathud { top: calc(env(safe-area-inset-top) + 66px) !important; right: 10px !important; }
+  #ridepanel p { display: none !important; }                                   /* the keys line is for keyboards */
+  #onboard { font-size: 15px !important; }
+}
+
+/* touch driving: the vehicle panel sits at the top (the thumbs own the bottom), so everything else flows beneath it, and it shrinks to speed + "get out" */
+body.drivetouch #ridepanel .acts button:not([data-a="out"]):not([data-a="wheel"]):not([data-a="auto"]) { display: none !important; }
+body.drivetouch #ridepanel .acts button[data-a="auto"], body.drivetouch #ridepanel .acts button[data-a="wheel"] { display: none !important; }
+body.drivetouch #ridepanel { padding: 6px 10px !important; min-height: 0; }
+body.drivetouch #hud-stack { top: calc(env(safe-area-inset-top) + 72px + var(--panel-h)); }
+body.drivetouch #chaos { top: calc(env(safe-area-inset-top) + 152px + var(--panel-h)) !important; }
+body.drivetouch #chaospop { top: calc(env(safe-area-inset-top) + 208px + var(--panel-h)) !important; }
+body.drivetouch #onboard { bottom: calc(230px + env(safe-area-inset-bottom)) !important; }
+body.drivetouch .heathud { top: calc(env(safe-area-inset-top) + 72px + var(--panel-h)) !important; }
+body.drivetouch #hud-stack { flex-direction: row; flex-wrap: wrap; max-width: 60vw; }
+body.drivetouch #notice { top: calc(env(safe-area-inset-top) + 118px + var(--panel-h)) !important; }
+body.drivetouch #chaos { top: calc(env(safe-area-inset-top) + 196px + var(--panel-h)) !important; }
+body.drivetouch #chaospop { top: calc(env(safe-area-inset-top) + 250px + var(--panel-h)) !important; }
+#hud-stack > [style*="display: none"], #hud-stack > [style*="display:none"] { display: none !important; }
+.heathud { text-align: right; max-width: 46vw; }

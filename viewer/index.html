@@ -58,6 +58,7 @@
   "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.8.3/build/index.module.js"
 } }
 </script>
+<link rel="stylesheet" href="css/hud.css">
 </head>
 <body class="loading">
 <div id="hud">
@@ -1023,6 +1024,7 @@ import { SpeedBoat } from "./js/speedboat.js";
 import { Missions } from "./js/missions.js";
 import { Furniture } from "./js/furniture.js";
 import { Wolves } from "./js/wolves.js";
+import { layoutHud } from "./js/hudlayout.js";
 let hitStop = 0;
 const progress = new LevelProgress({ nav, fares: null, getPursuit: () => pursuit, ride, toast: (t, ms) => Messages.ask(t, [], { ms: ms || 3500 }),
   getPos: () => {
@@ -1098,6 +1100,7 @@ const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => o
   make("cpark", "Central Park Loop", ring([260, 1290], 260, 8));
 })();
 missions.go = id => nav.onWelcome("mission:" + id);
+layoutHud({ isPlaying: () => ride.state === "driving" || speedboat.active || flight.active, isOnboarding: () => onboard.step >= 0 && ride.state === "driving" });
 const heat = new Heat({ ride, chaos, pursuit: () => pursuit, toast: t => Messages.ask(t, [], { ms: 3500 }) });
 progress.heat = heat; heat.suppress = () => onboard.step >= 0;                  // no police during the guided first ride
 chaos.onBigMoment = s => { Analytics.first("first_crash"); if (s > 0.5) { hitStop = 0.1; clip.highlight("Huge crash"); } };

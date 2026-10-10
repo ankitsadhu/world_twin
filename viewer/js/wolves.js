@@ -82,7 +82,7 @@ export class Wolves {
   }
 
   build() {
-    this.el = document.createElement("div");
+    this.el = document.createElement("div"); this.el.id = "wolfchip";
     this.el.style.cssText = "position:fixed;left:12px;top:calc(100px + env(safe-area-inset-top));z-index:25;padding:5px 10px;border-radius:999px;background:rgba(20,20,24,.72);border:1px solid rgba(255,255,255,.2);color:#ffd86a;font:700 12px system-ui,sans-serif;backdrop-filter:blur(8px);pointer-events:none";
     document.body.appendChild(this.el);
   }

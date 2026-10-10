@@ -143,7 +143,7 @@ export class Progress {
     const chip = this.el.querySelector(".chip");
     chip.addEventListener("click", () => { this.el.classList.toggle("open"); chip.blur(); });
     chip.addEventListener("keydown", e => e.stopPropagation());
-    this.chip = chip; this.card = this.el.querySelector(".card");
+    this.chip = chip; this.card = this.el.querySelector(".card"); chip.setAttribute("role", "button"); chip.title = "Open missions (K)"; chip.style.cursor = "pointer";
   }
 
   paint() {

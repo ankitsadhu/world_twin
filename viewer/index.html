@@ -71,7 +71,6 @@
   <div class="sep"></div>
   <button id="mapbtn" class="dockbtn" aria-label="Map"><i data-icon="map"></i><span>Map (M)</span><em>Map</em></button>
   <button id="soundbtn" class="dockbtn" aria-pressed="false" aria-label="City sound"><i data-icon="sound"></i><span>Sound on / off</span><em>Sound</em></button>
-  <button id="missionsbtn" class="dockbtn" aria-label="Missions"><i data-icon="star"></i><span>Missions (K)</span><em>Missions</em></button>
   <button id="menubtn" class="dockbtn" aria-label="Menu"><i data-icon="settings"></i><span>Menu (Esc)</span><em>Menu</em></button>
   <div class="sep"></div>
 </div>
@@ -662,7 +661,6 @@ function syncDock() {
 }
 document.getElementById("mapbtn").onclick = () => toggleMap();
 document.getElementById("viewbtn").onclick = () => document.getElementById(document.body.dataset.mode === "explore" ? "walk" : "explorebtn").click();
-document.getElementById("missionsbtn").onclick = () => missions.togglePanel();
 document.getElementById("menubtn").onclick = () => pause.open();
 document.getElementById("ridepill").onclick = () => { Messages.dismiss("Welcome back"); if (mode !== "walk") setMode("walk"); ride.rideNearestBike(true); };
 setInterval(() => {                                                             // the one obvious next step for anyone on foot: Ride

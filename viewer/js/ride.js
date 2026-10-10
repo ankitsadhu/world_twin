@@ -1298,6 +1298,19 @@ export class Ride {
       mass, inertia: boxInertia(mass, halfLength, halfWidth), halfLength, halfWidth, K };
   }
 
+  // real-world damage: the front crumples and absorbs a head-on, a side hit has no crush zone and costs the most, and a bike has no body at all to take it.
+  // The body is dented at the point of impact, whatever it hit (another vehicle, a wall, a prop).
+  takeDamage(at, strength) {
+    const v = this.vehicle; if (!v) return;
+    const side = hitSide(v, this.heading, at), bikeV = v.kind === "bike";
+    const sideK = bikeV ? { front: 1, rear: 0.85, left: 1.2, right: 1.2 }[side] : { front: 0.95, rear: 0.85, left: 1.3, right: 1.3 }[side];
+    if (!this.invincible) this.damage = THREE.MathUtils.clamp(this.damage + strength * sideK * (bikeV ? 0.72 : 0.58), 0, 1);   // (a crash run is not about your own repair bill)
+    v.damage = this.damage; (v.hitSides ||= {})[side] = (v.hitSides[side] || 0) + strength;
+    dentVehicle(v, at, strength);
+    if (strength > 0.12) this.toast?.(`${side[0].toUpperCase() + side.slice(1)} hit`);
+    if (this.damage >= 1 && !this.wrecked) { this.wrecked = true; this.v = 0; this.toast?.("Wrecked · get out to call a tow"); }
+  }
+
   applyImpact(body, result) {
     if (!result) return;
     this.car.position.x = body.x; this.car.position.z = -body.y;
@@ -1308,13 +1321,7 @@ export class Ride {
     this.yawRate = body.omega;
     this.setHeading(this.heading);
     if (result.closingSpeed < 0.5) return;
-    const at = new THREE.Vector3(result.point[0], 0.6, -result.point[1]), side = hitSide(this.vehicle, this.heading, at), bikeV = this.vehicle?.kind === "bike";
-    // real-world damage: the front crumples and absorbs a head-on, a side hit has no crush zone and costs the most, and a bike has no body at all to take it
-    const sideK = bikeV ? { front: 1, rear: 0.85, left: 1.2, right: 1.2 }[side] : { front: 0.95, rear: 0.85, left: 1.3, right: 1.3 }[side];
-    if (!this.invincible) this.damage = THREE.MathUtils.clamp(this.damage + result.strength * sideK * (bikeV ? 0.72 : 0.58), 0, 1);   // (a crash run is not about your own repair bill)
-    this.vehicle.damage = this.damage; (this.vehicle.hitSides ||= {})[side] = (this.vehicle.hitSides[side] || 0) + result.strength;
-    dentVehicle(this.vehicle, at, result.strength);
-    if (result.strength > 0.15) this.toast?.(`${side[0].toUpperCase() + side.slice(1)} hit`);
+    this.takeDamage(new THREE.Vector3(result.point[0], 0.6, -result.point[1]), result.strength);
     this.onBump?.(result.strength);
     this.fares?.bump(result.strength);
     this.audio?.crash?.(new THREE.Vector3(result.point[0], 0.6, -result.point[1]), result.strength);
@@ -1562,6 +1569,8 @@ export class Ride {
       // a crash you feel: a kick of the camera and a thump that scale with speed, the car bounces back and stalls a moment
       const s = Math.min(1, Math.abs(this.v) / 14);
       if (Math.abs(this.v) > 1) {
+        const hard = Math.min(1, (Math.abs(this.v) / 18) ** 2);            // a wall does not give: the crash energy goes with speed squared
+        this.takeDamage(hitObstacle?.point ? new THREE.Vector3(hitObstacle.point.x, 0.6, hitObstacle.point.z) : new THREE.Vector3(front[0], 0.6, -front[1]), hard);
         this.onBump?.(s);
         this.fx?.crash(front[0], this.car.position.y, -front[1], s);
         this.fares?.bump(s);

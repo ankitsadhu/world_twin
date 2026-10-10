@@ -67,7 +67,7 @@ Written as a producer's review for a launch decision. Evidence is from this sess
 6. **Frame time budget is not measured in the product.** `Settings.quality = auto` steps down by FPS; there is no per-system timing (traffic, NPCs, particles, shadows). Add a `?debug` overlay with ms per system. (P1)
 7. **Observability**: errors go to the console only. Add `window.onerror` + unhandled rejection reporting to the analytics beacon with build id and device class. (P1)
 8. **Saved-state versioning**: keys `ts.*.v1` exist; there is no migration path or global reset. A bad save can brick a returning player. (P2)
-9. **Security/privacy**: no secrets in the client (good); analytics endpoint and privacy page not final; sales email is a placeholder in `config/world.json`. (P1, blocking for deploy)
+9. **Security/privacy**: no secrets in the client (good); analytics endpoint and privacy page not final. The sales/support inbox is set (`support@neonblox.com` in `config/world.json`). (P1, blocking for deploy)
 10. **Hosting**: no-cache for html/js/json is required (memory note) or players run stale modules. Add a build hash to module URLs so caching can be turned on safely later. (P1)
 
 ### Things I changed this week that need follow-up
@@ -90,7 +90,7 @@ Written as a producer's review for a launch decision. Evidence is from this sess
 8. `bootstrap.js` refactor of the wiring; per-system frame timings.
 
 **Before public launch**
-9. Privacy page, final sales inbox, kill switches (Rough contact, vehicles), domain and hosting with no-cache headers.
+9. Privacy page, kill switches (Rough contact, vehicles), domain and hosting with no-cache headers.
 10. 5 strangers, silent playtest, measure: seconds to first laugh, where they quit, session length (target median > 3 min, D1 > 15 %).
 
 ## 6. Decision needed from you
@@ -112,5 +112,5 @@ Not done, and why:
 - **72 MB first load / staged loading / compression:** needs the asset pipeline (KTX2, Draco, brotli, a split shell) and a hosting decision. Largest remaining launch risk.
 - **Real-device pass (iPhone + mid Android):** needs hardware. Touch stick, long-press hit and driving buttons were tested with synthetic events only.
 - **`bootstrap.js` refactor of the 1,600-line wiring:** a large mechanical change that deserves its own branch and the smoke test as a safety net (now it exists).
-- **Privacy page, final sales inbox, kill switches, domain:** need your input (sales inbox, domain).
+- **Privacy page, kill switches, domain:** the sales inbox is already set (`support@neonblox.com`); the domain and the analytics endpoint are still open.
 - **Legacy hotkeys (X, J, T, E) and the V key:** left working, not advertised; decide whether to remove.

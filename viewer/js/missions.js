@@ -148,6 +148,7 @@ export class Missions {
       const b = e.target.closest("button"); if (!b) return;
       if (b.dataset.a === "close") return this.togglePanel(false);
       if (b.dataset.a === "next") { this.next(); return; }
+      if (b.dataset.a === "all") { this.showAll = !this.showAll; this.paintPanel(); return; }
       const id = b.dataset.id; if (!id) return;
       if (b.dataset.a === "track") this.track(id);
       if (b.dataset.a === "go") { this.togglePanel(false); this.go?.(id); }
@@ -158,9 +159,15 @@ export class Missions {
     if (!this.panel) return;
     if (this.panel.style.display === "block") {
       const CAT = { Chaos: ["#ef4a2f", "💥"], Racing: ["#f59e0b", "🏁"], Jobs: ["#2e9e4f", "🚕"], Water: ["#00838f", "🚤"], Sky: ["#8e44ad", "✈️"], Collect: ["#c79a12", "🐾"] };
-      const cats = [...new Set(MISSIONS.map(m => m.cat))], doneN = MISSIONS.filter(m => this.done[m.id]).length;
-      this.panel.innerHTML = `<h3>Missions <span style="font-size:12px;font-weight:600;opacity:.7">${doneN}/${MISSIONS.length} done</span> <span><button class="p" data-a="next">Next up</button> <button data-a="close">✕</button></span></h3>` + cats.map(c => `<div class="cat">${CAT[c][1]} ${c}</div>` + MISSIONS.filter(m => m.cat === c).map(m =>
-        `<div class="row${this.active === m.id ? " on" : ""}"><span class="b" style="background:${this.done[m.id] ? "#2e9e4f" : CAT[c][0]}">${CAT[c][1]}<i>${this.done[m.id] ? "✓" : m.num}</i></span><span class="t"><b>${m.name}</b><small>${m.zone} · level ${m.level}</small></span><button data-a="track" data-id="${m.id}">${this.active === m.id ? "Tracking" : "Track"}</button><button class="p" data-a="go" data-id="${m.id}">Go</button></div>`).join("")).join("");
+      const doneN = MISSIONS.filter(m => this.done[m.id]).length, todo = MISSIONS.filter(m => !this.done[m.id]);
+      const row = m => `<div class="row${this.active === m.id ? " on" : ""}"><span class="b" style="background:${this.done[m.id] ? "#2e9e4f" : CAT[m.cat][0]}">${CAT[m.cat][1]}<i>${this.done[m.id] ? "✓" : m.num}</i></span><span class="t"><b>${m.name}</b><small>${m.zone}</small></span><button data-a="track" data-id="${m.id}">${this.active === m.id ? "Tracking" : "Track"}</button><button class="p" data-a="go" data-id="${m.id}">Go</button></div>`;
+      // the three to do next (the tracked one first), and the rest one tap away: a list of 21 is a chore, a list of 3 is a plan
+      const next = [...todo].sort((x, y) => (this.active === y.id) - (this.active === x.id)).slice(0, 3);
+      const cats = [...new Set(MISSIONS.map(m => m.cat))];
+      this.panel.innerHTML = `<h3>Missions <span style="font-size:12px;font-weight:600;opacity:.7">${doneN}/${MISSIONS.length}</span> <span><button data-a="close">✕</button></span></h3>`
+        + (next.length ? `<div class="cat">Next up</div>${next.map(row).join("")}` : `<div class="cat">All done. Nicely played.</div>`)
+        + `<button class="p" data-a="all" style="margin:8px 0">${this.showAll ? "Hide the rest ▴" : `All missions (${MISSIONS.length}) ▾`}</button>`
+        + (this.showAll ? cats.map(c => `<div class="cat">${CAT[c][1]} ${c}</div>${MISSIONS.filter(m => m.cat === c).map(row).join("")}`).join("") : "");
     }
     const a = this.activeMission(), p = this.pos?.();
     this.chip.style.display = a && a.id !== "m_wolf" ? "block" : "none";          // the wolf hunt has its own compass chip

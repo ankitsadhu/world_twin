@@ -16,6 +16,11 @@ export const Analytics = {
     addEventListener("keydown", () => this.first("first_input"), { once: true });
     addEventListener("pagehide", () => { this.track("session_end", { s: Math.round((performance.now() - this.t0) / 1000) }); this.flush(); });
     setInterval(() => this.flush(), 20000);
+    // every uncaught error and rejected promise goes into the same funnel (capped, so a loop of errors cannot flood it), tagged with the build and a device class
+    const build = document.querySelector('meta[name="build"]')?.content || "dev", dev = matchMedia("(pointer: coarse)").matches ? "touch" : "desktop";
+    let n = 0; const rep = (kind, msg, where) => { if (n++ < 20) this.track("error", { kind, msg: String(msg).slice(0, 200), at: String(where || "").slice(-120), build, dev }); };
+    addEventListener("error", e => rep("error", e.message, `${e.filename}:${e.lineno}`));
+    addEventListener("unhandledrejection", e => rep("promise", e.reason?.message || e.reason));
   },
   first(name, data) { if (this.once.has(name)) return; this.once.add(name); this.track(name, { ...data, at: Math.round((performance.now() - this.t0) / 1000) }); },
   track(name, data = {}) {

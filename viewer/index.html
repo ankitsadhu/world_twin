@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="build" content="dev">
 <title>Times Square Viewer</title>
 <style>
   html, body { margin: 0; height: 100%; background: #07070b; color: var(--ink); font: var(--t-body)/1.4 var(--font); overflow: hidden; }
@@ -1168,6 +1169,7 @@ const pause = new PauseMenu({
   onOpen: () => { paused = true; audio.ctx?.suspend(); },
   onClose: () => { paused = false; clock.getDelta(); if (Settings.v.sound) audio.ctx?.resume(); },
   actions: [
+    { label: "Look from above / back to the street", run: () => document.getElementById(document.body.dataset.mode === "explore" ? "walk" : "explorebtn").click() },
     { label: "My garage", run: () => ride.openGarage() },
     { label: "Record a clip (F8)", run: () => clip.toggle() },
     { label: "What can I do?", run: () => nav.openWelcome() },
@@ -1563,45 +1565,67 @@ function drawMinimap() {
 // ---------------------------------------------------------------- loop
 const clock = new THREE.Clock();
 let paused = false;
+// ---- the frame loop. One failing system must never freeze the game: the next frame is scheduled first, every system runs inside a guard that reports once and
+// switches that system off after 30 failures, and ?perf shows the milliseconds each system costs (the number to look at before blaming the GPU).
+const SYS = new Map(), PERF = new URLSearchParams(location.search).has("perf");
+function S(name, obj, method, a, b) {
+  const f = obj?.[method]; if (!f) return;
+  let st = SYS.get(name); if (!st) SYS.set(name, st = { ms: 0, err: 0, off: false }); if (st.off) return;
+  const t0 = PERF ? performance.now() : 0;
+  try { f.call(obj, a, b); } catch (e) {
+    st.err++; if (st.err === 1) { console.error(`[${name}]`, e); Analytics.track("system_error", { sys: name, msg: String(e?.message || e).slice(0, 160) }); }
+    if (st.err > 30) { st.off = true; Analytics.track("system_off", { sys: name }); console.error(`[${name}] switched off after repeated errors`); }
+  }
+  if (PERF) st.ms += performance.now() - t0;
+}
+let perfBox = null, perfT = 0, perfFrames = 0;
+function perfReport(dt) {
+  if (!PERF) return; perfFrames++; perfT += dt; if (perfT < 1) return;
+  perfBox ||= Object.assign(document.body.appendChild(document.createElement("pre")), { style: "position:fixed;right:8px;top:8px;z-index:99;margin:0;padding:6px 8px;font:11px/1.35 ui-monospace,monospace;color:#9f9;background:rgba(0,0,0,.7);border-radius:6px;pointer-events:none" });
+  const rows = [...SYS.entries()].map(([n, v]) => [n, v.ms / perfFrames, v.err, v.off]).sort((a, b) => b[1] - a[1]).slice(0, 12);
+  perfBox.textContent = `${Math.round(perfFrames / perfT)} fps\n` + rows.map(([n, ms, e, off]) => `${n.padEnd(10)} ${ms.toFixed(2)} ms${e ? ` ERR ${e}${off ? " OFF" : ""}` : ""}`).join("\n");
+  for (const v of SYS.values()) v.ms = 0; perfFrames = 0; perfT = 0;
+}
 function tick() {
+  requestAnimationFrame(tick);
   let dt = Math.min(clock.getDelta(), 0.05);
   if (hitStop > 0) { hitStop -= dt; dt *= 0.06; }               // impact freeze: the world nearly stops for a beat when a punch lands
-  handlePad(dt);
-  if (paused) { composer.render(); requestAnimationFrame(tick); return; }   // the world holds still behind the menu
-  if (mode === "walk") walk.update(dt, document.activeElement?.tagName === "INPUT" ? {} : keys);
-  else if (mode === "orbit" && !nav.flight) orbit.update();
-  ride.update(dt);
-  flight.update(dt);
-  region?.update(camera);
-  boat.update(dt);
-  helm.update(dt);
-  intrepid.update();
-  trip.update();
-  fares.update(dt);
-  playzone.update(dt);
-  ride.furniture?.update(dt); fx.update(dt, ride); population.update(dt);
-  heli.show(!!(pursuit?.active && (pursuit.stars || 0) >= 4), ride); heli.update(dt, ride);
-  speedboat.update(dt);
-  tours.update(dt);
-  traffic?.update(dt);
-  pursuit?.update(dt);
-  nav.update(dt, keys);
-  if (crowd) crowd.update(dt);
-  npcs?.update(dt);
-  screens.update(dt);
-  audio.update(dt);
-  business.update(clock.elapsedTime);
+  S("pad", { f: handlePad }, "f", dt);
+  if (paused) { composer.render(); return; }                    // the world holds still behind the menu
+  if (mode === "walk") S("walk", walk, "update", dt, document.activeElement?.tagName === "INPUT" ? {} : keys);
+  else if (mode === "orbit" && !nav.flight) S("orbit", orbit, "update");
+  S("ride", ride, "update", dt);
+  S("flight", flight, "update", dt);
+  S("region", region, "update", camera);
+  S("boat", boat, "update", dt);
+  S("helm", helm, "update", dt);
+  S("intrepid", intrepid, "update");
+  S("trip", trip, "update");
+  S("fares", fares, "update", dt);
+  S("playzone", playzone, "update", dt);
+  S("furniture", ride.furniture, "update", dt); S("fx", fx, "update", dt, ride); S("population", population, "update", dt);
+  try { heli.show(!!(pursuit?.active && (pursuit.stars || 0) >= 4), ride); } catch (e) { /* the helicopter is decoration */ } S("heli", heli, "update", dt, ride);
+  S("speedboat", speedboat, "update", dt);
+  S("tours", tours, "update", dt);
+  S("traffic", traffic, "update", dt);
+  S("pursuit", pursuit, "update", dt);
+  S("nav", nav, "update", dt, keys);
+  S("crowd", crowd, "update", dt);
+  S("npcs", npcs, "update", dt);
+  S("screens", screens, "update", dt);
+  S("audio", audio, "update", dt);
+  S("business", business, "update", clock.elapsedTime);
   sky.position.copy(camera.position);
   worldWater.position.x = camera.position.x; worldWater.position.z = camera.position.z;   // always reaches the horizon
   const near = camera.position.y > 300 ? 1.0 : camera.position.y > 60 ? 0.4 : 0.1;   // depth precision for a 16 km view
-  drawMe(dt);
-  if (mode === "walk") walk.applyView(dt);                   // third person: the camera steps back behind you to draw
+  S("me", { f: drawMe }, "f", dt);
+  if (mode === "walk") S("view", walk, "applyView", dt);     // third person: the camera steps back behind you to draw
   if (camera.near !== near) { camera.near = near; camera.updateProjectionMatrix(); }
-  composer.render();
-  drawMinimap();
-  Messages.layout();
-  syncDock();
-  requestAnimationFrame(tick);
+  const tr = PERF ? performance.now() : 0; composer.render(); if (PERF) { const st = SYS.get("render") || SYS.set("render", { ms: 0, err: 0, off: false }).get("render"); st.ms += performance.now() - tr; }
+  S("minimap", { f: drawMinimap }, "f");
+  S("messages", Messages, "layout");
+  S("dock", { f: syncDock }, "f");
+  perfReport(dt);
 }
 addEventListener("resize", () => {
   camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
@@ -1609,6 +1633,7 @@ addEventListener("resize", () => {
 });
 goTo(HERO_VIEW.eye, HERO_VIEW.target);
 tick();
+if (new URLSearchParams(location.search).has("selftest")) import("./js/selftest.js").then(m => m.run());     // ?debug&selftest: the smoke test (js/selftest.js)
 load().catch(err => {                                         // plain words + a way out, never a raw error
   console.error(err);
   const t = document.getElementById("loadtxt");

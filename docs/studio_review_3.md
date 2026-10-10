@@ -97,3 +97,20 @@ Written as a producer's review for a launch decision. Evidence is from this sess
 1. Ship five missions or all 21? (Recommendation: five.)
 2. Keep Rough contact off on the public site at launch? (Recommendation: yes.)
 3. Is a native-feeling phone experience a launch requirement, or desktop first and phone as a follow-up? This changes the loading budget and the touch work.
+
+## 7. Status after "fix everything" (same day)
+
+Done and verified (Browser pane, `?debug&selftest`: 16/16 pass):
+- One prompt at a time: the notice lane is silent during the tutorial.
+- The dock and zoom buttons are gone; View lives in the Menu, Menu is the gear in the search bar on every device.
+- The missions list shows "Next up" (3) with the other 18 one tap away.
+- Frame loop hardening: next frame is scheduled first, every system runs in a guard (reports once, switches itself off after 30 errors), `?perf` shows ms per system. First readings (desktop, 119 fps): render 3.8 ms, walk 1.8, camera view 1.2, minimap 0.8, traffic 0.35; the walk and camera-view numbers are worth a look.
+- Error reporting: uncaught errors and rejected promises go to the analytics funnel with build id and device class (capped at 20 per session).
+- In-page smoke test (`js/selftest.js`) covering the first minute and the HUD rules; a CI wrapper (`scripts/tools/smoke.mjs`) written but not run (Playwright is not installed here).
+
+Not done, and why:
+- **72 MB first load / staged loading / compression:** needs the asset pipeline (KTX2, Draco, brotli, a split shell) and a hosting decision. Largest remaining launch risk.
+- **Real-device pass (iPhone + mid Android):** needs hardware. Touch stick, long-press hit and driving buttons were tested with synthetic events only.
+- **`bootstrap.js` refactor of the 1,600-line wiring:** a large mechanical change that deserves its own branch and the smoke test as a safety net (now it exists).
+- **Privacy page, final sales inbox, kill switches, domain:** need your input (sales inbox, domain).
+- **Legacy hotkeys (X, J, T, E) and the V key:** left working, not advertised; decide whether to remove.

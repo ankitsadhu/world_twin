@@ -88,7 +88,6 @@ body.onboarding #hint { display: none !important; }
 
 /* ---- touch driving: thumbs own the bottom corners. Steer on the left, Go big on the right with Brake beside it and Hop above; the tab bar steps aside
    (Menu stays in the search bar), and the minimap moves up out of the way. Glass, not black discs. */
-body[data-input="touch"]:not(.drivetouch) #gearbtn { display: none !important; }
 body.drivetouch #dock { display: none !important; }
 body.drivetouch #drivepad { --drivepad-b: calc(26px + env(safe-area-inset-bottom)) !important; }
 body.drivetouch #drivepad button { width: 68px !important; height: 68px !important; border-radius: 50% !important; font-size: 15px; font-weight: 800; color: #fff !important;
@@ -116,3 +115,11 @@ body[data-input="touch"].canride #ridepill:hover { transform: none; }
 
 /* a chip a module hides (inline display:none) stays hidden: the stack's own display rule must not win */
 #hud-stack > [style*="display: none"] { display: none !important; }
+
+/* one prompt at a time: during the tutorial only the tutorial speaks */
+body.onboarding #notice { display: none !important; }
+
+/* the dock is gone: View lives in the Menu, Menu is the gear in the search bar on every device */
+#dock, #zoom { display: none !important; }
+#gearbtn { display: grid !important; }
+#where .kbd { right: 46px; }

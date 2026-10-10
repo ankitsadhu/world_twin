@@ -416,15 +416,13 @@ export class Ride {
       const row = (p, sub, attr) => `<button ${attr}="${p.id}">${p.name}${sub ? ` <span style="color:var(--ink-3);font-weight:400">· ${sub}</span>` : ""}<small>${fmtDist(d(p))}</small></button>`;
       const head = t => `<div style="margin:var(--s2) 0 2px;color:var(--ink-3);font-size:var(--t-caption);font-weight:600">${t}</div>`;
       P.innerHTML = `<h3>${this.carIcon} Where to?</h3>
-        <p>A self-driving cab anywhere on Midtown's streets. Beyond Midtown, tap a place for directions (walk, boat or plane).</p>
-        <div class="dest">${head("Nearby · by cab")}${near.map(p => row(p, "", "data-dest")).join("")}
-          ${head("Waterfront · the boat and the plane")}${water.map(p => row(p, p.id === "pier83" ? "Hudson Sightseer" : "fly a plane", "data-dest")).join("")}
-          ${far.length ? head("Beyond Midtown · walk, boat or plane") + far.map(p => row(p, "directions", "data-dirs")).join("") : ""}</div>
-        <div class="acts"><button class="ui-btn" data-a="free">Free drive · take the wheel</button>${x}</div>`;
+        <div class="dest">${head("Nearby")}${near.map(p => row(p, "", "data-dest")).join("")}
+          ${head("Waterfront")}${water.map(p => row(p, p.id === "pier83" ? "Hudson Sightseer" : "fly a plane", "data-dest")).join("")}
+          ${far.length ? head("Further out") + far.map(p => row(p, "directions", "data-dirs")).join("") : ""}</div>
+        <div class="acts"><button class="ui-btn primary" data-a="free">Ride a motorbike</button>${x}</div>`;
     } else if (s === "coming") {
-      P.innerHTML = `<h3>${this.carIcon} Your self-driving cab is on its way</h3>
-        <div class="stats"><span class="big" id="ride-eta">–</span><span>to ${dest}</span></div>
-        <p>Pickup at the nearest curb, ${fmtDist(this.pickupDist || 0)} from you (yellow beacon)${this.pickupDist > 120 ? ` · about ${Math.max(1, Math.round(this.pickupDist / 80))} min walk` : ""}.</p>
+      P.innerHTML = `<h3>${this.carIcon} Cab on its way</h3>
+        <div class="stats"><span class="big" id="ride-eta">–</span><span>${this.dest ? "to " + dest + " · " : ""}pickup ${fmtDist(this.pickupDist || 0)} away</span></div>
         <div class="acts">${x}</div>`;
     } else if (s === "waiting") {
       P.innerHTML = `<h3>${this.carIcon} Your cab is here</h3><p>${this.dest ? `Ride to ${dest}` : "Get in and take the wheel"}</p>
@@ -533,7 +531,7 @@ export class Ride {
 
   action(a) {
     if (a === "cancel") return this.end();
-    if (a === "free") return this.book(null);
+    if (a === "free") { this.end(); return this.rideNearestBike(true); }
     if (a === "getin") return this.approach({ booked: true });
     if (a === "show") return this.showCar(true);
     if (a === "wheel") { this.state = "driving"; this.look.yaw = 0; return this.render(); }

@@ -67,7 +67,6 @@ export class PlayZone {
       if (!c) continue;
       site.cx = c[0]; site.cy = c[1]; this.buildSite(site); this.sites.push(site);
       this.nav?.places?.push({ id: "stuntpark_" + site.id, name: site.name, sub: `Ramps and things to smash · ${site.sub}`, kind: "landmark", keywords: "stunt park ramps jump smash barrels sandbox playground skatepark", x: site.cx, y: site.cy, eye: [site.cx - 14, site.cy - 22, 8], target: [site.cx, site.cy, 1] });
-      if (site.id === "cross") this.nav?.places?.push({ id: "stuntpark", name: "Stunt Park", sub: site.sub, kind: "landmark", keywords: "stunt park", x: site.cx, y: site.cy, eye: [site.cx - 14, site.cy - 22, 8], target: [site.cx, site.cy, 1] });
     }
     this.pending = this.pending.filter(s => !s.cx);
     if (this.sites.length) this.onBuilt?.(this.sites);

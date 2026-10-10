@@ -669,7 +669,7 @@ function syncDock() {
     travel.querySelector("em").textContent = occupied ? "Vehicle" : "Travel";
   }
   if (syncDock.m === m && document.getElementById("walk").getAttribute("aria-pressed") === String(m === "walk")) return;
-  syncDock.m = m;
+  syncDock.m = m; document.body.dataset.mode = m;
   document.getElementById("explorebtn").setAttribute("aria-pressed", String(m === "explore"));
   document.getElementById("walk").setAttribute("aria-pressed", String(m === "walk"));
   document.getElementById("ridebtn")?.setAttribute("aria-pressed", String(m === "ride"));
@@ -1078,6 +1078,7 @@ const hudPos = () => { if (ride.state === "driving" && ride.car) return { x: rid
 const mapSets = () => (mapData && cityMap.data ? [mapData, cityMap.data] : []);
 const wolves = new Wolves({ camera, fx, harbor, scene, ground: groundMap, collider: () => collider, pos: hudPos, chaos, mapSets, pop: t => chaos.popText(t), toast: t => Messages.ask(t, [], { ms: 4500 }),
   onFound: n => { progress.s.m.wolves = n; Analytics.track("wolf", { n }); if (n >= 50) missions.markDone("m_wolf"); } });
+wolves.hunting = () => missions.active === "m_wolf";
 const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => onboard.step >= 0 || race.state !== "idle" || speedboat.race.state !== "idle" || crashRun.state !== "idle" || spree.state !== "idle" || (pursuit?.active ?? false), scene, camera, traffic: () => traffic, race: () => race, pos: hudPos, mapSets, ask: (t, a, o) => Messages.ask(t, a, o), toast: t => Messages.ask(t, [], { ms: 4000 }),
   start: {
     bike: () => { setMode("walk"); ride.rideNearestBike(true); },

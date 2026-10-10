@@ -21,7 +21,7 @@ const DEFAULTS = {
   volume: 0.8, sound: null,            // sound: null = not asked yet, true / false = the player's answer
   sensitivity: 1, invertY: false,
   textScale: 1, reduceMotion: null,    // null = follow the system setting
-  captions: true, contrast: false,
+  captions: false, contrast: false,
   roughContact: undefined,   // undefined = the default above (on at localhost, off public)
   quality: "auto",                     // auto | low | balanced | high
   traffic: 1, crowd: 1500,

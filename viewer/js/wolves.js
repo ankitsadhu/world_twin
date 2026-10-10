@@ -97,5 +97,7 @@ export class Wolves {
       extra = ` · ${arrows[Math.round(a / 0.7854) % 8]} ${d < 1000 ? Math.round(d / 10) * 10 + " m" : (d / 1000).toFixed(1) + " km"}`;
     }
     const t = `🐺 ${this.found.size}/${N}${extra}`; if (t !== this.txt) { this.txt = t; this.el.textContent = t; }
+    const close = w && p && Math.hypot(w.x - p.x, w.y - p.y) < 120;
+    this.el.style.display = (this.hunting?.() || close) && this.found.size < N ? "" : "none";          // out of the way unless you are hunting or one is near
   }
 }

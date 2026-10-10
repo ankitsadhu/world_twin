@@ -61,3 +61,6 @@ body.drivetouch #chaos { top: calc(env(safe-area-inset-top) + 196px + var(--pane
 body.drivetouch #chaospop { top: calc(env(safe-area-inset-top) + 250px + var(--panel-h)) !important; }
 #hud-stack > [style*="display: none"], #hud-stack > [style*="display:none"] { display: none !important; }
 .heathud { text-align: right; max-width: 46vw; }
+
+/* ---- less chrome: the view controls only where they make sense (zoom and turn are for Explore; the dock stays to what you need) */
+body:not([data-mode="explore"]) #zoom, body:not([data-mode="explore"]) #dock [data-t] { display: none !important; }

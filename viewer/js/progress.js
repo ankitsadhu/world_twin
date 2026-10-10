@@ -149,7 +149,7 @@ export class Progress {
   paint() {
     if (this.missionStats) {                                                       // one spine: the chip counts missions, not levels
       const st = this.missionStats(), sg = `${st.done}/${st.total}|${Math.round(this.s.xp)}`;
-      if (sg !== this._sig) { this._sig = sg; this.chip.innerHTML = `<span class="lv">${st.done}/${st.total}</span> Missions · ${Math.round(this.s.xp).toLocaleString()} XP`; }
+      if (sg !== this._sig) { this._sig = sg; this.chip.innerHTML = `<span class="lv">${st.done}/${st.total}</span> Missions`; }
       return;
     }
     const sig = `${this.s.level}|${Math.round(this.s.xp)}|${Math.round(this.value(LEVELS[this.level - 1].goals[0][0]))}|${this.el.classList.contains("open")}`;

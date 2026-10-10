@@ -122,6 +122,7 @@ export class Navigator {
       #welcome .tile.hero { grid-column: 1 / -1; min-height: 96px; text-align: center; }
       #welcome .tile.hero b { font-size: 22px; }
       #welcome .tile.hero span { font-size: var(--t-body); }
+      #welcome .more2 { grid-column: 1 / -1; margin-top: var(--s2); } #welcome .more2 summary { cursor: pointer; text-align: center; color: var(--ink-2); font-size: var(--t-caption); padding: var(--s2); list-style: none; } #welcome .more2 .tiles { margin-top: var(--s2); }
       #welcome .more { grid-column: 1 / -1; margin: var(--s2) 0 0; font-size: var(--t-caption); color: var(--ink-2); text-align: center; }
       #welcome .tile.primary { background: var(--accent); color: var(--accent-ink); }
       #welcome .tile.primary span { color: var(--accent-ink); opacity: .75; }
@@ -147,19 +148,20 @@ export class Navigator {
       <div id="hint" class="ui-surface" role="status"></div>
       <div id="welcome" role="dialog" aria-modal="true" aria-labelledby="wtitle"><div class="card ui-surface">
         <h2 id="wtitle">Times Square, live.</h2>
-        <p class="lead">A real city, real New York time. Jump on a bike and cause some chaos. <small>(Everything else stays in the menu: “What can I do?”)</small></p>
+        <p class="lead">A real city, real New York time. Jump on a bike and cause some chaos.</p>
         <div class="tiles">
           <button class="tile primary hero" data-w="bike"><b>▶ Play: ride a motorcycle</b><span>Ride, jump, smash, escape the police. Score a chaos chain.</span></button>
-          <p class="more">Or try something else</p>
-          <button class="tile" data-w="fares"><b>🚕 Drive a cab</b><span>Beat-the-clock fares around Midtown</span></button>
-          <button class="tile" data-w="fly"><b>✈ Fly a plane</b><span>Off the Intrepid · over the Hudson</span></button>
-          <button class="tile" data-w="speedboat"><b>🚤 Speedboat race</b><span>Hudson Dash · boost pads on the water</span></button>
-          <button class="tile" data-w="sail"><b>⚓ Sail the Hudson</b><span>Take the helm to the Statue of Liberty</span></button>
-          <button class="tile" data-w="tours"><b>⏱ Sightseeing tours</b><span>Walk, sail or fly against the clock</span></button>
           <button class="tile" data-w="walk"><b>Walk the streets</b><span>Run, jump, explore on foot</span></button>
           <button class="tile" data-w="tour"><b>60-second tour</b><span>The highlights, hands-free</span></button>
-          <button class="tile" data-w="ride"><b>Ride a self-driving cab</b><span>Book it, watch it pull up, ride</span></button>
-          <button class="tile" data-w="business"><b>Buy a screen or building</b><span>Real screens, real prices</span></button>
+          <details class="more2"><summary>More ways to play</summary><div class="tiles">
+            <button class="tile" data-w="fares"><b>🚕 Drive a cab</b><span>Beat-the-clock fares</span></button>
+            <button class="tile" data-w="fly"><b>✈ Fly a plane</b><span>Off the Intrepid</span></button>
+            <button class="tile" data-w="speedboat"><b>🚤 Speedboat race</b><span>Boost pads on the water</span></button>
+            <button class="tile" data-w="sail"><b>⚓ Sail the Hudson</b><span>To the Statue of Liberty</span></button>
+            <button class="tile" data-w="tours"><b>⏱ Sightseeing tours</b><span>Against the clock</span></button>
+            <button class="tile" data-w="ride"><b>Ride a cab</b><span>Book it and ride</span></button>
+            <button class="tile" data-w="business"><b>Buy a screen or building</b><span>Real screens, real prices</span></button>
+          </div></details>
         </div>
       </div></div>
       <div id="tourbar" class="ui-surface" role="dialog" aria-label="Tour"><div class="t" id="tourt"></div><div class="c" id="tourc"></div>

@@ -202,8 +202,8 @@ export class Navigator {
   setHint() {
     if (!this.revealed) return;
     const touch = matchMedia("(pointer: coarse)").matches;
-    if (this.getMode() === "walk") this.tip("walk2", touch ? "Tap the street to walk there · drag to look"
-      : "WASD walk · Shift run · Space jump · V camera · drag to look", 11000);
+    if (this.getMode() === "walk") this.tip("walk2", (touch ? "Tap the street to walk there · drag to look" : "WASD walk · Shift run · Space jump · V camera · drag to look")
+      + (Settings.roughContact ? (touch ? " · hold to hit" : " · G or right-click to hit") : ""), 11000);
     else if (this.low) this.tip("look", touch ? "Drag to look around · pinch to move" : "Drag to look around · scroll to move");
     else this.tip("map", touch ? "Drag to move · double-tap a building to see all of it" : "Drag to move · double-click a building to see all of it");
   }

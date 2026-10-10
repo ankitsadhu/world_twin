@@ -36,7 +36,15 @@ export class StreetWalk {
       this.drag = [e.clientX, e.clientY];
       this.target = null;
     });
-    dom.addEventListener("pointerup", () => { this.drag = null; });
+    // hitting people (when Rough contact is on): G, right-click, a long press on a touch screen, or L1 on a pad. No button on screen.
+    dom.addEventListener("contextmenu", e => { if (this.active && Settings.roughContact) { e.preventDefault(); this.attack(); } });
+    dom.addEventListener("pointerdown", e => {
+      if (!this.active || e.pointerType !== "touch") return;
+      clearTimeout(this.holdT); const x0 = e.clientX, y0 = e.clientY; this.holdXY = [x0, y0];
+      this.holdT = setTimeout(() => { if (this.active && Settings.roughContact && this.holdXY && Math.hypot((this.lastXY?.[0] ?? x0) - x0, (this.lastXY?.[1] ?? y0) - y0) < 12) { this.attack(); navigator.vibrate?.(15); } }, 480);
+    });
+    dom.addEventListener("pointermove", e => { this.lastXY = [e.clientX, e.clientY]; });
+    dom.addEventListener("pointerup", () => { clearTimeout(this.holdT); this.holdXY = null; this.lastXY = null; this.drag = null; });
     addEventListener("keydown", e => {
       if (!this.active || e.target.tagName === "INPUT") return;
       if (e.code === "Space") { e.preventDefault(); if (!e.repeat) this.jump(); return; }

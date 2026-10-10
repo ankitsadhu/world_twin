@@ -514,6 +514,7 @@ export class Avatar {
 // walkable, and pause a while (look at the screens). Cost control: off-screen or beyond 300 m they aren't drawn or posed,
 // beyond 35 m they wear the far version and are posed every other frame.
 const NEAR_M = 35, DRAW_M = 300;
+const TALK_YAW = 1;   // the sign of a head turn towards someone (checked in the browser)
 export class Npcs {
   // movers(): cars as [x, y, heading, speed]; player(): your feet [x, y] or null
   constructor({ loader, root, scene, camera, crowd, collider, groundAt, playerId, count = 24, movers = () => [], player = () => null, ground = null }) {
@@ -870,7 +871,30 @@ export class Npcs {
     else { n.target = L.target ? [tx, ty] : null; n.sp = L.sp; if (!L.target) n.h += (L.h - n.h) * Math.min(1, dt * 2); }
   }
 
+  // people walking together talk: they turn their heads to each other, whoever is speaking gestures with a hand and nods along with their words,
+  // and the listener watches them and nods now and then. Speaker and listener swap every few seconds (all on the party's own clock, so a group looks like a conversation).
+  talk(n, t) {
+    if (!n.leader && t > (n.mateT || 0)) { n.mateT = t + 2; n.mate = this.list.find(m => m.leader === n) || null; }   // a party's leader finds who walks with them (checked every 2 s)
+    const L = n.leader || n, mate = n.leader || n.mate;
+    if (!mate || mate.state === "out" || !this.list.includes(mate)) return;
+    const a = n.a, party = L.tp ??= this.rng() * 6.28, who = Math.sin(t * 0.33 + party) + 0.6 * Math.sin(t * 0.91 + party * 2);          // > 0: the leader is speaking
+    const idx = n.leader ? 1 + ((n.off?.[0] > 0) ? 0 : 1) : 0, speaking = n.leader ? who + idx * 0.2 < 0 : who > 0;
+    const dx = mate.x - n.x, dy = mate.y - n.y; let yaw = Math.atan2(dx, -dy) - n.h; yaw = ((yaw + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
+    const glance = speaking ? 0.45 : 0.9, look = Math.max(0, Math.min(1, glance + 0.35 * Math.sin(t * 0.7 + party)));              // speakers look at you sometimes, listeners nearly always
+    const deg = THREE.MathUtils.radToDeg(Math.max(-0.9, Math.min(0.9, yaw))) * look * TALK_YAW;
+    const nod = speaking ? Math.sin(t * 6.5 + party) * 3 + Math.sin(t * 2.3) * 2 : Math.max(0, Math.sin(t * 1.5 + party)) ** 6 * 9;
+    a.rot("Neck", ["x", -2 + nod * 0.3], ["y", deg * 0.35]);
+    a.rot("Head", ["x", 2 + nod * 0.7], ["y", deg * 0.6]);
+    if (speaking && n.v < 2.2) {                                              // a hand that talks: the forearm comes up and moves with the words
+      const side = n.off && n.off[0] < 0 ? "Left" : "Right", sg = side === "Left" ? 1 : -1, w = Math.sin(t * 3.1 + party), k = 0.5 + 0.5 * Math.sin(t * 0.8 + party);
+      a.rot(side + "Arm", ["x", -28 - 10 * w * k], ["z", sg * (14 + 6 * w)]);
+      a.rot(side + "ForeArm", ["x", -(70 + 18 * w * k)]);
+      a.rot(side + "Hand", ["x", -10 + 12 * w], ["z", sg * 8 * w]);
+    }
+  }
+
   update(dt) {
+    this.clock = (this.clock || 0) + dt;
     const cam = this.camera.position;
     const cars = this.movers(), me = this.player();
     if ((this.recT = (this.recT || 0) + dt) > 0.2) { this.recT = 0; if (cam.y < 60) this.recycle(); }
@@ -916,7 +940,7 @@ export class Npcs {
       n.a.set(n.x, n.gs + (n.air || 0), -n.y, n.h, n.v, n.air || 0);
       n.skip = (n.skip || 0) + dt;
       if (farLod && (this.frame + i) % 2) continue;              // far away: pose every other frame
-      n.a.update(n.skip); this.poseImpact(n); n.skip = 0;
+      n.a.update(n.skip); this.poseImpact(n); if (!farLod && n.state === "walking") this.talk(n, this.clock); n.skip = 0;
     }
   }
 }

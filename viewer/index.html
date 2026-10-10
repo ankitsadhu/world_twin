@@ -127,6 +127,9 @@ import { Plan } from "./js/plan.js";
 document.querySelectorAll("[data-icon]").forEach(el => el.outerHTML = ICON[el.dataset.icon]);
 
 const ROOT = "../";
+// Developer tools (window.__dbg, the smoke test, ?perf, the character inspection views) exist ONLY on a local machine. On any other host ?debug does nothing.
+const LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname), DEBUG = LOCAL && new URLSearchParams(location.search).has("debug");
+window.__DEBUG = DEBUG;
 // Blender (Z-up, metres) -> three (Y-up): (x, y, z) -> (x, z, -y)
 const B = (x, y, z) => new THREE.Vector3(x, z, -y);
 
@@ -801,10 +804,25 @@ const business = new Business({ root: ROOT, district: "times_square", nav, setSl
 // buying screens and buildings into a plan, then checkout (js/plan.js): the only money in the game
 const plan = new Plan({ business, nav, root: ROOT, district: "times_square", toast: t => Messages.ask(t, [], { ms: 3500 }) });
 nav.onBuilding = b => plan.onBuilding(b);
-if (new URLSearchParams(location.search).has("debug"))      // developer handle, only with ?debug
+if (DEBUG)      // developer handle, local machine only
   window.__views = () => screenViews;
-if (new URLSearchParams(location.search).has("debug"))
-  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pursuit() { return pursuit; }, get cityMap() { return cityMap; }, get trip() { return trip; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get progress() { return progress; }, get chaos() { return chaos; }, get race() { return race; }, get heat() { return heat; }, get clip() { return clip; }, get playzone() { return playzone; }, get crashRun() { return crashRun; }, get speedboat() { return speedboat; }, get missions() { return missions; }, get fx() { return fx; }, get heli() { return heli; }, get obstacles() { indexSceneObstacles(); return obstacleBoxes; }, get wolves() { return wolves; }, get population() { return population; }, get onboard() { return onboard; }, get business() { return business; }, get paused() { return paused; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
+if (DEBUG)
+  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pursuit() { return pursuit; }, get cityMap() { return cityMap; }, get trip() { return trip; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get progress() { return progress; }, get chaos() { return chaos; }, get race() { return race; }, get heat() { return heat; }, get clip() { return clip; }, get playzone() { return playzone; }, get crashRun() { return crashRun; }, get speedboat() { return speedboat; }, get missions() { return missions; }, get fx() { return fx; }, get heli() { return heli; }, get obstacles() { indexSceneObstacles(); return obstacleBoxes; }, get wolves() { return wolves; }, charView: m => window.__charView(m), get population() { return population; }, get onboard() { return onboard; }, get business() { return business; }, get paused() { return paused; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
+// Character inspection (local ?debug only): __dbg.charView("wire" | "flat" | "normals" | "uv" | "mat" | "normal"). These show topology, normals, UVs and material
+// regions of the player's mesh for art review. Nothing here hides or removes any part of the outfit.
+if (DEBUG) window.__charView = mode => {
+  const root = window.__dbg?.me?.object || null; if (!root) return "no player";
+  const checker = (() => { const c = document.createElement("canvas"); c.width = c.height = 64; const g = c.getContext("2d"); for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) { g.fillStyle = (x + y) % 2 ? "#eee" : "#444"; g.fillRect(x * 8, y * 8, 8, 8); } const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t; })();
+  const hue = n => { let h = 0; for (const ch of n) h = (h * 31 + ch.charCodeAt(0)) % 360; return new THREE.Color().setHSL(h / 360, 0.7, 0.55); };
+  root.traverse(o => {
+    if (!o.isMesh) return; o.userData._orig ||= o.material; const orig = o.userData._orig;
+    const one = m => mode === "wire" ? new THREE.MeshBasicMaterial({ color: 0x66e0ff, wireframe: true }) : mode === "flat" ? new THREE.MeshLambertMaterial({ color: 0xbbbbbb, flatShading: true })
+      : mode === "normals" ? new THREE.MeshNormalMaterial() : mode === "uv" ? new THREE.MeshBasicMaterial({ map: checker }) : mode === "mat" ? new THREE.MeshBasicMaterial({ color: hue(m.name || "m") }) : m;
+    o.material = mode === "normal" ? orig : Array.isArray(orig) ? orig.map(one) : one(orig);
+    if (o.material.map === checker || (Array.isArray(o.material) && o.material[0]?.map === checker)) o.material.needsUpdate = true;
+  });
+  return mode;
+};
 let traffic = null;
 let pursuit = null;
 const trafficCount = () => Math.round((Settings.quality === "low" ? 14 : matchMedia("(max-width: 640px)").matches ? 18 : 28) * Settings.v.traffic);
@@ -1581,7 +1599,7 @@ const clock = new THREE.Clock();
 let paused = false;
 // ---- the frame loop. One failing system must never freeze the game: the next frame is scheduled first, every system runs inside a guard that reports once and
 // switches that system off after 30 failures, and ?perf shows the milliseconds each system costs (the number to look at before blaming the GPU).
-const SYS = new Map(), PERF = new URLSearchParams(location.search).has("perf");
+const SYS = new Map(), PERF = LOCAL && new URLSearchParams(location.search).has("perf");
 function S(name, obj, method, a, b) {
   const f = obj?.[method]; if (!f) return;
   let st = SYS.get(name); if (!st) SYS.set(name, st = { ms: 0, err: 0, off: false }); if (st.off) return;
@@ -1647,7 +1665,7 @@ addEventListener("resize", () => {
 });
 goTo(HERO_VIEW.eye, HERO_VIEW.target);
 tick();
-if (new URLSearchParams(location.search).has("selftest")) import("./js/selftest.js").then(m => m.run());     // ?debug&selftest: the smoke test (js/selftest.js)
+if (DEBUG && new URLSearchParams(location.search).has("selftest")) import("./js/selftest.js").then(m => m.run());     // ?debug&selftest: the smoke test (js/selftest.js)
 load().catch(err => {                                         // plain words + a way out, never a raw error
   console.error(err);
   const t = document.getElementById("loadtxt");

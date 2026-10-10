@@ -46,7 +46,12 @@ pl = os.path.join(ROOT, "export/vehicles/small_plane.glb")
 check(os.path.exists(pl) and os.path.getsize(pl) > 10000, "plane export/vehicles/small_plane.glb present")
 
 html = open(os.path.join(ROOT, "viewer/index.html")).read()
-check("window.__dbg" not in html or 'has("debug")' in html, "debug handle only exposed with ?debug")
+check("window.__dbg" not in html or "DEBUG = LOCAL &&" in html, "developer tools (window.__dbg, selftest, character views) are local-host only")
+# nothing in the shipped viewer may offer to remove the character's clothing, in any build
+bad = [f for f in [os.path.join(dp, fn) for dp, _, fns in os.walk(os.path.join(ROOT, "viewer")) for fn in fns if fn.endswith((".js", ".html"))]
+       if re.search(r"remove[_ ]?cloth|hide[_ ]?cloth|undress|unclothed|\bnude\b|naked|strip[_ ]?cloth", open(f, errors="ignore").read(), re.I)]
+check(not bad, "no option to remove or hide the character's clothing in the viewer" + (f" (found in {[os.path.relpath(b, ROOT) for b in bad]})" if bad else ""))
+check(os.path.isdir(os.path.join(ROOT, "export_web")), "light asset tier built (python3 scripts/tools/make_web_assets.py)")
 check("example.com" not in html, "no placeholder addresses hard-coded in the viewer")
 
 rep = subprocess.run([os.path.join(ROOT, ".venv/bin/python"), "scripts/director/director.py", "--district", "times_square"],

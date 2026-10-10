@@ -26,7 +26,7 @@ export const Analytics = {
   track(name, data = {}) {
     const e = { n: name, t: Date.now(), id: uid(), ...data };
     this.q.push(e); write(this.q);
-    if (location.search.includes("debug")) (window.__events ||= []).push(e);
+    if (window.__DEBUG) (window.__events ||= []).push(e);
   },
   flush() {
     if (!this.url || !this.q.length) return;

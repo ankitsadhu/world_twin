@@ -3,6 +3,7 @@
 // doors (open on hinges), steering wheel, seats and camera points. Routes follow the real street centrelines
 // (data/<district>/nav.json NAV_roads), keep to the right-hand lane and slow down for turns.
 // Coordinates: road graph in Blender local metres (x, y); three.js = (x, z = -y).
+import { dentVehicle, hitSide } from "./dent.js";
 import * as THREE from "three";
 import { makeBlob } from "./shadow.js";
 import { Bikes, BIKE, PAINTS } from "./bike.js";
@@ -1307,8 +1308,13 @@ export class Ride {
     this.yawRate = body.omega;
     this.setHeading(this.heading);
     if (result.closingSpeed < 0.5) return;
-    if (!this.invincible) this.damage = THREE.MathUtils.clamp(this.damage + result.strength * (this.vehicle?.kind === "bike" ? 0.72 : 0.58), 0, 1);   // (a crash run is not about your own repair bill)
-    this.vehicle.damage = this.damage;
+    const at = new THREE.Vector3(result.point[0], 0.6, -result.point[1]), side = hitSide(this.vehicle, this.heading, at), bikeV = this.vehicle?.kind === "bike";
+    // real-world damage: the front crumples and absorbs a head-on, a side hit has no crush zone and costs the most, and a bike has no body at all to take it
+    const sideK = bikeV ? { front: 1, rear: 0.85, left: 1.2, right: 1.2 }[side] : { front: 0.95, rear: 0.85, left: 1.3, right: 1.3 }[side];
+    if (!this.invincible) this.damage = THREE.MathUtils.clamp(this.damage + result.strength * sideK * (bikeV ? 0.72 : 0.58), 0, 1);   // (a crash run is not about your own repair bill)
+    this.vehicle.damage = this.damage; (this.vehicle.hitSides ||= {})[side] = (this.vehicle.hitSides[side] || 0) + result.strength;
+    dentVehicle(this.vehicle, at, result.strength);
+    if (result.strength > 0.15) this.toast?.(`${side[0].toUpperCase() + side.slice(1)} hit`);
     this.onBump?.(result.strength);
     this.fares?.bump(result.strength);
     this.audio?.crash?.(new THREE.Vector3(result.point[0], 0.6, -result.point[1]), result.strength);
@@ -1369,30 +1375,8 @@ export class Ride {
     }
   }
 
-  updateSmoke(dt) {
-    const v = this.vehicle;
-    if (!v) return;
-    if (this.damage <= 0.6) {
-      if (v.smoke) v.smoke.visible = false;
-      return;
-    }
-    if (!v.smoke) {
-      const count = 14, geometry = new THREE.BufferGeometry(), positions = new Float32Array(count * 3);
-      geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      const material = new THREE.PointsMaterial({ color: 0x62666a, size: 0.24, transparent: true, opacity: 0.28, depthWrite: false });
-      v.smoke = new THREE.Points(geometry, material);
-      v.smoke.frustumCulled = false; v.smoke.raycast = () => {};
-      v.smokeAges = Float32Array.from({ length: count }, (_, i) => i / count);
-      v.group.add(v.smoke);
-    }
-    v.smoke.visible = true;
-    v.smoke.material.opacity = 0.14 + this.damage * 0.18;
-    const a = v.smoke.geometry.attributes.position, bike = v.kind === "bike";
-    for (let i = 0; i < v.smokeAges.length; i++) {
-      const age = v.smokeAges[i] = (v.smokeAges[i] + dt * (0.45 + this.damage * 0.25)) % 1;
-      a.setXYZ(i, Math.sin(age * 8 + i) * (0.08 + age * 0.24), 0.75 + age * 1.45, (bike ? 0 : -0.25) + Math.cos(age * 7 + i) * 0.12);
-    }
-    a.needsUpdate = true;
+  updateSmoke() {
+    const sm = this.vehicle?.smoke; if (sm) sm.visible = false;      // the plume comes from fx.js now (the old square-sprite smoke is retired)
   }
 
   // ---------------------------------------------------------------- per frame
@@ -1549,6 +1533,7 @@ export class Ride {
         if (!contact) continue;
         const result = resolveImpact(own, other, contact);
         Object.assign(v.motion, { vx: other.vx, vy: other.vy, omega: other.omega });
+        if (result) dentVehicle(v, new THREE.Vector3(result.point[0], 0.6, -result.point[1]), result.strength);
         v.heading = other.h; v.group.position.x = other.x; v.group.position.z = -other.y;
           this.applyImpact(own, result); impact = { own, result }; break;
       }

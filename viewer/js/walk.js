@@ -1,5 +1,5 @@
 // Street View-style walking: no mouse capture, nothing to learn.
-//   drag = look around (grab the world) · W/S or ↑/↓ = walk · A/D or ←/→ = turn · Shift = run · Space = jump
+//   drag = look around (grab the world) · W/S or ↑/↓ = walk · A/D = strafe · ←/→ = turn · Shift = run · Space = jump
 //   double-click the ground = walk there · Esc = back to Explore · V = first / third person
 // Third person: the game logic still treats the camera as your eyes (everything that asks "where am I?" reads
 // camera.position); only for drawing the frame does the camera step back behind your character (applyView), and the
@@ -49,14 +49,6 @@ export class StreetWalk {
       if (!this.active || e.target.tagName === "INPUT") return;
       if (e.code === "Space") { e.preventDefault(); if (!e.repeat) this.jump(); return; }
       if (e.code === "KeyG") { e.preventDefault(); if (!e.repeat) this.attack(); return; }
-      if (!e.repeat && /^(ArrowUp|ArrowDown|KeyW|KeyS)$/.test(e.code)) this.pressAt = performance.now();
-    });
-    addEventListener("keyup", e => {     // a quick tap = one Street View step (~8 m); holding = walk
-      if (!this.active || e.target.tagName === "INPUT" || !/^(ArrowUp|ArrowDown|KeyW|KeyS)$/.test(e.code)) return;
-      if (performance.now() - (this.pressAt || 0) < 220) {
-        const dir = /Up|W/.test(e.code) ? 1 : -1, p = this.eye;
-        this.target = [p.x - Math.sin(this.yaw) * 8 * dir, -(p.z - Math.cos(this.yaw) * 8 * dir)];
-      }
     });
   }
 
@@ -184,8 +176,8 @@ export class StreetWalk {
     this.stunT = Math.max(0, (this.stunT || 0) - dt);
     if (this.stunT > 0) keys = {};
     const run = this.stunT > 0 ? false : keys.ShiftLeft || keys.ShiftRight || this.pad?.run;
-    if (keys.KeyA || keys.ArrowLeft) this.yaw += dt * 1.6;
-    if (keys.KeyD || keys.ArrowRight) this.yaw -= dt * 1.6;
+    if (keys.ArrowLeft) this.yaw += dt * 1.6;                // arrows turn; A / D strafe (as in any third-person game)
+    if (keys.ArrowRight) this.yaw -= dt * 1.6;
     const P = this.stunT > 0 ? null : this.pad;              // controller: left stick walks / strafes, right stick looks
     if (P) {
       this.yaw -= P.rx * dt * 2.4;
@@ -198,9 +190,10 @@ export class StreetWalk {
     let mv = 0;
     if (keys.KeyW || keys.ArrowUp) mv += 1;
     if (keys.KeyS || keys.ArrowDown) mv -= 1;
+    const st = (keys.KeyD ? 1 : 0) - (keys.KeyA ? 1 : 0), rx = Math.cos(this.yaw), rz = -Math.sin(this.yaw);   // strafe: the camera's right
     let dx = 0, dz = 0;
     const [vw, vr] = this.third ? [1.6, 4.6] : [5, 14];       // you can see yourself: a brisk walk (1.6 m/s: a 0.77 m leg breaks into a run near 1.9) and a fast run
-    if (mv) { this.target = null; const sp = (run ? vr : vw) * dt * mv; dx = fx * sp; dz = fz * sp; }
+    if (mv || st) { this.target = null; const sp = (run ? vr : vw) * dt, l = Math.hypot(mv, st); dx = (fx * mv + rx * st) / l * sp; dz = (fz * mv + rz * st) / l * sp; }
     else if (P && (P.lx || P.ly)) {                          // analog walk: push further = walk faster
       this.target = null;
       const input = Math.hypot(P.lx, P.ly), sp = (run ? vr : vw) * dt * Math.min(1, input);

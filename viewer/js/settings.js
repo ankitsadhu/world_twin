@@ -90,6 +90,9 @@ export class PauseMenu {
       #pause .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 12px; background: #fff; transition: left .15s; }
       #pause .sw[aria-checked="true"] { background: var(--good); }
       #pause .sw[aria-checked="true"]::after { left: 23px; }
+      #pause .keys h4 { margin: var(--s3) 0 var(--s1); font-size: var(--t-caption); color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+      #pause .keys dl { display: grid; grid-template-columns: 7.5em 1fr; gap: 4px var(--s3); margin: 0; font-size: var(--t-body); }
+      #pause .keys dt { font-weight: var(--w-semibold); color: var(--ink); } #pause .keys dd { margin: 0; color: var(--ink-2); }
       #pause .fine { color: var(--ink-3); font-size: var(--t-caption); margin-top: var(--s4); }
       #pause .seg { display: flex; gap: 2px; padding: 2px; margin: var(--s4) 0 var(--s2); background: var(--fill); border-radius: var(--r-control); }
       #pause .seg button { flex: 1; min-height: 36px; border: none; border-radius: 10px; background: none; color: var(--ink-2);
@@ -108,7 +111,12 @@ export class PauseMenu {
         <button class="ui-btn primary" id="pause-resume">Resume</button>
         <div class="list">${this.actions.map((a, i) => `<button data-act="${i}">${a.label}<span aria-hidden="true">›</span></button>`).join("")}</div>
         <div class="seg" role="tablist" aria-label="Settings">
-          ${["Sound", "You", "Display", "City"].map(t => `<button role="tab" data-tab="${t}" aria-selected="false">${t}</button>`).join("")}</div>
+          ${["Keys", "Sound", "You", "Display", "City"].map(t => `<button role="tab" data-tab="${t}" aria-selected="false">${t}</button>`).join("")}</div>
+        <section data-tab="Keys" role="tabpanel" class="keys">
+          <h4>On foot</h4><dl><dt>W S</dt><dd>walk forward / back</dd><dt>A D</dt><dd>step left / right</dd><dt>← →</dt><dd>turn</dd><dt>Shift</dt><dd>run</dd><dt>Space</dt><dd>jump</dd><dt>drag</dt><dd>look around</dd><dt>V</dt><dd>first / third person</dd><dt>F</dt><dd>get on a bike · board</dd><dt>G · right-click</dt><dd>hit (Rough contact)</dd></dl>
+          <h4>Riding</h4><dl><dt>W S</dt><dd>go / brake</dd><dt>A D</dt><dd>steer</dd><dt>Space</dt><dd>hop (bike)</dd><dt>H</dt><dd>horn</dd><dt>C</dt><dd>look back</dd><dt>F</dt><dd>get off</dd></dl>
+          <h4>Anywhere</h4><dl><dt>Esc</dt><dd>menu</dd><dt>M</dt><dd>map</dd><dt>K</dt><dd>missions</dd><dt>/</dt><dd>search</dd><dt>F8</dt><dd>record a clip</dd></dl>
+          <p class="fine">On a touch screen: tap the street to walk there, drag to look, hold to hit. While riding: Go, Brake, steer and Hop are on screen.</p></section>
         <section data-tab="Sound" role="tabpanel">${sw("sound", "City sound")}${range("volume", "Volume", 0, 1, 0.05)}${sw("captions", "Captions", "Horns, sirens and your cab, as text")}</section>
         <section data-tab="You" role="tabpanel">
         <div class="row"><label for="set-outfit">Outfit</label>
@@ -151,7 +159,7 @@ export class PauseMenu {
     confirmTwice("pause-reset", "Tap again to reset", "Settings reset", () => { Settings.reset(); this.sync(); });
     confirmTwice("pause-forget", "Tap again to forget", "Forgotten", () => { Progress.clear(); this.onForget?.(); });
     el.querySelectorAll(".seg [data-tab]").forEach(b => b.onclick = () => this.tab(b.dataset.tab));
-    this.tab(store.get("ts.settingsTab") || "Sound");
+    this.tab(store.get("ts.settingsTab") || "Keys");
     el.querySelectorAll(".sw").forEach(b => b.onclick = () => {
       const k = b.dataset.k, cur = k === "reduceMotion" ? Settings.reduceMotion : k === "roughContact" ? Settings.roughContact : !!Settings.v[k];
       Settings.set({ [k]: !cur }); this.sync();

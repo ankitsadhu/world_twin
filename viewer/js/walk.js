@@ -20,16 +20,6 @@ export class StreetWalk {
     this.bar.style.cssText = "position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:120px;height:4px;border-radius:2px;background:rgba(255,255,255,.18);opacity:0;transition:opacity .3s;z-index:7;pointer-events:none";
     this.bar.innerHTML = '<i style="display:block;height:100%;width:100%;border-radius:2px;background:#fff"></i>';
     document.body.appendChild(this.bar);
-    this.hitButton = document.createElement("button");
-    this.hitButton.type = "button";
-    this.hitButton.className = "ui-btn ui-surface walk-hit";
-    this.hitButton.textContent = "Shove";
-    this.hitButton.setAttribute("aria-label", "Shove a person");
-    this.hitButton.hidden = true;
-    this.hitButton.style.cssText = "position:fixed;right:calc(var(--s4) + 76px);bottom:var(--s4);z-index:14;min-height:var(--hit);box-shadow:var(--shadow)";
-    document.body.appendChild(this.hitButton);
-    this.hitButton.addEventListener("pointerdown", e => e.stopPropagation());
-    this.hitButton.addEventListener("click", () => this.attack());
     dom.addEventListener("pointerdown", e => {
       if (!this.active || e.button !== 0) return;
       this.drag = [e.clientX, e.clientY];
@@ -66,13 +56,11 @@ export class StreetWalk {
     const e = new THREE.Euler().setFromQuaternion(this.camera.quaternion, "YXZ");
     this.yaw = e.y; this.pitch = THREE.MathUtils.clamp(e.x, -0.5, 0.5);
     this.active = true; this.target = null;
-    this.hitButton.hidden = !Settings.roughContact;
-    this.hitButton.style.display = this.hitButton.hidden ? "none" : "inline-flex";
     this.dom.style.cursor = "grab";
   }
   disable() {
     this.restoreEye(); this.active = false; this.target = null; this.dom.style.cursor = "";
-    this.vx = this.vz = 0; this.bar.style.opacity = 0; this.hitButton.hidden = true; this.hitButton.style.display = "none";
+    this.vx = this.vz = 0; this.bar.style.opacity = 0;
   }
 
   kick(p = 0.2, t = 0.14) { this.kickT = t; this.kickP = p; }              // a camera jolt (an impact)
@@ -182,8 +170,6 @@ export class StreetWalk {
 
   update(dt, keys) {
     if (!this.active) return;
-    this.hitButton.hidden = !Settings.roughContact;
-    this.hitButton.style.display = this.hitButton.hidden ? "none" : "inline-flex";
     this.attackCd = Math.max(0, (this.attackCd || 0) - dt);
     this.restoreEye();
     const cam = this.camera;

@@ -124,7 +124,7 @@ export class PauseMenu {
         ${range("textScale", "Text size", 0.85, 1.5, 0.05)}${sw("contrast", "High-contrast markers", "Bigger, outlined map markers")}
         ${sw("reduceMotion", "Reduce motion", "No fly-ins, camera swoops or shakes")}</section>
         <section data-tab="City" role="tabpanel">${range("traffic", "Traffic", 0, 1.5, 0.25)}
-          ${sw("roughContact", "Rough contact", "Non-graphic hits; press G or tap Shove on foot · on while testing at localhost, off on the public site")}
+          ${sw("roughContact", "Rough contact", "Non-graphic hits; press G on foot · on while testing at localhost, off on the public site")}
           <div class="acts" style="margin-top:var(--s4)"><button class="ui-btn danger" id="pause-reset">Reset settings</button>
           <button class="ui-btn danger" id="pause-forget">Forget my place &amp; parked cars</button></div>
           <p class="fine">Settings and your progress are saved in this browser only.</p></section>

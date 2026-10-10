@@ -15,7 +15,6 @@
   #dock .dockbtn[aria-pressed="true"] { background: none; color: var(--accent); }
   #bizbtn { position: fixed !important; top: auto !important; right: auto !important; left: var(--s3); z-index: 13;
     bottom: calc(76px + env(safe-area-inset-bottom)) !important; }
-  .walk-hit { right: var(--s3) !important; bottom: calc(76px + env(safe-area-inset-bottom)) !important; }
   #minimap { width: 88px !important; height: 88px !important; left: auto !important; right: var(--s3);
     top: 68px; bottom: auto !important; }
   #wpchip { top: 64px !important; left: var(--s3) !important; transform: none !important; max-width: calc(100% - 120px); }

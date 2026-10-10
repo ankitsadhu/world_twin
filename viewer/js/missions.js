@@ -163,7 +163,7 @@ export class Missions {
         `<div class="row${this.active === m.id ? " on" : ""}"><span class="b" style="background:${this.done[m.id] ? "#2e9e4f" : CAT[c][0]}">${CAT[c][1]}<i>${this.done[m.id] ? "✓" : m.num}</i></span><span class="t"><b>${m.name}</b><small>${m.zone} · level ${m.level}</small></span><button data-a="track" data-id="${m.id}">${this.active === m.id ? "Tracking" : "Track"}</button><button class="p" data-a="go" data-id="${m.id}">Go</button></div>`).join("")).join("");
     }
     const a = this.activeMission(), p = this.pos?.();
-    this.chip.style.display = a ? "block" : "none";
+    this.chip.style.display = a && a.id !== "m_wolf" ? "block" : "none";          // the wolf hunt has its own compass chip
     if (a) { const d = p ? Math.hypot(a.x - p.x, a.y - p.y) : 0; this.chip.textContent = `▶ ${a.num}. ${a.name}${p ? " · " + (d < 1000 ? Math.round(d / 10) * 10 + " m" : (d / 1000).toFixed(1) + " km") : ""}`; }
   }
   

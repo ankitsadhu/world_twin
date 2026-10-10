@@ -113,3 +113,6 @@ body.drivetouch canvas#minimap { top: calc(env(safe-area-inset-top) + 124px) !im
 body[data-input="touch"][data-mode="walk"]:not(.incar):not(.onboarding) #walkstick { display: block; }
 body[data-input="touch"] #ridepill { left: auto; right: max(16px, env(safe-area-inset-right)); bottom: calc(112px + env(safe-area-inset-bottom)); transform: none; }   /* thumbs: stick on the left, Ride on the right */
 body[data-input="touch"].canride #ridepill:hover { transform: none; }
+
+/* a chip a module hides (inline display:none) stays hidden: the stack's own display rule must not win */
+#hud-stack > [style*="display: none"] { display: none !important; }

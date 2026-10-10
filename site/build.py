@@ -12,7 +12,7 @@ B = json.loads((ROOT / "business.json").read_text())
 RELEASE = "--release" in sys.argv
 NAV = [("index", "Home"), ("buy", "Buy a slot"), ("how-it-works", "How it works"), ("about", "About"), ("contact", "Contact")]
 LEGAL = [("privacy", "Privacy"), ("terms", "Terms"), ("refund-policy", "Refund policy"), ("delivery", "Delivery")]
-TITLES = {"index": "Own a place in Times Square", "buy": "Buy a slot", "how-it-works": "How it works", "about": "About", "contact": "Contact",
+TITLES = {"index": "Take a place in Times Square", "buy": "Buy a slot", "how-it-works": "How it works", "about": "About", "contact": "Contact",
           "privacy": "Privacy Policy", "terms": "Terms of Service", "refund-policy": "Refund and Cancellation Policy", "delivery": "Delivery Policy"}
 todos = []
 
@@ -28,7 +28,7 @@ def layout(slug, body):
     title = TITLES[slug] + ("" if slug == "index" else f" | {B['brand']}")
     if slug == "index": title = f"{B['brand']}: {TITLES[slug]}"
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(title)}</title><meta name="description" content="Play a real-scale Times Square in your browser, and own a permanent place in it: a billboard, a screen or a building.">
+<title>{html.escape(title)}</title><meta name="description" content="Play a real-scale Times Square in your browser, and take a place in it for a year: a billboard, a screen or a building.">
 <link rel="stylesheet" href="assets/site.css"></head><body>
 <header class="site"><div class="wrap"><a class="logo" href="index.html">NEON<b>BLOX</b></a><nav>{nav}<a href="play/">Play</a></nav></div></header>
 <main>{body}</main>

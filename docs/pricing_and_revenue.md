@@ -1,5 +1,7 @@
 # Pricing and revenue: what we actually have to sell
 
+> **2026-10-10 decision: slots are sold for 1 YEAR only (single payment, no refunds, exclusive, renewal offered to the holder). Everything below that says "permanent" is superseded; the §10 launch prices are NOT yet confirmed as 1-year prices.**
+>
 > **Launch plan: start at §10.** The prices in §2–§6 are the **target** prices, where an item ends up once demand is proven. We launch far lower and let the algorithm in §10 raise prices as things sell.
 
 Updated 2026-10-04. The facts this is built on:

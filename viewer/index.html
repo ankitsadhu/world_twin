@@ -309,8 +309,16 @@ const HERO_VIEW = { eye: [-14.5, 137.5, 6.4], target: [16, -215, 40] };   // top
 let resolveCity; const cityReady = new Promise(r => resolveCity = r);
 let sceneObstacleVersion = 0;
 
+// Asset tier: "full" loads the original files in export/, "light" loads the smaller copies in export_web/ (made by scripts/tools/make_web_assets.py; the originals are never modified).
+// Automatic = light on phones and Low graphics, full otherwise. ?assets=full|light or Settings > Display > Asset quality overrides it, so full quality is always one switch away.
+const ASSET_TIER = (() => { const q = new URLSearchParams(location.search).get("assets"), s = Settings.v.assets;
+  if (q === "full" || q === "light") return q; if (s === "full" || s === "light") return s;
+  return matchMedia("(max-width: 640px)").matches || Settings.quality === "low" ? "light" : "full"; })();
+window.__assetTier = ASSET_TIER;
+function chunkUrls(path) { return ASSET_TIER === "light" && /^export\//.test(path) ? [ROOT + path.replace(/^export\//, "export_web/"), ROOT + path] : [ROOT + path]; }   // a missing light copy falls back to the original
 function loadChunk(path) {
-  return new Promise((res, rej) => gltf.load(ROOT + path, g => {
+  const urls = chunkUrls(path);
+  const adopt = g => {
     const st = NOOPT ? {} : optimizeChunk(g.scene);          // few big draws instead of one per building / prop
     perf.chunks[path.split("/").pop()] = st;
     g.scene.traverse(o => {
@@ -323,8 +331,11 @@ function loadChunk(path) {
     scene.add(g.scene);
     sceneObstacleVersion++;
     adoptWater(g.scene);
-    res();
-  }, undefined, rej));
+  };
+  return new Promise((res, rej) => {
+    const attempt = i => gltf.load(urls[i], g => { adopt(g); res(); }, undefined, err => (i + 1 < urls.length ? attempt(i + 1) : rej(err)));
+    attempt(0);
+  });
 }
 
 async function load() {
@@ -1215,7 +1226,7 @@ function applyQuality() {
   bloom.enabled = q !== "low";
   if (traffic) traffic.count = trafficCount();
 }
-Settings.on((v, patch) => { if (!patch || "quality" in patch) { qualityOverride = null; applyQuality(); } if (patch && "traffic" in patch && traffic) traffic.count = trafficCount(); });
+Settings.on((v, patch) => { if (patch && "assets" in patch) Messages.ask("Asset quality changes after a reload", [["Reload now", () => location.reload(), true], ["Later", () => {}]], { ms: 15000, key: "assets_reload" }); if (!patch || "quality" in patch) { qualityOverride = null; applyQuality(); } if (patch && "traffic" in patch && traffic) traffic.count = trafficCount(); });
 function watchFrameRate() {
   if (Settings.v.quality !== "auto") return;
   let n = 0; const t0 = performance.now();

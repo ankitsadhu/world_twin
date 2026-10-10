@@ -1,6 +1,6 @@
 // Buying in the city: the only money in this game (product rule, 2026-10-03). Businesses book screens and banners,
 // or take a whole building (its screens + shop signs, and its name on the map), into a plan, then check out.
-//   Screens: duration (1 week .. 12 months), exclusive or in rotation (1 of 6 advertisers, 10 s every minute), start
+//   Screens: sold for 1 year only, exclusive, start
 //   date; the price follows the screen's indicative monthly rate with term discounts.
 //   Buildings (business view: double-click / tap a building): what you get and an indicative monthly lease.
 //   Checkout: company and contact details -> an order (number, items, total) saved in this browser, then either the
@@ -11,9 +11,9 @@ import { money, fmt } from "./business.js";
 const KEY_PLAN = "ts.plan", KEY_ORDERS = "ts.orders";
 const get = k => { try { return JSON.parse(localStorage.getItem(k)) || []; } catch { return []; } };
 const put = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* private mode */ } };
-const DURATIONS = [["1w", "1 week", 0.25], ["1m", "1 month", 1], ["3m", "3 months", 3], ["6m", "6 months", 6], ["12m", "12 months", 12]];
-const DISCOUNT = { "1w": 1.15, "1m": 1, "3m": 0.95, "6m": 0.9, "12m": 0.85 };   // short = premium, long = cheaper
-const SHARES = [["exclusive", "Exclusive (your ad only)", 1], ["rotation", "In rotation (1 of 6, 10 s per minute)", 0.22]];
+const DURATIONS = [["12m", "1 year", 12]];                  // one product: a slot is sold for 1 year (no weeks, months or rotation); renewal is offered before it ends
+const DISCOUNT = { "12m": 1 };
+const SHARES = [["exclusive", "Exclusive (your ad only)", 1]];
 const usd = n => "$" + Math.round(n).toLocaleString("en-US");
 const day = d => d.toISOString().slice(0, 10);
 
@@ -70,8 +70,9 @@ export class Plan {
   hookSheet() {
     const cta = document.getElementById("sh-cta");
     cta.insertAdjacentHTML("beforebegin", `<div id="sh-book">
-      <label for="bk-dur">How long</label><select id="bk-dur" class="ui-input">${DURATIONS.map(([k, t]) => `<option value="${k}"${k === "1m" ? " selected" : ""}>${t}</option>`).join("")}</select>
-      <label for="bk-share">Screen time</label><select id="bk-share" class="ui-input">${SHARES.map(([k, t]) => `<option value="${k}">${t}</option>`).join("")}</select>
+      <select id="bk-dur" class="ui-input" hidden>${DURATIONS.map(([k, t]) => `<option value="${k}" selected>${t}</option>`).join("")}</select>
+      <select id="bk-share" class="ui-input" hidden>${SHARES.map(([k, t]) => `<option value="${k}">${t}</option>`).join("")}</select>
+      <p class="fine" style="margin:4px 0 8px">1 year, exclusive: only your artwork on this slot.</p>
       <label for="bk-start">Starts</label><input id="bk-start" type="date" class="ui-input">
       <div class="price"><span style="color:var(--ink-2)" id="bk-what"></span><b id="bk-price"></b></div></div>`);
     cta.textContent = "Add to plan";
@@ -144,8 +145,8 @@ export class Plan {
       ${p.sign_slots.length ? `<div class="it"><span class="nm">${p.sign_slots.length} shop sign${p.sign_slots.length === 1 ? "" : "s"}<small>The storefront signs at street level</small></span><span>${usd(pr.signs)}</span></div>` : ""}
       <div class="it"><span class="nm">Your name on the building<small>On the map, in search, on its card</small></span><span>${usd(pr.name)}</span></div>
       <div class="tot"><span>Per month (indicative)</span><span>${usd(pr.total)}</span></div>
-      <label class="fine" for="pp-dur" style="display:block">Lease</label>
-      <select id="pp-dur" class="ui-input" style="width:100%">${DURATIONS.slice(1).map(([k, t]) => `<option value="${k}"${k === "12m" ? " selected" : ""}>${t}</option>`).join("")}</select>
+      <select id="pp-dur" class="ui-input" hidden>${DURATIONS.map(([k, t]) => `<option value="${k}" selected>${t}</option>`).join("")}</select>
+      <p class="fine">Sold for 1 year, exclusive.</p>
       <button class="ui-btn primary" data-a="add" style="width:100%;margin-top:var(--s3)">${inPlan ? "Update in plan" : "Add building to plan"}</button>
       <p class="fine">Prices are estimates; final terms are confirmed by our team before anything is charged.</p>`;
     el.style.display = "block";
@@ -169,7 +170,7 @@ export class Plan {
     const el = document.getElementById("planpanel"), dur = k => DURATIONS.find(d => d[0] === k)?.[1] || k;
     el.innerHTML = `<button class="ui-btn x" data-a="x" aria-label="Close">✕</button><h2>Your plan</h2>
       <p class="sub">${this.items.length ? `${this.items.length} item${this.items.length > 1 ? "s" : ""} · ~${fmt(this.items.reduce((a, i) => a + (i.audience || 0), 0))} people pass them daily` : "Add screens (tap a highlighted screen) or buildings (double-click one) in the business view."}</p>
-      ${this.items.map((i, k) => `<div class="it"><span class="nm">${i.name}<small>${i.type === "building" ? "Building lease" : (i.share === "rotation" ? "In rotation" : "Exclusive")} · ${dur(i.dur)} from ${i.start}</small></span>
+      ${this.items.map((i, k) => `<div class="it"><span class="nm">${i.name}<small>${i.type === "building" ? "Building · 1 year" : (i.share === "rotation" ? "In rotation" : "Exclusive")} · ${dur(i.dur)} from ${i.start}</small></span>
         <span>${usd(i.price)}<br><button class="ui-btn" data-rm="${k}" style="min-height:26px;font-size:var(--t-caption);margin-top:4px">Remove</button></span></div>`).join("")}
       ${this.items.length ? `<div class="tot"><span>Total (indicative)</span><span>${usd(this.total())}</span></div>
         <form class="plan-f" id="planform" autocomplete="on">
@@ -194,7 +195,7 @@ export class Plan {
       company: form.get("company"), name: form.get("name"), email: form.get("email"), website: form.get("website") };
     this.orders.push(order); put(KEY_ORDERS, this.orders);
     const lines = [`Order ${id}`, `Company: ${order.company}`, `Contact: ${order.name} <${order.email}>`, `Website: ${order.website || "-"}`, "",
-      ...order.items.map(i => `- ${i.name} (${i.type === "building" ? "building lease" : i.share}, ${i.dur} from ${i.start}): ${usd(i.price)}`),
+      ...order.items.map(i => `- ${i.name} (${i.type === "building" ? "building, 1 year" : i.share}, ${i.dur} from ${i.start}): ${usd(i.price)}`),
       "", `Total (indicative): ${usd(order.total)}`];
     if (this.paymentLink) {
       const u = new URL(this.paymentLink);

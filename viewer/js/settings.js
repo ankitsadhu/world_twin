@@ -24,6 +24,7 @@ const DEFAULTS = {
   captions: false, contrast: false,
   roughContact: undefined,   // undefined = the default above (on at localhost, off public)
   quality: "auto",                     // auto | low | balanced | high
+  assets: "auto",                      // auto | light | full: which model/texture files to download (full = the originals, always available)
   traffic: 1, crowd: 1500,
   view: "third",                       // walking camera: third person (see yourself) or first person
   outfit: "leather",                   // your character's outfit (avatar.js PLAYER_OUTFITS)
@@ -130,6 +131,8 @@ export class PauseMenu {
         <div class="row"><label for="set-quality">Graphics<small>Lower = smoother on older phones</small></label>
           <select id="set-quality" data-k="quality"><option value="auto">Automatic</option><option value="low">Low</option>
           <option value="balanced">Balanced</option><option value="high">High</option></select></div>
+        <div class="row"><label for="set-assets">Asset quality<small>Full = the original models and textures. Light loads about half as much. Takes effect after a reload.</small></label>
+          <select id="set-assets" data-k="assets"><option value="auto">Automatic</option><option value="full">Full (original)</option><option value="light">Light (faster)</option></select></div>
         ${range("textScale", "Text size", 0.85, 1.5, 0.05)}${sw("contrast", "High-contrast markers", "Bigger, outlined map markers")}
         ${sw("reduceMotion", "Reduce motion", "No fly-ins, camera swoops or shakes")}</section>
         <section data-tab="City" role="tabpanel">${range("traffic", "Traffic", 0, 1.5, 0.25)}

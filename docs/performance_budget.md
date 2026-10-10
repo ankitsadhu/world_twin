@@ -13,12 +13,14 @@
 | Memory (30 min) | flat | not measured; soak test to write |
 
 ## Done
+- **Asset tiers (reversible quality):** `export/` = Full (the originals, never modified). `export_web/` = Light (images re-encoded smaller; geometry byte-identical), made by `scripts/tools/make_web_assets.py`. Automatic = Light on phones and Low graphics, Full otherwise; override with `?assets=full|light` or Settings > Display > Asset quality. Measured: GLB chunks 32.4 -> 15.9 MB; whole first load 71.3 -> 55.6 MB. Deleting `export_web/` falls back to the originals.
 - Only the sky for the current time of day is loaded before the first frame (6 MB); the other (6 MB) streams in behind it.
 - Minimap redraws at 30 Hz instead of every frame.
 - Frame loop guarded and timed per system (`?perf`).
 
-## Biggest wins still available (in order)
-1. **Models: 41 MB of GLB.** hero.glb 9.5 MB, harbor buildings 5.6, terrain 5.6, mid_n 3.6, mid_s 2.9. Meshopt/Draco compression and splitting by distance; load the harbour and downtown only when you go there.
+## Biggest wins still available (in order; each as a new variant with a switch, never an in-place edit)
+1. **Load less at the start:** harbour buildings (5.3 MB), the 9 character models (about 8 MB with far variants), and the second sky are not needed for the first frame; stream them after first input.
+1b. **Models:** hero.glb 9.5 MB (8.3 of it images), terrain 5.6 MB (5.6 of it images). Further texture work: KTX2.
 2. **Textures to KTX2 (Basis).** About 4 to 8x smaller on the GPU as well as on the wire.
 3. **HDR skies 2K -> 1K and a compressed format** (the two skies are 12 MB for lighting that is blurred anyway).
 4. **JSON 8.7 MB:** the harbour collision data is 3 MB; load it when the player nears the harbour, and quantise it.

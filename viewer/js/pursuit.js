@@ -47,6 +47,7 @@ export class Pursuit {
       return;
     }
 
+    if (this.ride.wrecked) { this.finish("caught", "Wrecked: busted. The chain is lost"); return; }
     const car = this.ride.car.position;
     const target = { x: car.x, y: -car.z, h: this.ride.heading };
     this.traffic.setPursuitTarget(target);

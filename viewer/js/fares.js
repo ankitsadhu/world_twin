@@ -126,6 +126,7 @@ export class Fares {
     }
     const J = this.job;
     if (!J) return;
+    if (this.ride.wrecked && J.stage === "ride") { this.stats.streak = 0; save(this.stats); this.toast?.("Vehicle wrecked: the passenger got out. Fare failed"); this.clearJob(); return; }
     const c = this.ride.car.position, x = c.x, y = -c.z, v = Math.abs(this.ride.v);
     if (J.who) J.who.update(dt);
     if (J.stage === "pickup") {

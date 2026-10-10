@@ -1496,7 +1496,11 @@ export class Ride {
       }
     }
     if (Math.hypot(nx - x, ny - y) > 1e-4) {
-      const meshObstacle = this.vehicleObstacle?.({ x, y, nx, ny, halfLength, halfWidth, height: 0.65 + lift }) || null;
+      let meshObstacle = this.vehicleObstacle?.({ x, y, nx, ny, halfLength, halfWidth, height: 0.65 + lift }) || null;
+      if (meshObstacle?.entry && this.furniture && Math.abs(this.v) > 2.5) {            // lamps, signals, bollards, bins, hydrants give way
+        const r = this.furniture.hit(meshObstacle.entry, meshObstacle.point, Math.cos(h) * this.v, Math.sin(h) * this.v, K === BIKE_H);
+        if (r) { this.v *= r.slow; if (K !== BIKE_H) { meshObstacle = null; this.bump = Settings.reduceMotion ? 0 : 0.2; this.bumpS = 0.3; } }
+      }
       if (meshObstacle && (!hitObstacle || meshObstacle.kind === "metal" || meshObstacle.kind === "glass"))
         hitObstacle = meshObstacle;
     }

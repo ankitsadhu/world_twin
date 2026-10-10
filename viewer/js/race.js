@@ -160,6 +160,8 @@ export class Race {
     if (this.ride.state !== "driving") return this.stop("Race over: you left the vehicle");
     this.t += dt;
     const r = this.ride, p = r.car.position;
+    if (r.wrecked) return this.fail("Wrecked: race over");                                  // a real game ends the run when you total the vehicle
+    if (this.state === "go" && this.t > (this.course.bronze || 120) * 2.5) return this.fail("Too slow: race over");
     this.tickProps(dt);
     if (this.state === "count") {
       r.v = 0;                                                                       // held on the line until GO
@@ -186,6 +188,8 @@ export class Race {
     }
     this.paint();
   }
+
+  fail(msg) { this.stop(); this.toast?.(`${msg} · press R to try again`); this.onFail?.({ id: this.lastId }); }
 
   finish() {
     const ms = this.t * 1000, c = this.course, s = ms / 1000;

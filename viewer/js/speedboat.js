@@ -104,7 +104,7 @@ export class SpeedBoat {
     let nx = this.x + (Math.cos(this.h) * this.v - Math.sin(this.h) * this.vl) * dt, ny = this.y + (Math.sin(this.h) * this.v + Math.cos(this.h) * this.vl) * dt;
     const hit = this.helm.hullHit(nx, ny, this.h);
     if (hit) {                                                                                  // shore or pier: bounce off, lose speed, shake
-      if (Math.abs(this.v) > 3) { this.shake = 0.3 + Math.min(0.7, Math.abs(this.v) / 25); this.audio?.crash?.(new THREE.Vector3(this.x, 0, -this.y), Math.min(1, Math.abs(this.v) / 20), "concrete"); this.onBump?.(Math.min(1, Math.abs(this.v) / 20)); }
+      if (Math.abs(this.v) > 3) { this.shake = 0.3 + Math.min(0.7, Math.abs(this.v) / 25); this.audio?.crash?.(new THREE.Vector3(this.x, 0, -this.y), Math.min(1, Math.abs(this.v) / 20), "concrete"); this.onBump?.(Math.min(1, Math.abs(this.v) / 20)); if (this.race.state === "go") this.bumps = (this.bumps || 0) + 1; }
       this.v *= -0.35; this.vl = 0; nx = this.x; ny = this.y;
     }
     this.x = nx; this.y = ny;
@@ -190,6 +190,7 @@ export class SpeedBoat {
   updateRace(dt) {
     const R = this.race; if (R.state === "idle") { this.paintHud(); return; }
     R.t += dt;
+    if (R.state === "go" && (R.t > this.bronze * 2.5 || (this.bumps || 0) > 8)) { this.bumps = 0; this.stopRace(R.t > this.bronze * 2.5 ? "Too slow: race over · press R to try again" : "Too many collisions: race over · press R to try again"); return; }
     if (R.state === "count") { this.v = 0; if (R.t >= 0) { R.state = "go"; R.t = 0; this.pop?.("GO!"); } this.paintHud(); return; }
     for (const p of this.props) if (Math.hypot(p.x - this.x, p.y - this.y) < 7 && !(p.t > performance.now())) { p.t = performance.now() + 3000; this.boostT = 2.4; this.v = Math.min(38, this.v + 6); this.pop?.("BOOST!"); this.onBoost?.(); }
     const P = this.course[R.cp];

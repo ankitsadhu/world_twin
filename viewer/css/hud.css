@@ -100,3 +100,7 @@ body.drivetouch #drivepad [data-c="up"].on { background: #ffd966 !important; }
 body.drivetouch #drivepad [data-c="down"] { width: 62px !important; height: 62px !important; right: 120px !important; left: auto !important; bottom: var(--drivepad-b) !important; }
 body.drivetouch #drivepad [data-c="horn"] { width: 58px !important; height: 58px !important; right: 34px !important; left: auto !important; bottom: calc(var(--drivepad-b) + 112px) !important; }
 body.drivetouch canvas#minimap { top: calc(env(safe-area-inset-top) + 124px) !important; bottom: auto !important; right: 10px !important; left: auto !important; width: 104px !important; height: 104px !important; }
+
+/* the district / world panel sits above the status chips, not under them */
+#hud { z-index: 40 !important; }
+#hud #menu { z-index: 41 !important; }

@@ -64,21 +64,11 @@
 <div id="hud">
   <button id="districtbtn" class="ui-btn ui-surface" aria-haspopup="menu" aria-expanded="false" aria-controls="menu">Times Square <i data-icon="chevron"></i></button>
   <div id="menu" class="ui-surface" role="menu" hidden>
-    <button class="item" id="whatbtn" role="menuitem"><i data-icon="help"></i>What can I do?</button>
-    <button class="item" id="tourbtn" role="menuitem"><i data-icon="tour"></i>Take the 60-second tour</button>
-    <button class="item" id="sightbtn" role="menuitem"><i data-icon="tour"></i>Sightseeing tours: walk, sail, fly</button>
-    <button class="item" id="bizmenu" role="menuitem"><i data-icon="screen"></i>For businesses: screens & buildings</button>
-    <button class="item" id="missionsmenu" role="menuitem"><i data-icon="tour"></i>Missions <span style="margin-left:auto;color:var(--ink-3);font-size:var(--t-caption)">K</span></button>
-    <button class="item" id="recmenu" role="menuitem"><i data-icon="screen"></i>Record screen <span style="margin-left:auto;color:var(--ink-3);font-size:var(--t-caption)">F8</span></button>
-    <button class="item" id="setbtn" role="menuitem"><i data-icon="settings"></i>Settings <span style="margin-left:auto;color:var(--ink-3);font-size:var(--t-caption)">Esc</span></button>
-    <div class="sep"></div>
     <div class="setting"><label for="tod">Time of day <span id="todv"></span></label>
       <button id="livebtn" class="ui-chip accent" style="border:none;cursor:pointer;margin-bottom:var(--s2)">Live · New York time</button>
       <input id="tod" autocomplete="off" type="range" min="0" max="1" step="0.01" value="0.92"></div>
     <div class="setting"><label for="people">People <span id="peoplev"></span></label>
       <input id="people" autocomplete="off" type="range" min="0" max="160" step="2" value="50"></div>
-    <div class="sep"></div>
-    <div class="soon">More neighbourhoods coming soon</div>
   </div>
 </div>
 <div id="dock" class="ui-surface" role="toolbar" aria-label="Controls">
@@ -399,7 +389,6 @@ function reveal() {
     if (saved.mode === "walk") setMode("walk");
     try { localStorage.setItem("ts_welcomed", "1"); } catch (e) { /* private mode */ }   // returning: no first-visit card
     nav.afterReveal(); afterReveal();
-    toast("Welcome back", "Start at the red steps", () => { if (mode === "walk") setMode("orbit"); nav.flyTo({ ...HERO_VIEW, name: "Times Square" }); });
     return;
   }
   if (Settings.reduceMotion) { goTo(HERO_VIEW.eye, HERO_VIEW.target); nav.afterReveal(); afterReveal(); return; }
@@ -708,7 +697,6 @@ const placeZoom = () => {                                  // keep the zoom pill
   document.getElementById("zoom").style.bottom = (innerHeight - r.top + 8) + "px";
 };
 addEventListener("resize", placeZoom); setTimeout(placeZoom, 0); setTimeout(placeZoom, 1500);
-document.getElementById("tourbtn").onclick = () => { menu.hidden = true; nav.startTour(); };
 document.getElementById("tod").oninput = e => { live = false; setTime(+e.target.value); };
 document.getElementById("livebtn").onclick = () => { live = true; document.getElementById("tod").value = nycTod(); setTime(nycTod()); };
 setInterval(() => { if (live) { document.getElementById("tod").value = nycTod(); setTime(nycTod()); } }, 60000);
@@ -1021,8 +1009,6 @@ const region = null;
 import { Clip } from "./js/clip.js";
 const clip = new Clip({ canvas: renderer.domElement, toast: t => Messages.ask(t, [], { ms: 3000 }) });
 clip.ask = (t, a, o) => Messages.ask(t, a, o);
-document.getElementById("recmenu")?.addEventListener("click", () => clip.toggle());
-document.getElementById("missionsmenu")?.addEventListener("click", () => missions.togglePanel(true));
 const trip = new Trip({ nav, ride, helm, flight, harbor, boat, camera, getMode: () => mode, toast: t => Messages.ask(t, [], { ms: 4500 }) });
 ride.onDirections = p => trip.open(p);
 ride.toast = t => Messages.ask(t, [], { ms: 3500 });
@@ -1191,17 +1177,13 @@ const pause = new PauseMenu({
   onClose: () => { paused = false; clock.getDelta(); if (Settings.v.sound) audio.ctx?.resume(); },
   actions: [
     { label: "My garage", run: () => ride.openGarage() },
+    { label: "Record a clip (F8)", run: () => clip.toggle() },
     { label: "What can I do?", run: () => nav.openWelcome() },
     { label: "For businesses", run: () => { if (!business.on) business.setMode(true); } },
-    { label: "Sightseeing tours", run: () => tours.open() },
     { label: "Back to the red steps", run: () => { flight.forceOut(); helm.forceOut(); if (ride.inCar) ride.getOut(); if (mode === "walk") setMode("orbit"); nav.flyTo({ ...HERO_VIEW, name: "Times Square" }); } },
   ] });
 let forgotten = false;                                         // "Forget my place": no autosave for the rest of this visit
 pause.onForget = () => { for (const v of ride.parked) scene.remove(v.group); ride.parked = []; forgotten = true; };
-document.getElementById("setbtn").onclick = () => { menu.hidden = true; pause.open(); };
-document.getElementById("bizmenu").onclick = () => { menu.hidden = true; if (!business.on) business.setMode(true); };
-document.getElementById("sightbtn").onclick = () => { menu.hidden = true; tours.open(); };
-document.getElementById("whatbtn").onclick = () => { menu.hidden = true; nav.openWelcome(); };
 // a settings button inside the search bar (the only always-visible spot on phones)
 document.getElementById("where").insertAdjacentHTML("beforeend", `<button id="gearbtn" class="ui-btn" aria-label="Settings">${ICON.settings}</button>`);
 const gearCss = document.createElement("style");

@@ -206,7 +206,8 @@ export class SpeedBoat {
   finishRace() {
     const R = this.race, ms = R.t * 1000, s = R.t, medal = s <= this.gold ? "gold" : s <= this.silver ? "silver" : s <= this.bronze ? "bronze" : "none";
     const prev = this.best[this.courseId], pb = !prev || ms < prev; if (pb) { this.best[this.courseId] = ms; save(this.best); }
-    this.stopRace(); this.toast?.(`${this.def.name}: ${this.fmt(ms)}${pb ? " · NEW BEST" : ""}${medal !== "none" ? " · " + medal.toUpperCase() : ""}`);
+    this.stopRace(); const text = (`${this.def.name}: ${this.fmt(ms)}${pb ? " · NEW BEST" : ""}${medal !== "none" ? " · " + medal.toUpperCase() : ""}`);
+    if (this.onResult) this.onResult(text, () => this.board(this.courseId).then(() => this.startRace())); else this.toast?.(text);
     this.onFinish?.({ ms, medal, pb, course: this.courseId });
   }
 

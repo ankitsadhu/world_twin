@@ -96,7 +96,8 @@ export class CrashJunction {
     if (pb) { this.best.score = score; save(this.best); }
     this.stop();
     this.chaos.s.total += score; this.chaos.s.best = Math.max(this.chaos.s.best, this.chaos.s.total);
-    this.toast?.(`Crash junction: ${cars} cars · ${this.pile} pile-ups · ${score.toLocaleString()} pts${medal !== "none" ? " · " + medal.toUpperCase() : ""}${pb ? " · NEW BEST" : ""}`);
+    const text = (`Crash junction: ${cars} cars · ${this.pile} pile-ups · ${score.toLocaleString()} pts${medal !== "none" ? " · " + medal.toUpperCase() : ""}${pb ? " · NEW BEST" : ""}`);
+    if (this.onResult) this.onResult(text, () => this.runAt(this.J.ax, this.J.s.y)); else this.toast?.(text);
     this.onFinish?.({ score, cars, pileups: this.pile, medal });
   }
 

@@ -52,3 +52,10 @@ Changes made in this pass (see `viewer/css/hud.css` and `viewer/js/hudlayout.js`
 top-right heat, bottom-centre vehicle bar with the tutorial prompt reserved above it, bottom-right hints), one visual language (glass panels, bold numerals, 8-pt spacing),
 the search bar shrinks while you play, buttons wrap instead of truncating, and safe-area padding on phones.
 Still to do: on-screen touch controls with a proper thumb layout, a larger speedometer with a rev ring, a pause/settings screen restyle, a mission result card.
+
+## 3. What was fixed after this review (status)
+Fixed: (1) one spine, the level chip is now the mission list "n/20 Missions", missions are the progress; (2) rewards: a new bike paint unlocks per finished mission (3 to start, 12 total);
+(3) the first lane is a road with a long clear run; (4) camera closer, speed FOV, tremor over 65 km/h, look back with C; (5) vehicle effects: damage smoke (black when wrecked), tyre smoke,
+crash sparks and dust, landing dust; (7) people shout "Hey!" and step away from a fast vehicle; (10) a police helicopter with a searchlight from 4 stars; (11) every mission has a named
+character with a briefing and a closing line, and race/boat/crash runs end on a result card with Retry and Next mission; (12) fail states for races, boats, chases, fares; (14) wolf compass and pickup burst.
+Not fixed (needs art, data or a longer job): (6) people models and faces; (8) traffic/crowds downtown; (9) more vehicle models; (13) audio mix and engine; (15) staged loading; touch-control restyle.

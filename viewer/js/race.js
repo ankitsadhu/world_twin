@@ -199,7 +199,8 @@ export class Race {
     const kind = this.kind(), G = this.ghosts[c.id]?.[kind], beatGhost = !!G && ms < G.ms, firstRun = !G;
     if (!G || ms < G.ms) { (this.ghosts[c.id] ||= {})[kind] = { ms, trace: this.rec, gateT: this.gateT.map(v => v == null ? null : +v.toFixed(2)) }; saveG(this.ghosts); }   // your best run becomes the ghost
     this.stop();
-    this.toast?.(`${c.name}: ${this.fmt(ms)}${pb ? " · NEW BEST" : ""}${medal !== "none" ? ` · ${medal.toUpperCase()}` : ""}${beatGhost ? ` · beat your ghost by ${((G.ms - ms) / 1000).toFixed(2)} s` : firstRun ? " · ghost saved: race it next time (T to restart)" : ""}`);
+    const text = (`${c.name}: ${this.fmt(ms)}${pb ? " · NEW BEST" : ""}${medal !== "none" ? ` · ${medal.toUpperCase()}` : ""}${beatGhost ? ` · beat your ghost by ${((G.ms - ms) / 1000).toFixed(2)} s` : firstRun ? " · ghost saved: race it next time (T to restart)" : ""}`);
+    if (this.onResult) this.onResult(text, () => this.start(c)); else this.toast?.(text);
     this.onFinish?.({ id: c.id, ms, medal, pb, beatGhost });
   }
 

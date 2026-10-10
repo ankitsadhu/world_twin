@@ -110,6 +110,7 @@ import { Collider } from "./js/collision.js";
 import { Crowd, tktsSeats } from "./js/crowd.js";
 import { Navigator } from "./js/nav.js";
 import { CityMap, drawPlaceIcon, drawBadge, pinColor } from "./js/map.js";
+import { PAINTS } from "./js/bike.js";
 import { StreetWalk } from "./js/walk.js";
 import { Business } from "./js/business.js";
 import { ICON } from "./js/icons.js";
@@ -796,7 +797,7 @@ nav.onBuilding = b => plan.onBuilding(b);
 if (new URLSearchParams(location.search).has("debug"))      // developer handle, only with ?debug
   window.__views = () => screenViews;
 if (new URLSearchParams(location.search).has("debug"))
-  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pursuit() { return pursuit; }, get cityMap() { return cityMap; }, get trip() { return trip; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get progress() { return progress; }, get chaos() { return chaos; }, get race() { return race; }, get heat() { return heat; }, get clip() { return clip; }, get playzone() { return playzone; }, get crashRun() { return crashRun; }, get speedboat() { return speedboat; }, get missions() { return missions; }, get obstacles() { indexSceneObstacles(); return obstacleBoxes; }, get wolves() { return wolves; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
+  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pursuit() { return pursuit; }, get cityMap() { return cityMap; }, get trip() { return trip; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get progress() { return progress; }, get chaos() { return chaos; }, get race() { return race; }, get heat() { return heat; }, get clip() { return clip; }, get playzone() { return playzone; }, get crashRun() { return crashRun; }, get speedboat() { return speedboat; }, get missions() { return missions; }, get fx() { return fx; }, get heli() { return heli; }, get obstacles() { indexSceneObstacles(); return obstacleBoxes; }, get wolves() { return wolves; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
 let traffic = null;
 let pursuit = null;
 const trafficCount = () => Math.round((Settings.quality === "low" ? 14 : matchMedia("(max-width: 640px)").matches ? 18 : 28) * Settings.v.traffic);
@@ -1025,6 +1026,8 @@ import { Missions } from "./js/missions.js";
 import { Furniture } from "./js/furniture.js";
 import { Wolves } from "./js/wolves.js";
 import { layoutHud } from "./js/hudlayout.js";
+import { Fx } from "./js/fx.js";
+import { Heli } from "./js/heli.js";
 let hitStop = 0;
 const progress = new LevelProgress({ nav, fares: null, getPursuit: () => pursuit, ride, toast: (t, ms) => Messages.ask(t, [], { ms: ms || 3500 }),
   getPos: () => {
@@ -1067,10 +1070,11 @@ const speedboat = new SpeedBoat({ scene, camera, helm, audio, setMode, getMode: 
   onBoost: () => { progress.s.m.boosts = (progress.s.m.boosts || 0) + 1; },
   onFinish: r => { progress.s.m.races = (progress.s.m.races || 0) + 1; progress.s.m.boatRaces = (progress.s.m.boatRaces || 0) + 1; chaos.s.total += Math.round(Math.max(0, 3000 - r.ms / 50)); Analytics.track("boat_race", r); missions.markDone("m_boat"); },
   onLeave: ({ x, y, h }) => { setMode("orbit"); goTo([x - Math.cos(h) * 70 + Math.sin(h) * 60, y - Math.sin(h) * 70 - Math.cos(h) * 60, 45], [x, y, 4]); } });
+const fx = new Fx(scene); ride.fx = fx; const heli = new Heli(scene);
 ride.furniture = new Furniture({ scene, audio, onHit: (k, pts, label) => { chaos.add(pts, label, "smash"); progress.s.m.smashed = (progress.s.m.smashed || 0) + 1; } });
 const hudPos = () => { if (ride.state === "driving" && ride.car) return { x: ride.car.position.x, y: -ride.car.position.z }; if (speedboat.active) return { x: speedboat.x, y: speedboat.y }; if (mode === "walk") return { x: camera.position.x, y: -camera.position.z }; return null; };
 const mapSets = () => (mapData && cityMap.data ? [mapData, cityMap.data] : []);
-const wolves = new Wolves({ harbor, scene, ground: groundMap, collider: () => collider, pos: hudPos, chaos, mapSets, pop: t => chaos.popText(t), toast: t => Messages.ask(t, [], { ms: 4500 }),
+const wolves = new Wolves({ camera, fx, harbor, scene, ground: groundMap, collider: () => collider, pos: hudPos, chaos, mapSets, pop: t => chaos.popText(t), toast: t => Messages.ask(t, [], { ms: 4500 }),
   onFound: n => { progress.s.m.wolves = n; Analytics.track("wolf", { n }); if (n >= 50) missions.markDone("m_wolf"); } });
 const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => onboard.step >= 0 || race.state !== "idle" || speedboat.race.state !== "idle" || crashRun.state !== "idle" || (pursuit?.active ?? false), scene, camera, traffic: () => traffic, race: () => race, pos: hudPos, mapSets, ask: (t, a, o) => Messages.ask(t, a, o), toast: t => Messages.ask(t, [], { ms: 4000 }),
   start: {
@@ -1100,7 +1104,26 @@ const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => o
   make("cpark", "Central Park Loop", ring([260, 1290], 260, 8));
 })();
 missions.go = id => nav.onWelcome("mission:" + id);
+race.onResult = (t, r) => missions.result(t, r); speedboat.onResult = (t, r) => missions.result(t, r); crashRun.onResult = (t, r) => missions.result(t, r);
+progress.missionStats = () => missions.stats();
+progress.chip.addEventListener("click", e => { e.stopImmediatePropagation(); missions.togglePanel(true); }, true);       // the level chip is the mission list now
+ride.bikes.unlockedCount = 3;                                                          // paints: three to start, one more for every finished mission
+missions.onChange = st => { const n = Math.min(12, 3 + st.done); if (n > ride.bikes.unlockedCount) { ride.bikes.unlockedCount = n; Messages.ask(`New bike paint unlocked: ${PAINTS[n - 1].name}`, [], { ms: 5000 }); } };
+{ const st = missions.stats(); ride.bikes.unlockedCount = Math.min(12, 3 + st.done); }
 layoutHud({ isPlaying: () => ride.state === "driving" || speedboat.active || flight.active, isOnboarding: () => onboard.step >= 0 && ride.state === "driving" });
+// people react to a vehicle tearing past: a shout ("Hey!"), a step away from its path, a look; only when it is fast and close
+let shoutT = 0;
+setInterval(() => {
+  if (ride.state !== "driving" || !npcs || Math.abs(ride.v) < 8 || performance.now() < shoutT) return;
+  const p = ride.car.position, x = p.x, y = -p.z;
+  for (const n of npcs.list) {
+    if (n.state !== "walking" || Math.hypot(n.x - x, n.y - y) > 3.4) continue;
+    shoutT = performance.now() + 2200;
+    audio.grunt?.(new THREE.Vector3(n.x, 1.6, -n.y), 1.25 + Math.random() * 0.35);
+    const dx = n.x - x, dy = n.y - y, d = Math.hypot(dx, dy) || 1; n.target = [n.x + dx / d * 3, n.y + dy / d * 3]; n.wait = 0;
+    break;
+  }
+}, 250);
 const heat = new Heat({ ride, chaos, pursuit: () => pursuit, toast: t => Messages.ask(t, [], { ms: 3500 }) });
 progress.heat = heat; heat.suppress = () => onboard.step >= 0;                  // no police during the guided first ride
 chaos.onBigMoment = s => { Analytics.first("first_crash"); if (s > 0.5) { hitStop = 0.1; clip.highlight("Huge crash"); } };
@@ -1563,7 +1586,8 @@ function tick() {
   trip.update();
   fares.update(dt);
   playzone.update(dt);
-  ride.furniture?.update(dt);
+  ride.furniture?.update(dt); fx.update(dt, ride);
+  heli.show(!!(pursuit?.active && (pursuit.stars || 0) >= 4), ride); heli.update(dt, ride);
   speedboat.update(dt);
   tours.update(dt);
   traffic?.update(dt);

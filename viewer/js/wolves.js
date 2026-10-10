@@ -60,6 +60,7 @@ export class Wolves {
   }
 
   collect(w) {
+    this.fx?.gold(w.x, this.ground.inside(w.x, w.y) ? this.ground.h(w.x, w.y) : 0, -w.y);
     w.got = true; this.found.add(w.id); save([...this.found]); w.g.visible = false;
     const n = this.found.size;
     this.chaos.s.total += 500; this.chaos.s.best = Math.max(this.chaos.s.best, this.chaos.s.total);
@@ -86,5 +87,15 @@ export class Wolves {
     this.el.style.cssText = "position:fixed;left:12px;top:calc(100px + env(safe-area-inset-top));z-index:25;padding:5px 10px;border-radius:999px;background:rgba(20,20,24,.72);border:1px solid rgba(255,255,255,.2);color:#ffd86a;font:700 12px system-ui,sans-serif;backdrop-filter:blur(8px);pointer-events:none";
     document.body.appendChild(this.el);
   }
-  paint() { this.el.textContent = `🐺 ${this.found.size}/${N}`; }
+  // the compass: how far the nearest golden wolf is and which way (relative to where you are looking)
+  paint() {
+    let extra = "";
+    const w = this.nearest(), p = this.pos?.();
+    if (w && p && this.camera) {
+      const d = Math.hypot(w.x - p.x, w.y - p.y), dir = new THREE.Vector3(); this.camera.getWorldDirection(dir);
+      const rel = Math.atan2(w.x - p.x, w.y - p.y) - Math.atan2(dir.x, -dir.z), a = ((rel % 6.2832) + 9.4248) % 6.2832, arrows = ["↑", "↗", "→", "↘", "↓", "↙", "←", "↖"];
+      extra = ` · ${arrows[Math.round(a / 0.7854) % 8]} ${d < 1000 ? Math.round(d / 10) * 10 + " m" : (d / 1000).toFixed(1) + " km"}`;
+    }
+    const t = `🐺 ${this.found.size}/${N}${extra}`; if (t !== this.txt) { this.txt = t; this.el.textContent = t; }
+  }
 }

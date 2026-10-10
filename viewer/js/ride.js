@@ -444,7 +444,7 @@ export class Ride {
         <div class="acts">
           ${self ? `<button class="ui-btn primary" data-a="wheel">Take the wheel</button>`
                  : `<button class="ui-btn primary" data-a="auto"${this.dest ? "" : " disabled"}>Self-drive</button>`}
-          ${this.vehicle?.kind === "bike" ? `<button class="ui-btn" data-a="paint">Repaint: ${PAINTS[this.vehicle.paint ?? 0]?.name || ""}</button>` : ""}
+          ${this.vehicle?.kind === "bike" ? `<button class="ui-btn" data-a="paint">Paint: ${PAINTS[this.vehicle.paint ?? 0]?.name || ""}</button>` : ""}
           ${this.vehicle?.kind === "taxi" ? `<button class="ui-btn" data-a="view">${this.view === "chase" ? "Inside view" : "Outside view"}</button>` : ""}
           ${!self && this.vehicle?.type === "Taxi" ? `<button class="ui-btn" data-a="fares">${this.fares?.active ? "Off duty" : "Take fares"}${touch ? "" : " · J"}</button>` : ""}
           ${chaseReady ? `<button class="ui-btn${this.pursuit.active ? " danger" : ""}" data-a="pursuit">${chaseLabel}</button>` : ""}
@@ -537,7 +537,7 @@ export class Ride {
     if (a === "show") return this.showCar(true);
     if (a === "wheel") { this.state = "driving"; this.look.yaw = 0; return this.render(); }
     if (a === "auto") return this.autopilot();
-    if (a === "paint") { const v = this.vehicle; v.userPaint = true; const p = this.bikes.repaint(v, (v.paint ?? 0) + 1); this.toast?.(p.name); return this.render(); }
+    if (a === "paint") { const v = this.vehicle; v.userPaint = true; const n = this.bikes.unlockedCount || 3, p = this.bikes.repaint(v, ((v.paint ?? 0) + 1) % n); this.toast?.(`${p.name} (${n}/${PAINTS.length} paints unlocked: finish missions for more)`); return this.render(); }
     if (a === "view") { this.view = this.view === "chase" ? "inside" : "chase"; this.look.yaw = 0; return this.render(); }
     if (a === "out") return this.getOut();
     if (a === "pursuit") {
@@ -818,6 +818,7 @@ export class Ride {
     this.bikeAir = Math.max(0, this.bikeAir + this.bikeVy * dt);
     if (!this.bikeAir) {                                                                       // touchdown
       this.landHard = Math.min(1.5, Math.abs(this.bikeVy) / 6); this.landDip = 0.3; this.bikeVy = 0;
+      this.fx?.land(this.car.position.x, this.car.position.y, this.car.position.z, this.landHard);
       if (this.landHard > 0.5) { this.onBump?.(Math.min(0.5, this.landHard * 0.3)); this.audio?.crash?.(new THREE.Vector3(this.car.position.x, 0.3, this.car.position.z), 0.25 * this.landHard, "concrete"); }
       this.settle(v, this.heading);
       return;
@@ -850,12 +851,13 @@ export class Ride {
     this.onBikes?.(this.bikeMarkers);
   }
   // flat, open ground near (x, y) with a clear run ahead: [x, y, heading] or null (no steps, kerbs, walls or people's furniture within 14 m ahead)
-  openSpot(x, y) {
+  openSpot(x, y, road = false) {
     const G = this.ground, col = this.getCollider(); if (!G?.built || !col) return null;
     let best = null;
-    for (let r = 3; r <= 60 && !best; r += 3) for (let a = 0; a < 360 && !best; a += 20) {
+    for (let r = 3; r <= (road ? 140 : 60) && !best; r += 3) for (let a = 0; a < 360 && !best; a += 20) {
       const px = x + Math.cos(a * Math.PI / 180) * r, py = y + Math.sin(a * Math.PI / 180) * r, h0 = G.h(px, py);
-      if (h0 > 0.35 || col.blocked(px, py, 0.8, 0.3)) continue;
+      if (h0 > (road ? 0.05 : 0.35) || col.blocked(px, py, 0.8, 0.3)) continue;
+      if (road && [[2.5, 0], [-2.5, 0], [0, 2.5], [0, -2.5]].some(([ox, oy]) => G.h(px + ox, py + oy) > 0.05)) continue;     // on the tarmac, not at a kerb
       for (let k = 0; k < 8; k++) {                                                    // a clear straight run in some direction
         const h = k * Math.PI / 4; let ok = true;
         for (let d = 3; d <= 40 && ok; d += 3) {                                          // 40 m of clear run: ground, walls, and the street furniture the mesh test knows (planters, bollards)
@@ -914,7 +916,7 @@ export class Ride {
     }
     if (!instant && best && bd < 45) this.approach({ parked: best });
     else if (this.bikes.tpl) {                                                      // none within a short walk: one is waiting nearby on open flat ground (the first minute must not be a hike, or a staircase)
-      const spot = this.openSpot(c.x, -c.z);
+      const spot = (instant && this.openSpot(c.x, -c.z, true)) || this.openSpot(c.x, -c.z);        // Play: onto a road, with a long clear run
       if (spot) this.bikeAt(spot.x, spot.y, spot.h).then(v => instant ? this.enter({ parked: v }) : this.approach({ parked: v }));     // Play: you are on the bike, no walking
       else this.toast?.("No room to put a bike here: walk to the street");
     } else this.toast?.("The motorcycles are still being brought out: try again in a moment");
@@ -1215,7 +1217,8 @@ export class Ride {
     addEventListener("keydown", e => {                                // H: honk (people ahead hurry out of the way)
       if (e.code === "KeyH" && this.inCar && !e.repeat && e.target.tagName !== "INPUT") this.honk();
     });
-    addEventListener("keyup", e => { if (keys[e.code]) this.ctl[keys[e.code]] = 0; });
+    addEventListener("keyup", e => { if (keys[e.code]) this.ctl[keys[e.code]] = 0; if (e.code === "KeyC") this.lookBack = false; });
+    addEventListener("keydown", e => { if (e.code === "KeyC" && this.state === "driving" && e.target.tagName !== "INPUT") this.lookBack = true; });
     this.dom.addEventListener("pointerdown", e => { if (this.inCar) this.look.drag = [e.clientX, e.clientY]; });
     addEventListener("pointermove", e => {
       if (!this.look.drag) return;
@@ -1454,6 +1457,7 @@ export class Ride {
     if (sp) sp.textContent = Math.round(Math.abs(this.v) * MPH);
     this.audio?.setCar?.(this.car.visible ? Math.abs(this.v) : 0, this.car.position);
     if (this.inCar) this.cameraFollow(dt);
+    else if (this.baseFov && Math.abs(this.camera.fov - this.baseFov) > 0.05) { this.camera.fov = this.baseFov; this.camera.updateProjectionMatrix(); this.baseFov = null; }
   }
 
   drive(dt) {
@@ -1574,6 +1578,7 @@ export class Ride {
       const s = Math.min(1, Math.abs(this.v) / 14);
       if (Math.abs(this.v) > 1) {
         this.onBump?.(s);
+        this.fx?.crash(front[0], this.car.position.y, -front[1], s);
         this.fares?.bump(s);
         this.audio?.crash?.(hitObstacle?.point || new THREE.Vector3(front[0], 0.6, -front[1]), s, hitObstacle?.kind || "concrete");
         this.bump = Settings.reduceMotion ? 0 : 0.25 + 0.55 * s; this.bumpS = s;
@@ -1642,7 +1647,7 @@ export class Ride {
     } else {
       const bk = this.vehicle?.kind === "bike";
       // Forward camera offsets use bike-local -Z with h+PI/2 and car-local +Z with h-PI/2; both rotate behind the vehicle.
-      const off = new THREE.Vector3(0, (bk ? 1.9 : 2.5) + Math.min(2.2, (this.bikeAir || 0) * 0.5), (bk ? -4.6 : 7.2) * (1 + Math.min(0.25, (this.bikeAir || 0) * 0.08))).applyAxisAngle(new THREE.Vector3(0, 1, 0), car.rotation.y + L.yaw);
+      const off = new THREE.Vector3(0, (bk ? 1.7 : 2.3) + Math.min(2.2, (this.bikeAir || 0) * 0.5), (bk ? -3.9 : 6.3) * (1 + Math.min(0.25, (this.bikeAir || 0) * 0.08))).applyAxisAngle(new THREE.Vector3(0, 1, 0), car.rotation.y + L.yaw + (this.lookBack ? Math.PI : 0));
       off.y += Math.max(0, L.pitch - 0.08) * 8;
       const want = car.position.clone().add(off);
       if (shake) want.add(new THREE.Vector3((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake * 0.6, (Math.random() - 0.5) * shake));
@@ -1651,8 +1656,13 @@ export class Ride {
       if (col) for (let k = 0; k < 8 && col.blocked(want.x, -want.z, 0.4, want.y); k++) want.lerp(car.position.clone().setY(want.y), 0.3);
       const a = this.camBlend < 1 ? (this.camBlend = Math.min(1, (this.camBlend || 0) + dt * 1.2), 1 - Math.exp(-dt * 3)) : 1 - Math.exp(-dt * 6);
       cam.position.lerp(want, a);
+      // the speed feel: the lens widens with speed (and more under boost), a fine tremor over 65 km/h, and C looks behind you
+      const sp = Math.abs(this.v); this.baseFov ??= cam.fov;
+      const fovT = this.baseFov + Math.min(16, sp * 0.5) + (this.boostT > 0 ? 6 : 0);
+      if (Math.abs(cam.fov - fovT) > 0.05) { cam.fov += (fovT - cam.fov) * Math.min(1, dt * 4); cam.updateProjectionMatrix(); }
+      if (sp > 18 && !Settings.reduceMotion) { const t = (sp - 18) * 0.0035; cam.position.x += (Math.random() - 0.5) * t; cam.position.y += (Math.random() - 0.5) * t * 0.7; }
       // bike faces +Z so look ahead is +Z; car faces -Z so look ahead is -Z
-      const look = car.position.clone().add(new THREE.Vector3(0, bk ? 1.0 : 1.1, 0)).add(new THREE.Vector3(0, 0, bk ? 4 : -4).applyQuaternion(car.quaternion));
+      const look = car.position.clone().add(new THREE.Vector3(0, bk ? 1.0 : 1.1, 0)).add(new THREE.Vector3(0, 0, (bk ? 4 : -4) * (this.lookBack ? -1 : 1)).applyQuaternion(car.quaternion));
       cam.lookAt(look);
     }
   }

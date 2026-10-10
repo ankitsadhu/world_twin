@@ -30,6 +30,30 @@ export const MISSIONS = [
   { id: "m_wolf", icon: "wolf", cat: "Collect", name: "Wolf Hunt", zone: "Everywhere", level: 1, x: 273, y: 631, pitch: "50 golden wolves hidden from Central Park to the Statue of Liberty", start: "wolf" },
 ];
 
+// the voices: who sends you, what they say before, and what they say after (one line each; short, not preachy)
+const BRIEFS = {
+  m_ride: ["Dispatch", "Take the bike out. Ride it hard, jump something, then wreck it. We'll call it a test.", "Not bad. The city's yours."],
+  m_wolf: ["Old Ray", "Fifty golden wolves are hidden from the park to the Statue. Find them all and you'll never need a map again.", "Every last one. Ray's buying."],
+  m_park_cross: ["Dispatch", "Ramps and barrels in the plaza. Break things, nobody minds.", "That plaza will never be the same."],
+  m_park_hudson: ["Jess", "Three kickers, one wall of crates. Small, medium, send it.", "Clean send. The crates are crying."],
+  m_park_back: ["Jess", "Bowling night on the west side. You're the ball.", "Strike."],
+  m_park_east: ["Marcus", "Two big ramps, one crate pyramid. You can guess the rest.", "Pyramid: gone."],
+  m_park_gate: ["Jess", "A skatepark at the edge of the park. Locals will be watching.", "They clapped. Probably."],
+  m_taxi: ["Rosa", "Theatre's letting out and everyone wants a cab. Beat the clock, tricks buy time.", "That's how you run a fare."],
+  m_trial: ["Marcus", "The long avenues, empty and fast. Beat your own ghost.", "Your ghost is furious."],
+  m_cpark: ["Dispatch", "Gates round the park. Find your own way.", "Nobody found a faster line."],
+  m_wall: ["Rosa", "From the Trade Center to the Battery before the markets close.", "Made it before the bell."],
+  m_crash: ["Marcus", "A junction at rush hour. Find the biggest mess you can make.", "Insurance will be calling."],
+  m_heat: ["Dispatch", "Cause trouble and the cruisers come. Then lose them.", "They're still looking for you."],
+  m_kart: ["Jess", "Boost pads, jump pads and cones round Midtown. Stay on the line.", "Pad after pad. Smooth."],
+  m_boat: ["Captain Lou", "The river's quiet and the speedboat's fast. Hit the green pads.", "You're a natural on the water."],
+  m_cross: ["Captain Lou", "Down the Hudson, past Hoboken, back before the ferry. Don't clip the piers.", "Jersey says thanks."],
+  m_lib: ["Captain Lou", "A lap round Liberty Island. She's watching, so show off.", "Lady Liberty approves."],
+  m_air: ["Tower", "Cleared to land on the carrier. Centreline, soft touch.", "Clean trap. Welcome aboard."],
+  m_statue: ["Tower", "Pass by the Statue low enough to see her face.", "She waved. Pretty sure."],
+  m_roof: ["Tower", "Jump, thread the gates, land on that roof.", "Textbook. Now do it again."],
+};
+
 export class Missions {
   // o: { scene, camera, ask(text, actions, opts), toast, pos: () => {x, y} | null, start: { bike(), park(), taxi(), race(id), crash(x, y), heat(), boat(), fly(), wolf() }, traffic: () => traffic, race: () => race, mapSets: () => [data...] }
   constructor(o) {
@@ -86,8 +110,16 @@ export class Missions {
   next() { const m = MISSIONS.find(m => !this.done[m.id]); if (m) { this.active = null; this.track(m.id); } return m; }
   activeMission() { return MISSIONS.find(m => m.id === this.active && !this.done[m.id]) || null; }
 
+  stats() { return { done: MISSIONS.filter(m => this.done[m.id]).length, total: MISSIONS.filter(m => m.x != null).length || MISSIONS.length }; }
+  // a result card after a run: what happened, with Retry and Next mission
+  result(text, retry) {
+    this.ask?.(text, [["Retry", () => retry?.(), true], ["Next mission", () => this.next()]], { ms: 14000, key: "result" });
+  }
+
   markDone(id) {
     if (this.done[id]) return;
+    const B = BRIEFS[id]; if (B) this.toast?.(`${B[0]}: “${B[2]}”`);
+    this.onChange?.(this.stats());
     this.done[id] = Date.now(); save(this.done);
     if (this.active === id) { this.active = null; try { localStorage.removeItem(KEY + ".active"); } catch { /* private mode */ } }
     this.pins(); this.paintPanel();
@@ -149,7 +181,8 @@ export class Missions {
     }
     if (near && near !== this.near) {
       this.near = near;
-      this.ask(`${near.name}: ${near.pitch}`, [["Start", () => this.begin(near), true], ["Not now", () => { this.cool.set(near.id, performance.now() + 90000); }]], { ms: 12000, key: "mission_" + near.id });
+      const B = BRIEFS[near.id];
+      this.ask(B ? `${B[0]}: “${B[1]}”` : `${near.name}: ${near.pitch}`, [["Start", () => this.begin(near), true], ["Not now", () => { this.cool.set(near.id, performance.now() + 90000); }]], { ms: 12000, key: "mission_" + near.id });
     } else if (!near) this.near = null;
   }
 

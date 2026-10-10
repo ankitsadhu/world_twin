@@ -22,3 +22,6 @@ data/region/map_osm.json
 
 # region street-map tiles (the region is not wired into the game; rebuild with scripts/tools/build_region_map.py)
 export/region/
+
+# generated Light asset tier (regenerate: python3 scripts/tools/make_web_assets.py); originals live in export/
+export_web/

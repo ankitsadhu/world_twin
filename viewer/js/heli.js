@@ -13,7 +13,7 @@ export class Heli {
     const blade = new THREE.Mesh(new THREE.BoxGeometry(8.4, 0.05, 0.25), dark); blade.position.y = 1.72; this.blade = blade; g.add(blade);
     const skid = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 0.1), dark); skid.position.y = -1.3; g.add(skid);
     for (const [c, x] of [[0xff2638, -0.5], [0x36a8ff, 0.5]]) { const l = new THREE.Mesh(new THREE.SphereGeometry(0.16, 8, 6), new THREE.MeshBasicMaterial({ color: c, toneMapped: false })); l.position.set(x, -0.9, 1.4); l.userData.strobe = c; g.add(l); }
-    this.cone = new THREE.Mesh(new THREE.ConeGeometry(3.6, 40, 20, 1, true), new THREE.MeshBasicMaterial({ color: 0xfff6d6, transparent: true, opacity: 0.09, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
+    this.cone = new THREE.Mesh(new THREE.ConeGeometry(3.6, 40, 20, 1, true), new THREE.MeshBasicMaterial({ color: 0xfff6d6, transparent: true, opacity: 0.035, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.FrontSide }));
     this.cone.position.y = -21; g.add(this.cone);
     g.traverse(o => { o.raycast = () => {}; o.userData.traffic = true; });
     this.group = g; g.visible = false; scene.add(g); this.active = false; this.t = 0;

@@ -4,7 +4,7 @@ import * as THREE from "three";
 
 const N = 700;
 const VS = `attribute float aSize; attribute float aAlpha; attribute float aRot; attribute vec3 aColor; varying float vA; varying float vR; varying vec3 vC;
-  void main(){ vA = aAlpha; vR = aRot; vC = aColor; vec4 mv = modelViewMatrix * vec4(position,1.0); gl_PointSize = aSize * (320.0 / -mv.z); gl_Position = projectionMatrix * mv; }`;
+  void main(){ vA = aAlpha; vR = aRot; vC = aColor; vec4 mv = modelViewMatrix * vec4(position,1.0); gl_PointSize = min(aSize * (320.0 / -mv.z), 200.0); vA = aAlpha * smoothstep(1.5, 7.0, -mv.z); gl_Position = projectionMatrix * mv; }`;
 const FS = `uniform sampler2D uTex; varying float vA; varying float vR; varying vec3 vC;
   void main(){ vec2 c = gl_PointCoord - 0.5; float cs = cos(vR), sn = sin(vR); vec2 uv = vec2(c.x * cs - c.y * sn, c.x * sn + c.y * cs) + 0.5;
     vec4 t = texture2D(uTex, uv); float shade = mix(0.7, 1.15, t.r);                                     /* lumpy: the dense core is lighter, the edges darker */

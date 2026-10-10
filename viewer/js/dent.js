@@ -3,7 +3,8 @@
 // Geometry is shared between clones of a model, so each mesh is cloned once, the first time it is dented.
 import * as THREE from "three";
 const _p = new THREE.Vector3(), _c = new THREE.Vector3(), _d = new THREE.Vector3(), _v = new THREE.Vector3(), _m = new THREE.Matrix4(), _s = new THREE.Vector3();
-const hash = (x, y, z) => { const v = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453; return v - Math.floor(v); };
+// smooth, low-frequency crumple: neighbouring vertices move almost alike, so the surface folds instead of tearing
+const wobble = (x, y, z) => 0.8 + 0.2 * Math.sin(x * 11 + z * 7) * Math.cos(y * 9 + x * 5);
 
 // v: a vehicle ({ group, model }); point: world-space impact point; strength 0..1
 export function dentVehicle(v, point, strength) {
@@ -11,7 +12,7 @@ export function dentVehicle(v, point, strength) {
   root.updateMatrixWorld(true);
   _c.setFromMatrixPosition(v.group.matrixWorld); _c.y += 0.6;                                // the body's centre: dents push towards it
   _d.copy(_c).sub(point); _d.y *= 0.3; if (_d.lengthSq() < 1e-4) return 0; _d.normalize();
-  const R = 0.35 + strength * 0.95, depth = 0.08 + strength * 0.4; let moved = 0;
+  const big = v.kind !== "bike", R = big ? 0.5 + strength * 0.9 : 0.3 + strength * 0.4, depth = big ? 0.04 + strength * 0.2 : 0.02 + strength * 0.1; let moved = 0;   // a bike is thin: a small, shallow crumple, never through the other side
   root.traverse(o => {
     if (!o.isMesh || o.isSkinnedMesh || /WHEEL|STEER|LIGHT|GLASS/i.test(o.name || "")) return;
     const g0 = o.geometry; if (!g0?.attributes?.position) return;
@@ -25,7 +26,7 @@ export function dentVehicle(v, point, strength) {
     let touched = false;
     for (let i = 0; i < pos.count; i++) {
       const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i), dist = Math.hypot(x - lp.x, y - lp.y, z - lp.z); if (dist > rl) continue;
-      const k = 1 - dist / rl, w = k * k * (3 - 2 * k) * (0.6 + 0.8 * hash(x, y, z));
+      const k = 1 - dist / rl, w = k * k * (3 - 2 * k) * wobble(x, y, z);
       pos.setXYZ(i, x + ld.x * dl * w, y + ld.y * dl * w, z + ld.z * dl * w); touched = true; moved++;
     }
     if (touched) { pos.needsUpdate = true; o.geometry.computeVertexNormals(); o.geometry.computeBoundingSphere(); }

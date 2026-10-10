@@ -67,8 +67,6 @@
     <div class="setting"><label for="tod">Time of day <span id="todv"></span></label>
       <button id="livebtn" class="ui-chip accent" style="border:none;cursor:pointer;margin-bottom:var(--s2)">Live · New York time</button>
       <input id="tod" autocomplete="off" type="range" min="0" max="1" step="0.01" value="0.92"></div>
-    <div class="setting"><label for="people">People <span id="peoplev"></span></label>
-      <input id="people" autocomplete="off" type="range" min="0" max="160" step="2" value="50"></div>
   </div>
 </div>
 <div id="dock" class="ui-surface" role="toolbar" aria-label="Controls">
@@ -799,7 +797,7 @@ nav.onBuilding = b => plan.onBuilding(b);
 if (new URLSearchParams(location.search).has("debug"))      // developer handle, only with ?debug
   window.__views = () => screenViews;
 if (new URLSearchParams(location.search).has("debug"))
-  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pursuit() { return pursuit; }, get cityMap() { return cityMap; }, get trip() { return trip; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get progress() { return progress; }, get chaos() { return chaos; }, get race() { return race; }, get heat() { return heat; }, get clip() { return clip; }, get playzone() { return playzone; }, get crashRun() { return crashRun; }, get speedboat() { return speedboat; }, get missions() { return missions; }, get fx() { return fx; }, get heli() { return heli; }, get obstacles() { indexSceneObstacles(); return obstacleBoxes; }, get wolves() { return wolves; }, get onboard() { return onboard; }, get business() { return business; }, get paused() { return paused; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
+  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pursuit() { return pursuit; }, get cityMap() { return cityMap; }, get trip() { return trip; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get progress() { return progress; }, get chaos() { return chaos; }, get race() { return race; }, get heat() { return heat; }, get clip() { return clip; }, get playzone() { return playzone; }, get crashRun() { return crashRun; }, get speedboat() { return speedboat; }, get missions() { return missions; }, get fx() { return fx; }, get heli() { return heli; }, get obstacles() { indexSceneObstacles(); return obstacleBoxes; }, get wolves() { return wolves; }, get population() { return population; }, get onboard() { return onboard; }, get business() { return business; }, get paused() { return paused; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
 let traffic = null;
 let pursuit = null;
 const trafficCount = () => Math.round((Settings.quality === "low" ? 14 : matchMedia("(max-width: 640px)").matches ? 18 : 28) * Settings.v.traffic);
@@ -845,19 +843,20 @@ Promise.all([fetch(ROOT + "export/times_square/collision2d.json").then(r => r.js
     if (traffic) traffic.onRiderEjected = (avatar, x, y, vx, vy, strength) => npcs.adoptHitRider(avatar, x, y, vx, vy, strength);
   });
 });
-// ---------------------------------------------------------------- people: how many real characters walk the city
-// (automatic by graphics quality until you move the slider; later: the live number of players)
-function peopleCount() {
-  return Settings.v.people ?? { low: 16, balanced: 50, high: 100 }[Settings.quality] ?? 50;
-}
-document.getElementById("people").value = peopleCount();
-document.getElementById("peoplev").textContent = peopleCount();
-document.getElementById("people").oninput = e => {
-  const n = +e.target.value;
-  document.getElementById("peoplev").textContent = n;
-  Settings.set({ people: n });
-  npcs?.setCount(n);
+// ---------------------------------------------------------------- people: the game decides how many (js/population.js, tuned in config/population.json)
+// the opening crowd by graphics tier; after that the population director follows where you are, the time, and what you are doing
+const peopleCount = () => Math.round(({ low: 16, balanced: 50, high: 100 }[Settings.quality] ?? 50) * (matchMedia("(max-width: 640px)").matches ? 0.6 : 1));
+const populationActivity = () => {
+  if (flight?.active) return "air";
+  if (helm?.active || speedboat.active) return "water";
+  if (race.state !== "idle" || crashRun.state !== "idle" || spree.state !== "idle" || (playzone?.sites?.some(t => { const p = hudPos(); return p && Math.hypot(p.x - t.cx, p.y - t.cy) < 70; }) && ride.state === "driving")) return "course";
+  if (pursuit?.active) return "chase";
+  if (ride.state === "driving") return "riding";
+  return mode === "walk" ? "walking" : "exploring";
 };
+const population = new Population({ root: ROOT, npcs: () => npcs, quality: () => Settings.quality, mobile: () => matchMedia("(max-width: 640px)").matches,
+  forced: +new URLSearchParams(location.search).get("people") || undefined,                    // ?people=N pins it for QA and screenshots
+  state: () => { const p = hudPos() || { x: 0, y: 0 }; return { x: p.x, y: p.y, tod: curTod, activity: populationActivity() }; } });
 // ---------------------------------------------------------------- you: your character, seen from behind when you walk
 let npcs = null, me = null, meId = null;
 async function wearCharacter(id) {
@@ -1025,6 +1024,7 @@ import { SpeedBoat } from "./js/speedboat.js";
 import { Missions } from "./js/missions.js";
 import { Furniture } from "./js/furniture.js";
 import { SmashSpree } from "./js/spree.js";
+import { Population } from "./js/population.js";
 import { Wolves } from "./js/wolves.js";
 import { layoutHud } from "./js/hudlayout.js";
 import { Fx } from "./js/fx.js";
@@ -1587,7 +1587,7 @@ function tick() {
   trip.update();
   fares.update(dt);
   playzone.update(dt);
-  ride.furniture?.update(dt); fx.update(dt, ride);
+  ride.furniture?.update(dt); fx.update(dt, ride); population.update(dt);
   heli.show(!!(pursuit?.active && (pursuit.stars || 0) >= 4), ride); heli.update(dt, ride);
   speedboat.update(dt);
   tours.update(dt);

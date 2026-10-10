@@ -1,0 +1,13 @@
+{
+  "_doc": "How many people walk the city is decided by the game, never by the player. target = base[quality] x area x time x activity, clamped, then eased in/out of sight. Tune here; no code change.",
+  "base": { "low": 16, "balanced": 50, "high": 100 },
+  "mobile_scale": 0.6,
+  "min": 6,
+  "max": 140,
+  "area": { "_doc": "metres from Times Square -> density", "points": [[0, 1.35], [300, 1.35], [1000, 1.0], [3000, 0.7], [9000, 0.4]] },
+  "time": { "_doc": "tod 0 = noon .. 1 = midnight", "points": [[0, 1.0], [0.3, 1.1], [0.5, 1.2], [0.75, 0.9], [1, 0.65]] },
+  "activity": { "walking": 1.0, "exploring": 0.8, "riding": 0.75, "chase": 0.6, "course": 0.35, "water": 0.0, "air": 0.0 },
+  "retune_seconds": 2,
+  "max_step": 4,
+  "step_seconds": 3
+}

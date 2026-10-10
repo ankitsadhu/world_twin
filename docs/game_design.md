@@ -63,3 +63,6 @@ Walk 1.6 m/s, run 4.6 m/s are real. Make it fun without breaking realism:
 4. Leaderboard endpoint + weekly season.
 5. Daily seed + ghosts.
 6. Platform polish: sound, rain, wet-grip, nostalgic-places set.
+
+## Population (people in the city)
+The player never sets this. `viewer/js/population.js` computes a target from the graphics tier (phones get 0.6x), the area (denser near Times Square, thinner towards the edges), the time of day (Times Square never sleeps, so the night floor is 0.65x) and what you are doing (on foot 1.0, riding 0.75, chase 0.6, race/stunt course 0.35, boat or plane 0), clamped to `config/population.json` min/max. The count eases in steps of 4 every 3 s and only removes people who are out of sight. All numbers live in `config/population.json`; adding characters changes the pool (`npcPool`), not the budget. `?people=N` pins it for QA. Next: drive the base from the live player count and the device's measured frame time.

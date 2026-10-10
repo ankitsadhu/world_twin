@@ -529,7 +529,7 @@ export class Npcs {
   // add or remove people (the People slider); spawning is async (models load once, then clone)
   async setCount(n) {
     this.want = n;
-    while (this.list.length > this.want) this.scene.remove(this.list.pop().a.object);
+    this.trim();
     if (this.spawning) return;
     this.spawning = true;
     const pool = npcPool(this.playerId), isMan = id => id === "daniel";
@@ -565,6 +565,14 @@ export class Npcs {
     }
     this.spawning = false;
     if (this.list.length !== this.want) this.setCount(this.want);
+  }
+
+  // fewer people wanted: only those who are out of sight leave (the rest carry on and go when they have walked out of view), so nobody vanishes in front of you
+  trim() {
+    for (let i = this.list.length - 1; i >= 0 && this.list.length > this.want; i--) {
+      const n = this.list[i]; if (n.a.object.visible && !this.forceTrim) continue;
+      this.list.splice(i, 1); this.scene.remove(n.a.object);
+    }
   }
 
   // you changed outfit: nobody else may wear it (they're replaced by someone from the new pool)
@@ -897,7 +905,7 @@ export class Npcs {
     this.clock = (this.clock || 0) + dt;
     const cam = this.camera.position;
     const cars = this.movers(), me = this.player();
-    if ((this.recT = (this.recT || 0) + dt) > 0.2) { this.recT = 0; if (cam.y < 60) this.recycle(); }
+    if ((this.recT = (this.recT || 0) + dt) > 0.2) { this.recT = 0; if (cam.y < 60) this.recycle(); if (this.list.length > this.want) this.trim(); }
     this.camera.updateMatrixWorld();
     this.frustum.setFromProjectionMatrix(this.m4.multiplyMatrices(this.camera.projectionMatrix, this.camera.matrixWorldInverse));
     this.frame++;

@@ -1,6 +1,7 @@
 // Missions on the map: every level / game lives at its own place in the city, as an amber flag on the map and minimap and a glowing ring in the
 // world. Walk or ride into the ring and the game asks "Start?": one tap and you're in it. Done missions turn green. This is the "go somewhere"
 // of the game: the whole map is used because each mission sits in a different zone.
+import { makeBeacon } from "./beacon.js";
 import * as THREE from "three";
 const KEY = "ts.missions.v1";
 const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
@@ -66,6 +67,7 @@ export class Missions {
     this.buildPanel();
     this.resolved = false;
     setInterval(() => this.tick(), 500);
+    const loop = () => { requestAnimationFrame(loop); this.animate(); }; loop();                // the beacons animate every frame
     setTimeout(() => { this.siteGiveUp = true; }, 45000);                     // a park with no free patch is simply left out
   }
 
@@ -87,14 +89,10 @@ export class Missions {
   }
 
   build() {
-    const mk = () => {
-      const g = new THREE.Group();
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(5.5, 0.28, 8, 40), new THREE.MeshBasicMaterial({ color: 0xf59e0b, toneMapped: false })); ring.rotation.x = Math.PI / 2; ring.position.y = 0.3;
-      const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.45, 120, 10, 1, true), new THREE.MeshBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.3, toneMapped: false, depthWrite: false })); beam.position.y = 60;
-      g.add(ring, beam); g.traverse(o => { o.raycast = () => {}; o.userData.traffic = true; }); return g;
-    };
+    const CATC = { Chaos: ["#ef4a2f", "💥"], Racing: ["#f59e0b", "🏁"], Jobs: ["#2e9e4f", "🚕"], Water: ["#00a3b4", "🚤"], Sky: ["#9b59d0", "✈️"], Collect: ["#d4a017", "🐾"] };
+    const mk = m => makeBeacon({ color: CATC[m.cat]?.[0] || "#f59e0b", icon: CATC[m.cat]?.[1] || "★", label: m.num });
     for (const g of this.rings.values()) this.scene.remove(g); this.rings.clear();
-    for (const m of MISSIONS) { if (m.x == null) continue; const g = mk(); g.position.set(m.x, 0, -m.y); g.visible = false; this.scene.add(g); this.rings.set(m.id, g); }
+    for (const m of MISSIONS) { if (m.x == null) continue; const g = mk(m); g.position.set(m.x, 0, -m.y); g.visible = false; this.scene.add(g); this.rings.set(m.id, g); }
     this.pins(); 
   }
 
@@ -178,7 +176,7 @@ export class Missions {
     for (const m of MISSIONS) {
       if (m.x == null) continue;
       const d = Math.hypot(m.x - p.x, m.y - p.y), g = this.rings.get(m.id);
-      if (g) { g.visible = d < 420 || this.active === m.id; g.children[1].material.opacity = this.active === m.id ? 0.6 : 0.22; g.scale.setScalar(this.active === m.id ? 1.5 : 1); const c = this.done[m.id] ? 0x2e9e4f : 0xf59e0b; g.children.forEach(o => o.material.color.setHex(c)); g.rotation.y += 0.02; }
+      if (g) g.visible = d < 420 || this.active === m.id;
       if (!busy && d < nd && !(this.cool.get(m.id) > performance.now())) { nd = d; near = m; }
     }
     if (near && near !== this.near) {
@@ -186,6 +184,11 @@ export class Missions {
       const B = BRIEFS[near.id];
       this.ask(B ? `${B[0]}: “${B[1]}”` : `${near.name}: ${near.pitch}`, [["Start", () => this.begin(near), true], ["Not now", () => { this.cool.set(near.id, performance.now() + 90000); }]], { ms: 12000, key: "mission_" + near.id });
     } else if (!near) this.near = null;
+  }
+
+  animate() {
+    if (!this.resolved) return; const p = this.pos?.(); if (!p) return; const t = performance.now() / 1000;
+    for (const m of MISSIONS) { const g = this.rings.get(m.id); if (g?.visible) g.userData.set(t, { active: this.active === m.id, done: !!this.done[m.id], dist: Math.hypot(m.x - p.x, m.y - p.y) }); }
   }
 
   begin(m) {

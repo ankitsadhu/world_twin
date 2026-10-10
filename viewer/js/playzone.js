@@ -11,9 +11,9 @@ const KINDS = {
   cone: { r: 0.3, h: 0.9, pts: 15, mass: 0.35, make: () => new THREE.ConeGeometry(0.34, 0.9, 12), color: 0xff6a00 },
 };
 
-// where the parks stand: the Times Square plaza (fixed) and four more across the map, each snapped to the nearest free flat 44 x 24 m patch
+// where the parks stand: a lot off the avenues in Midtown (fixed: no crowds, no traffic) and four more across the map, each snapped to the nearest free flat 44 x 24 m patch
 const SITES = [
-  { id: "cross", name: "Stunt Park", at: [-20, 92], fixed: true, variant: 0, sub: "Times Square plaza" },
+  { id: "cross", name: "Stunt Park", at: [240, 240], fixed: true, variant: 0, sub: "Midtown, off the avenues" },
   { id: "hudson", name: "Pier Jump", at: [-1400, -300], variant: 1, sub: "Hudson River Park" },
   { id: "back", name: "Backstreet Bowl", at: [-823, 75], variant: 3, sub: "Hell's Kitchen" },
   { id: "east", name: "East Side Stunts", at: [739, 394], variant: 2, sub: "Midtown East" },

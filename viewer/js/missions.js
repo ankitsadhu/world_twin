@@ -10,7 +10,7 @@ const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch 
 // start: what happens when you say Start (the host gives these as functions); x, y are where the flag stands (null = found at run time)
 export const MISSIONS = [
   { id: "m_ride", icon: "firstride", cat: "Chaos", name: "First Ride", zone: "The Crossroads", level: 1, x: 0, y: -5, pitch: "Ride, jump, near-miss, crash: your first chaos chain", start: "bike" },
-  { id: "m_park_cross", icon: "ramp", cat: "Chaos", name: "Stunt Park", zone: "The Crossroads", level: 3, site: "cross", pitch: "Ramps and 29 things to smash on the plaza", start: "park" },
+  { id: "m_park_cross", icon: "ramp", cat: "Chaos", name: "Stunt Park", zone: "Midtown", level: 3, site: "cross", pitch: "Ramps and 29 things to smash in an empty lot", start: "park" },
   { id: "m_park_hudson", icon: "ramp", cat: "Chaos", name: "Pier Jump", zone: "Hudson River Park", level: 3, site: "hudson", pitch: "Three kickers, small to big, over a wall of crates", start: "park" },
   { id: "m_park_back", icon: "ramp", cat: "Chaos", name: "Backstreet Bowl", zone: "Hell's Kitchen", level: 3, site: "back", pitch: "Four ramps round a bowling alley of barrels", start: "park" },
   { id: "m_park_east", icon: "ramp", cat: "Chaos", name: "East Side Stunts", zone: "Midtown East", level: 3, site: "east", pitch: "Two big ramps facing each other and a crate pyramid", start: "park" },
@@ -36,7 +36,7 @@ export const MISSIONS = [
 const BRIEFS = {
   m_ride: ["Dispatch", "Take the bike out. Ride it hard, jump something, then wreck it. We'll call it a test.", "Not bad. The city's yours."],
   m_wolf: ["Old Ray", "Fifty golden wolves are hidden from the park to the Statue. Find them all and you'll never need a map again.", "Every last one. Ray's buying."],
-  m_park_cross: ["Dispatch", "Ramps and barrels in the plaza. Break things, nobody minds.", "That plaza will never be the same."],
+  m_park_cross: ["Dispatch", "Ramps and barrels in an empty lot off the avenue. Break things, nobody minds.", "That lot will never be the same."],
   m_park_hudson: ["Jess", "Three kickers, one wall of crates. Small, medium, send it.", "Clean send. The crates are crying."],
   m_park_back: ["Jess", "Bowling night on the west side. You're the ball.", "Strike."],
   m_park_east: ["Marcus", "Two big ramps, one crate pyramid. You can guess the rest.", "Pyramid: gone."],

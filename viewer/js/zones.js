@@ -1,7 +1,7 @@
 // The world's zones (docs/world_plan.md): each is a named place with its own signature game, searchable ("Where to?"), pinned on the map and
 // minimap, and usable as a destination. Positions are real intersections / waterfront points checked to be walkable ground.
 export const ZONES = [
-  { id: "crossroads", name: "The Crossroads", x: 0, y: -5, sub: "Times Square · Stunt Park, ramps and things to smash", kw: "times square stunt crossroads ramps ball drop" },
+  { id: "crossroads", name: "The Crossroads", x: 0, y: -5, sub: "Times Square · the plaza, the crowds and the ball drop", kw: "times square crossroads ball drop" },
   { id: "broadway", name: "Broadway Theater District", x: 0, y: 314, sub: "Taxi rush · fares between the theatres", kw: "broadway theater theatre taxi fares crazy" },
   { id: "backstreets", name: "Hell's Kitchen Backstreets", x: -823, y: 75, sub: "Street races and time trials on the long avenues", kw: "hell's kitchen race racing drift avenue time trial need for speed" },
   { id: "hudson", name: "Hudson River Park", x: -1400, y: -300, sub: "Waterfront · boats and the sunset", kw: "hudson river park pier boat waterfront sunset" },

@@ -105,3 +105,11 @@ body.drivetouch canvas#minimap { top: calc(env(safe-area-inset-top) + 124px) !im
 /* the district / world panel sits above the status chips, not under them */
 #hud { z-index: 40 !important; }
 #hud #menu { z-index: 41 !important; }
+
+/* ---- the walking stick (touch only, on foot): bottom left, above the tab bar */
+#walkstick { position: fixed; left: max(22px, env(safe-area-inset-left)); bottom: calc(96px + env(safe-area-inset-bottom)); width: 132px; height: 132px; border-radius: 50%; z-index: 28; display: none; touch-action: none;
+  background: rgba(20, 22, 28, .38); border: 1.5px solid rgba(255, 255, 255, .25); backdrop-filter: blur(8px); }
+#walkstick i { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; background: rgba(255, 255, 255, .5); box-shadow: 0 4px 14px rgba(0, 0, 0, .3); transition: transform .04s; }
+body[data-input="touch"][data-mode="walk"]:not(.incar):not(.onboarding) #walkstick { display: block; }
+body[data-input="touch"] #ridepill { left: auto; right: max(16px, env(safe-area-inset-right)); bottom: calc(112px + env(safe-area-inset-bottom)); transform: none; }   /* thumbs: stick on the left, Ride on the right */
+body[data-input="touch"].canride #ridepill:hover { transform: none; }

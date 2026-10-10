@@ -16,7 +16,7 @@ export class Race {
     this.build();
     addEventListener("keydown", e => {
       if (e.code === "KeyT" && !e.repeat && this.state !== "idle" && e.target.tagName !== "INPUT") { this.start(this.course, true); return; }   // Trackmania: instant restart
-      if (e.code === "KeyR" && !e.repeat && e.target.tagName !== "INPUT" && this.ride.state === "driving") this.toggle();
+      if (e.code === "KeyR" && !e.repeat && e.target.tagName !== "INPUT" && this.ride.state === "driving") { if (this.state !== "idle") this.start(this.course, true); else this.toggle(); }      // R: start the nearest race, and while one is running, retry it
     });
     setInterval(() => this.tick(0.05), 50);
   }

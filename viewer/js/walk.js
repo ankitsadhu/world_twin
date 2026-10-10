@@ -36,6 +36,20 @@ export class StreetWalk {
       this.drag = [e.clientX, e.clientY];
       this.target = null;
     });
+    // a thumb stick for touch screens: push to walk in that direction (relative to where the camera looks), push all the way to run. Drag anywhere else to look.
+    this.stick = { lx: 0, ly: 0, on: false };
+    const base = this.stickEl = document.createElement("div"); base.id = "walkstick"; base.setAttribute("aria-hidden", "true"); base.innerHTML = "<i></i>";
+    document.body.appendChild(base);
+    const knob = base.firstChild; let sid = null;
+    const setStick = e => {
+      const r = base.getBoundingClientRect(), R = r.width / 2, dx = e.clientX - (r.left + R), dy = e.clientY - (r.top + R), L = Math.hypot(dx, dy), k = Math.min(1, L / R);
+      this.stick.lx = L ? dx / L * k : 0; this.stick.ly = L ? -dy / L * k : 0; this.stick.on = k > 0.12;
+      knob.style.transform = `translate(${(L ? dx / L * k : 0) * R * 0.55}px, ${(L ? dy / L * k : 0) * R * 0.55}px)`;
+    };
+    const endStick = () => { sid = null; this.stick.on = false; this.stick.lx = this.stick.ly = 0; knob.style.transform = ""; };
+    base.addEventListener("pointerdown", e => { e.stopPropagation(); sid = e.pointerId; try { base.setPointerCapture(sid); } catch { /* a synthetic pointer */ } setStick(e); });
+    base.addEventListener("pointermove", e => { if (e.pointerId === sid) setStick(e); });
+    base.addEventListener("pointerup", endStick); base.addEventListener("pointercancel", endStick);
     // hitting people (when Rough contact is on): G, right-click, a long press on a touch screen, or L1 on a pad. No button on screen.
     dom.addEventListener("contextmenu", e => { if (this.active && Settings.roughContact) { e.preventDefault(); this.attack(); } });
     dom.addEventListener("pointerdown", e => {
@@ -194,10 +208,10 @@ export class StreetWalk {
     let dx = 0, dz = 0;
     const [vw, vr] = this.third ? [1.6, 4.6] : [5, 14];       // you can see yourself: a brisk walk (1.6 m/s: a 0.77 m leg breaks into a run near 1.9) and a fast run
     if (mv || st) { this.target = null; const sp = (run ? vr : vw) * dt, l = Math.hypot(mv, st); dx = (fx * mv + rx * st) / l * sp; dz = (fz * mv + rz * st) / l * sp; }
-    else if (P && (P.lx || P.ly)) {                          // analog walk: push further = walk faster
+    else if ((P && (P.lx || P.ly)) || this.stick?.on) {      // analog walk (pad stick or the touch stick): push further = walk faster
       this.target = null;
-      const input = Math.hypot(P.lx, P.ly), sp = (run ? vr : vw) * dt * Math.min(1, input);
-      dx = (fx * -P.ly + -fz * P.lx) * sp / input; dz = (fz * -P.ly + fx * P.lx) * sp / input;
+      const A = P && (P.lx || P.ly) ? P : this.stick, input = Math.hypot(A.lx, A.ly), sprint = run || (A === this.stick && input > 0.93), sp = (sprint ? vr : vw) * dt * Math.min(1, input);
+      dx = (fx * -A.ly + -fz * A.lx) * sp / input; dz = (fz * -A.ly + fx * A.lx) * sp / input;
     }
     else if (this.target) {
       const tx = this.target[0] - cam.position.x, tz = -this.target[1] - cam.position.z;

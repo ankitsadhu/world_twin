@@ -20,6 +20,33 @@ const SITES = [
   { id: "gate", name: "Park Gate Skatepark", at: [273, 631], variant: 1, sub: "Central Park's south edge" },
 ];
 
+
+// ---- how a park looks: a painted pad with a run-in arrow, bright ramps with chevrons, floodlights and a banner, so it reads as a place to play from across the plaza
+const PAL = [0xff6b2c, 0x19c3d4, 0xe8438f, 0x8bd62f];
+function padTexture(base) {
+  const W = 512, H = 320, c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d");
+  g.fillStyle = base; g.fillRect(0, 0, W, H);
+  g.fillStyle = "rgba(255,255,255,.05)"; for (let x = 0; x < W; x += 32) g.fillRect(x, 0, 1, H); for (let y = 0; y < H; y += 32) g.fillRect(0, y, W, 1);       // tile joints
+  g.strokeStyle = "rgba(255,255,255,.9)"; g.lineWidth = 6; g.strokeRect(10, 10, W - 20, H - 20);                                                          // painted border
+  g.strokeStyle = "rgba(255,214,10,.85)"; g.lineWidth = 5; g.setLineDash([26, 20]); g.beginPath(); g.moveTo(24, H / 2); g.lineTo(W - 24, H / 2); g.stroke(); g.setLineDash([]);   // the run line
+  g.fillStyle = "rgba(255,255,255,.85)"; for (let i = 0; i < 3; i++) { const x = 120 + i * 60; g.beginPath(); g.moveTo(x, H / 2 - 22); g.lineTo(x + 36, H / 2); g.lineTo(x, H / 2 + 22); g.lineTo(x + 12, H / 2); g.closePath(); g.fill(); }   // arrows: go this way
+  const t = new THREE.CanvasTexture(g.canvas); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
+}
+function chevronTexture(col) {
+  const W = 128, H = 256, c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d");
+  g.fillStyle = col; g.fillRect(0, 0, W, H);
+  g.strokeStyle = "rgba(255,255,255,.92)"; g.lineWidth = 16; g.lineJoin = "miter";
+  for (let i = 0; i < 4; i++) { const y = 30 + i * 62; g.beginPath(); g.moveTo(14, y + 34); g.lineTo(W / 2, y); g.lineTo(W - 14, y + 34); g.stroke(); }     // chevrons point up the slope
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
+}
+function bannerSprite(text, col) {
+  const W = 512, H = 128, c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d");
+  g.fillStyle = "rgba(10,12,18,.88)"; g.beginPath(); g.roundRect(4, 4, W - 8, H - 8, 22); g.fill(); g.lineWidth = 8; g.strokeStyle = col; g.stroke();
+  g.fillStyle = "#fff"; g.font = "800 62px system-ui, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(text, W / 2, H / 2 + 3);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, transparent: true, depthWrite: false, toneMapped: false })); sp.scale.set(12, 3, 1); return sp;
+}
+
 export class PlayZone {
   // o: { scene, ground, ride, chaos, nav, collider: () => collider }
   constructor(o) {
@@ -64,9 +91,23 @@ export class PlayZone {
       : v === 1 ? [R(-16, -6, 0, 8, 5, 1.3), R(-16, 1, 0, 9, 5, 1.8), R(-16, 8, 0, 10, 5, 2.4)]                    // three kickers side by side, small to big
       : v === 2 ? [R(-14, 0, 0, 11, 6.5, 2.3), R(14, 0, Math.PI, 11, 6.5, 2.3)]                                      // two big ramps facing each other
       : [R(-10, -7, 0, 7, 4.5, 1.1), R(10, 7, Math.PI, 7, 4.5, 1.1), R(10, -7, Math.PI / 2, 7, 4.5, 1.1), R(-10, 7, -Math.PI / 2, 7, 4.5, 1.1)];   // a bowl of four
-    const mat = new THREE.MeshStandardMaterial({ color: 0x3b3f46, roughness: 0.8 }), stripe = new THREE.MeshBasicMaterial({ color: 0xffd60a, toneMapped: false });
+    const stripe = new THREE.MeshBasicMaterial({ color: 0xffd60a, toneMapped: false });
     this.ramps.push(...ramps);
+    const noRay = o => { o.raycast = () => {}; o.userData.traffic = true; return o; };
+    // the pad the park stands on: a painted slab (it lies flat on the ground and the ramps and props stand on it)
+    const padCol = ["#2b5f86", "#33704a", "#6a4a8f", "#7a6238"][v] || "#1c3a52", padG = this.ground.h(CX, CY);
+    const pad = noRay(new THREE.Mesh(new THREE.PlaneGeometry(56, 35), (() => { const t = padTexture(padCol); return new THREE.MeshStandardMaterial({ map: t, emissive: 0xffffff, emissiveMap: t, emissiveIntensity: 0.42, roughness: 0.9, polygonOffset: true, polygonOffsetFactor: -2 }); })()));
+    pad.rotation.x = -Math.PI / 2; pad.position.set(CX, padG + 0.03, -CY); pad.receiveShadow = true; this.scene.add(pad);
+    // floodlights at the four corners and a banner, so the park is visible (and lit) from across the plaza
+    for (const [dx, dy] of [[-27, -16], [27, -16], [-27, 16], [27, 16]]) {
+      const pole = noRay(new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.14, 8, 8), new THREE.MeshStandardMaterial({ color: 0x40454d, roughness: 0.6 }))); pole.position.set(CX + dx, padG + 4, -(CY + dy));
+      const head = noRay(new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.35, 0.7), new THREE.MeshBasicMaterial({ color: 0xfff1c9, toneMapped: false }))); head.position.set(CX + dx, padG + 8.1, -(CY + dy));
+      this.scene.add(pole, head);
+    }
+    const banner = noRay(bannerSprite(site.name.toUpperCase(), "#" + PAL[v % 4].toString(16).padStart(6, "0"))); banner.position.set(CX, padG + 9.5, -(CY + 17)); this.scene.add(banner);
+    let ri = 0;
     for (const r of ramps) {
+      const colr = PAL[(ri++ + v) % 4], mat = new THREE.MeshStandardMaterial({ color: colr, roughness: 0.55 });
       const base = this.ground.h(r.x, r.y);                                                // the ground it stands on (before the ramp is stamped in)
       this.ground.addRamp(r.x, r.y, r.h, r.len, r.wid, r.rise);
       const sh = new THREE.Shape(); sh.moveTo(-r.len / 2, 0); sh.lineTo(r.len / 2, 0); sh.lineTo(r.len / 2, r.rise); sh.closePath();
@@ -74,6 +115,9 @@ export class PlayZone {
       const m = new THREE.Mesh(g, mat); m.castShadow = m.receiveShadow = true; m.raycast = () => {}; m.userData.traffic = true;   // not a wall: the ground map carries the ramp
       m.position.set(r.x, base + 0.01, -r.y); m.rotation.y = r.h;                                          // local +x = up the ramp
       this.scene.add(m);
+      const slopeL = Math.hypot(r.len, r.rise), face = noRay(new THREE.Mesh(new THREE.PlaneGeometry(r.wid * 0.86, slopeL), (() => { const t = chevronTexture("#" + colr.toString(16).padStart(6, "0")); return new THREE.MeshStandardMaterial({ map: t, emissive: 0xffffff, emissiveMap: t, emissiveIntensity: 0.3, roughness: 0.6, polygonOffset: true, polygonOffsetFactor: -2 }); })()));
+      face.geometry.rotateZ(-Math.PI / 2); face.rotation.set(-Math.PI / 2, 0, 0);                  // chevrons point up the slope
+      const holder = new THREE.Group(); holder.rotation.z = Math.atan2(r.rise, r.len); holder.position.y = r.rise / 2 + 0.03; holder.add(face); m.add(holder);
       const lip = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.06, r.wid), stripe); lip.position.set(r.len / 2 - 0.2, r.rise + 0.03, 0); lip.raycast = () => {}; m.add(lip);
     }
     const A = (k, dx, dy, lift) => this.add(k, CX + dx, CY + dy, site, lift);

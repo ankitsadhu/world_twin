@@ -205,7 +205,7 @@ export class Navigator {
     if (this.getMode() === "walk") this.tip("walk2", (touch ? "Tap the street to walk there · drag to look" : "WASD walk · Shift run · Space jump · V camera · drag to look")
       + (Settings.roughContact ? (touch ? " · hold to hit" : " · G or right-click to hit") : ""), 11000);
     else if (this.low) this.tip("look", touch ? "Drag to look around · pinch to move" : "Drag to look around · scroll to move");
-    else this.tip("map", touch ? "Drag to move · double-tap a building to see all of it" : "Drag to move · double-click a building to see all of it");
+    else this.tip("map", touch ? "Drag to turn · two fingers to move · double-tap a building" : "Drag to turn · right-drag to move · double-click a building");
   }
   tip(key, text, ms = 6500) {
     if (safeStore.get("ts_tip_" + key)) return;
@@ -486,10 +486,6 @@ export class Navigator {
       this.streetWheel(Math.max(-120, Math.min(120, e.deltaY)));
     }, { capture: true, passive: false });
     const dock = document.getElementById("dock") || document.body;
-    dock.insertAdjacentHTML("beforeend", `
-      <button class="dockbtn" data-t="1" aria-label="Turn left 30 degrees">${ICON.turnLeft}<span>Turn left 30° (Q)</span></button>
-      <button class="dockbtn" data-t="-1" aria-label="Turn right 30 degrees">${ICON.turnRight}<span>Turn right 30° (E)</span></button>`);
-    dock.querySelectorAll("[data-t]").forEach(b => b.onclick = () => this.turn(+b.dataset.t * Math.PI / 6));
     addEventListener("keydown", e => {
       if (e.target.tagName === "INPUT" || e.repeat || this.getMode() !== "orbit") return;
       if (e.code === "KeyQ") this.turn(Math.PI / 6);

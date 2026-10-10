@@ -567,6 +567,9 @@ orbit.maxPolarAngle = Math.PI * 0.97;   // allow looking up at the towers from s
 orbit.screenSpacePanning = false;        // right-drag pans along the ground, like a map
 orbit.zoomToCursor = true;               // scroll zooms toward what you point at, so zoom = travel
 orbit.minDistance = 2; orbit.maxDistance = 2500;
+// drag to turn the view (the way every 3D scene works); right-drag or two fingers pans; wheel / pinch zooms. No turn buttons needed.
+orbit.mouseButtons = { LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.PAN };
+orbit.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
 const walk = new StreetWalk({ camera, dom: renderer.domElement, getCollider: () => collider,
   groundAt: p => groundAt(p), onExit: () => setMode("orbit"), blockedAhead: (p, d, l) => blockedAhead(p, d, l) });
 walk.onWalk = () => nav?.doneTip("walk");

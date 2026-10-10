@@ -115,6 +115,7 @@ export class PauseMenu {
         <section data-tab="Keys" role="tabpanel" class="keys">
           <h4>On foot</h4><dl><dt>W S</dt><dd>walk forward / back</dd><dt>A D</dt><dd>step left / right</dd><dt>← →</dt><dd>turn</dd><dt>Shift</dt><dd>run</dd><dt>Space</dt><dd>jump</dd><dt>drag</dt><dd>look around</dd><dt>V</dt><dd>first / third person</dd><dt>F</dt><dd>get on a bike · board</dd><dt>G · right-click</dt><dd>hit (Rough contact)</dd></dl>
           <h4>Riding</h4><dl><dt>W S</dt><dd>go / brake</dd><dt>A D</dt><dd>steer</dd><dt>Space</dt><dd>hop (bike)</dd><dt>H</dt><dd>horn</dd><dt>C</dt><dd>look back</dd><dt>R</dt><dd>retry a race</dd><dt>F</dt><dd>get off</dd></dl>
+          <h4>Looking from above</h4><dl><dt>drag</dt><dd>turn the view</dd><dt>right-drag</dt><dd>move across the city</dd><dt>scroll</dt><dd>zoom</dd><dt>Q E</dt><dd>turn in steps</dd></dl>
           <h4>Anywhere</h4><dl><dt>Esc</dt><dd>menu</dd><dt>M</dt><dd>map</dd><dt>K</dt><dd>missions</dd><dt>/</dt><dd>search</dd><dt>F8</dt><dd>record a clip</dd></dl>
           <p class="fine">On a touch screen: the stick walks (push all the way to run), drag anywhere else to look, tap the street to walk there, hold to hit. While riding: Go, Brake, steer and Hop are on screen.</p></section>
         <section data-tab="Sound" role="tabpanel">${sw("sound", "City sound")}${range("volume", "Volume", 0, 1, 0.05)}${sw("captions", "Captions", "Horns, sirens and your cab, as text")}</section>

@@ -64,3 +64,39 @@ body.drivetouch #chaospop { top: calc(env(safe-area-inset-top) + 250px + var(--p
 
 /* ---- less chrome: the view controls only where they make sense (zoom and turn are for Explore; the dock stays to what you need) */
 body:not([data-mode="explore"]) #zoom, body:not([data-mode="explore"]) #dock [data-t] { display: none !important; }
+
+/* ---- the dock is four things: View · Map · Missions · Menu (the old buttons stay in the page for the code that drives them, out of sight) */
+#explorebtn, #walk, #ridebtn, #garagebtn, #soundbtn, #dock .sep { display: none !important; }
+body.playing #viewbtn, body.incar #viewbtn { display: none !important; }
+
+/* ---- the one obvious next step on foot: Ride */
+#ridepill { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 28; display: none; min-height: 52px; padding: 0 30px;
+  border-radius: 999px; font-size: 18px; font-weight: 800; letter-spacing: .01em; box-shadow: 0 8px 28px rgba(0, 0, 0, .45); }
+body.canride #ridepill { display: inline-flex; align-items: center; justify-content: center; }
+body.canride #ridepill:hover { transform: translateX(-50%) scale(1.04); }
+
+/* ---- the vehicle bar while driving: speed, then two quiet pills. Not a card of labels. */
+#ridepanel.drive { display: flex !important; align-items: center; gap: 14px; width: auto !important; max-width: calc(100% - 24px); padding: 8px 12px 8px 20px !important; border-radius: 999px !important; }
+#ridepanel.drive h3, #ridepanel.drive p, #ridepanel.drive #ride-left { display: none !important; }
+#ridepanel.drive .stats { margin: 0 !important; gap: 5px !important; align-items: baseline; }
+#ridepanel.drive .big { font-size: 38px !important; line-height: 1; }
+#ridepanel.drive .acts { flex-wrap: nowrap !important; gap: 6px !important; margin: 0; }
+#ridepanel.drive .acts .ui-btn, #ridepanel.drive .acts button { flex: 0 0 auto !important; white-space: nowrap !important; padding: 9px 16px !important; border-radius: 999px !important; font-size: 13px !important; }
+#ridepanel.drive .acts button:not(.primary) { background: rgba(255, 255, 255, .1) !important; border: none !important; }
+body.onboarding #hint { display: none !important; }
+
+/* ---- touch driving: thumbs own the bottom corners. Steer on the left, Go big on the right with Brake beside it and Hop above; the tab bar steps aside
+   (Menu stays in the search bar), and the minimap moves up out of the way. Glass, not black discs. */
+body[data-input="touch"]:not(.drivetouch) #gearbtn { display: none !important; }
+body.drivetouch #dock { display: none !important; }
+body.drivetouch #drivepad { --drivepad-b: calc(26px + env(safe-area-inset-bottom)) !important; }
+body.drivetouch #drivepad button { width: 68px !important; height: 68px !important; border-radius: 50% !important; font-size: 15px; font-weight: 800; color: #fff !important;
+  background: rgba(20, 22, 28, .5) !important; border: 1.5px solid rgba(255, 255, 255, .24) !important; backdrop-filter: blur(10px); box-shadow: 0 6px 18px rgba(0, 0, 0, .3); }
+body.drivetouch #drivepad button.on { background: rgba(255, 255, 255, .32) !important; }
+body.drivetouch #drivepad [data-c="left"] { left: 14px !important; bottom: var(--drivepad-b) !important; }
+body.drivetouch #drivepad [data-c="right"] { left: 94px !important; bottom: var(--drivepad-b) !important; }
+body.drivetouch #drivepad [data-c="up"] { width: 94px !important; height: 94px !important; right: 16px !important; bottom: var(--drivepad-b) !important; background: rgba(255, 200, 61, .88) !important; color: #141414 !important; font-size: 18px; }
+body.drivetouch #drivepad [data-c="up"].on { background: #ffd966 !important; }
+body.drivetouch #drivepad [data-c="down"] { width: 62px !important; height: 62px !important; right: 120px !important; left: auto !important; bottom: var(--drivepad-b) !important; }
+body.drivetouch #drivepad [data-c="horn"] { width: 58px !important; height: 58px !important; right: 34px !important; left: auto !important; bottom: calc(var(--drivepad-b) + 112px) !important; }
+body.drivetouch canvas#minimap { top: calc(env(safe-area-inset-top) + 124px) !important; bottom: auto !important; right: 10px !important; left: auto !important; width: 104px !important; height: 104px !important; }

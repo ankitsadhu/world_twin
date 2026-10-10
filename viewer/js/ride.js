@@ -400,8 +400,8 @@ export class Ride {
     if (s === "driving" && !touch) this.nav.tip?.(pad ? "drivepad" : "drivekeys", pad
       ? bike ? "R2 go · L2 brake · left stick steer · R1 hop · ○ get off" : "R2 go · L2 brake · left stick steer · □ horn · ○ get out"
       : bike ? "W go · S brake · A/D steer · Space hop · F get off" : "W go · S brake · A/D steer · H horn · F get out");
-    if (s === "idle") { P.style.display = "none"; return; }
-    P.style.display = "block";
+    if (s === "idle") { P.style.display = "none"; P.classList.remove("drive"); return; }
+    P.style.display = "block"; P.classList.toggle("drive", s === "driving");
     const x = `<button class="ui-btn x" data-a="cancel" aria-label="Cancel ride">${ICON.close}</button>`;
     const dest = this.dest ? this.dest.name : "Free drive";
     if (s === "choose") {
@@ -442,12 +442,12 @@ export class Ride {
             : "W / ↑ go · S / ↓ brake · A D / ← → steer · H horn"}</p>`}
         <div class="acts">
           ${self ? `<button class="ui-btn primary" data-a="wheel">Take the wheel</button>`
-                 : `<button class="ui-btn primary" data-a="auto"${this.dest ? "" : " disabled"}>Self-drive</button>`}
-          ${this.vehicle?.kind === "bike" ? `<button class="ui-btn" data-a="paint">Paint: ${PAINTS[this.vehicle.paint ?? 0]?.name || ""}</button>` : ""}
+                 : (this.dest ? `<button class="ui-btn primary" data-a="auto">Self-drive</button>` : "")}
+          ${this.vehicle?.kind === "bike" ? `<button class="ui-btn" data-a="paint" title="${PAINTS[this.vehicle.paint ?? 0]?.name || ""}">Repaint</button>` : ""}
           ${this.vehicle?.kind === "taxi" ? `<button class="ui-btn" data-a="view">${this.view === "chase" ? "Inside view" : "Outside view"}</button>` : ""}
           ${!self && this.vehicle?.type === "Taxi" ? `<button class="ui-btn" data-a="fares">${this.fares?.active ? "Off duty" : "Take fares"}${touch ? "" : " · J"}</button>` : ""}
           ${chaseReady ? `<button class="ui-btn${this.pursuit.active ? " danger" : ""}" data-a="pursuit">${chaseLabel}</button>` : ""}
-          <button class="ui-btn" data-a="out">${self ? "Stop & get out" : "Park & get out"}${this.borrowed && !touch ? " · " + prompt(pad ? "back" : "interact") : ""}</button></div>`;
+          <button class="ui-btn" data-a="out">${self ? "Stop" : this.vehicle?.kind === "bike" ? "Get off" : "Get out"}${this.borrowed && !touch ? " · " + prompt(pad ? "back" : "interact") : ""}</button></div>`;
       if (chaseReady) P.insertAdjacentHTML("beforeend", `<p id="pursuit-status" role="status" style="margin:var(--s2) 0 0;color:var(--ink-2);font-size:var(--t-caption)">${this.pursuit.status}</p>`);
     } else if (s === "arrived") {
       P.innerHTML = `<h3>${this.carIcon} You've arrived</h3><p>${dest}</p>

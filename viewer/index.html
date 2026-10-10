@@ -81,18 +81,22 @@
     <div class="soon">More neighbourhoods coming soon</div>
   </div>
 </div>
-<div id="dock" class="ui-surface" role="toolbar" aria-label="View controls">
+<div id="dock" class="ui-surface" role="toolbar" aria-label="Controls">
+  <button id="viewbtn" class="dockbtn" aria-label="Switch between street view and the map view"><i data-icon="explore"></i><span>Look from above / back to the street (V)</span><em>View</em></button>
   <button id="explorebtn" class="dockbtn" aria-pressed="true" aria-label="Explore"><i data-icon="explore"></i><span>Explore from above</span><em>Explore</em></button>
   <button id="walk" class="dockbtn" aria-pressed="false" aria-label="Walk"><i data-icon="walk"></i><span>Walk at street level</span><em>Walk</em></button>
   <div class="sep"></div>
   <button id="mapbtn" class="dockbtn" aria-label="Map"><i data-icon="map"></i><span>Map (M)</span><em>Map</em></button>
   <button id="soundbtn" class="dockbtn" aria-pressed="false" aria-label="City sound"><i data-icon="sound"></i><span>Sound on / off</span><em>Sound</em></button>
+  <button id="missionsbtn" class="dockbtn" aria-label="Missions"><i data-icon="star"></i><span>Missions (K)</span><em>Missions</em></button>
+  <button id="menubtn" class="dockbtn" aria-label="Menu"><i data-icon="settings"></i><span>Menu (Esc)</span><em>Menu</em></button>
   <div class="sep"></div>
 </div>
 <div id="zoom" class="ui-surface" role="group" aria-label="Zoom">
   <button class="dockbtn" id="zoomin" aria-label="Zoom in"><i data-icon="plus"></i><span>Zoom in (+)</span></button>
   <button class="dockbtn" id="zoomout" aria-label="Zoom out"><i data-icon="minus"></i><span>Zoom out (−)</span></button>
 </div>
+<button id="ridepill" class="ui-btn primary" aria-label="Ride a motorbike">▶ Ride</button>
 <div id="loading"><h1>Times Square</h1><p id="loadtxt">Getting the lights on…</p><div id="bar"><div></div></div></div>
 <canvas id="minimap" width="440" height="440"></canvas>
 
@@ -670,11 +674,21 @@ function syncDock() {
   }
   if (syncDock.m === m && document.getElementById("walk").getAttribute("aria-pressed") === String(m === "walk")) return;
   syncDock.m = m; document.body.dataset.mode = m;
+  const vb = document.getElementById("viewbtn"); if (vb) { const toMap = m !== "explore"; vb.innerHTML = `${ICON[toMap ? "explore" : "walk"]}<span>${toMap ? "Look from above" : "Back to the street"} (V)</span><em>${toMap ? "Above" : "Street"}</em>`; }
   document.getElementById("explorebtn").setAttribute("aria-pressed", String(m === "explore"));
   document.getElementById("walk").setAttribute("aria-pressed", String(m === "walk"));
   document.getElementById("ridebtn")?.setAttribute("aria-pressed", String(m === "ride"));
 }
 document.getElementById("mapbtn").onclick = () => toggleMap();
+document.getElementById("viewbtn").onclick = () => document.getElementById(document.body.dataset.mode === "explore" ? "walk" : "explorebtn").click();
+document.getElementById("missionsbtn").onclick = () => missions.togglePanel();
+document.getElementById("menubtn").onclick = () => pause.open();
+document.getElementById("ridepill").onclick = () => { Messages.dismiss("Welcome back"); if (mode !== "walk") setMode("walk"); ride.rideNearestBike(true); };
+setInterval(() => {                                                             // the one obvious next step for anyone on foot: Ride
+  const idle = !ride.inCar && !ride.approaching && ride.state === "idle" && !flight?.active && !helm?.active && !document.body.classList.contains("onboarding") && !pause.isOpen && !cityMap.isOpen && !business.on
+    && document.getElementById("welcome").style.display !== "flex" && getComputedStyle(document.getElementById("hopin")).display === "none";
+  document.body.classList.toggle("canride", !!idle);
+}, 300);
 function zoomBy(dir) {
   if (mode === "walk") {                                   // on foot: + steps forward, − steps back
     const f = new THREE.Vector3(); camera.getWorldDirection(f); f.y = 0; f.normalize();
@@ -797,7 +811,7 @@ nav.onBuilding = b => plan.onBuilding(b);
 if (new URLSearchParams(location.search).has("debug"))      // developer handle, only with ?debug
   window.__views = () => screenViews;
 if (new URLSearchParams(location.search).has("debug"))
-  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pursuit() { return pursuit; }, get cityMap() { return cityMap; }, get trip() { return trip; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get progress() { return progress; }, get chaos() { return chaos; }, get race() { return race; }, get heat() { return heat; }, get clip() { return clip; }, get playzone() { return playzone; }, get crashRun() { return crashRun; }, get speedboat() { return speedboat; }, get missions() { return missions; }, get fx() { return fx; }, get heli() { return heli; }, get obstacles() { indexSceneObstacles(); return obstacleBoxes; }, get wolves() { return wolves; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
+  window.__dbg = { groundMap, nav, camera, orbit, renderer, perf, screens, get audio() { return audio; }, get ride() { return ride; }, get traffic() { return traffic; }, get pursuit() { return pursuit; }, get cityMap() { return cityMap; }, get trip() { return trip; }, get pause() { return pause; }, Settings, get pad() { return pad; }, get crowd() { return crowd; }, get mode() { return mode; }, get flight() { return flight; }, get boat() { return boat; }, get helm() { return helm; }, get harbor() { return harbor; }, get walk() { return walk; }, get fares() { return fares; }, get progress() { return progress; }, get chaos() { return chaos; }, get race() { return race; }, get heat() { return heat; }, get clip() { return clip; }, get playzone() { return playzone; }, get crashRun() { return crashRun; }, get speedboat() { return speedboat; }, get missions() { return missions; }, get fx() { return fx; }, get heli() { return heli; }, get obstacles() { indexSceneObstacles(); return obstacleBoxes; }, get wolves() { return wolves; }, get onboard() { return onboard; }, get business() { return business; }, get paused() { return paused; }, get tours() { return tours; }, plan, get me() { return me; }, get npcs() { return npcs; }, blockedAhead };   // debugging handle
 let traffic = null;
 let pursuit = null;
 const trafficCount = () => Math.round((Settings.quality === "low" ? 14 : matchMedia("(max-width: 640px)").matches ? 18 : 28) * Settings.v.traffic);
@@ -1176,6 +1190,7 @@ const pause = new PauseMenu({
   onOpen: () => { paused = true; audio.ctx?.suspend(); },
   onClose: () => { paused = false; clock.getDelta(); if (Settings.v.sound) audio.ctx?.resume(); },
   actions: [
+    { label: "My garage", run: () => ride.openGarage() },
     { label: "What can I do?", run: () => nav.openWelcome() },
     { label: "For businesses", run: () => { if (!business.on) business.setMode(true); } },
     { label: "Sightseeing tours", run: () => tours.open() },

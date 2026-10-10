@@ -74,6 +74,12 @@ export class PauseMenu {
       #pause h2 { margin: 0 0 var(--s4); font-size: var(--t-title); display: flex; align-items: center; justify-content: space-between; }
       #pause h3 { margin: var(--s5) 0 var(--s2); font-size: var(--t-caption); color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
       #pause .acts { display: flex; flex-wrap: wrap; gap: var(--s2); }
+      #pause #pause-resume { width: 100%; min-height: 48px; font-size: var(--t-headline); }
+      #pause .list { margin-top: var(--s3); border-radius: 14px; overflow: hidden; background: var(--fill); }
+      #pause .list button { display: flex; width: 100%; justify-content: space-between; align-items: center; min-height: 48px; padding: 0 var(--s4); border: none; background: none; color: var(--ink); font: var(--t-body) var(--font); text-align: left; cursor: pointer; }
+      #pause .list button + button { border-top: 1px solid var(--glass-border); }
+      #pause .list button:hover { background: var(--fill-hover); }
+      #pause .list span { color: var(--ink-3); font-size: 20px; }
       #pause .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); min-height: var(--hit); }
       #pause .row label { color: var(--ink); font-size: var(--t-body); }
       #pause .row small { display: block; color: var(--ink-3); font-size: var(--t-caption); }
@@ -98,13 +104,13 @@ export class PauseMenu {
       <input type="range" id="set-${k}" data-k="${k}" min="${min}" max="${max}" step="${step}"></div>`;
     document.body.insertAdjacentHTML("beforeend", `
       <div id="pause" role="dialog" aria-modal="true" aria-label="Paused"><div class="card ui-surface">
-        <h2>Paused <button class="ui-btn" id="pause-x" aria-label="Resume">${ICON.close}</button></h2>
-        <div class="acts"><button class="ui-btn primary" id="pause-resume">Resume</button>
-          ${this.actions.map((a, i) => `<button class="ui-btn" data-act="${i}">${a.label}</button>`).join("")}</div>
+        <h2>Menu <button class="ui-btn" id="pause-x" aria-label="Resume">${ICON.close}</button></h2>
+        <button class="ui-btn primary" id="pause-resume">Resume</button>
+        <div class="list">${this.actions.map((a, i) => `<button data-act="${i}">${a.label}<span aria-hidden="true">›</span></button>`).join("")}</div>
         <div class="seg" role="tablist" aria-label="Settings">
-          ${["Sound", "Controls", "Display", "City"].map(t => `<button role="tab" data-tab="${t}" aria-selected="false">${t}</button>`).join("")}</div>
+          ${["Sound", "You", "Display", "City"].map(t => `<button role="tab" data-tab="${t}" aria-selected="false">${t}</button>`).join("")}</div>
         <section data-tab="Sound" role="tabpanel">${sw("sound", "City sound")}${range("volume", "Volume", 0, 1, 0.05)}${sw("captions", "Captions", "Horns, sirens and your cab, as text")}</section>
-        <section data-tab="Controls" role="tabpanel">
+        <section data-tab="You" role="tabpanel">
         <div class="row"><label for="set-outfit">Outfit</label>
           <select id="set-outfit" data-k="outfit"><option value="leather">Leather trousers</option><option value="leather_shorts">Leather shorts</option></select></div>
         ${sw("shades", "Sunglasses")}${sw("cap", "Baseball cap")}${sw("jacket", "Denim jacket")}

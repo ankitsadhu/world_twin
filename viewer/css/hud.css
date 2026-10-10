@@ -66,7 +66,8 @@ body.drivetouch #chaospop { top: calc(env(safe-area-inset-top) + 250px + var(--p
 body:not([data-mode="explore"]) #zoom, body:not([data-mode="explore"]) #dock [data-t] { display: none !important; }
 
 /* ---- the dock is four things: View · Map · Missions · Menu (the old buttons stay in the page for the code that drives them, out of sight) */
-#explorebtn, #walk, #ridebtn, #garagebtn, #soundbtn, #dock .sep { display: none !important; }
+#explorebtn, #walk, #ridebtn, #garagebtn, #soundbtn, #mapbtn, #dock .sep { display: none !important; }   /* the minimap is the map button: tap it (or M) */
+#minimap { cursor: pointer; }
 body.playing #viewbtn, body.incar #viewbtn { display: none !important; }
 
 /* ---- the one obvious next step on foot: Ride */

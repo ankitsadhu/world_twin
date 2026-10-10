@@ -338,8 +338,11 @@ async function load() {
   const first = all.filter(([k]) => FIRST.includes(k)), rest = all.filter(([k]) => !FIRST.includes(k));
   const bar = document.querySelector("#bar > div");
   let done = 0;
-  const tick = () => { done++; bar.style.width = (100 * done / (first.length + 2)) + "%"; };
-  await Promise.all([loadEnv("day", "wide_street_01_2k.hdr").then(tick), loadEnv("night", "shanghai_bund_2k.hdr").then(tick)]);
+  const tick = () => { done++; bar.style.width = (100 * done / (first.length + 1)) + "%"; };
+  // only the sky for the current time is needed to start (6 MB); the other streams in behind the first frame and the lighting re-blends when it arrives
+  const night = todNow() > 0.5, now = night ? ["night", "shanghai_bund_2k.hdr"] : ["day", "wide_street_01_2k.hdr"], later = night ? ["day", "wide_street_01_2k.hdr"] : ["night", "shanghai_bund_2k.hdr"];
+  await loadEnv(...now).then(tick);
+  loadEnv(...later).then(() => setTime(curTod));
   await Promise.all(first.map(([, path]) => loadChunk(path).then(tick)));
   try { demoBrands = (await (await fetch(ROOT + "data/times_square/demo_brands.json", { cache: "no-cache" })).json()).hero; } catch (e) {}
   applyDemo(true);
@@ -1578,7 +1581,7 @@ function S(name, obj, method, a, b) {
   }
   if (PERF) st.ms += performance.now() - t0;
 }
-let perfBox = null, perfT = 0, perfFrames = 0;
+let perfBox = null, perfT = 0, perfFrames = 0, mmLast = 0;
 function perfReport(dt) {
   if (!PERF) return; perfFrames++; perfT += dt; if (perfT < 1) return;
   perfBox ||= Object.assign(document.body.appendChild(document.createElement("pre")), { style: "position:fixed;right:8px;top:8px;z-index:99;margin:0;padding:6px 8px;font:11px/1.35 ui-monospace,monospace;color:#9f9;background:rgba(0,0,0,.7);border-radius:6px;pointer-events:none" });
@@ -1622,7 +1625,7 @@ function tick() {
   if (mode === "walk") S("view", walk, "applyView", dt);     // third person: the camera steps back behind you to draw
   if (camera.near !== near) { camera.near = near; camera.updateProjectionMatrix(); }
   const tr = PERF ? performance.now() : 0; composer.render(); if (PERF) { const st = SYS.get("render") || SYS.set("render", { ms: 0, err: 0, off: false }).get("render"); st.ms += performance.now() - tr; }
-  S("minimap", { f: drawMinimap }, "f");
+  const tm = performance.now(); if (tm - mmLast > 33) { mmLast = tm; S("minimap", { f: drawMinimap }, "f"); }          // the minimap redraws at 30 Hz: it is a map, not an animation
   S("messages", Messages, "layout");
   S("dock", { f: syncDock }, "f");
   perfReport(dt);

@@ -1024,6 +1024,7 @@ import { CrashJunction } from "./js/crash.js";
 import { SpeedBoat } from "./js/speedboat.js";
 import { Missions } from "./js/missions.js";
 import { Furniture } from "./js/furniture.js";
+import { SmashSpree } from "./js/spree.js";
 import { Wolves } from "./js/wolves.js";
 import { layoutHud } from "./js/hudlayout.js";
 import { Fx } from "./js/fx.js";
@@ -1065,6 +1066,7 @@ const smashBy = {}; playzone.onSmash = (k, site) => { progress.s.m.smashed = (pr
 playzone.onBuilt = () => missions.refreshSites?.(playzone.sites);
 const crashRun = new CrashJunction({ ride, traffic: () => traffic, chaos, toast: t => Messages.ask(t, [], { ms: 3500 }), onFinish: r => { progress.s.m.junctions = (progress.s.m.junctions || 0) + 1; progress.s.m.pileups = (progress.s.m.pileups || 0) + r.pileups; Analytics.track("crash_run", r); missions.markDone("m_crash"); } });
 crashRun.pop = t => chaos.popText(t);
+const spree = new SmashSpree({ ride, chaos, toast: t => Messages.ask(t, [], { ms: 3500 }), onFinish: r => { Analytics.track("spree", r); missions.markDone("m_spree"); } });
 const speedboat = new SpeedBoat({ scene, camera, helm, audio, setMode, getMode: () => mode, nav, toast: t => Messages.ask(t, [], { ms: 3500 }), pop: t => chaos.popText(t),
   onBoard: () => { flight.forceOut(); helm.forceOut(); if (ride.inCar) ride.getOut(); if (ride.active) ride.end(); nav.setWaypoint?.(null); },
   onBoost: () => { progress.s.m.boosts = (progress.s.m.boosts || 0) + 1; },
@@ -1076,13 +1078,14 @@ const hudPos = () => { if (ride.state === "driving" && ride.car) return { x: rid
 const mapSets = () => (mapData && cityMap.data ? [mapData, cityMap.data] : []);
 const wolves = new Wolves({ camera, fx, harbor, scene, ground: groundMap, collider: () => collider, pos: hudPos, chaos, mapSets, pop: t => chaos.popText(t), toast: t => Messages.ask(t, [], { ms: 4500 }),
   onFound: n => { progress.s.m.wolves = n; Analytics.track("wolf", { n }); if (n >= 50) missions.markDone("m_wolf"); } });
-const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => onboard.step >= 0 || race.state !== "idle" || speedboat.race.state !== "idle" || crashRun.state !== "idle" || (pursuit?.active ?? false), scene, camera, traffic: () => traffic, race: () => race, pos: hudPos, mapSets, ask: (t, a, o) => Messages.ask(t, a, o), toast: t => Messages.ask(t, [], { ms: 4000 }),
+const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => onboard.step >= 0 || race.state !== "idle" || speedboat.race.state !== "idle" || crashRun.state !== "idle" || spree.state !== "idle" || (pursuit?.active ?? false), scene, camera, traffic: () => traffic, race: () => race, pos: hudPos, mapSets, ask: (t, a, o) => Messages.ask(t, a, o), toast: t => Messages.ask(t, [], { ms: 4000 }),
   start: {
     bike: () => { setMode("walk"); ride.rideNearestBike(true); },
     park: () => { if (!ride.inCar) { setMode("walk"); ride.rideNearestBike(); } Messages.ask("Stunt Park: ride at the ramps, smash the barrels", [], { ms: 5000 }); },
     taxi: () => { if (ride.state === "driving") fares.toggle(); else { setMode("walk"); ride.rideNearestBike(); Messages.ask("Get on a bike or in a car, then press J for fares", [], { ms: 5000 }); } },
     race: id => { if (!race.startCourse(id)) Messages.ask("Get on a bike or in a car first, then start the race here (R)", [], { ms: 5000 }); },
     crash: (x, y) => { if (ride.state === "driving") crashRun.runAt(x, y); else Messages.ask("Get on a bike or in a car first, then press X here", [], { ms: 5000 }); },
+    spree: () => { if (ride.state === "driving") spree.start(); else { setMode("walk"); ride.rideNearestBike(); Messages.ask("Get on the bike, then start the spree from the mission list (K)", [], { ms: 5000 }); } },
     heat: () => { if (ride.state === "driving") pursuit?.start(2); else Messages.ask("Get on a bike or in a car first, then come back for the chase", [], { ms: 5000 }); },
     boat: id => speedboat.board(id), fly: () => { flight.board({ home: true }); },
     teleport: async m => {                                        // fast travel: you arrive at the flag with a bike at your side, and get on
@@ -1104,7 +1107,7 @@ const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => o
   make("cpark", "Central Park Loop", ring([260, 1290], 260, 8));
 })();
 missions.go = id => nav.onWelcome("mission:" + id);
-race.onResult = (t, r) => missions.result(t, r); speedboat.onResult = (t, r) => missions.result(t, r); crashRun.onResult = (t, r) => missions.result(t, r);
+race.onResult = (t, r) => missions.result(t, r); speedboat.onResult = (t, r) => missions.result(t, r); crashRun.onResult = (t, r) => missions.result(t, r); spree.onResult = (t, r) => missions.result(t, r);
 progress.missionStats = () => missions.stats();
 progress.chip.addEventListener("click", e => { e.stopImmediatePropagation(); missions.togglePanel(true); }, true);       // the level chip is the mission list now
 ride.bikes.unlockedCount = 3;                                                          // paints: three to start, one more for every finished mission

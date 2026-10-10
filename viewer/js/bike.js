@@ -53,7 +53,7 @@ export class Bikes {
       if (n === "STEER") parts.fork = { o, base: o.quaternion.clone() };
       if (n === "KICKSTAND") parts.stand = { o };
     });
-    group.add(makeBlob(0.7, 2.2));                                    // contact shadow
+    const blob = makeBlob(0.7, 2.2); blob.userData.isBlob = true; group.add(blob);   // contact shadow (it stays on the ground in a jump)
     const v = { group, model, parts, kind: "bike", type: BIKE.type, lean: PARKED_LEAN, stand: 0, rider: null, paint: 0 };
     (this.all ||= []).push(v);
     this.autoPaint(v);                                                          // the best colour nobody nearby is wearing

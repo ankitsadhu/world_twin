@@ -9,7 +9,11 @@ const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch 
 // start: what happens when you say Start (the host gives these as functions); x, y are where the flag stands (null = found at run time)
 export const MISSIONS = [
   { id: "m_ride", icon: "firstride", cat: "Chaos", name: "First Ride", zone: "The Crossroads", level: 1, x: 0, y: -5, pitch: "Ride, jump, near-miss, crash: your first chaos chain", start: "bike" },
-  { id: "m_park", icon: "ramp", cat: "Chaos", name: "Stunt Park", zone: "The Crossroads", level: 3, x: -20, y: 92, pitch: "Ramps and 29 things to smash on the plaza", start: "park" },
+  { id: "m_park_cross", icon: "ramp", cat: "Chaos", name: "Stunt Park", zone: "The Crossroads", level: 3, site: "cross", pitch: "Ramps and 29 things to smash on the plaza", start: "park" },
+  { id: "m_park_hudson", icon: "ramp", cat: "Chaos", name: "Pier Jump", zone: "Hudson River Park", level: 3, site: "hudson", pitch: "Three kickers, small to big, over a wall of crates", start: "park" },
+  { id: "m_park_back", icon: "ramp", cat: "Chaos", name: "Backstreet Bowl", zone: "Hell's Kitchen", level: 3, site: "back", pitch: "Four ramps round a bowling alley of barrels", start: "park" },
+  { id: "m_park_east", icon: "ramp", cat: "Chaos", name: "East Side Stunts", zone: "Midtown East", level: 3, site: "east", pitch: "Two big ramps facing each other and a crate pyramid", start: "park" },
+  { id: "m_park_gate", icon: "ramp", cat: "Chaos", name: "Park Gate Skatepark", zone: "Central Park's south edge", level: 3, site: "gate", pitch: "Kickers and a barrel pyramid by the park", start: "park" },
   { id: "m_taxi", icon: "taxi", cat: "Jobs", name: "Taxi Rush", zone: "Broadway", level: 4, x: 0, y: 314, pitch: "Crazy-Taxi fares between the theatres: tricks buy time", start: "taxi" },
   { id: "m_trial", icon: "trial", cat: "Racing", name: "Time Trial: Hell's Kitchen run", zone: "Hell's Kitchen Backstreets", level: 5, race: "hell", pitch: "Race your own ghost down the long avenues (T restarts)", start: "race" },
   { id: "m_kart", icon: "bolt", cat: "Racing", name: "Kart Dash", zone: "Midtown", level: 8, race: "midtown", pitch: "Boost pads, jump pads and cones around Midtown", start: "race" },
@@ -36,14 +40,19 @@ export class Missions {
     this.buildPanel();
     this.resolved = false;
     setInterval(() => this.tick(), 500);
+    setTimeout(() => { this.siteGiveUp = true; }, 45000);                     // a park with no free patch is simply left out
   }
 
   // where each flag stands (race starts and junctions come from the live road grid)
+  refreshSites(sites) { this.sites = sites; if (this.resolved) { this.resolved = false; } }
+
   resolve() {
     const T = this.traffic?.(), R = this.race?.();
     if (!T?.ready || !R) return false;
     const courses = R.courses();
+    const sites = this.sites || [];
     for (const m of MISSIONS) {
+      if (m.site) { const t = sites.find(x => x.id === m.site); if (!t) { m.x = m.y = null; continue; } m.x = t.cx - 12; m.y = t.cy; continue; }
       if (m.race) { const c = courses.find(c => c.id === m.race); if (!c) return false; [m.x, m.y] = c.pts[0]; }
       else if (m.junction) { [m.x, m.y] = m.junction; }
     }
@@ -58,12 +67,13 @@ export class Missions {
       const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.45, 120, 10, 1, true), new THREE.MeshBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.3, toneMapped: false, depthWrite: false })); beam.position.y = 60;
       g.add(ring, beam); g.traverse(o => { o.raycast = () => {}; o.userData.traffic = true; }); return g;
     };
-    for (const m of MISSIONS) { const g = mk(); g.position.set(m.x, 0, -m.y); g.visible = false; this.scene.add(g); this.rings.set(m.id, g); }
+    for (const g of this.rings.values()) this.scene.remove(g); this.rings.clear();
+    for (const m of MISSIONS) { if (m.x == null) continue; const g = mk(); g.position.set(m.x, 0, -m.y); g.visible = false; this.scene.add(g); this.rings.set(m.id, g); }
     this.pins(); 
   }
 
   pins() {
-    const markers = MISSIONS.map(m => ({ id: m.id, icon: m.icon, label: `${m.num}. ${m.name} · ${m.cat} · level ${m.level}`, x: m.x, y: m.y, minS: 0.12, mission: true, name: m.name, cat: m.cat, level: m.level, zone: m.zone, pitch: m.pitch, num: m.num, done: !!this.done[m.id], active: this.active === m.id }));
+    const markers = MISSIONS.filter(m => m.x != null).map(m => ({ id: m.id, icon: m.icon, label: `${m.num}. ${m.name} · ${m.cat} · level ${m.level}`, x: m.x, y: m.y, minS: 0.12, mission: true, name: m.name, cat: m.cat, level: m.level, zone: m.zone, pitch: m.pitch, num: m.num, done: !!this.done[m.id], active: this.active === m.id }));
     for (const d of this.mapSets() || []) if (d?.markers) { d.markers = d.markers.filter(x => !x.mission); d.markers.push(...markers.map(x => ({ ...x }))); }
   }
 
@@ -132,6 +142,7 @@ export class Missions {
     const busy = this.busy?.(); this.paintPanel();
     let near = null, nd = 14;
     for (const m of MISSIONS) {
+      if (m.x == null) continue;
       const d = Math.hypot(m.x - p.x, m.y - p.y), g = this.rings.get(m.id);
       if (g) { g.visible = d < 420 || this.active === m.id; g.children[1].material.opacity = this.active === m.id ? 0.6 : 0.22; g.scale.setScalar(this.active === m.id ? 1.5 : 1); const c = this.done[m.id] ? 0x2e9e4f : 0xf59e0b; g.children.forEach(o => o.material.color.setHex(c)); g.rotation.y += 0.02; }
       if (!busy && d < nd && !(this.cool.get(m.id) > performance.now())) { nd = d; near = m; }

@@ -805,16 +805,29 @@ export class Ride {
   }
   stepBikeAir(dt) {
     const v = this.vehicle;
-    if (this.state !== "driving" || !v || this.bikeAir <= 0) return;                       // bikes hop; any vehicle can fly off a ramp
+    if (this.state !== "driving" || !v) return;
+    const blob = v.group.children.find(c => c.userData.isBlob);
+    // landing: the suspension squashes and the nose settles (a short dip that eases out)
+    if (this.landDip > 0) {
+      this.landDip = Math.max(0, this.landDip - dt * 4.5);
+      v.group.position.y -= Math.sin(this.landDip / 0.3 * Math.PI) * 0.1 * Math.min(1, this.landHard);
+      v.group.rotation.x += this.landDip * 0.5 * (this.airPitch > 0 ? -1 : 1) * 0.3;
+    }
+    if (this.bikeAir <= 0) { if (blob) { blob.position.y = 0; blob.scale.setScalar(1); } this.airPitch = 0; return; }
     this.bikeVy -= 9.81 * dt;
     this.bikeAir = Math.max(0, this.bikeAir + this.bikeVy * dt);
-    if (!this.bikeAir) {
-      this.bikeVy = 0;
+    if (!this.bikeAir) {                                                                       // touchdown
+      this.landHard = Math.min(1.5, Math.abs(this.bikeVy) / 6); this.landDip = 0.3; this.bikeVy = 0;
+      if (this.landHard > 0.5) { this.onBump?.(Math.min(0.5, this.landHard * 0.3)); this.audio?.crash?.(new THREE.Vector3(this.car.position.x, 0.3, this.car.position.z), 0.25 * this.landHard, "concrete"); }
       this.settle(v, this.heading);
       return;
     }
+    // in the air the nose follows the flight path: up on the way up, level at the top, down on the way down, the way a real jump looks
+    const target = THREE.MathUtils.clamp(Math.atan2(this.bikeVy, Math.max(7, this.v)) * 1.1, -0.65, 0.65);
+    this.airPitch = (this.airPitch ?? 0) + (target - (this.airPitch ?? 0)) * Math.min(1, dt * 7);
     v.group.position.y = (v.gy ?? v.group.position.y - 0.03) + 0.03 + this.bikeAir;
-    v.group.rotation.x = THREE.MathUtils.clamp(-Math.atan2(this.bikeVy, Math.max(8, this.v)) * 0.55, -0.16, 0.16);
+    v.group.rotation.x = -this.airPitch;
+    if (blob) { blob.position.y = -this.bikeAir + 0.02; blob.scale.setScalar(Math.max(0.45, 1 - this.bikeAir * 0.2)); }       // the contact shadow stays on the ground below
   }
   async makeBike() { await this.bikes.ready; return this.bikes.make(); }
   // a few cruisers stand at the curb to start with (they're always there: bikes aren't part of your saved progress)
@@ -890,7 +903,7 @@ export class Ride {
     if (v) { this.assignGarageId(v); this.approach({ parked: v }); }
   }
   // the nearest free bike to where you are: the welcome screen's "Ride a motorcycle"
-  async rideNearestBike() {
+  async rideNearestBike(instant = false) {
     await this.bikes.ready;                                                           // the bike model may still be loading: wait for it instead of failing
     const c = this.camera.position;
     let best = null, bd = Infinity;
@@ -899,10 +912,10 @@ export class Ride {
       const d = Math.hypot(v.group.position.x - c.x, v.group.position.z - c.z);
       if (d < bd) { bd = d; best = v; }
     }
-    if (best && bd < 45) this.approach({ parked: best });
+    if (!instant && best && bd < 45) this.approach({ parked: best });
     else if (this.bikes.tpl) {                                                      // none within a short walk: one is waiting nearby on open flat ground (the first minute must not be a hike, or a staircase)
       const spot = this.openSpot(c.x, -c.z);
-      if (spot) this.bikeAt(spot.x, spot.y, spot.h).then(v => this.approach({ parked: v }));
+      if (spot) this.bikeAt(spot.x, spot.y, spot.h).then(v => instant ? this.enter({ parked: v }) : this.approach({ parked: v }));     // Play: you are on the bike, no walking
       else this.toast?.("No room to put a bike here: walk to the street");
     } else this.toast?.("The motorcycles are still being brought out: try again in a moment");
   }
@@ -1625,7 +1638,7 @@ export class Ride {
     } else {
       const bk = this.vehicle?.kind === "bike";
       // Forward camera offsets use bike-local -Z with h+PI/2 and car-local +Z with h-PI/2; both rotate behind the vehicle.
-      const off = new THREE.Vector3(0, bk ? 1.9 : 2.5, bk ? -4.6 : 7.2).applyAxisAngle(new THREE.Vector3(0, 1, 0), car.rotation.y + L.yaw);
+      const off = new THREE.Vector3(0, (bk ? 1.9 : 2.5) + Math.min(2.2, (this.bikeAir || 0) * 0.5), (bk ? -4.6 : 7.2) * (1 + Math.min(0.25, (this.bikeAir || 0) * 0.08))).applyAxisAngle(new THREE.Vector3(0, 1, 0), car.rotation.y + L.yaw);
       off.y += Math.max(0, L.pitch - 0.08) * 8;
       const want = car.position.clone().add(off);
       if (shake) want.add(new THREE.Vector3((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake * 0.6, (Math.random() - 0.5) * shake));

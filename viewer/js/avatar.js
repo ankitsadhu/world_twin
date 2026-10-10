@@ -686,14 +686,9 @@ export class Npcs {
   }
 
   updateImpact(n, dt) {
-    if (n.leaving > 0) {                                                     // running away after a second hit
+    if (n.leaving > 0) {                                                     // hurrying away after being hit: they stay in the world, then just wander again
       n.leaving -= dt;
-      const far = Math.hypot(n.x - this.camera.position.x, n.y + this.camera.position.z) > 70;
-      if (n.leaving <= 0 && !far) n.leaving = 1;                             // not yet out of sight: keep running
-      else if (n.leaving <= 0 || (far && n.leaving < 14)) {
-        const p = this.sample(this.camera.position.x, -this.camera.position.z, 180);
-        if (p) { Object.assign(n, { x: p[0], y: p[1], state: "walking", hitCount: 0, air: 0, vx: 0, vy: 0, target: null, wait: 2 + this.rng(), sp: 1.1 + this.rng() * 0.45, leaving: 0, escape: false, g: null, gs: null }); }
-      }
+      if (n.leaving <= 0 || !n.target) { n.leaving = 0; n.sp = 1.1 + this.rng() * 0.45; n.escape = false; n.wait = 2 + this.rng() * 4; }
     }
     if (n.state === "walking") return;
     if (n.state === "out") {

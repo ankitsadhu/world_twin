@@ -382,7 +382,7 @@ function groundUnderlay() {
   scene.add(m);
 }
 
-let playArea = null;
+let playArea = null, playzoneRef = null;
 const saved = Progress.load();                                 // where you were last time (this browser)
 function reveal() {
   resolveCity();
@@ -588,6 +588,7 @@ walk.pedsNear = (x, y, r) => npcs?.near(x, y, r) || [];
 walk.blockers = () => {
   const out = [];
   for (const [x, y, h, v] of traffic?.ready ? traffic.obstacles() : []) out.push([x, y, h, 2.3, 1.0, v]);
+  if (playzoneRef) out.push(...playzoneRef.blockers());
   for (const v of ride.parked) out.push([v.group.position.x, -v.group.position.z, v.heading ?? 0, v.kind === "bike" ? 1.0 : 2.3, v.kind === "bike" ? 0.4 : 1.0]);
   return out;
 };
@@ -1052,8 +1053,9 @@ setInterval(() => {
 }, 500);
 const onboard = new Onboard({ onDone: () => missions.markDone("m_ride"), ride, chaos, clip, touch: () => matchMedia("(pointer: coarse)").matches });
 chaos.onTrick = (k, p, e) => fares.trick(k, p, e);
-const playzone = new PlayZone({ scene, ground: groundMap, ride, chaos, nav });
-playzone.onSmash = () => { progress.s.m.smashed = (progress.s.m.smashed || 0) + 1; if (playzone.smashed >= 10) missions.markDone("m_park"); };
+const playzone = new PlayZone({ scene, ground: groundMap, ride, chaos, nav, collider: () => collider }); playzoneRef = playzone;
+const smashBy = {}; playzone.onSmash = (k, site) => { progress.s.m.smashed = (progress.s.m.smashed || 0) + 1; smashBy[site] = (smashBy[site] || 0) + 1; if (smashBy[site] >= 10) missions.markDone("m_park_" + site); };
+playzone.onBuilt = () => missions.refreshSites?.(playzone.sites);
 const crashRun = new CrashJunction({ ride, traffic: () => traffic, chaos, toast: t => Messages.ask(t, [], { ms: 3500 }), onFinish: r => { progress.s.m.junctions = (progress.s.m.junctions || 0) + 1; progress.s.m.pileups = (progress.s.m.pileups || 0) + r.pileups; Analytics.track("crash_run", r); missions.markDone("m_crash"); } });
 crashRun.pop = t => chaos.popText(t);
 const speedboat = new SpeedBoat({ scene, camera, helm, audio, setMode, getMode: () => mode, nav, toast: t => Messages.ask(t, [], { ms: 3500 }), pop: t => chaos.popText(t),
@@ -1067,7 +1069,7 @@ const wolves = new Wolves({ harbor, scene, ground: groundMap, collider: () => co
   onFound: n => { progress.s.m.wolves = n; Analytics.track("wolf", { n }); if (n >= 50) missions.markDone("m_wolf"); } });
 const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => onboard.step >= 0 || race.state !== "idle" || speedboat.race.state !== "idle" || crashRun.state !== "idle" || (pursuit?.active ?? false), scene, camera, traffic: () => traffic, race: () => race, pos: hudPos, mapSets, ask: (t, a, o) => Messages.ask(t, a, o), toast: t => Messages.ask(t, [], { ms: 4000 }),
   start: {
-    bike: () => { setMode("walk"); ride.rideNearestBike(); },
+    bike: () => { setMode("walk"); ride.rideNearestBike(true); },
     park: () => { if (!ride.inCar) { setMode("walk"); ride.rideNearestBike(); } Messages.ask("Stunt Park: ride at the ramps, smash the barrels", [], { ms: 5000 }); },
     taxi: () => { if (ride.state === "driving") fares.toggle(); else { setMode("walk"); ride.rideNearestBike(); Messages.ask("Get on a bike or in a car, then press J for fares", [], { ms: 5000 }); } },
     race: id => { if (!race.startCourse(id)) Messages.ask("Get on a bike or in a car first, then start the race here (R)", [], { ms: 5000 }); },
@@ -1240,7 +1242,7 @@ nav.onWelcome = k => {
   else if (k === "sail") { out(); helm.board(); }
   else if (k === "speedboat") { out(); speedboat.board(); }
   else if (k.startsWith?.("mission:")) { out(); missions.travel(k.slice(8)); }
-  else if (k === "bike") { out(); setMode("walk"); ride.rideNearestBike(); }
+  else if (k === "bike") { out(); setMode("walk"); ride.rideNearestBike(true); }
   else if (k === "tours") tours.open();
   else if (k === "fares") {                                   // into a yellow cab, then the first fare
     out();

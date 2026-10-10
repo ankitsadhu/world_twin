@@ -9,7 +9,7 @@
   canvas { display: block; }
   /* top-left: neighbourhood switcher + menu (tour, settings) */
   #hud { position: fixed; top: var(--s4); left: var(--s4); z-index: 12; }
-  #districtbtn { display: inline-flex; align-items: center; gap: var(--s1); font-size: var(--t-headline); }
+  #districtbtn { display: inline-flex; align-items: center; gap: var(--s1); font-size: var(--t-headline); font-weight: var(--w-semibold); padding: 0 var(--s4); min-height: var(--hit); border-radius: var(--r-control); }
   #menu { position: absolute; top: 52px; left: 0; width: 260px; padding: var(--s2); }
   #menu[hidden] { display: none; }
   #menu .item { display: flex; align-items: center; gap: var(--s3); width: 100%; min-height: var(--hit); padding: 0 var(--s3);
@@ -62,12 +62,7 @@
 </head>
 <body class="loading">
 <div id="hud">
-  <button id="districtbtn" class="ui-btn ui-surface" aria-haspopup="menu" aria-expanded="false" aria-controls="menu">Times Square <i data-icon="chevron"></i></button>
-  <div id="menu" class="ui-surface" role="menu" hidden>
-    <div class="setting"><label for="tod">Time of day <span id="todv"></span></label>
-      <button id="livebtn" class="ui-chip accent" style="border:none;cursor:pointer;margin-bottom:var(--s2)">Live · New York time</button>
-      <input id="tod" autocomplete="off" type="range" min="0" max="1" step="0.01" value="0.92"></div>
-  </div>
+  <div id="districtbtn" class="ui-surface" role="status" aria-label="Where you are">Times Square</div>
 </div>
 <div id="dock" class="ui-surface" role="toolbar" aria-label="Controls">
   <button id="viewbtn" class="dockbtn" aria-label="Switch between street view and the map view"><i data-icon="explore"></i><span>Look from above / back to the street (V)</span><em>View</em></button>
@@ -130,9 +125,6 @@ import { applyStorefronts } from "./js/storefront4.js";
 import { Tours } from "./js/tours.js";
 import { Plan } from "./js/plan.js";
 document.querySelectorAll("[data-icon]").forEach(el => el.outerHTML = ICON[el.dataset.icon]);
-const menuBtn = document.getElementById("districtbtn"), menu = document.getElementById("menu");
-menuBtn.onclick = e => { e.stopPropagation(); menu.hidden = !menu.hidden; menuBtn.setAttribute("aria-expanded", String(!menu.hidden)); };
-addEventListener("pointerdown", e => { if (!menu.hidden && !document.getElementById("hud").contains(e.target)) { menu.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); } });
 
 const ROOT = "../";
 // Blender (Z-up, metres) -> three (Y-up): (x, y, z) -> (x, z, -y)
@@ -277,13 +269,15 @@ function nycTod() {
 function nycClock() {
   return new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "numeric", minute: "2-digit" }).format(new Date());
 }
-let live = true;
+// the time of day is the game's, not the player's: the real New York clock (the sky, the lights and the crowd all follow it).
+// ?time=day|dusk|night|<hour 0-24> pins it for QA, screenshots and (later) missions that want a fixed hour.
+const TIME_PIN = (() => { const t = new URLSearchParams(location.search).get("time"); if (!t) return null; const h = { day: 12, dusk: 18.5, night: 23 }[t] ?? +t; return Number.isFinite(h) ? Math.min(1, Math.abs(h - 12) / 12 * 1.15) : null; })();
+let live = TIME_PIN == null;
+const todNow = () => TIME_PIN ?? nycTod();
 let curTod = 0;
 function setTime(tod) {
   curTod = tod;
-  document.getElementById("todv").textContent = live ? nycClock() : tod < 0.3 ? "Day" : tod < 0.65 ? "Dusk" : "Night";
-  document.getElementById("livebtn").style.opacity = live ? 1 : 0.5;
-  const night = smooth(0.45, 0.8, tod), dusk = smooth(0.25, 0.55, tod);
+    const night = smooth(0.45, 0.8, tod), dusk = smooth(0.25, 0.55, tod);
   for (const e of emissives) e.m.emissiveIntensity = e.day + (e.night - e.day) * night;
   const sunE = Math.max(0, 1 - smooth(0.35, 0.62, tod));
   sun.intensity = 3.2 * sunE;
@@ -349,7 +343,7 @@ async function load() {
   await Promise.all(first.map(([, path]) => loadChunk(path).then(tick)));
   try { demoBrands = (await (await fetch(ROOT + "data/times_square/demo_brands.json", { cache: "no-cache" })).json()).hero; } catch (e) {}
   applyDemo(true);
-  setTime(+document.getElementById("tod").value);
+  setTime(todNow());
   await Promise.race([colliderReady, new Promise(r => setTimeout(r, 4000))]);   // needed to judge a saved spot
   reveal();
   // the rest of Midtown streams in behind the reveal
@@ -695,9 +689,7 @@ const placeZoom = () => {                                  // keep the zoom pill
   document.getElementById("zoom").style.bottom = (innerHeight - r.top + 8) + "px";
 };
 addEventListener("resize", placeZoom); setTimeout(placeZoom, 0); setTimeout(placeZoom, 1500);
-document.getElementById("tod").oninput = e => { live = false; setTime(+e.target.value); };
-document.getElementById("livebtn").onclick = () => { live = true; document.getElementById("tod").value = nycTod(); setTime(nycTod()); };
-setInterval(() => { if (live) { document.getElementById("tod").value = nycTod(); setTime(nycTod()); } }, 60000);
+setInterval(() => { if (live) setTime(nycTod()); }, 60000);          // the sky follows the real New York clock; nobody sets it
 
 const down = new THREE.Raycaster();
 // vehicles, people and their shadows are never "the ground" (a probe that hit a car roof or a bike seat lifted whoever stood
@@ -788,7 +780,6 @@ const nav = new Navigator({ camera, orbit, scene, B, root: ROOT, setMode, getMod
   onArrive: () => {}, groundAt: p => groundAt(p), blockedAhead });
 nav.load(ROOT + "export/times_square/places.json");
 // start from clean defaults (browsers may restore old slider values on reload)
-document.getElementById("tod").value = nycTod();          // follow real New York time by default
 const business = new Business({ root: ROOT, district: "times_square", nav, setSlotImage, ask: (t, a, o) => Messages.ask(t, a, o),
   slotMeshes: () => pickables, camera });
 // buying screens and buildings into a plan, then checkout (js/plan.js): the only money in the game
@@ -1196,7 +1187,7 @@ document.getElementById("gearbtn").onclick = () => pause.open();
 addEventListener("keydown", e => {                           // capture: decide before the map / sheet handlers act
   if (e.key !== "Escape" || e.target.tagName === "INPUT") return;
   if (!ride.garage.hidden) { ride.closeGarage(); e.stopPropagation(); return; }
-  if (cityMap.isOpen || business.current || !menu.hidden || document.getElementById("welcome").style.display === "flex") {
+  if (cityMap.isOpen || business.current || document.getElementById("welcome").style.display === "flex") {
     if (document.getElementById("welcome").style.display === "flex") nav.closeWelcome();
     return;
   }

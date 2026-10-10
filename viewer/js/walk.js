@@ -271,10 +271,10 @@ export class StreetWalk {
     if (intended > 0.004 && actual < intended * 0.3) { this.vx *= 0.5; this.vz *= 0.5; }   // pressed against something: no momentum
     const moved = actual / Math.max(dt, 1e-3);
     this.speed = (this.speed || 0) + (moved - (this.speed || 0)) * Math.min(1, dt * 8);
-    if (Settings.roughContact && moved > 2 && this.hitNearby && !(this.hitCd > 0)) {
+    if (Settings.roughContact && moved > 2 && this.hitNearby && !this.target && !(this.hitCd > 0)) {         // a shoulder-barge you chose (not the auto-walk to a bike): a stagger, never a knock-down
       const x = cam.position.x + dx / Math.max(intended, 1e-3) * 0.6;
       const y = -cam.position.z - dz / Math.max(intended, 1e-3) * 0.6;
-      if (this.hitNearby(x, y, this.vx, -this.vz, Math.min(1, moved / 5))) this.hitCd = 0.8;
+      if (this.hitNearby(x, y, this.vx, -this.vz, Math.min(0.45, moved / 10))) this.hitCd = 0.8;
     }
     this.hitCd = Math.max(0, (this.hitCd || 0) - dt);
     const want = moved > 0.1 ? Math.atan2(dx, dz) : this.heading ?? this.yaw + Math.PI;

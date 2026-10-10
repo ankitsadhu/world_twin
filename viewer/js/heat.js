@@ -14,7 +14,7 @@ export class Heat {
   active() { return this.ride.state === "driving"; }
 
   onEvent(kind, a) {
-    if (this.ride.invincible) return;                                          // the crash run is its own game: no police
+    if (this.ride.invincible || this.suppress?.()) return;                                          // the crash run is its own game: no police
     if (!this.active() || this.pursuit()?.active) return;
     if (kind === "crashHit") this.add(a > 0.6 ? 1.0 : 0.6);            // a big smash is serious, a bump is not
     else if (kind === "near") this.add(0.12);

@@ -14,12 +14,14 @@ export class Onboard {
     document.body.appendChild(this.el);
     if (this.step >= 0) setInterval(() => this.tick(0.1), 100);
   }
-  say(t, sub = "") { this.el.innerHTML = t + (sub ? `<div style="font:500 13px system-ui;opacity:.75;margin-top:4px">${sub}</div>` : ""); this.el.style.display = "block"; }
+  say(t, sub = "") {
+    const h = document.getElementById("hint"); if (h) h.style.visibility = "hidden";        // one instruction at a time: the controls strip waits
+    this.el.innerHTML = t + (sub ? `<div style="font:500 13px system-ui;opacity:.75;margin-top:4px">${sub}</div>` : ""); this.el.style.display = "block"; }
   next() { this.step++; this.t = 0; this.lastChain = this.chaos.chain; this.lastNear = this.chaos.nearCount || 0; }
   tick(dt) {
     const r = this.ride, C = this.chaos;
     if (this.step < 0) return;
-    if (!(r.state === "driving" && r.vehicle?.kind === "bike")) { this.el.style.display = "none"; return; }   // only on a bike you are riding
+    if (!(r.state === "driving" && r.vehicle?.kind === "bike")) { this.el.style.display = "none"; document.getElementById("hint")?.style.removeProperty("visibility"); return; }   // only on a bike you are riding
     this.t += dt;
     const touch = this.touch?.(), go = touch ? "Hold GO" : "Hold W";
     switch (this.step) {
@@ -27,7 +29,7 @@ export class Onboard {
       case 1: this.say(touch ? "Tap HOP to jump!" : "Press SPACE to jump!", "Go fast first: you need speed to get air"); if (r.bikeAir > 0) this.next(); if (this.t > 25) this.next(); break;
       case 2: this.say("Thread between the cars", "Close passes build your CHAOS chain"); if ((C.nearCount || 0) > this.lastNear || this.t > 25) this.next(); break;
       case 3: this.say("Now crash into something!", "Big impacts are the fun part"); if (C.lastCrash && performance.now() - C.lastCrash < 3000) this.next(); if (this.t > 40) this.next(); break;
-      case 4: this.say("That's chaos 🔥", this.clip ? "Press F8 any time to record a clip and share it" : ""); if (this.t > 6) { this.step = -1; finish(); this.el.style.display = "none"; } break;
+      case 4: this.say("That's chaos 🔥", this.clip ? "Press F8 any time to record a clip and share it" : ""); if (this.t > 6) { this.step = -1; finish(); this.el.style.display = "none"; document.getElementById("hint")?.style.removeProperty("visibility"); this.onDone?.(); } break;
     }
   }
 }

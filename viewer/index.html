@@ -1050,7 +1050,7 @@ setInterval(() => {
   if (want) { if (!mine || wp.id !== want.id || wp.x !== want.x || wp.y !== want.y) nav.setWaypoint(want); }
   else if (mine) nav.setWaypoint(null);
 }, 500);
-const onboard = new Onboard({ ride, chaos, clip, touch: () => matchMedia("(pointer: coarse)").matches });
+const onboard = new Onboard({ onDone: () => missions.markDone("m_ride"), ride, chaos, clip, touch: () => matchMedia("(pointer: coarse)").matches });
 chaos.onTrick = (k, p, e) => fares.trick(k, p, e);
 const playzone = new PlayZone({ scene, ground: groundMap, ride, chaos, nav });
 playzone.onSmash = () => { progress.s.m.smashed = (progress.s.m.smashed || 0) + 1; if (playzone.smashed >= 10) missions.markDone("m_park"); };
@@ -1065,7 +1065,7 @@ const hudPos = () => { if (ride.state === "driving" && ride.car) return { x: rid
 const mapSets = () => (mapData && cityMap.data ? [mapData, cityMap.data] : []);
 const wolves = new Wolves({ harbor, scene, ground: groundMap, collider: () => collider, pos: hudPos, chaos, mapSets, pop: t => chaos.popText(t), toast: t => Messages.ask(t, [], { ms: 4500 }),
   onFound: n => { progress.s.m.wolves = n; Analytics.track("wolf", { n }); if (n >= 50) missions.markDone("m_wolf"); } });
-const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => race.state !== "idle" || speedboat.race.state !== "idle" || crashRun.state !== "idle" || (pursuit?.active ?? false), scene, camera, traffic: () => traffic, race: () => race, pos: hudPos, mapSets, ask: (t, a, o) => Messages.ask(t, a, o), toast: t => Messages.ask(t, [], { ms: 4000 }),
+const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => onboard.step >= 0 || race.state !== "idle" || speedboat.race.state !== "idle" || crashRun.state !== "idle" || (pursuit?.active ?? false), scene, camera, traffic: () => traffic, race: () => race, pos: hudPos, mapSets, ask: (t, a, o) => Messages.ask(t, a, o), toast: t => Messages.ask(t, [], { ms: 4000 }),
   start: {
     bike: () => { setMode("walk"); ride.rideNearestBike(); },
     park: () => { if (!ride.inCar) { setMode("walk"); ride.rideNearestBike(); } Messages.ask("Stunt Park: ride at the ramps, smash the barrels", [], { ms: 5000 }); },
@@ -1094,8 +1094,8 @@ const missions = new Missions({ dismiss: k => Messages.dismiss(k), busy: () => r
 })();
 missions.go = id => nav.onWelcome("mission:" + id);
 const heat = new Heat({ ride, chaos, pursuit: () => pursuit, toast: t => Messages.ask(t, [], { ms: 3500 }) });
-progress.heat = heat;
-chaos.onBigMoment = s => { Analytics.first("first_crash"); missions.markDone("m_ride"); if (s > 0.5) { hitStop = 0.1; clip.highlight("Huge crash"); } };
+progress.heat = heat; heat.suppress = () => onboard.step >= 0;                  // no police during the guided first ride
+chaos.onBigMoment = s => { Analytics.first("first_crash"); if (s > 0.5) { hitStop = 0.1; clip.highlight("Huge crash"); } };
 chaos.onBest = n => { if (n > 1500) clip.highlight(`${n.toLocaleString()}-point chain`); };
 setInterval(() => {                                           // the Statue fly-by: low enough and close enough to Lady Liberty
   if (flight.active && flight.state === "air" && harbor.statue && Math.hypot(flight.p.x - harbor.statue[0], flight.p.y - harbor.statue[1]) < 150 && flight.p.z < 260 && !missions.done.m_statue) { missions.markDone("m_statue"); chaos.s.total += 2500; chaos.popText("STATUE FLY-BY  +2500", true); }

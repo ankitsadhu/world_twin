@@ -836,6 +836,25 @@ export class Ride {
     }
     this.onBikes?.(this.bikeMarkers);
   }
+  // flat, open ground near (x, y) with a clear run ahead: [x, y, heading] or null (no steps, kerbs, walls or people's furniture within 14 m ahead)
+  openSpot(x, y) {
+    const G = this.ground, col = this.getCollider(); if (!G?.built || !col) return null;
+    let best = null;
+    for (let r = 3; r <= 60 && !best; r += 3) for (let a = 0; a < 360 && !best; a += 20) {
+      const px = x + Math.cos(a * Math.PI / 180) * r, py = y + Math.sin(a * Math.PI / 180) * r, h0 = G.h(px, py);
+      if (h0 > 0.35 || col.blocked(px, py, 0.8, 0.3)) continue;
+      for (let k = 0; k < 8; k++) {                                                    // a clear straight run in some direction
+        const h = k * Math.PI / 4; let ok = true;
+        for (let d = 3; d <= 40 && ok; d += 3) {                                          // 40 m of clear run: ground, walls, and the street furniture the mesh test knows (planters, bollards)
+          const qx = px + Math.cos(h) * d, qy = py + Math.sin(h) * d, bx = px + Math.cos(h) * (d - 3), by = py + Math.sin(h) * (d - 3);
+          if (Math.abs(G.h(qx, qy) - h0) > 0.2 || col.blocked(qx, qy, 0.9, 0.3) || this.vehicleObstacle?.({ x: bx, y: by, nx: qx, ny: qy, halfLength: 1.15, halfWidth: 0.7, height: 0.8 })) ok = false;
+        }
+        if (ok) { best = { x: px, y: py, h }; break; }
+      }
+    }
+    return best;
+  }
+
   // a fresh bike standing at (x, y): used when you fast-travel to a mission far from any bike
   async bikeAt(x, y, h = 0) {
     await this.bikes.ready;
@@ -871,7 +890,8 @@ export class Ride {
     if (v) { this.assignGarageId(v); this.approach({ parked: v }); }
   }
   // the nearest free bike to where you are: the welcome screen's "Ride a motorcycle"
-  rideNearestBike() {
+  async rideNearestBike() {
+    await this.bikes.ready;                                                           // the bike model may still be loading: wait for it instead of failing
     const c = this.camera.position;
     let best = null, bd = Infinity;
     for (const v of this.parked) {
@@ -879,8 +899,12 @@ export class Ride {
       const d = Math.hypot(v.group.position.x - c.x, v.group.position.z - c.z);
       if (d < bd) { bd = d; best = v; }
     }
-    if (best) this.approach({ parked: best });
-    else this.toast?.("The motorcycles are still being brought out: try again in a moment");
+    if (best && bd < 45) this.approach({ parked: best });
+    else if (this.bikes.tpl) {                                                      // none within a short walk: one is waiting nearby on open flat ground (the first minute must not be a hike, or a staircase)
+      const spot = this.openSpot(c.x, -c.z);
+      if (spot) this.bikeAt(spot.x, spot.y, spot.h).then(v => this.approach({ parked: v }));
+      else this.toast?.("No room to put a bike here: walk to the street");
+    } else this.toast?.("The motorcycles are still being brought out: try again in a moment");
   }
   // sedans / SUVs from the traffic: the same light model as the traffic itself (outside view only)
   makeCar(t) {
